@@ -9,17 +9,26 @@ namespace EveApi
     public abstract class ApiBase
     {
         #region Properties
+        /// <summary>
+        /// The end part of the URL to retrieve the information from the API
+        /// </summary>
         public abstract string ApiUrl
         {
             get;
         }
 
+        /// <summary>
+        /// API key to get the infomation
+        /// </summary>
         public string ApiKey
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// API user ID to get the information
+        /// </summary>
         public string ApiUserId
         {
             get;
@@ -27,6 +36,9 @@ namespace EveApi
         }
 
         XmlDocument m_ApiRawDocument = null;
+        /// <summary>
+        /// The raw XML document from the API
+        /// </summary>
         public XmlDocument ApiRawDocument
         {
             get { return m_ApiRawDocument; }
@@ -41,11 +53,13 @@ namespace EveApi
                     {
                         CacheTime = DateTime.Parse(reader.ReadElementString());
                     }
-
                 }
             }
         }
 
+        /// <summary>
+        /// Time the document is valid until
+        /// </summary>
         public DateTime CacheTime
         {
             get;
@@ -54,9 +68,18 @@ namespace EveApi
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Parse the raw XML into a usable class
+        /// </summary>
+        /// <returns></returns>
         public abstract bool ParseData();
 
-        public bool ParseForErrors(XmlDocument docToCheck)
+        /// <summary>
+        /// Parse the XML document for errors
+        /// </summary>
+        /// <param name="docToCheck">The document to check for errors</param>
+        /// <returns>True if any erorrs are found</returns>
+        private bool ParseForErrors(XmlDocument docToCheck)
         {
             XmlReader reader = docToCheck.CreateNavigator().ReadSubtree();
             while (reader.Read())
@@ -81,8 +104,16 @@ namespace EveApi
             return false;
         }
 
+        /// <summary>
+        /// Used to add addditional information to the POST string
+        /// </summary>
         public virtual void AddDataToPost() { /* nothing */ }
 
+        /// <summary>
+        /// Downloads the information from the API and stored is if it's valid
+        /// </summary>
+        /// <param name="proxyInfo">Proxy info to use</param>
+        /// <returns>True if the information was retrieved successfully</returns>
         public bool GrabDataFromApi(ProxyInfo proxyInfo)
         {
             XmlDocument returnDoc = new XmlDocument();
@@ -94,7 +125,7 @@ namespace EveApi
             post.PostItems.Add("apiKey", ApiKey);
             post.PostItems.Add("version", "2");
 
-            post.Url = "http://api.eve-online.com/" + ApiUrl;
+            post.Url = "http://api.eve-online.com" + ApiUrl;
 
             post.Type = PostSubmitter.PostTypeEnum.Post;
 
@@ -115,7 +146,7 @@ namespace EveApi
 
             ApiRawDocument = returnDoc;
 
-            return true;
+            return ParseData();
         }
         #endregion
     }

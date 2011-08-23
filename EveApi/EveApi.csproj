@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api Classes\AccountStatus.cs" />
     <Compile Include="Api Classes\ApiBase.cs" />
     <Compile Include="Api Classes\ImageApi.cs" />
     <Compile Include="Post.cs" />

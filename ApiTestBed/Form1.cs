@@ -28,5 +28,15 @@ namespace ApiTestBed
                 picImage.Image = img;
             }
         }
+
+        private void btnAccontStatus_Click(object sender, EventArgs e)
+        {
+            EveApi.AccountStatus status = new EveApi.AccountStatus();
+
+            status.ApiUserId = txtUserID.Text;
+            status.ApiKey = txtApiKey.Text;
+
+            status.GrabDataFromApi(null);
+        }
     }
 }

@@ -48,6 +48,12 @@
             this.btnGetCharPortrait = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.nudCharID = new System.Windows.Forms.NumericUpDown();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtUserID = new System.Windows.Forms.TextBox();
+            this.btnAccontStatus = new System.Windows.Forms.Button();
+            this.txtApiKey = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -58,11 +64,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCharID)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -282,6 +290,63 @@
             this.nudCharID.TabIndex = 30;
             this.nudCharID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.txtApiKey);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Controls.Add(this.btnAccontStatus);
+            this.tabPage2.Controls.Add(this.txtUserID);
+            this.tabPage2.Controls.Add(this.label6);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(357, 473);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(8, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(43, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "User ID";
+            // 
+            // txtUserID
+            // 
+            this.txtUserID.Location = new System.Drawing.Point(77, 6);
+            this.txtUserID.Name = "txtUserID";
+            this.txtUserID.Size = new System.Drawing.Size(274, 20);
+            this.txtUserID.TabIndex = 1;
+            // 
+            // btnAccontStatus
+            // 
+            this.btnAccontStatus.Location = new System.Drawing.Point(11, 64);
+            this.btnAccontStatus.Name = "btnAccontStatus";
+            this.btnAccontStatus.Size = new System.Drawing.Size(87, 71);
+            this.btnAccontStatus.TabIndex = 2;
+            this.btnAccontStatus.Text = "Account Status";
+            this.btnAccontStatus.UseVisualStyleBackColor = true;
+            this.btnAccontStatus.Click += new System.EventHandler(this.btnAccontStatus_Click);
+            // 
+            // txtApiKey
+            // 
+            this.txtApiKey.Location = new System.Drawing.Point(77, 32);
+            this.txtApiKey.Name = "txtApiKey";
+            this.txtApiKey.Size = new System.Drawing.Size(274, 20);
+            this.txtApiKey.TabIndex = 4;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 35);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(45, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "API Key";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -301,6 +366,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCharID)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -327,6 +394,12 @@
         private System.Windows.Forms.Button btnGetCharPortrait;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown nudCharID;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TextBox txtApiKey;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnAccontStatus;
+        private System.Windows.Forms.TextBox txtUserID;
+        private System.Windows.Forms.Label label6;
     }
 }
 

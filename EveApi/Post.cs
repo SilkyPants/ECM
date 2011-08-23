@@ -176,7 +176,7 @@ namespace EveApi
                 request = (HttpWebRequest) WebRequest.Create(uri);
                 
                 // Proxy Stuff
-                if(proxyInfo.UseProxy)
+                if(proxyInfo != null && proxyInfo.UseProxy)
                 {
                     WebProxy myProxy = new WebProxy();
 
