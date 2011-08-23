@@ -22,6 +22,8 @@ namespace ApiTestBed
 
             if (sender == btnGetCharPortrait)
                 img = EveApi.ImageApi.GetCharacterPortrait((int)nudCharID.Value, EveApi.ImageApi.ImageRequestSize.Size256x256);
+            if (sender == btnGetCorpLogo)
+                img = EveApi.ImageApi.GetCorporationLogo((int)nudCorpID.Value, EveApi.ImageApi.ImageRequestSize.Size256x256);
 
             if (img != null)
             {
@@ -31,12 +33,44 @@ namespace ApiTestBed
 
         private void btnAccontStatus_Click(object sender, EventArgs e)
         {
-            EveApi.AccountStatus status = new EveApi.AccountStatus();
+            EveApi.Account.AccountStatus status = new EveApi.Account.AccountStatus();
 
             status.ApiUserId = txtUserID.Text;
             status.ApiKey = txtApiKey.Text;
 
             status.GrabDataFromApi(null);
+
+            StringBuilder statusString = new StringBuilder();
+
+            statusString.AppendLine(string.Format("Paid Until {0} at {1}", status.PaidUntil.ToShortDateString(), 
+                                                status.PaidUntil.ToShortTimeString()));
+            statusString.AppendLine(string.Format("Created on {0} at {1}", status.CreationDate.ToShortDateString(),
+                                                status.CreationDate.ToShortTimeString()));
+            statusString.AppendLine(string.Format("Logged on {0} times to CCP", status.NumberOfLogons));
+            statusString.AppendLine(string.Format("Played EVE for {0} minutes", status.PlayTimeMinutes));
+
+            MessageBox.Show(statusString.ToString());
+        }
+
+        private void btnCharList_Click(object sender, EventArgs e)
+        {
+            EveApi.Account.CharacterList charList = new EveApi.Account.CharacterList();
+
+            charList.ApiUserId = txtUserID.Text;
+            charList.ApiKey = txtApiKey.Text;
+
+            charList.GrabDataFromApi(null);
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("Characters:");
+
+            foreach (EveApi.Account.CharacterList.CharacterInfo charInfo in charList.Characters)
+            {
+                sb.AppendLine(string.Format("{0} ({1}) with {2} ({3})", charInfo.Name, charInfo.ID, charInfo.CorporationName, charInfo.CorporationID));
+            }
+
+            MessageBox.Show(sb.ToString());
         }
     }
 }

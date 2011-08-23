@@ -42,9 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api Classes\AccountStatus.cs" />
-    <Compile Include="Api Classes\ApiBase.cs" />
-    <Compile Include="Api Classes\ImageApi.cs" />
+    <Compile Include="Account\AccountStatus.cs" />
+    <Compile Include="Account\CharacterList.cs" />
+    <Compile Include="ApiBase.cs" />
+    <Compile Include="ImageApi.cs" />
     <Compile Include="Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

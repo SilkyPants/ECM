@@ -10,9 +10,10 @@ namespace EveApi
     {
         #region Properties
         /// <summary>
-        /// The end part of the URL to retrieve the information from the API
+        /// The URI to retrieve the information from the API.
+        /// Must be appended to the API URL
         /// </summary>
-        public abstract string ApiUrl
+        public abstract string ApiUri
         {
             get;
         }
@@ -125,7 +126,7 @@ namespace EveApi
             post.PostItems.Add("apiKey", ApiKey);
             post.PostItems.Add("version", "2");
 
-            post.Url = "http://api.eve-online.com" + ApiUrl;
+            post.Url = "http://api.eve-online.com" + ApiUri;
 
             post.Type = PostSubmitter.PostTypeEnum.Post;
 

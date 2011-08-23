@@ -42,18 +42,19 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnGetCorpLogo = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.nudCorpID = new System.Windows.Forms.NumericUpDown();
             this.btnGetCharPortrait = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.nudCharID = new System.Windows.Forms.NumericUpDown();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtUserID = new System.Windows.Forms.TextBox();
-            this.btnAccontStatus = new System.Windows.Forms.Button();
             this.txtApiKey = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.btnAccontStatus = new System.Windows.Forms.Button();
+            this.txtUserID = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.btnCharList = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -62,7 +63,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCorpID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCharID)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
@@ -121,9 +122,9 @@
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.numericUpDown2);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.btnGetCorpLogo);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.nudCorpID);
             this.groupBox1.Controls.Add(this.btnGetCharPortrait);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.nudCharID);
@@ -227,14 +228,15 @@
             this.numericUpDown2.TabIndex = 36;
             this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // button1
+            // btnGetCorpLogo
             // 
-            this.button1.Location = new System.Drawing.Point(226, 40);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(102, 23);
-            this.button1.TabIndex = 35;
-            this.button1.Text = "Get Image";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnGetCorpLogo.Location = new System.Drawing.Point(226, 40);
+            this.btnGetCorpLogo.Name = "btnGetCorpLogo";
+            this.btnGetCorpLogo.Size = new System.Drawing.Size(102, 23);
+            this.btnGetCorpLogo.TabIndex = 35;
+            this.btnGetCorpLogo.Text = "Get Image";
+            this.btnGetCorpLogo.UseVisualStyleBackColor = true;
+            this.btnGetCorpLogo.Click += new System.EventHandler(this.GetImage);
             // 
             // label2
             // 
@@ -245,18 +247,23 @@
             this.label2.TabIndex = 34;
             this.label2.Text = "Corporation Logo";
             // 
-            // numericUpDown1
+            // nudCorpID
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(118, 43);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.nudCorpID.Location = new System.Drawing.Point(118, 43);
+            this.nudCorpID.Maximum = new decimal(new int[] {
             1410065407,
             2,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(102, 20);
-            this.numericUpDown1.TabIndex = 33;
-            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudCorpID.Name = "nudCorpID";
+            this.nudCorpID.Size = new System.Drawing.Size(102, 20);
+            this.nudCorpID.TabIndex = 33;
+            this.nudCorpID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudCorpID.Value = new decimal(new int[] {
+            1000168,
+            0,
+            0,
+            0});
             // 
             // btnGetCharPortrait
             // 
@@ -289,9 +296,15 @@
             this.nudCharID.Size = new System.Drawing.Size(102, 20);
             this.nudCharID.TabIndex = 30;
             this.nudCharID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudCharID.Value = new decimal(new int[] {
+            91145028,
+            0,
+            0,
+            0});
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnCharList);
             this.tabPage2.Controls.Add(this.txtApiKey);
             this.tabPage2.Controls.Add(this.label7);
             this.tabPage2.Controls.Add(this.btnAccontStatus);
@@ -305,21 +318,22 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // label6
+            // txtApiKey
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(8, 9);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(43, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "User ID";
+            this.txtApiKey.Location = new System.Drawing.Point(77, 32);
+            this.txtApiKey.Name = "txtApiKey";
+            this.txtApiKey.Size = new System.Drawing.Size(274, 20);
+            this.txtApiKey.TabIndex = 4;
+            this.txtApiKey.Text = "7D716o9mZ57EHrLt3hX0AaTMAIOw9XJ7DVzyzBufk1rbxEXsq9l5y3TUP6v5zuzg";
             // 
-            // txtUserID
+            // label7
             // 
-            this.txtUserID.Location = new System.Drawing.Point(77, 6);
-            this.txtUserID.Name = "txtUserID";
-            this.txtUserID.Size = new System.Drawing.Size(274, 20);
-            this.txtUserID.TabIndex = 1;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 35);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(45, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "API Key";
             // 
             // btnAccontStatus
             // 
@@ -331,21 +345,32 @@
             this.btnAccontStatus.UseVisualStyleBackColor = true;
             this.btnAccontStatus.Click += new System.EventHandler(this.btnAccontStatus_Click);
             // 
-            // txtApiKey
+            // txtUserID
             // 
-            this.txtApiKey.Location = new System.Drawing.Point(77, 32);
-            this.txtApiKey.Name = "txtApiKey";
-            this.txtApiKey.Size = new System.Drawing.Size(274, 20);
-            this.txtApiKey.TabIndex = 4;
+            this.txtUserID.Location = new System.Drawing.Point(77, 6);
+            this.txtUserID.Name = "txtUserID";
+            this.txtUserID.Size = new System.Drawing.Size(274, 20);
+            this.txtUserID.TabIndex = 1;
+            this.txtUserID.Text = "1320669";
             // 
-            // label7
+            // label6
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 35);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(45, 13);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "API Key";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(8, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(43, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "User ID";
+            // 
+            // btnCharList
+            // 
+            this.btnCharList.Location = new System.Drawing.Point(104, 64);
+            this.btnCharList.Name = "btnCharList";
+            this.btnCharList.Size = new System.Drawing.Size(87, 71);
+            this.btnCharList.TabIndex = 5;
+            this.btnCharList.Text = "Character List";
+            this.btnCharList.UseVisualStyleBackColor = true;
+            this.btnCharList.Click += new System.EventHandler(this.btnCharList_Click);
             // 
             // Form1
             // 
@@ -364,7 +389,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCorpID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCharID)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
@@ -388,9 +413,9 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnGetCorpLogo;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown nudCorpID;
         private System.Windows.Forms.Button btnGetCharPortrait;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown nudCharID;
@@ -400,6 +425,7 @@
         private System.Windows.Forms.Button btnAccontStatus;
         private System.Windows.Forms.TextBox txtUserID;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnCharList;
     }
 }
 

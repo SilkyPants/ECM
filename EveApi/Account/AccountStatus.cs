@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 
-namespace EveApi
+namespace EveApi.Account
 {
     public class AccountStatus : ApiBase
     {
@@ -44,7 +44,7 @@ namespace EveApi
             private set;
         }
 
-        public override string ApiUrl
+        public override string ApiUri
         {
             get { return "/account/AccountStatus.xml.aspx"; }
         }
@@ -54,10 +54,6 @@ namespace EveApi
             XmlReader reader = ApiRawDocument.CreateNavigator().ReadSubtree();
             while (reader.Read())
             {
-                //PaidUntil = reader.ReadElementContentAsDateTime("paidUntil", reader.NamespaceURI);
-                //CreationDate = reader.ReadElementContentAsDateTime("createDate", reader.NamespaceURI);
-                //NumberOfLogons = reader.ReadElementContentAsInt("logonCount", reader.NamespaceURI);
-                //PlayTimeMinutes = reader.ReadElementContentAsInt("logonMinutes", reader.NamespaceURI);
                 XmlNodeType nodeType = reader.NodeType;
                 switch (nodeType)
                 {
