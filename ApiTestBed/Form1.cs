@@ -72,5 +72,23 @@ namespace ApiTestBed
 
             MessageBox.Show(sb.ToString());
         }
+
+        private void btnServerStatus_Click(object sender, EventArgs e)
+        {
+            EveApi.ServerStatus status = new EveApi.ServerStatus();
+
+            status.GrabDataFromApi(null);
+
+            MessageBox.Show(string.Format("Server is {0} with {1} players", status.ServerOnline ? "Online" : "Offline", status.NumberOfPlayers));
+        }
+
+        private void btnSkillTree_Click(object sender, EventArgs e)
+        {
+            EveApi.Eve.SkillTree tree = new EveApi.Eve.SkillTree();
+
+            tree.GrabDataFromApi(null);
+
+            MessageBox.Show("asdasd");
+        }
     }
 }

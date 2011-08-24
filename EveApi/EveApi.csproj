@@ -45,9 +45,15 @@
     <Compile Include="Account\AccountStatus.cs" />
     <Compile Include="Account\CharacterList.cs" />
     <Compile Include="ApiBase.cs" />
+    <Compile Include="Eve\SkillTree.cs" />
     <Compile Include="ImageApi.cs" />
+    <Compile Include="ServerStatus.cs" />
     <Compile Include="Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Character\" />
+    <Folder Include="Map\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

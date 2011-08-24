@@ -29,26 +29,27 @@ namespace EveApi.Account
 
         public override bool ParseData()
         {
-            XmlReader reader = ApiRawDocument.CreateNavigator().ReadSubtree();
-            ApiRawDocument.Save("CharList.xml");
-            if (reader.ReadToFollowing("rowset"))
+            using (XmlReader reader = ApiRawDocument.CreateNavigator().ReadSubtree())
             {
-                Characters = new List<CharacterInfo>();
-
-                using (XmlReader characterTree = reader.ReadSubtree())
+                if (reader.ReadToFollowing("rowset"))
                 {
-                    while (characterTree.Read())
+                    Characters = new List<CharacterInfo>();
+
+                    using (XmlReader characterTree = reader.ReadSubtree())
                     {
-                        if (characterTree.NodeType == XmlNodeType.Element && characterTree.Name == "row")
+                        while (characterTree.Read())
                         {
-                            CharacterInfo character = new CharacterInfo();
+                            if (characterTree.NodeType == XmlNodeType.Element && characterTree.Name == "row")
+                            {
+                                CharacterInfo character = new CharacterInfo();
 
-                            character.Name = reader.GetAttribute("name");
-                            character.ID = reader.GetAttribute("characterID");
-                            character.CorporationName = reader.GetAttribute("corporationName");
-                            character.CorporationID = reader.GetAttribute("corporationID");
+                                character.Name = reader.GetAttribute("name");
+                                character.ID = reader.GetAttribute("characterID");
+                                character.CorporationName = reader.GetAttribute("corporationName");
+                                character.CorporationID = reader.GetAttribute("corporationID");
 
-                            Characters.Add(character);
+                                Characters.Add(character);
+                            }
                         }
                     }
                 }

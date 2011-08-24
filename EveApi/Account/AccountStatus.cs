@@ -51,38 +51,29 @@ namespace EveApi.Account
 
         public override bool ParseData()
         {
-            XmlReader reader = ApiRawDocument.CreateNavigator().ReadSubtree();
-            while (reader.Read())
+            using (XmlReader reader = ApiRawDocument.CreateNavigator().ReadSubtree())
             {
-                XmlNodeType nodeType = reader.NodeType;
-                switch (nodeType)
+                while (reader.Read())
                 {
-                    case XmlNodeType.Element:
+                    if (reader.NodeType == XmlNodeType.Element)
+                    {
+                        if (reader.Name.Equals("paidUntil"))
                         {
-                            if (reader.Name.Equals("paidUntil"))
-                            {
-                                PaidUntil = DateTime.Parse(reader.ReadElementString());
-                            }
-                            if (reader.Name.Equals("createDate"))
-                            {
-                                CreationDate = DateTime.Parse(reader.ReadElementString());
-                            }
-                            if (reader.Name.Equals("logonCount"))
-                            {
-                                NumberOfLogons = int.Parse(reader.ReadElementString());
-                            }
-                            if (reader.Name.Equals("logonMinutes"))
-                            {
-                                PlayTimeMinutes = int.Parse(reader.ReadElementString());
-                            }
-                            /*
-                             * paidUntil
-                             * createDate
-                             * logonCount	 
-                             * logonMinutes
-                             */
+                            PaidUntil = DateTime.Parse(reader.ReadElementString());
                         }
-                        break;
+                        if (reader.Name.Equals("createDate"))
+                        {
+                            CreationDate = DateTime.Parse(reader.ReadElementString());
+                        }
+                        if (reader.Name.Equals("logonCount"))
+                        {
+                            NumberOfLogons = int.Parse(reader.ReadElementString());
+                        }
+                        if (reader.Name.Equals("logonMinutes"))
+                        {
+                            PlayTimeMinutes = int.Parse(reader.ReadElementString());
+                        }
+                    }
                 }
             }
 

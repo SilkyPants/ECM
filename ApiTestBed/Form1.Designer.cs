@@ -49,12 +49,17 @@
             this.label1 = new System.Windows.Forms.Label();
             this.nudCharID = new System.Windows.Forms.NumericUpDown();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnCharList = new System.Windows.Forms.Button();
             this.txtApiKey = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.btnAccontStatus = new System.Windows.Forms.Button();
             this.txtUserID = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.btnCharList = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnServerStatus = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnSkillTree = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -66,6 +71,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudCorpID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudCharID)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -99,7 +107,7 @@
             this.groupBox2.Size = new System.Drawing.Size(341, 294);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
+            this.groupBox2.Text = "Image";
             // 
             // picImage
             // 
@@ -133,7 +141,7 @@
             this.groupBox1.Size = new System.Drawing.Size(341, 161);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Text = "Images";
             // 
             // button4
             // 
@@ -304,10 +312,11 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.btnCharList);
+            this.tabPage2.Controls.Add(this.groupBox5);
+            this.tabPage2.Controls.Add(this.groupBox4);
+            this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.txtApiKey);
             this.tabPage2.Controls.Add(this.label7);
-            this.tabPage2.Controls.Add(this.btnAccontStatus);
             this.tabPage2.Controls.Add(this.txtUserID);
             this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -315,8 +324,18 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(357, 473);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "Api Services";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnCharList
+            // 
+            this.btnCharList.Location = new System.Drawing.Point(99, 19);
+            this.btnCharList.Name = "btnCharList";
+            this.btnCharList.Size = new System.Drawing.Size(87, 75);
+            this.btnCharList.TabIndex = 5;
+            this.btnCharList.Text = "Character List";
+            this.btnCharList.UseVisualStyleBackColor = true;
+            this.btnCharList.Click += new System.EventHandler(this.btnCharList_Click);
             // 
             // txtApiKey
             // 
@@ -337,9 +356,9 @@
             // 
             // btnAccontStatus
             // 
-            this.btnAccontStatus.Location = new System.Drawing.Point(11, 64);
+            this.btnAccontStatus.Location = new System.Drawing.Point(6, 19);
             this.btnAccontStatus.Name = "btnAccontStatus";
-            this.btnAccontStatus.Size = new System.Drawing.Size(87, 71);
+            this.btnAccontStatus.Size = new System.Drawing.Size(87, 75);
             this.btnAccontStatus.TabIndex = 2;
             this.btnAccontStatus.Text = "Account Status";
             this.btnAccontStatus.UseVisualStyleBackColor = true;
@@ -362,15 +381,56 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "User ID";
             // 
-            // btnCharList
+            // groupBox3
             // 
-            this.btnCharList.Location = new System.Drawing.Point(104, 64);
-            this.btnCharList.Name = "btnCharList";
-            this.btnCharList.Size = new System.Drawing.Size(87, 71);
-            this.btnCharList.TabIndex = 5;
-            this.btnCharList.Text = "Character List";
-            this.btnCharList.UseVisualStyleBackColor = true;
-            this.btnCharList.Click += new System.EventHandler(this.btnCharList_Click);
+            this.groupBox3.Controls.Add(this.btnAccontStatus);
+            this.groupBox3.Controls.Add(this.btnCharList);
+            this.groupBox3.Location = new System.Drawing.Point(11, 58);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(338, 100);
+            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Account";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.btnServerStatus);
+            this.groupBox4.Location = new System.Drawing.Point(11, 164);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(338, 100);
+            this.groupBox4.TabIndex = 7;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Misc";
+            // 
+            // btnServerStatus
+            // 
+            this.btnServerStatus.Location = new System.Drawing.Point(6, 19);
+            this.btnServerStatus.Name = "btnServerStatus";
+            this.btnServerStatus.Size = new System.Drawing.Size(87, 75);
+            this.btnServerStatus.TabIndex = 2;
+            this.btnServerStatus.Text = "Server Status";
+            this.btnServerStatus.UseVisualStyleBackColor = true;
+            this.btnServerStatus.Click += new System.EventHandler(this.btnServerStatus_Click);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.btnSkillTree);
+            this.groupBox5.Location = new System.Drawing.Point(11, 270);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(338, 100);
+            this.groupBox5.TabIndex = 8;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Eve";
+            // 
+            // btnSkillTree
+            // 
+            this.btnSkillTree.Location = new System.Drawing.Point(6, 19);
+            this.btnSkillTree.Name = "btnSkillTree";
+            this.btnSkillTree.Size = new System.Drawing.Size(87, 75);
+            this.btnSkillTree.TabIndex = 2;
+            this.btnSkillTree.Text = "Skill Tree";
+            this.btnSkillTree.UseVisualStyleBackColor = true;
+            this.btnSkillTree.Click += new System.EventHandler(this.btnSkillTree_Click);
             // 
             // Form1
             // 
@@ -393,6 +453,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudCharID)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -426,6 +489,11 @@
         private System.Windows.Forms.TextBox txtUserID;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnCharList;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button btnServerStatus;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button btnSkillTree;
     }
 }
 

@@ -28,12 +28,12 @@ namespace EveApi
             Post
         }
 
-        private string m_url=string.Empty;
-        private NameValueCollection m_values=new NameValueCollection();
+        private string m_url = string.Empty;
+        private NameValueCollection m_values = new NameValueCollection();
 
         private ProxyInfo proxyInfo = new ProxyInfo();
 
-        private PostTypeEnum m_type=PostTypeEnum.Get;
+        private PostTypeEnum m_type = PostTypeEnum.Get;
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -44,25 +44,25 @@ namespace EveApi
 
         /// <summary>
         /// Constructor that accepts a url as a parameter
-				/// </summary>
-				/// <param name="newProxyInfo">The proxy info needed to make the post.</param>
-				/// <param name="url">The url where the post will be submitted to.</param>
+        /// </summary>
+        /// <param name="newProxyInfo">The proxy info needed to make the post.</param>
+        /// <param name="url">The url where the post will be submitted to.</param>
         public PostSubmitter(ProxyInfo newProxyInfo, string url)
             : this(newProxyInfo)
         {
-            m_url=url;
+            m_url = url;
         }
 
         /// <summary>
         /// Constructor allowing the setting of the url and items to post.
-				/// </summary>
-				/// <param name="newProxyInfo">the proxy info needed to make the post.</param>
-				/// <param name="url">the url for the post.</param>
+        /// </summary>
+        /// <param name="newProxyInfo">the proxy info needed to make the post.</param>
+        /// <param name="url">the url for the post.</param>
         /// <param name="values">The values for the post.</param>
         public PostSubmitter(ProxyInfo newProxyInfo, string url, NameValueCollection values)
             : this(newProxyInfo, url)
         {
-            m_values=values;
+            m_values = values;
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace EveApi
             }
             set
             {
-                m_url=value;
+                m_url = value;
             }
         }
         /// <summary>
@@ -90,7 +90,7 @@ namespace EveApi
             }
             set
             {
-                m_values=value;
+                m_values = value;
             }
         }
         /// <summary>
@@ -104,7 +104,7 @@ namespace EveApi
             }
             set
             {
-                m_type=value;
+                m_type = value;
             }
         }
 
@@ -128,16 +128,16 @@ namespace EveApi
         /// <returns>a string containing the result of the post.</returns>
         public bool Post(ref string result)
         {
-            StringBuilder parameters=new StringBuilder();
+            StringBuilder parameters = new StringBuilder();
 
-            for (int i=0;i < m_values.Count;i++)
+            for (int i = 0; i < m_values.Count; i++)
             {
-                EncodeAndAddItem(ref parameters,m_values.GetKey(i),m_values[i]);
+                EncodeAndAddItem(ref parameters, m_values.GetKey(i), m_values[i]);
             }
 
-            result=PostData(m_url,parameters.ToString());
+            result = PostData(m_url, parameters.ToString());
 
-            return (result!=null);
+            return (result != null);
         }
         ///// <summary>
         ///// Posts the supplied data to specified url.
@@ -149,34 +149,37 @@ namespace EveApi
         //    m_url=url;
         //    return this.Post();
         //}
-				///// <summary>
-				///// Posts the supplied data to specified url.
-				///// </summary>
-				///// <param name="url">The url to post to.</param>
-				///// <param name="values">The values to post.</param>
-				///// <returns>a string containing the result of the post.</returns>
+        ///// <summary>
+        ///// Posts the supplied data to specified url.
+        ///// </summary>
+        ///// <param name="url">The url to post to.</param>
+        ///// <param name="values">The values to post.</param>
+        ///// <returns>a string containing the result of the post.</returns>
         //public string Post(string url, NameValueCollection values)
         //{
         //    m_values=values;
         //    return this.Post(url);
         //}
-				///// <summary>
-				///// Posts data to a specified url. Note that this assumes that you have already url encoded the post data.
-				///// </summary>
-				///// <param name="postData">The data to post.</param>
-				///// <param name="url">the url to post to.</param>
-				///// <returns>Returns the result of the post.</returns>
+        ///// <summary>
+        ///// Posts data to a specified url. Note that this assumes that you have already url encoded the post data.
+        ///// </summary>
+        ///// <param name="postData">The data to post.</param>
+        ///// <param name="url">the url to post to.</param>
+        ///// <returns>Returns the result of the post.</returns>
         private string PostData(string url, string postData)
         {
-            HttpWebRequest request=null;
+            HttpWebRequest request = null;
 
-            if (m_type==PostTypeEnum.Post)
+            // This line stops transparent proxies from causing pain and suffering!
+            System.Net.ServicePointManager.Expect100Continue = false;
+
+            if (m_type == PostTypeEnum.Post)
             {
                 Uri uri = new Uri(url);
-                request = (HttpWebRequest) WebRequest.Create(uri);
-                
+                request = (HttpWebRequest)WebRequest.Create(uri);
+
                 // Proxy Stuff
-                if(proxyInfo != null && proxyInfo.UseProxy)
+                if (proxyInfo != null && proxyInfo.UseProxy)
                 {
                     WebProxy myProxy = new WebProxy();
 
@@ -189,12 +192,12 @@ namespace EveApi
                         myProxy.Credentials = new NetworkCredential(proxyInfo.ProxyUser, proxyInfo.ProxyPass);
                     request.Proxy = myProxy;
                 }
-		        //End Proxy Stuff
-                
+                //End Proxy Stuff
+
                 request.Method = "POST";
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.ContentLength = postData.Length;
-								request.Timeout = 5000;
+                request.Timeout = 5000;
 
                 try
                 {
@@ -205,32 +208,32 @@ namespace EveApi
                         writeStream.Write(bytes, 0, bytes.Length);
                     }
                 }
-								catch (WebException webEx)
+                catch (WebException webEx)
                 {
-										//System.Windows.Forms.MessageBox.Show(
-                                        Console.WriteLine(
-                                        webEx.Message + " (" + url + ")"
-										//,"Error: " + webEx.Status.ToString(),
-										//System.Windows.Forms.MessageBoxButtons.OK,
-										//System.Windows.Forms.MessageBoxIcon.Error
-                                        );
+                    //System.Windows.Forms.MessageBox.Show(
+                    Console.WriteLine(
+                    webEx.Message + " (" + url + ")"
+                        //,"Error: " + webEx.Status.ToString(),
+                        //System.Windows.Forms.MessageBoxButtons.OK,
+                        //System.Windows.Forms.MessageBoxIcon.Error
+                    );
                     return null;
                 }
             }
             else
             {
                 Uri uri = new Uri(url + "?" + postData);
-                request = (HttpWebRequest) WebRequest.Create(uri);
+                request = (HttpWebRequest)WebRequest.Create(uri);
                 request.Method = "GET";
             }
 
-            string result=string.Empty;
+            string result = string.Empty;
 
-            using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             {
                 using (Stream responseStream = response.GetResponseStream())
                 {
-                    using (StreamReader readStream = new StreamReader (responseStream, Encoding.UTF8))
+                    using (StreamReader readStream = new StreamReader(responseStream, Encoding.UTF8))
                     {
                         result = readStream.ReadToEnd();
                     }
@@ -242,18 +245,18 @@ namespace EveApi
         /// <summary>
         /// Encodes an item and ads it to the string.
         /// </summary>
-				/// <param name="baseRequest">The previously encoded data.</param>
-				/// <param name="key">The key to encode.</param>
+        /// <param name="baseRequest">The previously encoded data.</param>
+        /// <param name="key">The key to encode.</param>
         /// <param name="dataItem">The data to encode.</param>
         /// <returns>A string containing the old data and the previously encoded data.</returns>
         private void EncodeAndAddItem(ref StringBuilder baseRequest, string key, string dataItem)
         {
-            if (baseRequest==null)
+            if (baseRequest == null)
             {
-                baseRequest=new StringBuilder();
+                baseRequest = new StringBuilder();
             }
 
-            if (baseRequest.Length!=0)
+            if (baseRequest.Length != 0)
             {
                 baseRequest.Append("&");
             }
@@ -266,10 +269,10 @@ namespace EveApi
     #endregion
 
     #region ProxyInfo Class
-		/// <summary>
-		/// Class that encapsulates all info needed to use a proxy
-		/// </summary>
-		public class ProxyInfo
+    /// <summary>
+    /// Class that encapsulates all info needed to use a proxy
+    /// </summary>
+    public class ProxyInfo
     {
         // Proxy Stuff
         string proxyUser = "";
@@ -279,10 +282,10 @@ namespace EveApi
         string proxyPort = "";
         bool useProxy = false;
 
-				/// <summary>
-				/// Gets or sets the user name
-				/// </summary>
-				public string ProxyUser
+        /// <summary>
+        /// Gets or sets the user name
+        /// </summary>
+        public string ProxyUser
         {
             get
             {
@@ -294,10 +297,10 @@ namespace EveApi
             }
         }
 
-				/// <summary>
-				/// Gets or sets the password
-				/// </summary>
-				public string ProxyPass
+        /// <summary>
+        /// Gets or sets the password
+        /// </summary>
+        public string ProxyPass
         {
             get
             {
@@ -309,10 +312,10 @@ namespace EveApi
             }
         }
 
-				/// <summary>
-				/// Gets or sets the Domain
-				/// </summary>
-				public string ProxyDomain
+        /// <summary>
+        /// Gets or sets the Domain
+        /// </summary>
+        public string ProxyDomain
         {
             get
             {
@@ -324,10 +327,10 @@ namespace EveApi
             }
         }
 
-				/// <summary>
-				/// Gets or sets the proxy IP address
-				/// </summary>
-				public string ProxyIP
+        /// <summary>
+        /// Gets or sets the proxy IP address
+        /// </summary>
+        public string ProxyIP
         {
             get
             {
@@ -339,10 +342,10 @@ namespace EveApi
             }
         }
 
-				/// <summary>
-				/// Gets or sets the proxy port
-				/// </summary>
-				public string ProxyPort
+        /// <summary>
+        /// Gets or sets the proxy port
+        /// </summary>
+        public string ProxyPort
         {
             get
             {
@@ -354,10 +357,10 @@ namespace EveApi
             }
         }
 
-				/// <summary>
-				/// Gets or sets the boolean to use the proxy or not
-				/// </summary>
-				public bool UseProxy
+        /// <summary>
+        /// Gets or sets the boolean to use the proxy or not
+        /// </summary>
+        public bool UseProxy
         {
             get
             {
