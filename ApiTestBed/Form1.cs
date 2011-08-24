@@ -90,5 +90,40 @@ namespace ApiTestBed
 
             MessageBox.Show("asdasd");
         }
+
+        private void btnAssets_Click(object sender, EventArgs e)
+        {
+            EveApi.Character.AssetList tree = new EveApi.Character.AssetList();
+
+            tree.ApiUserId = txtUserID.Text;
+            tree.ApiKey = txtApiKey.Text;
+            tree.CharacterID = int.Parse(txtCharID.Text);
+
+            tree.GrabDataFromApi(null);
+
+            MessageBox.Show("asdasd");
+        }
+
+        private void btnCharAccounts_Click(object sender, EventArgs e)
+        {
+            EveApi.Character.AccountBalance accounts = new EveApi.Character.AccountBalance();
+
+            accounts.ApiUserId = txtUserID.Text;
+            accounts.ApiKey = txtApiKey.Text;
+            accounts.CharacterID = int.Parse(txtCharID.Text);
+
+            accounts.GrabDataFromApi(null);
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("Accounts:");
+
+            foreach (EveApi.Character.AccountBalance.AccountInfo info in accounts.Accounts)
+            {
+                sb.AppendLine(string.Format("#{0} (ID: {1}) with {2:0,0.00} ISK", info.AccountKey, info.AccountID, info.AccountBalance));
+            }
+
+            MessageBox.Show(sb.ToString());
+        }
     }
 }

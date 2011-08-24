@@ -108,7 +108,12 @@ namespace EveApi
         /// <summary>
         /// Used to add addditional information to the POST string
         /// </summary>
-        public virtual void AddDataToPost() { /* nothing */ }
+        public virtual void AddDataToPost(PostSubmitter post) 
+        {
+            post.PostItems.Add("userID", ApiUserId);
+            post.PostItems.Add("apiKey", ApiKey);
+            post.PostItems.Add("version", "2");
+        }
 
         /// <summary>
         /// Downloads the information from the API and stored is if it's valid
@@ -122,9 +127,7 @@ namespace EveApi
             // TODO: Add proxy info in properly.
             PostSubmitter post = new PostSubmitter(proxyInfo);
 
-            post.PostItems.Add("userID", ApiUserId);
-            post.PostItems.Add("apiKey", ApiKey);
-            post.PostItems.Add("version", "2");
+            AddDataToPost(post);
 
             post.Url = "http://api.eve-online.com" + ApiUri;
 
