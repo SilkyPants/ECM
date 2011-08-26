@@ -65,6 +65,8 @@
             this.txtCharID = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btnCharAccounts = new System.Windows.Forms.Button();
+            this.btnCertTree = new System.Windows.Forms.Button();
+            this.btnCharSheet = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -336,6 +338,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.btnCertTree);
             this.groupBox5.Controls.Add(this.btnSkillTree);
             this.groupBox5.Location = new System.Drawing.Point(11, 270);
             this.groupBox5.Name = "groupBox5";
@@ -441,6 +444,7 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.btnCharSheet);
             this.groupBox6.Controls.Add(this.btnCharAccounts);
             this.groupBox6.Controls.Add(this.txtCharID);
             this.groupBox6.Controls.Add(this.label8);
@@ -488,6 +492,26 @@
             this.btnCharAccounts.Text = "Accounts";
             this.btnCharAccounts.UseVisualStyleBackColor = true;
             this.btnCharAccounts.Click += new System.EventHandler(this.btnCharAccounts_Click);
+            // 
+            // btnCertTree
+            // 
+            this.btnCertTree.Location = new System.Drawing.Point(99, 19);
+            this.btnCertTree.Name = "btnCertTree";
+            this.btnCertTree.Size = new System.Drawing.Size(87, 75);
+            this.btnCertTree.TabIndex = 3;
+            this.btnCertTree.Text = "Certificate Tree";
+            this.btnCertTree.UseVisualStyleBackColor = true;
+            this.btnCertTree.Click += new System.EventHandler(this.btnCertTree_Click);
+            // 
+            // btnCharSheet
+            // 
+            this.btnCharSheet.Location = new System.Drawing.Point(192, 36);
+            this.btnCharSheet.Name = "btnCharSheet";
+            this.btnCharSheet.Size = new System.Drawing.Size(87, 51);
+            this.btnCharSheet.TabIndex = 8;
+            this.btnCharSheet.Text = "Character Sheet";
+            this.btnCharSheet.UseVisualStyleBackColor = true;
+            this.btnCharSheet.Click += new System.EventHandler(this.btnCharSheet_Click);
             // 
             // Form1
             // 
@@ -558,6 +582,8 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnAssets;
         private System.Windows.Forms.Button btnCharAccounts;
+        private System.Windows.Forms.Button btnCertTree;
+        private System.Windows.Forms.Button btnCharSheet;
     }
 }
 

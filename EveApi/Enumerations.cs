@@ -1,0 +1,631 @@
+﻿
+using System.Xml.Serialization;
+namespace EveApi
+{
+    /// <summary>
+    /// EVE stores items in a location with a value we call the "flag." 
+    /// This value is used to indicate more data about the item's location. 
+    /// For example, instead of having different locations for each of the modules, we instead have the single location (the ship) with many flags. 
+    /// The flags indicate if the item is in cargo or fitted, and if fitted, to which slot.
+    /// 
+    /// http://wiki.eve-id.net/API_Inventory_Flags
+    /// </summary>
+    public enum InventoryFlags
+    {
+        /// <summary>
+        /// None
+        /// </summary>
+        [XmlEnum("0")]
+        None = 0,
+        /// <summary>
+        /// Wallet
+        /// </summary>
+        [XmlEnum("1")]
+        Wallet = 1,
+        /// <summary>
+        /// Factory
+        /// </summary>
+        [XmlEnum("2")]
+        Factory = 2,
+        /// <summary>
+        /// Hangar
+        /// </summary>
+        [XmlEnum("4")]
+        Hangar = 4,
+        /// <summary>
+        /// Cargo
+        /// </summary>
+        [XmlEnum("5")]
+        Cargo = 5,
+        /// <summary>
+        /// Briefcase
+        /// </summary>
+        [XmlEnum("6")]
+        Briefcase = 6,
+        /// <summary>
+        /// Skill
+        /// </summary>
+        [XmlEnum("7")]
+        Skill = 7,
+        /// <summary>
+        /// Reward
+        /// </summary>
+        [XmlEnum("8")]
+        Reward = 8,
+        /// <summary>
+        /// Character in station connected
+        /// </summary>
+        [XmlEnum("9")]
+        Connected = 9,
+        /// <summary>
+        /// Character in station offline
+        /// </summary>
+        [XmlEnum("10")]
+        Disconnected = 10,
+        /// <summary>
+        /// Low power slot 1
+        /// </summary>
+        [XmlEnum("11")]
+        LoSlot0 = 11,
+        /// <summary>
+        /// Low power slot 2
+        /// </summary>
+        [XmlEnum("12")]
+        LoSlot1 = 12,
+        /// <summary>
+        /// Low power slot 3
+        /// </summary>
+        [XmlEnum("13")]
+        LoSlot2 = 13,
+        /// <summary>
+        /// Low power slot 4
+        /// </summary>
+        [XmlEnum("14")]
+        LoSlot3 = 14,
+        /// <summary>
+        /// Low power slot 5
+        /// </summary>
+        [XmlEnum("15")]
+        LoSlot4 = 15,
+        /// <summary>
+        /// Low power slot 6
+        /// </summary>
+        [XmlEnum("16")]
+        LoSlot5 = 16,
+        /// <summary>
+        /// Low power slot 7
+        /// </summary>
+        [XmlEnum("17")]
+        LoSlot6 = 17,
+        /// <summary>
+        /// Low power slot 8
+        /// </summary>
+        [XmlEnum("18")]
+        LoSlot7 = 18,
+        /// <summary>
+        /// Medium power slot 1
+        /// </summary>
+        [XmlEnum("19")]
+        MedSlot0 = 19,
+        /// <summary>
+        /// Medium power slot 2
+        /// </summary>
+        [XmlEnum("20")]
+        MedSlot1 = 20,
+        /// <summary>
+        /// Medium power slot 3
+        /// </summary>
+        [XmlEnum("21")]
+        MedSlot2 = 21,
+        /// <summary>
+        /// Medium power slot 4
+        /// </summary>
+        [XmlEnum("22")]
+        MedSlot3 = 22,
+        /// <summary>
+        /// Medium power slot 5
+        /// </summary>
+        [XmlEnum("23")]
+        MedSlot4 = 23,
+        /// <summary>
+        /// Medium power slot 6
+        /// </summary>
+        [XmlEnum("24")]
+        MedSlot5 = 24,
+        /// <summary>
+        /// Medium power slot 7
+        /// </summary>
+        [XmlEnum("25")]
+        MedSlot6 = 25,
+        /// <summary>
+        /// Medium power slot 8
+        /// </summary>
+        [XmlEnum("26")]
+        MedSlot7 = 26,
+        /// <summary>
+        /// High power slot 1
+        /// </summary>
+        [XmlEnum("27")]
+        HiSlot0 = 27,
+        /// <summary>
+        /// High power slot 2
+        /// </summary>
+        [XmlEnum("28")]
+        HiSlot1 = 28,
+        /// <summary>
+        /// High power slot 3
+        /// </summary>
+        [XmlEnum("29")]
+        HiSlot2 = 29,
+        /// <summary>
+        /// High power slot 4
+        /// </summary>
+        [XmlEnum("30")]
+        HiSlot3 = 30,
+        /// <summary>
+        /// High power slot 5
+        /// </summary>
+        [XmlEnum("31")]
+        HiSlot4 = 31,
+        /// <summary>
+        /// High power slot 6
+        /// </summary>
+        [XmlEnum("32")]
+        HiSlot5 = 32,
+        /// <summary>
+        /// High power slot 7
+        /// </summary>
+        [XmlEnum("33")]
+        HiSlot6 = 33,
+        /// <summary>
+        /// High power slot 8
+        /// </summary>
+        [XmlEnum("34")]
+        HiSlot7 = 34,
+        /// <summary>
+        /// Fixed slot
+        /// </summary>
+        [XmlEnum("35")]
+        FixedSlot = 35,
+        /// <summary>
+        /// Promenade slot 1
+        /// </summary>
+        [XmlEnum("40")]
+        PromenadeSlot1 = 40,
+        /// <summary>
+        /// Promenade slot 2
+        /// </summary>
+        [XmlEnum("41")]
+        PromenadeSlot2 = 41,
+        /// <summary>
+        /// Promenade slot 3
+        /// </summary>
+        [XmlEnum("42")]
+        PromenadeSlot3 = 42,
+        /// <summary>
+        /// Promenade slot 4
+        /// </summary>
+        [XmlEnum("43")]
+        PromenadeSlot4 = 43,
+        /// <summary>
+        /// Promenade slot 5
+        /// </summary>
+        [XmlEnum("44")]
+        PromenadeSlot5 = 44,
+        /// <summary>
+        /// Promenade slot 6
+        /// </summary>
+        [XmlEnum("45")]
+        PromenadeSlot6 = 45,
+        /// <summary>
+        /// Promenade slot 7
+        /// </summary>
+        [XmlEnum("46")]
+        PromenadeSlot7 = 46,
+        /// <summary>
+        /// Promenade slot 8
+        /// </summary>
+        [XmlEnum("47")]
+        PromenadeSlot8 = 47,
+        /// <summary>
+        /// Promenade slot 9
+        /// </summary>
+        [XmlEnum("48")]
+        PromenadeSlot9 = 48,
+        /// <summary>
+        /// Promenade slot 10
+        /// </summary>
+        [XmlEnum("49")]
+        PromenadeSlot10 = 49,
+        /// <summary>
+        /// Promenade slot 11
+        /// </summary>
+        [XmlEnum("50")]
+        PromenadeSlot11 = 50,
+        /// <summary>
+        /// Promenade slot 12
+        /// </summary>
+        [XmlEnum("51")]
+        PromenadeSlot12 = 51,
+        /// <summary>
+        /// Promenade slot 13
+        /// </summary>
+        [XmlEnum("52")]
+        PromenadeSlot13 = 52,
+        /// <summary>
+        /// Promenade slot 14
+        /// </summary>
+        [XmlEnum("53")]
+        PromenadeSlot14 = 53,
+        /// <summary>
+        /// Promenade slot 15
+        /// </summary>
+        [XmlEnum("54")]
+        PromenadeSlot15 = 54,
+        /// <summary>
+        /// Promenade slot 16
+        /// </summary>
+        [XmlEnum("55")]
+        PromenadeSlot16 = 55,
+        /// <summary>
+        /// Capsule
+        /// </summary>
+        [XmlEnum("56")]
+        Capsule = 56,
+        /// <summary>
+        /// Pilot
+        /// </summary>
+        [XmlEnum("57")]
+        Pilot = 57,
+        /// <summary>
+        /// Passenger
+        /// </summary>
+        [XmlEnum("58")]
+        Passenger = 58,
+        /// <summary>
+        /// Boarding Gate
+        /// </summary>
+        [XmlEnum("59")]
+        BoardingGate = 59,
+        /// <summary>
+        /// Crew
+        /// </summary>
+        [XmlEnum("60")]
+        Crew = 60,
+        /// <summary>
+        /// Skill In Training
+        /// </summary>
+        [XmlEnum("61")]
+        SkillInTraining = 61,
+        /// <summary>
+        /// Corporation Market Deliveries / Returns
+        /// </summary>
+        [XmlEnum("62")]
+        CorpMarket = 62,
+        /// <summary>
+        /// Locked item
+        /// </summary>
+        [XmlEnum("63")]
+        Locked = 63,
+        /// <summary>
+        /// Unlocked item
+        /// </summary>
+        [XmlEnum("64")]
+        Unlocked = 64,
+        /// <summary>
+        /// Office slot 1
+        /// </summary>
+        [XmlEnum("70")]
+        OfficeSlot1 = 70,
+        /// <summary>
+        /// Office slot 2
+        /// </summary>
+        [XmlEnum("71")]
+        OfficeSlot2 = 71,
+        /// <summary>
+        /// Office slot 3
+        /// </summary>
+        [XmlEnum("72")]
+        OfficeSlot3 = 72,
+        /// <summary>
+        /// Office slot 4
+        /// </summary>
+        [XmlEnum("73")]
+        OfficeSlot4 = 73,
+        /// <summary>
+        /// Office slot 5
+        /// </summary>
+        [XmlEnum("74")]
+        OfficeSlot5 = 74,
+        /// <summary>
+        /// Office slot 6
+        /// </summary>
+        [XmlEnum("75")]
+        OfficeSlot6 = 75,
+        /// <summary>
+        /// Office slot 7
+        /// </summary>
+        [XmlEnum("76")]
+        OfficeSlot7 = 76,
+        /// <summary>
+        /// Office slot 8
+        /// </summary>
+        [XmlEnum("77")]
+        OfficeSlot8 = 77,
+        /// <summary>
+        /// Office slot 9
+        /// </summary>
+        [XmlEnum("78")]
+        OfficeSlot9 = 78,
+        /// <summary>
+        /// Office slot 10
+        /// </summary>
+        [XmlEnum("79")]
+        OfficeSlot10 = 79,
+        /// <summary>
+        /// Office slot 11
+        /// </summary>
+        [XmlEnum("80")]
+        OfficeSlot11 = 80,
+        /// <summary>
+        /// Office slot 12
+        /// </summary>
+        [XmlEnum("81")]
+        OfficeSlot12 = 81,
+        /// <summary>
+        /// Office slot 13
+        /// </summary>
+        [XmlEnum("82")]
+        OfficeSlot13 = 82,
+        /// <summary>
+        /// Office slot 14
+        /// </summary>
+        [XmlEnum("83")]
+        OfficeSlot14 = 83,
+        /// <summary>
+        /// Office slot 15
+        /// </summary>
+        [XmlEnum("84")]
+        OfficeSlot15 = 84,
+        /// <summary>
+        /// Office slot 16
+        /// </summary>
+        [XmlEnum("85")]
+        OfficeSlot16 = 85,
+        /// <summary>
+        /// Bonus
+        /// </summary>
+        [XmlEnum("86")]
+        Bonus = 86,
+        /// <summary>
+        /// Drone Bay
+        /// </summary>
+        [XmlEnum("87")]
+        DroneBay = 87,
+        /// <summary>
+        /// Booster
+        /// </summary>
+        [XmlEnum("88")]
+        Booster = 88,
+        /// <summary>
+        /// Implant
+        /// </summary>
+        [XmlEnum("89")]
+        Implant = 89,
+        /// <summary>
+        /// Ship Hangar
+        /// </summary>
+        [XmlEnum("90")]
+        ShipHangar = 90,
+        /// <summary>
+        /// Low power slot 4
+        /// </summary>
+        [XmlEnum("91")]
+        ShipOffline = 91,
+        /// <summary>
+        /// Rig slot 1
+        /// </summary>
+        [XmlEnum("92")]
+        RigSlot0 = 92,
+        /// <summary>
+        /// Rig slot 2
+        /// </summary>
+        [XmlEnum("93")]
+        RigSlot1 = 93,
+        /// <summary>
+        /// Rig slot 3
+        /// </summary>
+        [XmlEnum("94")]
+        RigSlot2 = 94,
+        /// <summary>
+        /// Rig slot 4
+        /// </summary>
+        [XmlEnum("95")]
+        RigSlot3 = 95,
+        /// <summary>
+        /// Rig slot 5
+        /// </summary>
+        [XmlEnum("96")]
+        RigSlot4 = 96,
+        /// <summary>
+        /// Rig slot 6
+        /// </summary>
+        [XmlEnum("97")]
+        RigSlot5 = 97,
+        /// <summary>
+        /// Rig slot 7
+        /// </summary>
+        [XmlEnum("98")]
+        RigSlot6 = 98,
+        /// <summary>
+        /// Rig slot 8
+        /// </summary>
+        [XmlEnum("99")]
+        RigSlot7 = 99,
+        /// <summary>
+        /// Factory Background Operation
+        /// </summary>
+        [XmlEnum("100")]
+        FactoryOperation = 100,
+        /// <summary>
+        /// Corp Security Access Group 2
+        /// </summary>
+        [XmlEnum("116")]
+        CorpSAG2 = 116,
+        /// <summary>
+        /// Corp Security Access Group 3
+        /// </summary>
+        [XmlEnum("117")]
+        CorpSAG3 = 117,
+        /// <summary>
+        /// Corp Security Access Group 4
+        /// </summary>
+        [XmlEnum("118")]
+        CorpSAG4 = 118,
+        /// <summary>
+        /// Corp Security Access Group 5
+        /// </summary>
+        [XmlEnum("119")]
+        CorpSAG5 = 119,
+        /// <summary>
+        /// Corp Security Access Group 6
+        /// </summary>
+        [XmlEnum("120")]
+        CorpSAG6 = 120,
+        /// <summary>
+        /// Corp Security Access Group 7
+        /// </summary>
+        [XmlEnum("121")]
+        CorpSAG7 = 121,
+        /// <summary>
+        /// Secondary Storage
+        /// </summary>
+        [XmlEnum("122")]
+        SecondaryStorage = 122,
+        /// <summary>
+        /// Captains Quarters
+        /// </summary>
+        [XmlEnum("123")]
+        CaptainsQuarters = 123,
+        /// <summary>
+        /// Wis Promenade
+        /// </summary>
+        [XmlEnum("124")]
+        WisPromenade = 124,
+        /// <summary>
+        /// Sub System slot 1
+        /// </summary>
+        [XmlEnum("125")]
+        SubSystem0 = 125,
+        /// <summary>
+        /// Sub System slot 2
+        /// </summary>
+        [XmlEnum("126")]
+        SubSystem1 = 126,
+        /// <summary>
+        /// Sub System slot 3
+        /// </summary>
+        [XmlEnum("127")]
+        SubSystem2 = 127,
+        /// <summary>
+        /// Sub System slot 4
+        /// </summary>
+        [XmlEnum("128")]
+        SubSystem3 = 128,
+        /// <summary>
+        /// Sub System slot 5
+        /// </summary>
+        [XmlEnum("129")]
+        SubSystem4 = 129,
+        /// <summary>
+        /// Sub System slot 6
+        /// </summary>
+        [XmlEnum("130")]
+        SubSystem5 = 130,
+        /// <summary>
+        /// Sub System slot 7
+        /// </summary>
+        [XmlEnum("131")]
+        SubSystem6 = 131,
+        /// <summary>
+        /// Sub System slot 8
+        /// </summary>
+        [XmlEnum("132")]
+        SubSystem7 = 132,
+        /// <summary>
+        /// Specialized Fuel Bay
+        /// </summary>
+        [XmlEnum("133")]
+        SpecializedFuelBay = 133,
+        /// <summary>
+        /// Specialized Ore Hold
+        /// </summary>
+        [XmlEnum("134")]
+        SpecializedOreHold = 134,
+        /// <summary>
+        /// Specialized Gas Hold
+        /// </summary>
+        [XmlEnum("135")]
+        SpecializedGasHold = 135,
+        /// <summary>
+        /// Specialized Mineral Hold
+        /// </summary>
+        [XmlEnum("136")]
+        SpecializedMineralHold = 136,
+        /// <summary>
+        /// SpecializedSalvageHold
+        /// </summary>
+        [XmlEnum("137")]
+        SpecializedSalvageHold = 137,
+        /// <summary>
+        /// Specialized Ship Hold
+        /// </summary>
+        [XmlEnum("138")]
+        SpecializedShipHold = 138,
+        /// <summary>
+        /// Specialized Small Ship Hold
+        /// </summary>
+        [XmlEnum("139")]
+        SpecializedSmallShipHold = 139,
+        /// <summary>
+        /// Specialized Medium Ship Hold
+        /// </summary>
+        [XmlEnum("140")]
+        SpecializedMediumShipHold = 140,
+        /// <summary>
+        /// Specialized Large Ship Hold
+        /// </summary>
+        [XmlEnum("141")]
+        SpecializedLargeShipHold = 141,
+        /// <summary>
+        /// Specialized Industrial Ship Hold
+        /// </summary>
+        [XmlEnum("142")]
+        SpecializedIndustrialShipHold = 142,
+        /// <summary>
+        /// Specialized Ammo Hold
+        /// </summary>
+        [XmlEnum("143")]
+        SpecializedAmmoHold = 143,
+        /// <summary>
+        /// Structure Active
+        /// </summary>
+        [XmlEnum("144")]
+        StructureActive = 144,
+        /// <summary>
+        /// Structure Inactive
+        /// </summary>
+        [XmlEnum("145")]
+        StructureInactive = 145,
+        /// <summary>
+        /// This item was put into a junkyard through reprocession.
+        /// </summary>
+        [XmlEnum("146")]
+        JunkyardReprocessed = 146,
+        /// <summary>
+        /// This item was put into a junkyard through being trashed by its owner.
+        /// </summary>
+        [XmlEnum("147")]
+        JunkyardTrashed = 147,
+    }
+}

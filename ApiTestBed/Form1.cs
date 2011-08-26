@@ -88,7 +88,7 @@ namespace ApiTestBed
 
             tree.GrabDataFromApi(null);
 
-            MessageBox.Show("asdasd");
+            MessageBox.Show("Done");
         }
 
         private void btnAssets_Click(object sender, EventArgs e)
@@ -101,7 +101,7 @@ namespace ApiTestBed
 
             tree.GrabDataFromApi(null);
 
-            MessageBox.Show("asdasd");
+            MessageBox.Show("Done");
         }
 
         private void btnCharAccounts_Click(object sender, EventArgs e)
@@ -124,6 +124,28 @@ namespace ApiTestBed
             }
 
             MessageBox.Show(sb.ToString());
+        }
+
+        private void btnCertTree_Click(object sender, EventArgs e)
+        {
+            EveApi.Eve.CertificateTree tree = new EveApi.Eve.CertificateTree();
+
+            tree.GrabDataFromApi(null);
+
+            MessageBox.Show("Done");
+        }
+
+        private void btnCharSheet_Click(object sender, EventArgs e)
+        {
+            EveApi.Character.CharacterSheet sheet = new EveApi.Character.CharacterSheet();
+
+            sheet.ApiUserId = txtUserID.Text;
+            sheet.ApiKey = txtApiKey.Text;
+            sheet.CharacterID = int.Parse(txtCharID.Text);
+
+            sheet.GrabDataFromApi(null);
+
+            MessageBox.Show("Done");
         }
     }
 }

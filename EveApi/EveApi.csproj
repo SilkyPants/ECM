@@ -42,21 +42,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account\AccountStatus.cs" />
-    <Compile Include="Account\CharacterList.cs" />
-    <Compile Include="ApiBase.cs" />
-    <Compile Include="Character\AccountBalance.cs" />
-    <Compile Include="Character\AssetList.cs" />
-    <Compile Include="Character\CharacterApiBase.cs" />
-    <Compile Include="Helper.cs" />
-    <Compile Include="Eve\SkillTree.cs" />
+    <Compile Include="Enumerations.cs" />
     <Compile Include="ImageApi.cs" />
-    <Compile Include="ServerStatus.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Map\" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Rowset-transform.xslt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

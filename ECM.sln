@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECM", "ECM\ECM.csproj", "{F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveApi", "EveApi\EveApi.csproj", "{DB5B3681-9F42-4C22-8562-2D39465D7A10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTestBed", "ApiTestBed\ApiTestBed.csproj", "{8F1C7C5C-7775-4215-A954-E717E2727AE1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,16 +35,6 @@ Global
 		{DB5B3681-9F42-4C22-8562-2D39465D7A10}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DB5B3681-9F42-4C22-8562-2D39465D7A10}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DB5B3681-9F42-4C22-8562-2D39465D7A10}.Release|x86.ActiveCfg = Release|Any CPU
-		{8F1C7C5C-7775-4215-A954-E717E2727AE1}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{8F1C7C5C-7775-4215-A954-E717E2727AE1}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{8F1C7C5C-7775-4215-A954-E717E2727AE1}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{8F1C7C5C-7775-4215-A954-E717E2727AE1}.Debug|x86.ActiveCfg = Debug|x86
-		{8F1C7C5C-7775-4215-A954-E717E2727AE1}.Debug|x86.Build.0 = Debug|x86
-		{8F1C7C5C-7775-4215-A954-E717E2727AE1}.Release|Any CPU.ActiveCfg = Release|x86
-		{8F1C7C5C-7775-4215-A954-E717E2727AE1}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{8F1C7C5C-7775-4215-A954-E717E2727AE1}.Release|Mixed Platforms.Build.0 = Release|x86
-		{8F1C7C5C-7775-4215-A954-E717E2727AE1}.Release|x86.ActiveCfg = Release|x86
-		{8F1C7C5C-7775-4215-A954-E717E2727AE1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
