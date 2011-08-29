@@ -42,14 +42,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Requests\ApiRequest.cs" />
+    <Compile Include="Api\Requests\ApiResult.cs" />
+    <Compile Include="Api\Sheets\AssetList.cs" />
+    <Compile Include="Api\Requests\AuthorisedApiRequest.cs" />
+    <Compile Include="Attributes\SimpleAttributes.cs" />
+    <Compile Include="Api\Requests\CCPError.cs" />
+    <Compile Include="Api\Requests\CharacterApiRequest.cs" />
+    <Compile Include="Api\Sheets\CharacterList.cs" />
+    <Compile Include="Api\Requests\IApiRequest.cs" />
+    <Compile Include="Api\Requests\IApiResult.cs" />
+    <Compile Include="Api\Sheets\ServerStatus.cs" />
+    <Compile Include="TimeExtensions.cs" />
     <Compile Include="Enumerations.cs" />
-    <Compile Include="ImageApi.cs" />
+    <Compile Include="Api\ImageApi.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
