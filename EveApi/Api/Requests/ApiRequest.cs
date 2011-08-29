@@ -115,7 +115,7 @@ namespace EveApi
 
         private void QueryApi()
         {
-            Console.WriteLine("Updating from API");
+            Console.WriteLine("Updating from API for {0}", typeof(T).Name);
 
             PropertyInfo pi = typeof(T).GetProperty("ApiUri", typeof(string));
             string apiUri = pi.GetValue(null, null) as string;

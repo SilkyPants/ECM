@@ -10,8 +10,6 @@ namespace EveApi
     {
         public CharacterApiRequest(int characterID, string userID, string apiKey) : base (userID, apiKey)
         {
-            postItems.Add("userID", userID);
-            postItems.Add("apiKey", apiKey);
             postItems.Add("characterID", characterID.ToString());
         }
     }

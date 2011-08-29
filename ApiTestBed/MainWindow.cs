@@ -49,6 +49,25 @@ public partial class MainWindow: Gtk.Window
 		charList.Enabled = true;
 		
 		requests.Add(charList);
+		
+		CharacterApiRequest<CharacterSheet> charSheet = new CharacterApiRequest<CharacterSheet>(91145028, userID, apiKey);
+		charSheet.OnRequestUpdate += HandleCharSheetOnRequestUpdate;
+		charSheet.Enabled = true;
+		
+		requests.Add(charSheet);
+	}
+
+	void HandleCharSheetOnRequestUpdate (ApiResult<CharacterSheet> result)
+	{
+		if(result != null)
+		{
+			if(result.Error == null)
+				result.XmlDocument.Save("charSheet.xml");
+			else
+			{
+				requests[2].Enabled = false;
+			}
+		}
 	}
 
 	public void SetupTrees ()

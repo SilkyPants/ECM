@@ -7,6 +7,7 @@ namespace EveApi
 {
     public interface IApiRequest
     {
+		bool Enabled {get;set;}
         /// <summary>
         /// Gets the last time this instance was updated (UTC).
         /// </summary>

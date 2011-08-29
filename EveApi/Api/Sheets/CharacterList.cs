@@ -7,7 +7,7 @@ using EveApi.Attributes;
 
 namespace EveApi
 {
-    [NeedsApiKey]
+    [NeedsCharacterID]
     public class CharacterList
     {
         [XmlIgnore]
