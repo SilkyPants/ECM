@@ -16,6 +16,7 @@ using System.Collections.Specialized;
 namespace EveApi
 {
     public class ApiRequest<T> : IApiRequest
+        where T : class
     {
         private static XslCompiledTransform m_RowsetTransform;
         private DateTime m_LastUpdate = DateTime.MinValue;

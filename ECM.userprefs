@@ -1,0 +1,17 @@
+﻿<Properties GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="EveApi\Api\Sheets\CharacterList.cs">
+    <Files>
+      <File FileName="ApiTestBed\MainWindow.cs" Line="47" Column="79" />
+      <File FileName="i:\Programming\C#\ECM\EveApi\Api\Requests\ApiRequest.cs" Line="120" Column="27" />
+      <File FileName="EveApi\Api\Sheets\CharacterList.cs" Line="15" Column="3" />
+      <File FileName="EveApi\Api\Sheets\AccountStatus.cs" Line="1" Column="1" />
+      <File FileName="EveApi\Api\Sheets\AssetList.cs" Line="1" Column="1" />
+      <File FileName="EveApi\Api\Sheets\ServerStatus.cs" Line="11" Column="9" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

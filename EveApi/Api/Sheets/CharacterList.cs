@@ -11,7 +11,7 @@ namespace EveApi
     public class CharacterList
     {
         [XmlIgnore]
-        public static string ApiUri = "/account/Characters.xml.aspx";
+        public static string ApiUri { get { return "/account/Characters.xml.aspx"; } }
 
         [XmlArray("characters")]
         [XmlArrayItem("character")]

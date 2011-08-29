@@ -6,6 +6,7 @@ using System.Text;
 namespace EveApi
 {
     public class AuthorisedApiRequest<T> : ApiRequest<T>
+        where T : class
     {
         public AuthorisedApiRequest(string userID, string apiKey)
         {

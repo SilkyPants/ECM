@@ -6,6 +6,7 @@ using System.Text;
 namespace EveApi
 {
     public class CharacterApiRequest<T> : AuthorisedApiRequest<T>
+        where T : class
     {
         public CharacterApiRequest(int characterID, string userID, string apiKey) : base (userID, apiKey)
         {

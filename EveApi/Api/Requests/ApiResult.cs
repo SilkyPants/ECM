@@ -7,6 +7,12 @@ using System.Xml.Serialization;
 
 namespace EveApi
 {
+
+    public interface IApiSheet
+    {
+        string ApiUri { get; }
+    }
+
     [XmlRoot("eveapi")]
     public class ApiResult<T> : IApiResult
     {
