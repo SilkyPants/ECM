@@ -45,8 +45,14 @@ namespace EveApi
         [XmlElement("DoB")]
 		public string BirthdayXML
 		{
-			get;
-			set;
+            get { return Birthday.DateTimeToTimeString(); }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                    return;
+
+                Birthday = value.TimeStringToDateTime();
+            }
 		}
 		
         [XmlIgnore]

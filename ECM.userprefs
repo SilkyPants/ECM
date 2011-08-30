@@ -1,13 +1,16 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="EveApi\Api\Sheets\CharacterList.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="ApiTestBed\MainWindow.cs" Line="47" Column="79" />
-      <File FileName="i:\Programming\C#\ECM\EveApi\Api\Requests\ApiRequest.cs" Line="120" Column="27" />
-      <File FileName="EveApi\Api\Sheets\CharacterList.cs" Line="15" Column="3" />
-      <File FileName="EveApi\Api\Sheets\AccountStatus.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Api\Sheets\AssetList.cs" Line="1" Column="1" />
+      <File FileName="ApiTestBed\MainWindow.cs" Line="59" Column="2" />
+      <File FileName="i:\Programming\C#\ECM\EveApi\Api\Requests\ApiRequest.cs" Line="118" Column="1" />
+      <File FileName="EveApi\Api\Sheets\CharacterList.cs" Line="26" Column="38" />
+      <File FileName="EveApi\Api\Sheets\AccountStatus.cs" Line="4" Column="19" />
+      <File FileName="EveApi\Api\Sheets\AssetList.cs" Line="13" Column="6" />
       <File FileName="EveApi\Api\Sheets\ServerStatus.cs" Line="11" Column="9" />
+      <File FileName="EveApi\Api\Sheets\CharacterSheet.cs" Line="12" Column="82" />
+      <File FileName="EveApi\Api\Requests\IApiRequest.cs" Line="10" Column="26" />
+      <File FileName="EveApi\Api\Requests\CharacterApiRequest.cs" Line="12" Column="10" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -154,6 +154,7 @@ namespace EveApi
             }
 
             XmlDocument doc = new XmlDocument();
+			doc.PreserveWhitespace = true;
             doc.InnerXml = xmlResult;
 
             m_LastResult = DeserializeAPIResultCore<T>(RowsetTransform, doc);
@@ -181,9 +182,9 @@ namespace EveApi
             }
         }
 
-        private ApiResult<T> DeserializeAPIResultCore<T>(XslCompiledTransform transform, XmlDocument doc)
+        private ApiResult<U> DeserializeAPIResultCore<U>(XslCompiledTransform transform, XmlDocument doc)
         {
-            ApiResult<T> result;
+            ApiResult<U> result;
 
             try
             {
@@ -203,8 +204,8 @@ namespace EveApi
 
                                 // Deserialize from the given stream
                                 stream.Seek(0, SeekOrigin.Begin);
-                                XmlSerializer xs = new XmlSerializer(typeof(ApiResult<T>));
-                                result = (ApiResult<T>)xs.Deserialize(stream);
+                                XmlSerializer xs = new XmlSerializer(typeof(ApiResult<U>));
+                                result = (ApiResult<U>)xs.Deserialize(stream);
 
                             }
                         }
@@ -212,14 +213,15 @@ namespace EveApi
                     // Deserialization without transform
                     else
                     {
-                        XmlSerializer xs = new XmlSerializer(typeof(ApiResult<T>));
-                        result = (ApiResult<T>)xs.Deserialize(reader);
+                        XmlSerializer xs = new XmlSerializer(typeof(ApiResult<U>));
+                        result = (ApiResult<U>)xs.Deserialize(reader);
                     }
                 }
             }
             // An error occurred during the XSL transform
             catch (Exception exc)
             {
+				Console.WriteLine(exc.Message);
                 return null;
             }
             // An error occurred during the deserialization
