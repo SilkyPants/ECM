@@ -628,4 +628,92 @@ namespace EveApi
         [XmlEnum("147")]
         JunkyardTrashed = 147,
     }
+	
+	/// <summary>
+    /// Defines the different types of agents. This is to help cut out redundant information from the databases
+    /// </summary>
+	public enum AgentTypes
+	{
+		NonAgent = 1,
+		BasicAgent = 2,
+		TutorialAgent = 3,
+		ResearchAgent = 4,
+		CONCORDAgent = 5,
+		GenericStorylineMissionAgent = 6,
+		StorylineMissionAgent = 7,
+		EventMissionAgent = 8,
+		FactionalWarfareAgent = 9,
+		EpicArcAgent = 10,
+		AuraAgent = 11
+	}
+	
+	public enum AgentDivisions
+	{
+		Accounting = 1,
+		Administration,
+		Advisory,
+		Archives,
+		Astrosurveying,
+		Command,
+		Distribution,
+		Financial,
+		Intelligence,
+		Internal_Security,
+		Legal,
+		Manufacturing,
+		Marketing,
+		Mining,
+		Personnel,
+		Production,
+		Public_Relations,
+		RnD,
+		Security,
+		Storage,
+		Surveillance,
+		NewDistribution,
+		NewMining,
+		NewSecurity
+	}
+	
+	public enum CorpActivities
+	{
+		Agriculture = 1,
+		Construction = 2,
+		Mining = 3,
+		Chemical = 4,
+		Military = 5,
+		Biotech = 6,
+		HiTech = 7,
+		Entertainment = 8,
+		Shipyard = 9,
+		Warehouse = 10,
+		Retail = 11,
+		Trading = 12,
+		Bureaucratic = 13,
+		Political = 14,
+		Legal = 15,
+		Security = 16,
+		Financial = 17,
+		Education = 18,
+		Manufacture = 19,
+		Disputed = 20
+	}
+	
+	public enum ItemMetaGroups
+	{
+		Tech1 = 1,
+		Tech2 = 2,
+		Storyline = 3,
+		Faction = 4,
+		Officer = 5,
+		Deadspace = 6,
+		Frigates = 7,
+		EliteFrigates = 8,
+		CommanderFrigates = 9,
+		Destroyer = 10,
+		Cruiser = 11,
+		EliteCruiser = 12,
+		CommanderCruiser = 13,
+		Tech3 = 14
+	}
 }
