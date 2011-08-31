@@ -49,6 +49,10 @@
     </Reference>
     <Reference Include="System.Xml">
     </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.74.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Externals\System.Data.SQLite.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\Requests\ApiRequest.cs" />
@@ -63,6 +67,7 @@
     <Compile Include="Api\Requests\IApiRequest.cs" />
     <Compile Include="Api\Requests\IApiResult.cs" />
     <Compile Include="Api\Sheets\ServerStatus.cs" />
+    <Compile Include="Equations.cs" />
     <Compile Include="TimeExtensions.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="Api\ImageApi.cs" />

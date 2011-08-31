@@ -2,15 +2,18 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="ApiTestBed\MainWindow.cs" Line="59" Column="2" />
-      <File FileName="i:\Programming\C#\ECM\EveApi\Api\Requests\ApiRequest.cs" Line="118" Column="1" />
-      <File FileName="EveApi\Api\Sheets\CharacterList.cs" Line="26" Column="38" />
-      <File FileName="EveApi\Api\Sheets\AccountStatus.cs" Line="4" Column="19" />
+      <File FileName="ApiTestBed\MainWindow.cs" Line="68" Column="1" />
+      <File FileName="i:\Programming\C#\ECM\EveApi\Api\Requests\ApiRequest.cs" Line="200" Column="49" />
+      <File FileName="EveApi\Api\Sheets\CharacterList.cs" Line="12" Column="6" />
+      <File FileName="EveApi\Api\Sheets\AccountStatus.cs" Line="13" Column="6" />
       <File FileName="EveApi\Api\Sheets\AssetList.cs" Line="13" Column="6" />
       <File FileName="EveApi\Api\Sheets\ServerStatus.cs" Line="11" Column="9" />
-      <File FileName="EveApi\Api\Sheets\CharacterSheet.cs" Line="12" Column="82" />
+      <File FileName="EveApi\Api\Sheets\CharacterSheet.cs" Line="48" Column="34" />
       <File FileName="EveApi\Api\Requests\IApiRequest.cs" Line="10" Column="26" />
-      <File FileName="EveApi\Api\Requests\CharacterApiRequest.cs" Line="12" Column="10" />
+      <File FileName="EveApi\Api\Requests\CharacterApiRequest.cs" Line="1" Column="1" />
+      <File FileName="EveApi\Api\Sheets\SkillsInTraining.cs" Line="156" Column="16" />
+      <File FileName="EveApi\Api\Requests\ApiResult.cs" Line="40" Column="10" />
+      <File FileName="EveApi\Api\Sheets\MapKills.cs" Line="23" Column="8" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
