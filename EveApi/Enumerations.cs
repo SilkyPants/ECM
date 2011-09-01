@@ -1,5 +1,6 @@
 ﻿
 using System.Xml.Serialization;
+using System;
 namespace EveApi
 {
     /// <summary>
@@ -716,4 +717,83 @@ namespace EveApi
 		CommanderCruiser = 13,
 		Tech3 = 14
 	}
+
+    public enum ItemAttributeCategories
+    {
+        /// <summary>
+        /// Fitting capabilities of a ship
+        /// </summary>
+        Fitting = 1,
+        /// <summary>
+        /// Shield attributes of ships
+        /// </summary>
+		Shield = 2,
+        /// <summary>
+        /// Armor attributes of ships
+        /// </summary>
+		Armor = 3,
+        /// <summary>
+        /// Structure attributes of ships
+        /// </summary>
+		Structure = 4,
+        /// <summary>
+        /// Capacitor attributes for ships
+        /// </summary>
+		Capacitor = 5,
+        /// <summary>
+        /// Targeting Attributes for ships
+        /// </summary>
+		Targeting = 6,
+        /// <summary>
+        /// Misc. attributes
+        /// </summary>
+		Miscellaneous = 7,
+        /// <summary>
+        /// Skill requirements
+        /// </summary>
+		RequiredSkills = 8,
+        /// <summary>
+        /// Attributes already checked and not going into a category
+        /// </summary>
+		Other = 9,
+        /// <summary>
+        /// All you need to know about drones
+        /// </summary>
+		Drones = 10,
+        /// <summary>
+        /// Attribs for the AI configuration
+        /// </summary>
+		AI = 12
+    }
+
+    [Flags]
+    public enum StationServices
+    {
+        BountyMissions = 1 << 0,
+		AssassinationMissions = 1 << 1,
+		CourierMissions = 1 << 2,
+		Interbus = 1 << 3,
+		ReprocessingPlant = 1 << 4,
+		Refinery = 1 << 5,
+		Market = 1 << 6,
+		BlackMarket = 1 << 7,
+		StockExchange = 1 << 8,
+		Cloning = 1 << 9,
+		Surgery = 1 << 10,
+		DNATherapy = 1 << 11,
+		RepairFacilities = 1 << 12,
+		Factory = 1 << 13,
+		Laboratory = 1 << 14,
+		Gambling = 1 << 15,
+		Fitting = 1 << 16,
+		Paintshop = 1 << 17,
+		News = 1 << 18,
+		Storage = 1 << 19,
+		Insurance = 1 << 20,
+		Docking = 1 << 21,
+		OfficeRental = 1 << 22,
+		JumpCloneFacility = 1 << 23,
+		LoyaltyPointStore = 1 << 24,
+        NavyOffices = 1 << 25,
+    }
 }
