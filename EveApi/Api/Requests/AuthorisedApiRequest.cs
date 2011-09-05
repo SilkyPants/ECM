@@ -8,10 +8,10 @@ namespace EveApi
     public class AuthorisedApiRequest<T> : ApiRequest<T>
         where T : class
     {
-        public AuthorisedApiRequest(string userID, string apiKey)
+        public AuthorisedApiRequest(string keyID, string vCode)
         {
-            postItems.Add("userID", userID);
-            postItems.Add("apiKey", apiKey);
+            postItems.Add("keyID", keyID);
+            postItems.Add("vCode", vCode);
         }
     }
 }

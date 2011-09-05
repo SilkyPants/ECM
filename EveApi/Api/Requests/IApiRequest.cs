@@ -28,11 +28,6 @@ namespace EveApi
         /// </summary>
         IApiResult LastResult { get; }
 
-        /// <summary>
-        /// Gets true whether a full key is needed.
-        /// </summary>
-        bool IsFullKeyNeeded { get; }
-
         void UpdateOnSecTick();
     }
 }

@@ -63,11 +63,6 @@ namespace EveApi
             get { return m_LastResult; }
         }
 
-        public bool IsFullKeyNeeded
-        {
-            get { return typeof(T).GetCustomAttributes(typeof(NeedsFullKeyAttribute), true).Length > 0; }
-        }
-
         public static XslCompiledTransform RowsetTransform
         {
             // Neat way to check for null and assign if needed \o/

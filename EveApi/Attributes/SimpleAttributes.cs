@@ -6,8 +6,14 @@ using System.Text;
 namespace EveApi.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class NeedsFullKeyAttribute : Attribute
+    public class KeyNeedsMaskAttribute : Attribute
     {
+        public ApiKeyMask RequiredMask { get; set; }
+
+        public KeyNeedsMaskAttribute(ApiKeyMask requiredMask)
+        {
+            RequiredMask = requiredMask;
+        }
     }
 
     [AttributeUsage(AttributeTargets.Class)]

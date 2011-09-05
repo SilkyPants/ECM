@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 namespace EveApi
 {
     [NeedsApiKey]
-    [NeedsFullKey]
+    [KeyNeedsMask(ApiKeyMask.AccountStatus)]
     public class AccountStatus
     {
         [XmlIgnore]

@@ -144,7 +144,7 @@ namespace EveApi
         /// <param name="charID">The Item's type ID</param>
         /// <param name="size">The Size of the image wanted</param>
         /// <returns>null on error, or the requested Image</returns>
-        public static Bitmap GetItemImage(int typeID, ImageRequestSize size)
+        public static Bitmap GetItemImage(long typeID, ImageRequestSize size)
         {
             string url = m_ImageApiUrl + "/InventoryType/" + typeID.ToString();
 
@@ -175,7 +175,7 @@ namespace EveApi
         /// <param name="typeID">Type ID of the item</param>
         /// <param name="size">Requested size of the image</param>
         /// <returns>null on error, or the requested Image</returns>
-        public static Bitmap GetItemRender(int typeID, ImageRequestSize size)
+        public static Bitmap GetItemRender(long typeID, ImageRequestSize size)
         {
             string url = m_ImageApiUrl + "/Render/" + typeID.ToString();
 

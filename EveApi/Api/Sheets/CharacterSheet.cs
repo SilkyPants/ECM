@@ -6,6 +6,7 @@ using EveApi.Attributes;
 namespace EveApi
 {
     [NeedsApiKey]
+    [KeyNeedsMask(ApiKeyMask.CharacterSheet)]
 	public class CharacterSheet
 	{
         [XmlIgnore]

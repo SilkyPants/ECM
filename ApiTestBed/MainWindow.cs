@@ -45,8 +45,8 @@ public partial class MainWindow: Gtk.Window
 		accStatus.Enabled = true;
 		
 		requests.Add(accStatus);
-		
-		AuthorisedApiRequest<CharacterList> charList = new AuthorisedApiRequest<CharacterList>(userID, apiKey);
+
+        AuthorisedApiRequest<ApiKeyInfo> charList = new AuthorisedApiRequest<ApiKeyInfo>(userID, apiKey);
 		charList.OnRequestUpdate += HandleCharListOnRequestUpdate;
 		charList.Enabled = true;
 		
@@ -99,9 +99,23 @@ public partial class MainWindow: Gtk.Window
 		CharacterApiRequest<SkillInTraining> charTraining = new CharacterApiRequest<SkillInTraining>(charID, userID, apiKey);
 		charTraining.OnRequestUpdate += HandleCharTrainingOnRequestUpdate;
 		charTraining.Enabled = true;
-		
-		requests.Add(charTraining);
+
+        requests.Add(charTraining);
+
+        CharacterApiRequest<AssetList> asset = new CharacterApiRequest<AssetList>(charID, userID, apiKey);
+        asset.OnRequestUpdate += new ApiRequest<AssetList>.RequestUpdated(asset_OnRequestUpdate);
+        asset.Enabled = true;
+
+        requests.Add(asset);
 	}
+
+    void asset_OnRequestUpdate(ApiResult<AssetList> result)
+    {
+        if (result != null && result.Error == null)
+        {
+            Console.WriteLine(result.XmlDocument.InnerXml);
+        }
+    }
 
 	void HandleCharTrainingOnRequestUpdate (ApiResult<SkillInTraining> result)
 	{
@@ -234,15 +248,13 @@ public partial class MainWindow: Gtk.Window
 		trvMapKills.Model = mapKills;
 	}
 
-	void HandleCharListOnRequestUpdate (ApiResult<CharacterList> result)
+    void HandleCharListOnRequestUpdate(ApiResult<ApiKeyInfo> result)
 	{
 		if (result != null && result.Error == null)
         {
 			accCharacters.Clear();
 			
-			CharacterList list = result.Result;
-			
-			foreach(CharacterListItem character in list.Characters)
+            foreach (CharacterListItem character in result.Result.Characters)
 				accCharacters.AppendValues(character.CharacterID.ToString(), character.Name, character.CorporationName);
 		}
 	}

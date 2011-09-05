@@ -7,8 +7,8 @@ using EveApi.Attributes;
 
 namespace EveApi
 {
-    [NeedsFullKey]
     [NeedsCharacterID]
+    [KeyNeedsMask(ApiKeyMask.AssetList)]
     public class AssetList
     {
         [XmlIgnore]
@@ -46,5 +46,12 @@ namespace EveApi
 
         [XmlAttribute("singleton")]
         public int Singleton { get; set; }
+		
+		///
+		///Items in the AssetList and ContractItems will now include a rawQuantity attribute if the quantity in the database is negative. 
+		///Negative quantities are in fact codes: -1 is a singleton item and -2 is a blueprint copy.
+		///
+        [XmlAttribute("rawQuantity")]
+        public int rawQuantity { get; set; }
     }
 }

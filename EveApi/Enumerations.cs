@@ -629,94 +629,94 @@ namespace EveApi
         [XmlEnum("147")]
         JunkyardTrashed = 147,
     }
-	
-	/// <summary>
+    
+    /// <summary>
     /// Defines the different types of agents. This is to help cut out redundant information from the databases
     /// </summary>
-	public enum AgentTypes
-	{
-		NonAgent = 1,
-		BasicAgent = 2,
-		TutorialAgent = 3,
-		ResearchAgent = 4,
-		CONCORDAgent = 5,
-		GenericStorylineMissionAgent = 6,
-		StorylineMissionAgent = 7,
-		EventMissionAgent = 8,
-		FactionalWarfareAgent = 9,
-		EpicArcAgent = 10,
-		AuraAgent = 11
-	}
-	
-	public enum AgentDivisions
-	{
-		Accounting = 1,
-		Administration,
-		Advisory,
-		Archives,
-		Astrosurveying,
-		Command,
-		Distribution,
-		Financial,
-		Intelligence,
-		Internal_Security,
-		Legal,
-		Manufacturing,
-		Marketing,
-		Mining,
-		Personnel,
-		Production,
-		Public_Relations,
-		RnD,
-		Security,
-		Storage,
-		Surveillance,
-		NewDistribution,
-		NewMining,
-		NewSecurity
-	}
-	
-	public enum CorpActivities
-	{
-		Agriculture = 1,
-		Construction = 2,
-		Mining = 3,
-		Chemical = 4,
-		Military = 5,
-		Biotech = 6,
-		HiTech = 7,
-		Entertainment = 8,
-		Shipyard = 9,
-		Warehouse = 10,
-		Retail = 11,
-		Trading = 12,
-		Bureaucratic = 13,
-		Political = 14,
-		Legal = 15,
-		Security = 16,
-		Financial = 17,
-		Education = 18,
-		Manufacture = 19,
-		Disputed = 20
-	}
-	
-	public enum ItemMetaGroups
-	{
-		Tech1 = 1,
-		Tech2 = 2,
-		Storyline = 3,
-		Faction = 4,
-		Officer = 5,
-		Deadspace = 6,
-		Frigates = 7,
-		EliteFrigates = 8,
-		CommanderFrigates = 9,
-		Destroyer = 10,
-		Cruiser = 11,
-		EliteCruiser = 12,
-		CommanderCruiser = 13,
-		Tech3 = 14
-	}
+    public enum AgentTypes
+    {
+        NonAgent = 1,
+        BasicAgent = 2,
+        TutorialAgent = 3,
+        ResearchAgent = 4,
+        CONCORDAgent = 5,
+        GenericStorylineMissionAgent = 6,
+        StorylineMissionAgent = 7,
+        EventMissionAgent = 8,
+        FactionalWarfareAgent = 9,
+        EpicArcAgent = 10,
+        AuraAgent = 11
+    }
+    
+    public enum AgentDivisions
+    {
+        Accounting = 1,
+        Administration,
+        Advisory,
+        Archives,
+        Astrosurveying,
+        Command,
+        Distribution,
+        Financial,
+        Intelligence,
+        Internal_Security,
+        Legal,
+        Manufacturing,
+        Marketing,
+        Mining,
+        Personnel,
+        Production,
+        Public_Relations,
+        RnD,
+        Security,
+        Storage,
+        Surveillance,
+        NewDistribution,
+        NewMining,
+        NewSecurity
+    }
+    
+    public enum CorpActivities
+    {
+        Agriculture = 1,
+        Construction = 2,
+        Mining = 3,
+        Chemical = 4,
+        Military = 5,
+        Biotech = 6,
+        HiTech = 7,
+        Entertainment = 8,
+        Shipyard = 9,
+        Warehouse = 10,
+        Retail = 11,
+        Trading = 12,
+        Bureaucratic = 13,
+        Political = 14,
+        Legal = 15,
+        Security = 16,
+        Financial = 17,
+        Education = 18,
+        Manufacture = 19,
+        Disputed = 20
+    }
+    
+    public enum ItemMetaGroups
+    {
+        Tech1 = 1,
+        Tech2 = 2,
+        Storyline = 3,
+        Faction = 4,
+        Officer = 5,
+        Deadspace = 6,
+        Frigates = 7,
+        EliteFrigates = 8,
+        CommanderFrigates = 9,
+        Destroyer = 10,
+        Cruiser = 11,
+        EliteCruiser = 12,
+        CommanderCruiser = 13,
+        Tech3 = 14
+    }
 
     public enum ItemAttributeCategories
     {
@@ -727,73 +727,113 @@ namespace EveApi
         /// <summary>
         /// Shield attributes of ships
         /// </summary>
-		Shield = 2,
+        Shield = 2,
         /// <summary>
         /// Armor attributes of ships
         /// </summary>
-		Armor = 3,
+        Armor = 3,
         /// <summary>
         /// Structure attributes of ships
         /// </summary>
-		Structure = 4,
+        Structure = 4,
         /// <summary>
         /// Capacitor attributes for ships
         /// </summary>
-		Capacitor = 5,
+        Capacitor = 5,
         /// <summary>
         /// Targeting Attributes for ships
         /// </summary>
-		Targeting = 6,
+        Targeting = 6,
         /// <summary>
         /// Misc. attributes
         /// </summary>
-		Miscellaneous = 7,
+        Miscellaneous = 7,
         /// <summary>
         /// Skill requirements
         /// </summary>
-		RequiredSkills = 8,
+        RequiredSkills = 8,
         /// <summary>
         /// Attributes already checked and not going into a category
         /// </summary>
-		Other = 9,
+        Other = 9,
         /// <summary>
         /// All you need to know about drones
         /// </summary>
-		Drones = 10,
+        Drones = 10,
         /// <summary>
         /// Attribs for the AI configuration
         /// </summary>
-		AI = 12
+        AI = 12
     }
 
     [Flags]
     public enum StationServices
     {
         BountyMissions = 1 << 0,
-		AssassinationMissions = 1 << 1,
-		CourierMissions = 1 << 2,
-		Interbus = 1 << 3,
-		ReprocessingPlant = 1 << 4,
-		Refinery = 1 << 5,
-		Market = 1 << 6,
-		BlackMarket = 1 << 7,
-		StockExchange = 1 << 8,
-		Cloning = 1 << 9,
-		Surgery = 1 << 10,
-		DNATherapy = 1 << 11,
-		RepairFacilities = 1 << 12,
-		Factory = 1 << 13,
-		Laboratory = 1 << 14,
-		Gambling = 1 << 15,
-		Fitting = 1 << 16,
-		Paintshop = 1 << 17,
-		News = 1 << 18,
-		Storage = 1 << 19,
-		Insurance = 1 << 20,
-		Docking = 1 << 21,
-		OfficeRental = 1 << 22,
-		JumpCloneFacility = 1 << 23,
-		LoyaltyPointStore = 1 << 24,
+        AssassinationMissions = 1 << 1,
+        CourierMissions = 1 << 2,
+        Interbus = 1 << 3,
+        ReprocessingPlant = 1 << 4,
+        Refinery = 1 << 5,
+        Market = 1 << 6,
+        BlackMarket = 1 << 7,
+        StockExchange = 1 << 8,
+        Cloning = 1 << 9,
+        Surgery = 1 << 10,
+        DNATherapy = 1 << 11,
+        RepairFacilities = 1 << 12,
+        Factory = 1 << 13,
+        Laboratory = 1 << 14,
+        Gambling = 1 << 15,
+        Fitting = 1 << 16,
+        Paintshop = 1 << 17,
+        News = 1 << 18,
+        Storage = 1 << 19,
+        Insurance = 1 << 20,
+        Docking = 1 << 21,
+        OfficeRental = 1 << 22,
+        JumpCloneFacility = 1 << 23,
+        LoyaltyPointStore = 1 << 24,
         NavyOffices = 1 << 25,
+    }
+    
+
+    [Flags]
+    public enum ApiKeyMask
+    {
+        AccountBalance          = 1 << 0,
+        AssetList               = 1 << 1,
+        CalendarEventAttendees  = 1 << 2,
+        CharacterSheet          = 1 << 3,
+        ContactList             = 1 << 4,
+        ContactNotifications    = 1 << 5,
+        FacWarStats             = 1 << 6,
+        IndustryJobs            = 1 << 7,
+        KillLog                 = 1 << 8,
+        MailBodies              = 1 << 9,
+        MailingLists            = 1 << 10,
+        MailMessages            = 1 << 11,
+        MarketOrders            = 1 << 12,
+        Medals                  = 1 << 13,
+        Notifications           = 1 << 14,
+        NotificationTexts       = 1 << 15,
+        Research                = 1 << 16,
+        SkillInTraining         = 1 << 17,
+        SkillQueue              = 1 << 18,
+        Standings               = 1 << 19,
+        UpcomingCalendarEvents  = 1 << 20,
+        WalletJournal           = 1 << 21,
+        WalletTransactions      = 1 << 22,
+        CharacterInfoPublic     = 1 << 23,
+        CharacterInfoPrivate    = 1 << 24,
+        AccountStatus           = 1 << 25,
+        Contracts               = 1 << 26,
+    }
+
+    public enum ApiKeyType
+    {
+        Account,
+        Character,
+        Corporation
     }
 }

@@ -25,7 +25,7 @@
             <child>
               <widget class="Gtk.Label" id="label6">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">User ID:</property>
+                <property name="LabelProp" translatable="yes">Key ID:</property>
               </widget>
               <packing>
                 <property name="Position">0</property>
@@ -38,7 +38,7 @@
               <widget class="Gtk.Entry" id="txtUserID">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Text" translatable="yes">1320669</property>
+                <property name="Text" translatable="yes">1512</property>
                 <property name="IsEditable">True</property>
                 <property name="InvisibleChar">●</property>
               </widget>
@@ -50,7 +50,7 @@
             <child>
               <widget class="Gtk.Label" id="label7">
                 <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">API Key:</property>
+                <property name="LabelProp" translatable="yes">VCode:</property>
               </widget>
               <packing>
                 <property name="Position">2</property>
@@ -63,7 +63,7 @@
               <widget class="Gtk.Entry" id="txtApiKey">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Text" translatable="yes">7D716o9mZ57EHrLt3hX0AaTMAIOw9XJ7DVzyzBufk1rbxEXsq9l5y3TUP6v5zuzg</property>
+                <property name="Text" translatable="yes">lE8EhrpxATliHxof1oiTOORFtty8jVqBdjkkFvscIYgD9mLHxK1m5z4ZvfsG0qyG</property>
                 <property name="IsEditable">True</property>
                 <property name="InvisibleChar">●</property>
               </widget>

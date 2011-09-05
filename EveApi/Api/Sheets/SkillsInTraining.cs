@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 namespace EveApi
 {
-	[NeedsCharacterID]
+    [NeedsCharacterID]
+    [KeyNeedsMask(ApiKeyMask.SkillInTraining)]
 	public class SkillInTraining
 	{
         [XmlIgnore]
