@@ -1,27 +1,16 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="EveApi\Api\Sheets\AssetList.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="EveApi\Api\Sheets\CharacterInfo.cs">
     <Files>
-      <File FileName="EveApi\Api\Sheets\AccountStatus.cs" Line="13" Column="6" />
-      <File FileName="ApiTestBed\MainWindow.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Api\Sheets\ApiKeyInfo.cs" Line="1" Column="1" />
-      <File FileName="i:\Programming\C#\ECM\EveApi\Api\Requests\ApiRequest.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Api\Sheets\AssetList.cs" Line="52" Column="95" />
-      <File FileName="EveApi\Api\Sheets\ServerStatus.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Api\Sheets\CharacterSheet.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Api\Requests\IApiRequest.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Api\Requests\CharacterApiRequest.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Api\Sheets\SkillsInTraining.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Api\Requests\ApiResult.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Api\Sheets\MapKills.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Equations.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Properties\Resources.resx" Line="1" Column="1" />
-      <File FileName="EveApi\Properties\Resources.Designer.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Enumerations.cs" Line="830" Column="23" />
+      <File FileName="i:\ECM\ApiTestBed\MainWindow.cs" Line="304" Column="28" />
+      <File FileName="EveApi\Api\Sheets\CharacterInfo.cs" Line="7" Column="37" />
+      <File FileName="EveApi\Resources\Rowset-transform.xslt" Line="35" Column="68" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="I:\ECM\ApiTestBed\MainWindow.cs" line="304" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

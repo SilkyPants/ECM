@@ -5,10 +5,11 @@ using System.Text;
 using System.Net;
 using System.Drawing;
 using System.IO;
+using Gdk;
 
 namespace EveApi
 {
-    public class ImageApi
+    public static class ImageApi
     {
         static string m_ImageApiUrl = "http://image.eveonline.com/";
         public enum ImageRequestSize
@@ -22,14 +23,70 @@ namespace EveApi
             Size512x512,
             Size1024x1024,
         }
+		
+		#region .Net Image Helpers
+        public static Bitmap GetCharacterPortraitNET(int charID, ImageRequestSize size)
+		{
+			return new Bitmap(GetCharacterPortrait(charID, size));
+		}
+		
+        public static Bitmap GetCorporationLogoNET(int corpID, ImageRequestSize size)
+		{
+			return new Bitmap(GetCorporationLogo(corpID, size));
+		}
+			
+        public static Bitmap GetAllianceLogoNET(int allianceID, ImageRequestSize size)
+		{
+			return new Bitmap(GetAllianceLogo(allianceID, size));
+		}
+		
+        public static Bitmap GetItemImageNET(long typeID, ImageRequestSize size)
+		{
+			return new Bitmap(GetItemImage(typeID, size));
+		}
+		
+        public static Bitmap GetItemRenderNET(long typeID, ImageRequestSize size)
+		{
+			return new Bitmap(GetItemRender(typeID, size));
+		}
+		#endregion
+		
+		#region Gtk# Image Helpers
+        public static Pixbuf GetCharacterPortraitGTK(int charID, ImageRequestSize size)
+		{
+			return new Pixbuf(GetCharacterPortrait(charID, size));
+		}
+		
+        public static Pixbuf GetCorporationLogoGTK(int corpID, ImageRequestSize size)
+		{
+			return new Pixbuf(GetCorporationLogo(corpID, size));
+		}
+			
+        public static Pixbuf GetAllianceLogoGTK(int allianceID, ImageRequestSize size)
+		{
+			return new Pixbuf(GetAllianceLogo(allianceID, size));
+		}
+		
+        public static Pixbuf GetItemImageGTK(long typeID, ImageRequestSize size)
+		{
+			return new Pixbuf(GetItemImage(typeID, size));
+		}
+		
+        public static Pixbuf GetItemRenderGTK(long typeID, ImageRequestSize size)
+		{
+			return new Pixbuf(GetItemRender(typeID, size));
+		}
+		#endregion
+			
+			
 
         /// <summary>
         /// Returns the character portrait for the given ID, at the requested size
         /// </summary>
         /// <param name="charID">The Character's ID</param>
         /// <param name="size">The Size of the image wanted</param>
-        /// <returns>null on error, or the requested Image</returns>
-        public static Bitmap GetCharacterPortrait(int charID, ImageRequestSize size)
+        /// <returns>null on error, or the requested Image MemoryStream</returns>
+        public static MemoryStream GetCharacterPortrait(int charID, ImageRequestSize size)
         {
             string url = m_ImageApiUrl + "/Character/" + charID.ToString();
 
@@ -71,8 +128,8 @@ namespace EveApi
         /// </summary>
         /// <param name="charID">The Corporation ID</param>
         /// <param name="size">The Size of the image wanted</param>
-        /// <returns>null on error, or the requested Image</returns>
-        public static Bitmap GetCorporationLogo(int corpID, ImageRequestSize size)
+        /// <returns>null on error, or the requested Image MemoryStream</returns>
+        public static MemoryStream GetCorporationLogo(int corpID, ImageRequestSize size)
         {
             string url = m_ImageApiUrl + "/Corporation/" + corpID.ToString();
 
@@ -108,8 +165,8 @@ namespace EveApi
         /// </summary>
         /// <param name="charID">The Alliance ID</param>
         /// <param name="size">The Size of the image wanted</param>
-        /// <returns>null on error, or the requested Image</returns>
-        public static Bitmap GetAllianceLogo(int allianceID, ImageRequestSize size)
+        /// <returns>null on error, or the requested Image MemoryStream</returns>
+        public static MemoryStream GetAllianceLogo(int allianceID, ImageRequestSize size)
         {
             string url = m_ImageApiUrl + "/Alliance/" + allianceID.ToString();
 
@@ -143,8 +200,8 @@ namespace EveApi
         /// </summary>
         /// <param name="charID">The Item's type ID</param>
         /// <param name="size">The Size of the image wanted</param>
-        /// <returns>null on error, or the requested Image</returns>
-        public static Bitmap GetItemImage(long typeID, ImageRequestSize size)
+        /// <returns>null on error, or the requested Image MemoryStream</returns>
+        public static MemoryStream GetItemImage(long typeID, ImageRequestSize size)
         {
             string url = m_ImageApiUrl + "/InventoryType/" + typeID.ToString();
 
@@ -174,8 +231,8 @@ namespace EveApi
         /// </summary>
         /// <param name="typeID">Type ID of the item</param>
         /// <param name="size">Requested size of the image</param>
-        /// <returns>null on error, or the requested Image</returns>
-        public static Bitmap GetItemRender(long typeID, ImageRequestSize size)
+        /// <returns>null on error, or the requested Image MemoryStream</returns>
+        public static MemoryStream GetItemRender(long typeID, ImageRequestSize size)
         {
             string url = m_ImageApiUrl + "/Render/" + typeID.ToString();
 
@@ -211,11 +268,11 @@ namespace EveApi
         /// </summary>
         /// <param name="url">URL where the image lies</param>
         /// <returns>The image, or null if not found.</returns>
-        static public Bitmap GetImage(string url)
+        static public MemoryStream GetImage(string url)
         {
             WebClient webClient = new WebClient();
             WebProxy myProxy = new WebProxy();
-            Bitmap newImage = null;
+            MemoryStream imgStream = null;
             
             // TODO: Download Form Interface
             //NeoComm.Forms.DownloadDialog downloadInfoForm = new NeoComm.Forms.DownloadDialog();
@@ -240,8 +297,7 @@ namespace EveApi
 
             try
             {
-                MemoryStream imgStream = new MemoryStream(webClient.DownloadData(url));
-                newImage = new System.Drawing.Bitmap(imgStream);
+                imgStream = new MemoryStream(webClient.DownloadData(url));
 
 
             }
@@ -252,7 +308,7 @@ namespace EveApi
             }
 
             //downloadInfoForm.Close();
-            return newImage;
+            return imgStream;
         }
     }
 }

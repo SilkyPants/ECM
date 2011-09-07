@@ -45,7 +45,7 @@ namespace ECM
             this.Size = new System.Drawing.Size(newSize + 16, newSize + 38);
 
 
-            pictureBox1.Image = EveApi.ImageApi.GetItemRender(m_TypeID, size);
+            pictureBox1.Image = EveApi.ImageApi.GetItemRenderNET(m_TypeID, size);
         }
     }
 }

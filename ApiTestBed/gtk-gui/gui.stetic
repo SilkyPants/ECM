@@ -101,7 +101,7 @@
           <widget class="Gtk.Notebook" id="notebook1">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">2</property>
+            <property name="CurrentPage">0</property>
             <property name="BorderWidth">3</property>
             <child>
               <widget class="Gtk.VBox" id="vbox1">
@@ -215,6 +215,7 @@
                             <property name="MemberName" />
                             <property name="HeightRequest">100</property>
                             <property name="CanFocus">True</property>
+                            <signal name="RowActivated" handler="ShowCharacterInfo" />
                           </widget>
                         </child>
                       </widget>

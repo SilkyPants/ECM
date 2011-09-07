@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTestBed", "ApiTestBed\Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMDatabaseCreator", "ECMDatabaseCreator\ECMDatabaseCreator.csproj", "{68451FB3-D015-4C95-BBDB-D525288AFAC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMGTK", "ECMGTK\ECMGTK.csproj", "{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,18 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}.Debug|x86.Build.0 = Debug|Any CPU
+		{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}.Release|x86.ActiveCfg = Release|Any CPU
+		{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}.Release|x86.Build.0 = Release|Any CPU
 		{68451FB3-D015-4C95-BBDB-D525288AFAC8}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{68451FB3-D015-4C95-BBDB-D525288AFAC8}.Debug|Any CPU.Build.0 = Debug|x86
 		{68451FB3-D015-4C95-BBDB-D525288AFAC8}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
@@ -67,7 +81,7 @@ Global
 		{FE02DB12-7DC7-4008-BAB8-3FB9BA7C9174}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ApiTestBed\ApiTestBed.csproj
+		StartupItem = ECMGTK\ECMGTK.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

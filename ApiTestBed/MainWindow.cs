@@ -44,7 +44,7 @@ public partial class MainWindow: Gtk.Window
 		accStatus.OnRequestUpdate += HandleAccStatusOnRequestUpdate;
 		accStatus.Enabled = true;
 		
-		requests.Add(accStatus);
+		//requests.Add(accStatus);
 
         AuthorisedApiRequest<ApiKeyInfo> charList = new AuthorisedApiRequest<ApiKeyInfo>(userID, apiKey);
 		charList.OnRequestUpdate += HandleCharListOnRequestUpdate;
@@ -56,13 +56,13 @@ public partial class MainWindow: Gtk.Window
 		serverStatus.OnRequestUpdate += HandleServerStatusOnRequestUpdate;
 		serverStatus.Enabled = true;
 		
-		requests.Add(serverStatus);
+		//requests.Add(serverStatus);
 				
 		ApiRequest<MapKills> mapKills = new ApiRequest<MapKills>();
 		mapKills.OnRequestUpdate += HandleMapKillsOnRequestUpdate;
 		mapKills.Enabled = true;
 		
-		requests.Add(mapKills);
+		//requests.Add(mapKills);
 	}
 
 	void HandleMapKillsOnRequestUpdate (ApiResult<MapKills> result)
@@ -254,7 +254,7 @@ public partial class MainWindow: Gtk.Window
         {
 			accCharacters.Clear();
 			
-            foreach (CharacterListItem character in result.Result.Characters)
+            foreach (CharacterListItem character in result.Result.Key.Characters)
 				accCharacters.AppendValues(character.CharacterID.ToString(), character.Name, character.CorporationName);
 		}
 	}
@@ -279,5 +279,29 @@ public partial class MainWindow: Gtk.Window
 	protected void UpdateCharacter (object sender, System.EventArgs e)
 	{
 		CreateCharacterRequests();
+	}
+
+	protected void ShowCharacterInfo (object o, Gtk.RowActivatedArgs args)
+	{
+		string userID = txtUserID.Text;
+		string apiKey = txtApiKey.Text;
+		
+		TreeIter iter;
+		accCharacters.GetIter(out iter, args.Path);
+		
+		string id = accCharacters.GetValue(iter, 0).ToString();
+		
+		CharacterApiRequest<CharacterInfo> charInfo = new CharacterApiRequest<CharacterInfo>(int.Parse(id), userID, apiKey);
+		charInfo.OnRequestUpdate += HandleCharInfoOnRequestUpdate;
+		charInfo.Enabled = true;
+		charInfo.UpdateOnSecTick();
+	}
+
+	void HandleCharInfoOnRequestUpdate (ApiResult<CharacterInfo> result)
+	{
+		if (result != null && result.Error == null)
+        {
+			CharacterInfo info = result.Result;
+		}
 	}
 }

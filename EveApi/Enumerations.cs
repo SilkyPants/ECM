@@ -828,6 +828,10 @@ namespace EveApi
         CharacterInfoPrivate    = 1 << 24,
         AccountStatus           = 1 << 25,
         Contracts               = 1 << 26,
+        Everything              = AccountBalance | AssetList | CalendarEventAttendees | CharacterSheet | ContactList | ContactNotifications |
+                                FacWarStats | IndustryJobs | KillLog | MailBodies | MailMessages | MailingLists | MarketOrders | Medals | 
+                                Notifications | NotificationTexts | Research | SkillInTraining | SkillQueue | Standings | UpcomingCalendarEvents | 
+                                WalletJournal | WalletTransactions | CharacterInfoPublic | CharacterInfoPrivate | AccountStatus | Contracts,
     }
 
     public enum ApiKeyType
