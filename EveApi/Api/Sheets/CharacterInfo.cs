@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 
 namespace EveApi
 {
-	[KeyNeedsMask(ApiKeyMask.CharacterInfoPublic|ApiKeyMask.CharacterInfoPrivate)]
+	//[KeyNeedsMask(ApiKeyMask.CharacterInfoPublic)]
 	[NeedsCharacterID]
 	public class CharacterInfo
 	{

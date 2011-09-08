@@ -10,44 +10,52 @@ namespace Stetic
 		{
 			if ((Stetic.Gui.initialized == false)) {
 				Stetic.Gui.initialized = true;
-			}
-		}
-	}
-    
-	internal class IconLoader
-	{
-		public static Gdk.Pixbuf LoadIcon (Gtk.Widget widget, string name, Gtk.IconSize size)
-		{
-			Gdk.Pixbuf res = widget.RenderIcon (name, size, null);
-			if ((res != null)) {
-				return res;
-			} else {
-				int sz;
-				int sy;
-				global::Gtk.Icon.SizeLookup (size, out sz, out sy);
-				try {
-					return Gtk.IconTheme.Default.LoadIcon (name, sz, 0);
-				} catch (System.Exception) {
-					if ((name != "gtk-missing-image")) {
-						return Stetic.IconLoader.LoadIcon (widget, "gtk-missing-image", size);
-					} else {
-						Gdk.Pixmap pmap = new Gdk.Pixmap (Gdk.Screen.Default.RootWindow, sz, sz);
-						Gdk.GC gc = new Gdk.GC (pmap);
-						gc.RgbFgColor = new Gdk.Color (255, 255, 255);
-						pmap.DrawRectangle (gc, true, 0, 0, sz, sz);
-						gc.RgbFgColor = new Gdk.Color (0, 0, 0);
-						pmap.DrawRectangle (gc, false, 0, 0, (sz - 1), (sz - 1));
-						gc.SetLineAttributes (3, Gdk.LineStyle.Solid, Gdk.CapStyle.Round, Gdk.JoinStyle.Round);
-						gc.RgbFgColor = new Gdk.Color (255, 0, 0);
-						pmap.DrawLine (gc, (sz / 4), (sz / 4), ((sz - 1) 
-                                        - (sz / 4)), ((sz - 1) 
-                                        - (sz / 4)));
-						pmap.DrawLine (gc, ((sz - 1) 
-                                        - (sz / 4)), (sz / 4), (sz / 4), ((sz - 1) 
-                                        - (sz / 4)));
-						return Gdk.Pixbuf.FromDrawable (pmap, pmap.Colormap, 0, 0, 0, 0, sz, sz);
-					}
-				}
+				global::Gtk.IconFactory w1 = new global::Gtk.IconFactory ();
+				global::Gtk.IconSet w2 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Home.png"));
+				w1.Add ("Home", w2);
+				global::Gtk.IconSet w3 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.CharSheet.png"));
+				w1.Add ("CharSheet", w3);
+				global::Gtk.IconSet w4 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Contacts.png"));
+				w1.Add ("Contacts", w4);
+				global::Gtk.IconSet w5 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Map.png"));
+				w1.Add ("Map", w5);
+				global::Gtk.IconSet w6 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Assets.png"));
+				w1.Add ("Assets", w6);
+				global::Gtk.IconSet w7 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Attributes.png"));
+				w1.Add ("Attributes", w7);
+				global::Gtk.IconSet w8 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Certificates.png"));
+				w1.Add ("Certificate", w8);
+				global::Gtk.IconSet w9 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Cog.png"));
+				w1.Add ("Cog", w9);
+				global::Gtk.IconSet w10 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Contracts.png"));
+				w1.Add ("Contracts", w10);
+				global::Gtk.IconSet w11 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Corporations.png"));
+				w1.Add ("Corporations", w11);
+				global::Gtk.IconSet w12 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.CustomChar.png"));
+				w1.Add ("CustomChar", w12);
+				global::Gtk.IconSet w13 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Market.png"));
+				w1.Add ("Market", w13);
+				global::Gtk.IconSet w14 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Mail.png"));
+				w1.Add ("Mail", w14);
+				global::Gtk.IconSet w15 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Fitting.png"));
+				w1.Add ("Fitting", w15);
+				global::Gtk.IconSet w16 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Research.png"));
+				w1.Add ("Research", w16);
+				global::Gtk.IconSet w17 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Money.png"));
+				w1.Add ("Money", w17);
+				global::Gtk.IconSet w18 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Skills.png"));
+				w1.Add ("Skills", w18);
+				global::Gtk.IconSet w19 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Implants.png"));
+				w1.Add ("Implants", w19);
+				global::Gtk.IconSet w20 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.KillLogs.png"));
+				w1.Add ("KillLog", w20);
+				global::Gtk.IconSet w21 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Standings.png"));
+				w1.Add ("Standings", w21);
+				global::Gtk.IconSet w22 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Internet.png"));
+				w1.Add ("Internet", w22);
+				global::Gtk.IconSet w23 = new global::Gtk.IconSet (global::Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Medal.png"));
+				w1.Add ("Medal", w23);
+				w1.AddDefault ();
 			}
 		}
 	}

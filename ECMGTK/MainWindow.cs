@@ -26,9 +26,49 @@ public partial class MainWindow: Gtk.Window
     public MainWindow (): base (Gtk.WindowType.Toplevel)
     {
         Build ();
-		
+        
 		// Hide the tabs so that we can make the app look awesome :D
 		ntbPages.ShowTabs = false;
+        ntbPages.CurrentPage = 0;
+		
+		lblBackground.UseMarkup = true;
+		lblBackground.Markup = "Go to the <a href=\"http://www.gtk.org\" title=\"&lt;i&gt;Our&/i&gt; website\">GTK+ website</a> for more...";
+		lblBackground.Text = "<b>Hello</b>";
+    }
+    
+    private Button CreateCharacterButton()
+    {
+        Button btnChar = new Button();
+        Image imgPortrait = new Image(null, "ECMGTK.Resources.NoPortrait_64.png");
+        Image imgRecycle = new Image(null, "ECMGTK.Resources.Icons.Recycle.png");
+        Button btnRecycle = new Button(imgRecycle);
+        Label lblStatus = new Label();
+        HBox hbxContainer = new HBox(false, 1);
+		        
+        lblStatus.Text = "This is some text\nIt spans multiple lines\nSo we can show cool stuff. This is to push the button out more, I can make it wrap with the WidthChar member";
+        lblStatus.WidthChars = 40;
+        lblStatus.Wrap = true;
+        
+        imgPortrait.WidthRequest = 64;
+        imgPortrait.HeightRequest = 64;
+        
+        hbxContainer.PackStart(imgPortrait);
+        hbxContainer.PackStart(lblStatus);
+        hbxContainer.PackStart(btnRecycle);
+        
+        btnChar.Add(hbxContainer);
+        
+        btnChar.ShowAll();
+		
+		btnChar.Clicked += delegate {
+			Console.WriteLine("Called Char Button Press");
+		};
+		
+		btnRecycle.Clicked += delegate {
+			Console.WriteLine("Called Char Recycle Button Press");
+		};
+        
+        return btnChar;
     }
     
     protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -36,4 +76,25 @@ public partial class MainWindow: Gtk.Window
         Application.Quit ();
         a.RetVal = true;
     }
+
+    protected void AddNewApiKey (object sender, System.EventArgs e)
+    {
+        //vbbCharacters.PackStart(CreateCharacterButton());
+		
+		ECMGTK.AddApiKey addKey = new ECMGTK.AddApiKey();
+		
+		addKey.Run();
+    }
+
+	protected void ChangePage (object sender, System.EventArgs e)
+	{
+		if(sender == HomeAction)
+		{
+			ntbPages.CurrentPage = 0;
+		}
+		else if(sender == CharSheetAction)
+		{
+			ntbPages.CurrentPage = 1;
+		}
+	}
 }
