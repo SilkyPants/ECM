@@ -106,6 +106,19 @@ public partial class MainWindow
 	private global::Gtk.TreeView trvKillLogs;
 	private global::Gtk.Label label14;
 	private global::Gtk.Label label22;
+	private global::Gtk.HPaned hpaned1;
+	private global::Gtk.Notebook notebook1;
+	private global::Gtk.ScrolledWindow GtkScrolledWindow10;
+	private global::Gtk.TreeView trvMarket;
+	private global::Gtk.Label label1;
+	private global::Gtk.VBox vbox7;
+	private global::Gtk.HBox hbox9;
+	private global::Gtk.Label label24;
+	private global::Gtk.Entry txtMarketFilter;
+	private global::Gtk.ScrolledWindow GtkScrolledWindow9;
+	private global::Gtk.TreeView trvSearchItems;
+	private global::Gtk.Label label4;
+	private global::Gtk.Label label23;
     
 	protected virtual void Build ()
 	{
@@ -176,7 +189,7 @@ public partial class MainWindow
 		this.hbox1.Name = "hbox1";
 		this.hbox1.Spacing = 2;
 		// Container child hbox1.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString (@"<ui><toolbar name='tlbTools'><toolitem name='HomeAction' action='HomeAction'/><separator/><toolitem name='CharSheetAction' action='CharSheetAction'/><toolitem name='ContactsAction' action='ContactsAction'/><toolitem name='MailAction' action='MailAction'/><toolitem name='FittingAction' action='FittingAction'/><toolitem name='MarketAction' action='MarketAction'/><toolitem name='ResearchAction' action='ResearchAction'/><toolitem name='ContractsAction' action='ContractsAction'/><toolitem name='MapAction' action='MapAction'/><toolitem name='CorporationsAction' action='CorporationsAction'/><toolitem name='AssetsAction' action='AssetsAction'/><toolitem name='MoneyAction' action='MoneyAction'/></toolbar></ui>");
+		this.UIManager.AddUiFromString ("<ui><toolbar name='tlbTools'><toolitem name='HomeAction' action='HomeAction'/><separator/><toolitem name='CharSheetAction' action='CharSheetAction'/><toolitem name='ContactsAction' action='ContactsAction'/><toolitem name='MailAction' action='MailAction'/><toolitem name='FittingAction' action='FittingAction'/><toolitem name='MarketAction' action='MarketAction'/><toolitem name='ResearchAction' action='ResearchAction'/><toolitem name='ContractsAction' action='ContractsAction'/><toolitem name='MapAction' action='MapAction'/><toolitem name='CorporationsAction' action='CorporationsAction'/><toolitem name='AssetsAction' action='AssetsAction'/><toolitem name='MoneyAction' action='MoneyAction'/></toolbar></ui>");
 		this.tlbTools = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/tlbTools")));
 		this.tlbTools.Name = "tlbTools";
 		this.tlbTools.Orientation = ((global::Gtk.Orientation)(1));
@@ -200,7 +213,7 @@ public partial class MainWindow
 		this.ntbPages = new global::Gtk.Notebook ();
 		this.ntbPages.CanFocus = true;
 		this.ntbPages.Name = "ntbPages";
-		this.ntbPages.CurrentPage = 0;
+		this.ntbPages.CurrentPage = 2;
 		this.ntbPages.ShowBorder = false;
 		this.ntbPages.ShowTabs = false;
 		this.ntbPages.Scrollable = true;
@@ -618,7 +631,7 @@ public partial class MainWindow
 		this.hbox6.Name = "hbox6";
 		this.hbox6.Spacing = 6;
 		// Container child hbox6.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString (@"<ui><toolbar name='toolbar1'><toolitem name='SkillsAction' action='SkillsAction'/><toolitem name='CertificatesAction' action='CertificatesAction'/><toolitem name='DecorationsAction' action='DecorationsAction'/><toolitem name='AttributesAction' action='AttributesAction'/><toolitem name='AugmentationsAction' action='AugmentationsAction'/><toolitem name='EmploymentAction' action='EmploymentAction'/><toolitem name='StandingsAction' action='StandingsAction'/><toolitem name='CombatLogsAction' action='CombatLogsAction'/></toolbar></ui>");
+		this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar1'><toolitem name='SkillsAction' action='SkillsAction'/><toolitem name='CertificatesAction' action='CertificatesAction'/><toolitem name='DecorationsAction' action='DecorationsAction'/><toolitem name='AttributesAction' action='AttributesAction'/><toolitem name='AugmentationsAction' action='AugmentationsAction'/><toolitem name='EmploymentAction' action='EmploymentAction'/><toolitem name='StandingsAction' action='StandingsAction'/><toolitem name='CombatLogsAction' action='CombatLogsAction'/></toolbar></ui>");
 		this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/toolbar1")));
 		this.toolbar1.Name = "toolbar1";
 		this.toolbar1.Orientation = ((global::Gtk.Orientation)(1));
@@ -845,19 +858,117 @@ public partial class MainWindow
 		this.label22.LabelProp = global::Mono.Unix.Catalog.GetString ("Character Sheet");
 		this.ntbPages.SetTabLabel (this.vbox2, this.label22);
 		this.label22.ShowAll ();
+		// Container child ntbPages.Gtk.Notebook+NotebookChild
+		this.hpaned1 = new global::Gtk.HPaned ();
+		this.hpaned1.CanFocus = true;
+		this.hpaned1.Name = "hpaned1";
+		this.hpaned1.Position = 240;
+		// Container child hpaned1.Gtk.Paned+PanedChild
+		this.notebook1 = new global::Gtk.Notebook ();
+		this.notebook1.CanFocus = true;
+		this.notebook1.Name = "notebook1";
+		this.notebook1.CurrentPage = 0;
+		// Container child notebook1.Gtk.Notebook+NotebookChild
+		this.GtkScrolledWindow10 = new global::Gtk.ScrolledWindow ();
+		this.GtkScrolledWindow10.Name = "GtkScrolledWindow10";
+		this.GtkScrolledWindow10.ShadowType = ((global::Gtk.ShadowType)(1));
+		// Container child GtkScrolledWindow10.Gtk.Container+ContainerChild
+		this.trvMarket = new global::Gtk.TreeView ();
+		this.trvMarket.CanFocus = true;
+		this.trvMarket.Name = "trvMarket";
+		this.trvMarket.HeadersVisible = false;
+		this.GtkScrolledWindow10.Add (this.trvMarket);
+		this.notebook1.Add (this.GtkScrolledWindow10);
+		// Notebook tab
+		this.label1 = new global::Gtk.Label ();
+		this.label1.Name = "label1";
+		this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Market");
+		this.notebook1.SetTabLabel (this.GtkScrolledWindow10, this.label1);
+		this.label1.ShowAll ();
+		// Container child notebook1.Gtk.Notebook+NotebookChild
+		this.vbox7 = new global::Gtk.VBox ();
+		this.vbox7.Name = "vbox7";
+		this.vbox7.Spacing = 6;
+		this.vbox7.BorderWidth = ((uint)(3));
+		// Container child vbox7.Gtk.Box+BoxChild
+		this.hbox9 = new global::Gtk.HBox ();
+		this.hbox9.Name = "hbox9";
+		this.hbox9.Spacing = 6;
+		// Container child hbox9.Gtk.Box+BoxChild
+		this.label24 = new global::Gtk.Label ();
+		this.label24.Name = "label24";
+		this.label24.LabelProp = global::Mono.Unix.Catalog.GetString ("Search:");
+		this.hbox9.Add (this.label24);
+		global::Gtk.Box.BoxChild w76 = ((global::Gtk.Box.BoxChild)(this.hbox9 [this.label24]));
+		w76.Position = 0;
+		w76.Expand = false;
+		w76.Fill = false;
+		// Container child hbox9.Gtk.Box+BoxChild
+		this.txtMarketFilter = new global::Gtk.Entry ();
+		this.txtMarketFilter.CanFocus = true;
+		this.txtMarketFilter.Name = "txtMarketFilter";
+		this.txtMarketFilter.IsEditable = true;
+		this.txtMarketFilter.InvisibleChar = '●';
+		this.hbox9.Add (this.txtMarketFilter);
+		global::Gtk.Box.BoxChild w77 = ((global::Gtk.Box.BoxChild)(this.hbox9 [this.txtMarketFilter]));
+		w77.Position = 1;
+		this.vbox7.Add (this.hbox9);
+		global::Gtk.Box.BoxChild w78 = ((global::Gtk.Box.BoxChild)(this.vbox7 [this.hbox9]));
+		w78.Position = 0;
+		w78.Expand = false;
+		w78.Fill = false;
+		// Container child vbox7.Gtk.Box+BoxChild
+		this.GtkScrolledWindow9 = new global::Gtk.ScrolledWindow ();
+		this.GtkScrolledWindow9.Name = "GtkScrolledWindow9";
+		this.GtkScrolledWindow9.ShadowType = ((global::Gtk.ShadowType)(1));
+		// Container child GtkScrolledWindow9.Gtk.Container+ContainerChild
+		this.trvSearchItems = new global::Gtk.TreeView ();
+		this.trvSearchItems.CanFocus = true;
+		this.trvSearchItems.Name = "trvSearchItems";
+		this.trvSearchItems.HeadersVisible = false;
+		this.GtkScrolledWindow9.Add (this.trvSearchItems);
+		this.vbox7.Add (this.GtkScrolledWindow9);
+		global::Gtk.Box.BoxChild w80 = ((global::Gtk.Box.BoxChild)(this.vbox7 [this.GtkScrolledWindow9]));
+		w80.Position = 1;
+		this.notebook1.Add (this.vbox7);
+		global::Gtk.Notebook.NotebookChild w81 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.vbox7]));
+		w81.Position = 1;
+		// Notebook tab
+		this.label4 = new global::Gtk.Label ();
+		this.label4.Name = "label4";
+		this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("Search");
+		this.notebook1.SetTabLabel (this.vbox7, this.label4);
+		this.label4.ShowAll ();
+		this.hpaned1.Add (this.notebook1);
+		global::Gtk.Paned.PanedChild w82 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.notebook1]));
+		w82.Resize = false;
+		this.ntbPages.Add (this.hpaned1);
+		global::Gtk.Notebook.NotebookChild w83 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages [this.hpaned1]));
+		w83.Position = 2;
+		// Notebook tab
+		this.label23 = new global::Gtk.Label ();
+		this.label23.Name = "label23";
+		this.label23.LabelProp = global::Mono.Unix.Catalog.GetString ("page3");
+		this.ntbPages.SetTabLabel (this.hpaned1, this.label23);
+		this.label23.ShowAll ();
 		this.hbox1.Add (this.ntbPages);
-		global::Gtk.Box.BoxChild w74 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.ntbPages]));
-		w74.Position = 2;
+		global::Gtk.Box.BoxChild w84 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.ntbPages]));
+		w84.Position = 2;
 		this.Add (this.hbox1);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 522;
+		this.DefaultWidth = 535;
 		this.DefaultHeight = 532;
-		this.Show ();
+		this.Hide ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.HomeAction.Activated += new global::System.EventHandler (this.ChangePage);
 		this.CharSheetAction.Activated += new global::System.EventHandler (this.ChangePage);
-		this.btnAddNewApiKey.Clicked += new global::System.EventHandler (this.AddNewApiKey);
+		this.MarketAction.Activated += new global::System.EventHandler (this.ChangePage);
+		this.trvMarket.RowCollapsed += new global::Gtk.RowCollapsedHandler (this.RowCollapsed);
+		this.trvMarket.RowActivated += new global::Gtk.RowActivatedHandler (this.RowActivated);
+		this.txtMarketFilter.Changed += new global::System.EventHandler (this.SearchTextChanged);
+		this.trvSearchItems.RowCollapsed += new global::Gtk.RowCollapsedHandler (this.RowCollapsed);
+		this.trvSearchItems.RowActivated += new global::Gtk.RowActivatedHandler (this.RowActivated);
 	}
 }

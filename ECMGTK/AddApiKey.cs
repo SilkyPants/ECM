@@ -61,6 +61,10 @@ namespace ECMGTK
 					accCharacters.AppendValues(true, character.Name);
 			}
 		}
+
+		protected void ImportKey (object sender, System.EventArgs e)
+		{
+		}
 	}
 }
 

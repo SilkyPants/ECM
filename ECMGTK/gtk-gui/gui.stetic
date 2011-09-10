@@ -120,7 +120,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="MainWindow" design-size="522 532">
+  <widget class="Gtk.Window" id="MainWindow" design-size="535 532">
     <action-group name="Default">
       <action id="HomeAction">
         <property name="Type">Action</property>
@@ -151,6 +151,7 @@
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
         <property name="StockId">Market</property>
+        <signal name="Activated" handler="ChangePage" />
       </action>
       <action id="FittingAction">
         <property name="Type">Action</property>
@@ -238,6 +239,7 @@
     </action-group>
     <property name="MemberName" />
     <property name="HeightRequest">532</property>
+    <property name="Visible">False</property>
     <property name="Title" translatable="yes">Eve Character Monitor</property>
     <property name="Icon">resource:ECMGTK.Resources.Icons.Corpse.png</property>
     <property name="WindowPosition">Center</property>
@@ -293,7 +295,7 @@
           <widget class="Gtk.Notebook" id="ntbPages">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">0</property>
+            <property name="CurrentPage">2</property>
             <property name="ShowBorder">False</property>
             <property name="ShowTabs">False</property>
             <property name="Scrollable">True</property>
@@ -351,7 +353,6 @@
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="Type">Custom</property>
-                        <signal name="Clicked" handler="AddNewApiKey" />
                         <child>
                           <widget class="Gtk.HBox" id="hbox4">
                             <property name="MemberName" />
@@ -1239,6 +1240,139 @@
               <widget class="Gtk.Label" id="label22">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">Character Sheet</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.HPaned" id="hpaned1">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Position">240</property>
+                <child>
+                  <widget class="Gtk.Notebook" id="notebook1">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="CurrentPage">0</property>
+                    <child>
+                      <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow10">
+                        <property name="MemberName" />
+                        <property name="ShadowType">In</property>
+                        <child>
+                          <widget class="Gtk.TreeView" id="trvMarket">
+                            <property name="MemberName" />
+                            <property name="CanFocus">True</property>
+                            <property name="ShowScrollbars">True</property>
+                            <property name="HeadersVisible">False</property>
+                            <signal name="RowCollapsed" handler="RowCollapsed" />
+                            <signal name="RowActivated" handler="RowActivated" />
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="label1">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Market</property>
+                      </widget>
+                      <packing>
+                        <property name="type">tab</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.VBox" id="vbox7">
+                        <property name="MemberName" />
+                        <property name="Spacing">6</property>
+                        <property name="BorderWidth">3</property>
+                        <child>
+                          <widget class="Gtk.HBox" id="hbox9">
+                            <property name="MemberName" />
+                            <property name="Spacing">6</property>
+                            <child>
+                              <widget class="Gtk.Label" id="label24">
+                                <property name="MemberName" />
+                                <property name="LabelProp" translatable="yes">Search:</property>
+                              </widget>
+                              <packing>
+                                <property name="Position">0</property>
+                                <property name="AutoSize">True</property>
+                                <property name="Expand">False</property>
+                                <property name="Fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Entry" id="txtMarketFilter">
+                                <property name="MemberName" />
+                                <property name="CanFocus">True</property>
+                                <property name="IsEditable">True</property>
+                                <property name="InvisibleChar">●</property>
+                                <signal name="Changed" handler="SearchTextChanged" />
+                              </widget>
+                              <packing>
+                                <property name="Position">1</property>
+                                <property name="AutoSize">True</property>
+                              </packing>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow9">
+                            <property name="MemberName" />
+                            <property name="ShadowType">In</property>
+                            <child>
+                              <widget class="Gtk.TreeView" id="trvSearchItems">
+                                <property name="MemberName" />
+                                <property name="CanFocus">True</property>
+                                <property name="ShowScrollbars">True</property>
+                                <property name="HeadersVisible">False</property>
+                                <signal name="RowCollapsed" handler="RowCollapsed" />
+                                <signal name="RowActivated" handler="RowActivated" />
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                          </packing>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="label4">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Search</property>
+                      </widget>
+                      <packing>
+                        <property name="type">tab</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Resize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder />
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label23">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">page3</property>
               </widget>
               <packing>
                 <property name="type">tab</property>

@@ -42,7 +42,7 @@ namespace ECM
 
             cmd.Dispose();
 
-            SQLiteDataAdapter adp = new SQLiteDataAdapter("SELECT marketGroupID, marketGroupName FROM invMarketGroups WHERE parentGroupID IS NULL", conn);
+            SQLiteDataAdapter adp = new SQLiteDataAdapter("SELECT marketGroupID, marketGroupName, hasTypes FROM invMarketGroups WHERE parentGroupID IS NULL", conn);
             DataTable res = new DataTable();
             adp.Fill(res);
             adp.Dispose();
@@ -51,11 +51,14 @@ namespace ECM
             {
                 TreeNode group = new TreeNode(row[1].ToString());
                 long groupID = Convert.ToInt64(row[0]);
+                int hasTypes = Convert.ToInt32(row[2]);
 
                 group.Tag = groupID;
 
                 group.Nodes.AddRange(GetMarketGroups(conn, groupID));
-                group.Nodes.AddRange(GetMarketItems(conn, groupID));
+				
+				if(hasTypes == 1)
+                	group.Nodes.AddRange(GetMarketItems(conn, groupID));
 
                 treeView1.Nodes.Add(group);
             }
@@ -76,7 +79,7 @@ namespace ECM
         {
             List<TreeNode> nodes = new List<TreeNode>();
 
-            SQLiteDataAdapter adp = new SQLiteDataAdapter(string.Format("SELECT marketGroupID, marketGroupName FROM invMarketGroups WHERE parentGroupID = {0}", parentGroupID), conn);
+            SQLiteDataAdapter adp = new SQLiteDataAdapter(string.Format("SELECT marketGroupID, marketGroupName, hasTypes FROM invMarketGroups WHERE parentGroupID = {0}", parentGroupID), conn);
             DataTable res = new DataTable();
             adp.Fill(res);
             adp.Dispose();
@@ -85,11 +88,14 @@ namespace ECM
             {
                 TreeNode group = new TreeNode(row[1].ToString());
                 long groupID = Convert.ToInt64(row[0]);
+                int hasTypes = Convert.ToInt32(row[2]);
 
                 group.Tag = groupID;
 
                 group.Nodes.AddRange(GetMarketGroups(conn, groupID));
-                group.Nodes.AddRange(GetMarketItems(conn, groupID));
+				
+				if(hasTypes == 1)
+                	group.Nodes.AddRange(GetMarketItems(conn, groupID));
 
                 nodes.Add(group);
             }
