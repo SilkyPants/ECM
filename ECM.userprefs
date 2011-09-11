@@ -3,7 +3,7 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="ECMGTK/MainWindow.cs">
     <Files>
       <File FileName="ECMGTK/AddApiKey.cs" Line="1" Column="1" />
-      <File FileName="ECMGTK/MainWindow.cs" Line="183" Column="46" />
+      <File FileName="ECMGTK/MainWindow.cs" Line="208" Column="44" />
       <File FileName="EveApi/Enumerations.cs" Line="1" Column="1" />
       <File FileName="ECMGTK/Main.cs" Line="1" Column="1" />
     </Files>

@@ -192,10 +192,20 @@ public partial class MainWindow: Gtk.Window
         
         marketStore.Clear();
         
+        TreeViewColumn mainColumn = new TreeViewColumn();
+        mainColumn.Title = "Groups";
+        
         CellRendererPixbuf pixBuf = new CellRendererPixbuf();
         pixBuf.Xalign = 0;
-        trvMarket.AppendColumn("Icon", pixBuf, "pixbuf", 0);
-        trvMarket.AppendColumn("Name", new CellRendererText(), "text", 1);
+        mainColumn.PackStart(pixBuf, false);
+        mainColumn.AddAttribute(pixBuf, "pixbuf", 0);
+        
+        CellRendererText label = new CellRendererText();
+        label.Xalign = 0;
+        mainColumn.PackStart(label, false);
+        mainColumn.AddAttribute(label, "text", 1);
+        
+        trvMarket.AppendColumn(mainColumn);
         
         LoadMarketGroupsForID(-1, TreeIter.Zero);
         
