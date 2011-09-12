@@ -84,7 +84,7 @@ public partial class MainWindow: Gtk.Window
 		Label label = new Label(title);
 		label.Xalign = 0;
 		
-		box.PackStart(icon, false, false, 0);
+		box.PackEnd(icon, false, false, 0);
 		box.PackStart(label, true, true, 0);
 		
 		box.ShowAll();
@@ -133,15 +133,6 @@ public partial class MainWindow: Gtk.Window
 		
         Application.Quit ();
         a.RetVal = true;
-    }
-
-    protected void AddNewApiKey (object sender, System.EventArgs e)
-    {
-        //vbbCharacters.PackStart(CreateCharacterButton());
-		
-		ECMGTK.AddApiKey addKey = new ECMGTK.AddApiKey();
-		
-		addKey.Run();
     }
 
     protected void RowCollapsed (object sender, Gtk.RowCollapsedArgs args)
@@ -323,4 +314,13 @@ public partial class MainWindow: Gtk.Window
         Console.WriteLine("SelectRow");
 	}
     #endregion
+	
+	#region Overview
+	protected void AddNewKey (object sender, System.EventArgs e)
+	{
+		ECMGTK.AddApiKey addKey = new ECMGTK.AddApiKey();
+		
+		addKey.Run();
+	}
+	#endregion
 }

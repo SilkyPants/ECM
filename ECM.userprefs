@@ -1,11 +1,11 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ECMGTK/MainWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ECMGTK\MainWindow.cs">
     <Files>
-      <File FileName="ECMGTK/AddApiKey.cs" Line="1" Column="1" />
-      <File FileName="ECMGTK/MainWindow.cs" Line="208" Column="44" />
-      <File FileName="EveApi/Enumerations.cs" Line="1" Column="1" />
-      <File FileName="ECMGTK/Main.cs" Line="1" Column="1" />
+      <File FileName="ECMGTK\AddApiKey.cs" Line="1" Column="1" />
+      <File FileName="EveApi\Enumerations.cs" Line="1" Column="1" />
+      <File FileName="ECMGTK\Main.cs" Line="30" Column="10" />
+      <File FileName="ECMGTK\MainWindow.cs" Line="318" Column="18" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,10 +13,15 @@
           <Node name="ApiTestBed" expanded="True" />
           <Node name="ECMGTK" expanded="True">
             <Node name="UserInterface" expanded="True">
-              <Node name="MainWindow" selected="True" />
+              <Node name="MainWindow" expanded="True">
+                <Node name="Default" selected="True" />
+              </Node>
             </Node>
+            <Node name="Resources" expanded="True" />
           </Node>
-          <Node name="EveApi" expanded="True" />
+          <Node name="EveApi" expanded="True">
+            <Node name="Api" expanded="True" />
+          </Node>
         </State>
       </Pad>
     </Pads>
