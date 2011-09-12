@@ -1,5 +1,5 @@
-==ECM - Yet another EVE Character Monitor
-==
+ECM - Yet another EVE Character Monitor
+---------------------------------------
 
 GTK# based character monitor for EVE Online.
 
