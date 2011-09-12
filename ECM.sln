@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMDatabaseCreator", "ECMDa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECMGTK", "ECMGTK\ECMGTK.csproj", "{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2F0D0DEF-8D47-4858-A449-1F8525543C34}"
+	ProjectSection(SolutionItems) = preProject
+		README.asciidoc = README.asciidoc
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +84,8 @@ Global
 		{FE02DB12-7DC7-4008-BAB8-3FB9BA7C9174}.Release|Mixed Platforms.Build.0 = Release|x86
 		{FE02DB12-7DC7-4008-BAB8-3FB9BA7C9174}.Release|x86.ActiveCfg = Release|x86
 		{FE02DB12-7DC7-4008-BAB8-3FB9BA7C9174}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = ECMGTK\ECMGTK.csproj

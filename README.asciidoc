@@ -1,1 +1,14 @@
-== ECM - Yet another EVE Character Monitor
+==ECM - Yet another EVE Character Monitor
+==
+
+GTK# based character monitor for EVE Online.
+
+Basically my version of something similar to EveMon - but that runs on the Mono API for cross platform goodness. 
+
+I have a lot of ideas that I would like to get into here, but it all comes down to time since that is something I cannot control ;)
+
+So far the immediate plans are to have:
+
+Ability to add/remove API keys (new cusomizable versions)
+Skill planner that reschedules around conflicts
+Map View/Journey planner
