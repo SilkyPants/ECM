@@ -80,11 +80,9 @@ namespace EveApi
     #endregion
     public static class EveCentralApi
     {
-        public static float GetAveragePrice(List<long> typeIDs)
+        public static EveCentralMarketStats GetAveragePrice(List<long> typeIDs)
         {
-            float avgTotal = 0;
-
-            if (typeIDs.Count < 0) return 0;
+            if (typeIDs.Count < 0) return null;
 
             string url = "http://api.eve-central.com/api/marketstat?";
 
@@ -119,16 +117,21 @@ namespace EveApi
             doc.PreserveWhitespace = true;
             doc.InnerXml = xmlResult;
 
-            XmlReader reader = doc.CreateNavigator().ReadSubtree();
+            XmlNodeReader reader = new XmlNodeReader(doc);
 
-            while (reader.Read())
+            EveCentralMarketStats stats = null;
+            
+            try
             {
-                if (reader.NodeType == XmlNodeType.Element)
-                {
-                }
+                XmlSerializer xs = new XmlSerializer(typeof(EveCentralMarketStats));
+                stats = (EveCentralMarketStats)xs.Deserialize(reader); 
             }
-
-            return avgTotal;
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+            return stats;
         }
     }
 

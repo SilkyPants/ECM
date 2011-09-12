@@ -304,4 +304,16 @@ public partial class MainWindow: Gtk.Window
 			CharacterInfo info = result.Result;
 		}
 	}
+
+    protected void EveCentralMarketTest (object sender, System.EventArgs e)
+    {
+        List<long> list = new List<long>();
+        
+        list.Add(438);
+        
+        EveCentralMarketStats stats = EveApi.EveCentralApi.GetAveragePrice(list);
+        
+        if(stats != null)
+            Console.WriteLine(stats.Items[0].All.Average);
+    }
 }

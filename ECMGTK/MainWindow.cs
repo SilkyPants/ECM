@@ -47,7 +47,6 @@ public partial class MainWindow: Gtk.Window
 		worker.RunWorkerAsync();
 		
 		Visible = true;
-		
     }
 
     void HandleWorkerRunWorkerCompleted (object sender, RunWorkerCompletedEventArgs e)

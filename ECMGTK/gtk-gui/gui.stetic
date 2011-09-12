@@ -120,7 +120,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="MainWindow" design-size="598 532">
+  <widget class="Gtk.Window" id="MainWindow" design-size="617 532">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="HeightRequest">532</property>

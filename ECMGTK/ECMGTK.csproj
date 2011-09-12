@@ -8,7 +8,7 @@
     <ProjectGuid>{1F176B2B-8B75-41D1-BF5F-C64A45B158F0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ECMGTK</RootNamespace>
-    <AssemblyName>ECMGTK</AssemblyName>
+    <AssemblyName>ECM</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
