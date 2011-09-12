@@ -19,12 +19,20 @@ namespace ECMGTK
 		{
 			trvCharacters.Model = accCharacters;
 			
+			TreeViewColumn col = new TreeViewColumn();
+			col.Title = "Character";
+			
 			CellRendererToggle crt = new CellRendererToggle();
 			crt.Activatable = true;
 			crt.Toggled += ImportCharacterChanged;
-			trvCharacters.AppendColumn ("Import", crt, "active", 0);
+			col.PackStart(crt, false);
+			col.AddAttribute(crt, "active", 0);
 			
-			trvCharacters.AppendColumn("Name", new CellRendererText(), "text", 1);
+			CellRendererText txt = new CellRendererText();
+			col.PackStart(txt, true);
+			col.AddAttribute(txt, "text", 1);
+			
+			trvCharacters.AppendColumn(col);
 		}
 
 		void ImportCharacterChanged (object o, ToggledArgs args)
