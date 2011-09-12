@@ -120,7 +120,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="MainWindow" design-size="689 532">
+  <widget class="Gtk.Window" id="MainWindow" design-size="598 532">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="HeightRequest">532</property>
@@ -1110,7 +1110,6 @@
         <child>
           <widget class="Gtk.HPaned" id="hpnMarket">
             <property name="MemberName" />
-            <property name="Visible">False</property>
             <property name="CanFocus">True</property>
             <property name="Position">300</property>
             <property name="BorderWidth">3</property>
@@ -1120,6 +1119,7 @@
                 <property name="CanFocus">True</property>
                 <property name="CurrentPage">0</property>
                 <property name="ShowBorder">False</property>
+                <property name="BorderWidth">1</property>
                 <child>
                   <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow10">
                     <property name="MemberName" />
@@ -1151,7 +1151,7 @@
                     <property name="Spacing">6</property>
                     <property name="BorderWidth">3</property>
                     <child>
-                      <widget class="Gtk.HBox" id="hbox9">
+                      <widget class="Gtk.HBox" id="hbox10">
                         <property name="MemberName" />
                         <property name="Spacing">6</property>
                         <child>
@@ -1232,21 +1232,7 @@
                 <property name="Homogeneous">True</property>
                 <property name="Spacing">3</property>
                 <property name="BorderWidth">3</property>
-                <property name="Size">1</property>
-                <property name="LayoutStyle">Start</property>
-                <child>
-                  <widget class="Gtk.Button" id="button676">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="Type">TextOnly</property>
-                    <property name="Label" translatable="yes">GtkButton</property>
-                    <property name="UseUnderline">True</property>
-                  </widget>
-                  <packing>
-                    <property name="Expand">False</property>
-                    <property name="Fill">False</property>
-                  </packing>
-                </child>
+                <property name="Size">0</property>
               </widget>
             </child>
           </widget>

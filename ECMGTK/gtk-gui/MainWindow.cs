@@ -178,7 +178,7 @@ public partial class MainWindow {
     
     private global::Gtk.VBox vbox7;
     
-    private global::Gtk.HBox hbox9;
+    private global::Gtk.HBox hbox10;
     
     private global::Gtk.Label label25;
     
@@ -191,8 +191,6 @@ public partial class MainWindow {
     private global::Gtk.Label label26;
     
     private global::Gtk.VButtonBox vbuttonbox1;
-    
-    private global::Gtk.Button button676;
     
     private global::Gtk.Label label27;
     
@@ -264,6 +262,7 @@ public partial class MainWindow {
         w6.Fill = false;
         // Container child vbxOverview.Gtk.Box+BoxChild
         this.hbuttonbox1 = new global::Gtk.HButtonBox();
+        this.hbuttonbox1.Name = "hbuttonbox1";
         this.hbuttonbox1.Homogeneous = true;
         this.hbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
         // Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
@@ -908,6 +907,7 @@ public partial class MainWindow {
         this.notebook1.Name = "notebook1";
         this.notebook1.CurrentPage = 0;
         this.notebook1.ShowBorder = false;
+        this.notebook1.BorderWidth = ((uint)(1));
         // Container child notebook1.Gtk.Notebook+NotebookChild
         this.GtkScrolledWindow10 = new global::Gtk.ScrolledWindow();
         this.GtkScrolledWindow10.Name = "GtkScrolledWindow10";
@@ -931,29 +931,29 @@ public partial class MainWindow {
         this.vbox7.Spacing = 6;
         this.vbox7.BorderWidth = ((uint)(3));
         // Container child vbox7.Gtk.Box+BoxChild
-        this.hbox9 = new global::Gtk.HBox();
-        this.hbox9.Name = "hbox9";
-        this.hbox9.Spacing = 6;
-        // Container child hbox9.Gtk.Box+BoxChild
+        this.hbox10 = new global::Gtk.HBox();
+        this.hbox10.Name = "hbox10";
+        this.hbox10.Spacing = 6;
+        // Container child hbox10.Gtk.Box+BoxChild
         this.label25 = new global::Gtk.Label();
         this.label25.Name = "label25";
         this.label25.LabelProp = global::Mono.Unix.Catalog.GetString("Search:");
-        this.hbox9.Add(this.label25);
-        global::Gtk.Box.BoxChild w76 = ((global::Gtk.Box.BoxChild)(this.hbox9[this.label25]));
+        this.hbox10.Add(this.label25);
+        global::Gtk.Box.BoxChild w76 = ((global::Gtk.Box.BoxChild)(this.hbox10[this.label25]));
         w76.Position = 0;
         w76.Expand = false;
         w76.Fill = false;
-        // Container child hbox9.Gtk.Box+BoxChild
+        // Container child hbox10.Gtk.Box+BoxChild
         this.txtMarketFilter = new global::Gtk.Entry();
         this.txtMarketFilter.CanFocus = true;
         this.txtMarketFilter.Name = "txtMarketFilter";
         this.txtMarketFilter.IsEditable = true;
         this.txtMarketFilter.InvisibleChar = '●';
-        this.hbox9.Add(this.txtMarketFilter);
-        global::Gtk.Box.BoxChild w77 = ((global::Gtk.Box.BoxChild)(this.hbox9[this.txtMarketFilter]));
+        this.hbox10.Add(this.txtMarketFilter);
+        global::Gtk.Box.BoxChild w77 = ((global::Gtk.Box.BoxChild)(this.hbox10[this.txtMarketFilter]));
         w77.Position = 1;
-        this.vbox7.Add(this.hbox9);
-        global::Gtk.Box.BoxChild w78 = ((global::Gtk.Box.BoxChild)(this.vbox7[this.hbox9]));
+        this.vbox7.Add(this.hbox10);
+        global::Gtk.Box.BoxChild w78 = ((global::Gtk.Box.BoxChild)(this.vbox7[this.hbox10]));
         w78.Position = 0;
         w78.Expand = false;
         w78.Fill = false;
@@ -988,21 +988,10 @@ public partial class MainWindow {
         this.vbuttonbox1.Homogeneous = true;
         this.vbuttonbox1.Spacing = 3;
         this.vbuttonbox1.BorderWidth = ((uint)(3));
-        this.vbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(3));
-        // Container child vbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
-        this.button676 = new global::Gtk.Button();
-        this.button676.CanFocus = true;
-        this.button676.Name = "button676";
-        this.button676.UseUnderline = true;
-        this.button676.Label = global::Mono.Unix.Catalog.GetString("GtkButton");
-        this.vbuttonbox1.Add(this.button676);
-        global::Gtk.ButtonBox.ButtonBoxChild w83 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.vbuttonbox1[this.button676]));
-        w83.Expand = false;
-        w83.Fill = false;
         this.hpnMarket.Add(this.vbuttonbox1);
         this.ntbPages.Add(this.hpnMarket);
-        global::Gtk.Notebook.NotebookChild w85 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages[this.hpnMarket]));
-        w85.Position = 5;
+        global::Gtk.Notebook.NotebookChild w84 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages[this.hpnMarket]));
+        w84.Position = 5;
         // Notebook tab
         this.label27 = new global::Gtk.Label();
         this.label27.Name = "label27";
@@ -1010,75 +999,74 @@ public partial class MainWindow {
         this.ntbPages.SetTabLabel(this.hpnMarket, this.label27);
         this.label27.ShowAll();
         // Notebook tab
-        global::Gtk.Label w86 = new global::Gtk.Label();
-        w86.Visible = true;
-        this.ntbPages.Add(w86);
+        global::Gtk.Label w85 = new global::Gtk.Label();
+        w85.Visible = true;
+        this.ntbPages.Add(w85);
         this.label28 = new global::Gtk.Label();
         this.label28.Name = "label28";
         this.label28.LabelProp = global::Mono.Unix.Catalog.GetString("Science & Industry");
-        this.ntbPages.SetTabLabel(w86, this.label28);
+        this.ntbPages.SetTabLabel(w85, this.label28);
         this.label28.ShowAll();
+        // Notebook tab
+        global::Gtk.Label w86 = new global::Gtk.Label();
+        w86.Visible = true;
+        this.ntbPages.Add(w86);
+        this.label29 = new global::Gtk.Label();
+        this.label29.Name = "label29";
+        this.label29.LabelProp = global::Mono.Unix.Catalog.GetString("Contracts");
+        this.ntbPages.SetTabLabel(w86, this.label29);
+        this.label29.ShowAll();
         // Notebook tab
         global::Gtk.Label w87 = new global::Gtk.Label();
         w87.Visible = true;
         this.ntbPages.Add(w87);
-        this.label29 = new global::Gtk.Label();
-        this.label29.Name = "label29";
-        this.label29.LabelProp = global::Mono.Unix.Catalog.GetString("Contracts");
-        this.ntbPages.SetTabLabel(w87, this.label29);
-        this.label29.ShowAll();
+        this.label30 = new global::Gtk.Label();
+        this.label30.Name = "label30";
+        this.label30.LabelProp = global::Mono.Unix.Catalog.GetString("Map");
+        this.ntbPages.SetTabLabel(w87, this.label30);
+        this.label30.ShowAll();
         // Notebook tab
         global::Gtk.Label w88 = new global::Gtk.Label();
         w88.Visible = true;
         this.ntbPages.Add(w88);
-        this.label30 = new global::Gtk.Label();
-        this.label30.Name = "label30";
-        this.label30.LabelProp = global::Mono.Unix.Catalog.GetString("Map");
-        this.ntbPages.SetTabLabel(w88, this.label30);
-        this.label30.ShowAll();
+        this.label31 = new global::Gtk.Label();
+        this.label31.Name = "label31";
+        this.label31.LabelProp = global::Mono.Unix.Catalog.GetString("Corporations");
+        this.ntbPages.SetTabLabel(w88, this.label31);
+        this.label31.ShowAll();
         // Notebook tab
         global::Gtk.Label w89 = new global::Gtk.Label();
         w89.Visible = true;
         this.ntbPages.Add(w89);
-        this.label31 = new global::Gtk.Label();
-        this.label31.Name = "label31";
-        this.label31.LabelProp = global::Mono.Unix.Catalog.GetString("Corporations");
-        this.ntbPages.SetTabLabel(w89, this.label31);
-        this.label31.ShowAll();
+        this.label32 = new global::Gtk.Label();
+        this.label32.Name = "label32";
+        this.label32.LabelProp = global::Mono.Unix.Catalog.GetString("Assets");
+        this.ntbPages.SetTabLabel(w89, this.label32);
+        this.label32.ShowAll();
         // Notebook tab
         global::Gtk.Label w90 = new global::Gtk.Label();
         w90.Visible = true;
         this.ntbPages.Add(w90);
-        this.label32 = new global::Gtk.Label();
-        this.label32.Name = "label32";
-        this.label32.LabelProp = global::Mono.Unix.Catalog.GetString("Assets");
-        this.ntbPages.SetTabLabel(w90, this.label32);
-        this.label32.ShowAll();
+        this.label33 = new global::Gtk.Label();
+        this.label33.Name = "label33";
+        this.label33.LabelProp = global::Mono.Unix.Catalog.GetString("Money");
+        this.ntbPages.SetTabLabel(w90, this.label33);
+        this.label33.ShowAll();
         // Notebook tab
         global::Gtk.Label w91 = new global::Gtk.Label();
         w91.Visible = true;
         this.ntbPages.Add(w91);
-        this.label33 = new global::Gtk.Label();
-        this.label33.Name = "label33";
-        this.label33.LabelProp = global::Mono.Unix.Catalog.GetString("Money");
-        this.ntbPages.SetTabLabel(w91, this.label33);
-        this.label33.ShowAll();
-        // Notebook tab
-        global::Gtk.Label w92 = new global::Gtk.Label();
-        w92.Visible = true;
-        this.ntbPages.Add(w92);
         this.label34 = new global::Gtk.Label();
         this.label34.Name = "label34";
         this.label34.LabelProp = global::Mono.Unix.Catalog.GetString("Help");
-        this.ntbPages.SetTabLabel(w92, this.label34);
+        this.ntbPages.SetTabLabel(w91, this.label34);
         this.label34.ShowAll();
         this.Add(this.ntbPages);
         if ((this.Child != null)) {
             this.Child.ShowAll();
         }
-        this.DefaultWidth = 689;
+        this.DefaultWidth = 598;
         this.DefaultHeight = 532;
-        this.hpnMarket.Hide();
         this.Hide();
         this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
         this.btnAddNewApiKey.Clicked += new global::System.EventHandler(this.AddNewKey);

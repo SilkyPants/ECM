@@ -25,6 +25,7 @@ using System.Data.SQLite;
 using SqlConn = System.Data.SQLite.SQLiteConnection;
 using SqlCmd = System.Data.SQLite.SQLiteCommand;
 using SqlReader = System.Data.SQLite.SQLiteDataReader;
+using System.ComponentModel;
 
 public partial class MainWindow: Gtk.Window
 {    
@@ -36,9 +37,21 @@ public partial class MainWindow: Gtk.Window
 		
 		FillTabsWithImages();
         
-		LoadMarket();
+		BackgroundWorker worker = new BackgroundWorker();
+		worker.DoWork += delegate {
+			LoadMarket();
+		};
+		
+		worker.RunWorkerCompleted += HandleWorkerRunWorkerCompleted;
+		
+		worker.RunWorkerAsync();
+		
 		Visible = true;
 		
+    }
+
+    void HandleWorkerRunWorkerCompleted (object sender, RunWorkerCompletedEventArgs e)
+    {
     }
 
 	public void FillTabsWithImages ()
