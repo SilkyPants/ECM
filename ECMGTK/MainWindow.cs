@@ -32,13 +32,65 @@ public partial class MainWindow: Gtk.Window
     {
         Build ();
         
-		// Hide the tabs so that we can make the app look awesome :D
-		//ntbPages.ShowTabs = false;
-        //ntbPages.CurrentPage = 0;
+        ntbPages.CurrentPage = 0;
+		
+		FillTabsWithImages();
         
 		LoadMarket();
 		Visible = true;
+		
     }
+
+	public void FillTabsWithImages ()
+	{
+		ntbPages.SetTabLabelPacking(vbxOverview, false, false, PackType.Start);
+		ntbPages.SetTabLabel(vbxOverview, CreateTabLabel("Overview", "ECMGTK.Resources.Icons.Home.png"));
+		
+		ntbPages.SetTabLabelPacking(vbxCharSheet, false, false, PackType.Start);
+		ntbPages.SetTabLabel(vbxCharSheet, CreateTabLabel("Character Sheet", "ECMGTK.Resources.Icons.CharSheet.png"));
+		
+		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
+		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
+		
+//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
+//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
+//		
+//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
+//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
+//		
+//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
+//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
+//		
+//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
+//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
+//		
+//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
+//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
+//		
+//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
+//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
+//		
+//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
+//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
+//		
+//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
+//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
+	}
+
+	public Widget CreateTabLabel (string title, string imageResource)
+	{
+		HBox box = new HBox();
+		Image icon = new Image(null, imageResource);
+		Label label = new Label(title);
+		label.Xalign = 0;
+		
+		box.PackStart(icon, false, false, 0);
+		box.PackStart(label, true, true, 0);
+		
+		box.ShowAll();
+		
+		return box;
+	}
     
     private Button CreateCharacterButton()
     {
@@ -91,22 +143,6 @@ public partial class MainWindow: Gtk.Window
 		
 		addKey.Run();
     }
-
-	protected void ChangePage (object sender, System.EventArgs e)
-	{
-		if(sender == HomeAction)
-		{
-			ntbPages.CurrentPage = 0;
-		}
-		else if(sender == CharSheetAction)
-		{
-			ntbPages.CurrentPage = 1;
-		}
-		else if(sender == MarketAction)
-		{
-			ntbPages.CurrentPage = 2;
-		}
-	}
 
     protected void RowCollapsed (object sender, Gtk.RowCollapsedArgs args)
     {
@@ -192,10 +228,20 @@ public partial class MainWindow: Gtk.Window
         
         marketStore.Clear();
         
+        TreeViewColumn mainColumn = new TreeViewColumn();
+        mainColumn.Title = "Groups";
+        
         CellRendererPixbuf pixBuf = new CellRendererPixbuf();
         pixBuf.Xalign = 0;
-        trvMarket.AppendColumn("Icon", pixBuf, "pixbuf", 0);
-        trvMarket.AppendColumn("Name", new CellRendererText(), "text", 1);
+        mainColumn.PackStart(pixBuf, false);
+        mainColumn.AddAttribute(pixBuf, "pixbuf", 0);
+        
+        CellRendererText label = new CellRendererText();
+        label.Xalign = 0;
+        mainColumn.PackStart(label, false);
+        mainColumn.AddAttribute(label, "text", 1);
+        
+        trvMarket.AppendColumn(mainColumn);
         
         LoadMarketGroupsForID(-1, TreeIter.Zero);
         
@@ -271,5 +317,10 @@ public partial class MainWindow: Gtk.Window
             marketStore.AppendValues(parentIter, null, itemName, typeID);
         }
     }
+
+	protected void SelectRow (object o, Gtk.SelectCursorRowArgs args)
+	{
+        Console.WriteLine("SelectRow");
+	}
     #endregion
 }

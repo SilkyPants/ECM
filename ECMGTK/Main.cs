@@ -28,20 +28,10 @@ namespace ECMGTK
     {
         public static void Main (string[] args)
         {
-            
-         
-         AppDomain.CurrentDomain.AssemblyResolve += HandleAppDomainCurrentDomainAssemblyResolve;
             Application.Init ();
             MainWindow win = new MainWindow ();
             win.Show ();
             Application.Run ();
     	}
-
-        static Assembly HandleAppDomainCurrentDomainAssemblyResolve (object sender, ResolveEventArgs args)
-        {
-        	Console.WriteLine(args.Name);
-			
-			return Assembly.Load(args.Name);
-        }
 	}
 }

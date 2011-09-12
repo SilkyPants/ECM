@@ -93,6 +93,7 @@
     <EmbeddedResource Include="Resources\Icons\Recycle.png" />
     <EmbeddedResource Include="Resources\Icons\ExportChar.png" />
     <EmbeddedResource Include="Resources\Icons\MarketGroup.png" />
+    <EmbeddedResource Include="Resources\Icons\CharInfo.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
