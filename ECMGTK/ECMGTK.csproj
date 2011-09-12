@@ -109,6 +109,7 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Classes\" />
+    <Folder Include="Resources\Database\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EveApi\EveApi.csproj">
@@ -125,8 +126,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Database\sqlite3.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="sqlite3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

@@ -83,8 +83,8 @@ namespace ECMGTK {
             this.label2.WidthRequest = 365;
             this.label2.Name = "label2";
             this.label2.Xalign = 0F;
-            this.label2.LabelProp = global::Mono.Unix.Catalog.GetString("Go to https://support.eveonline.com/api/ or click here to generate a key.\n\nClicki" +
-                    "ng here will suggest a key to use all features available in this program.");
+            this.label2.LabelProp = global::Mono.Unix.Catalog.GetString("Go to https://support.eveonline.com/api/ or click here to generate a key.\r\n\r\nClic" +
+                    "king here will suggest a key to use all features available in this program.");
             this.label2.Wrap = true;
             this.GtkAlignment2.Add(this.label2);
             this.frame1.Add(this.GtkAlignment2);
