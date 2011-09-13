@@ -123,6 +123,16 @@ Global
 		$0.StandardHeader = $9
 		$9.Text = 
 		$9.IncludeInNewFiles = True
+		$0.VersionControlPolicy = $10
+		$10.CommitMessageStyle = $11
+		$11.LastFilePostfix = "@:\n  "
+		$11.IncludeDirectoryPaths = True
+		$10.inheritsSet = Mono
+		$0.ChangeLogPolicy = $12
+		$12.UpdateMode = None
+		$12.MessageStyle = $13
+		$13.LineAlign = 0
+		$12.inheritsSet = Mono
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

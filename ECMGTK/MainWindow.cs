@@ -29,6 +29,19 @@
 
     void trvSelectionChanged (object sender, EventArgs e)
     {
+        TreeIter iter;        TreeModel model;
+        if(trvMarket.Selection.GetSelected(out model, out iter))
+        {
+            if(model.GetValue(iter, 0) == null)
+            {
+                long ID = Convert.ToInt64(model.GetValue(iter, 2));
+                string name = model.GetValue(iter, 1).ToString();
 
+                Button btn = new Button(new Label(name + ID.ToString()));
+                btn.ShowAll();
+
+                vbbItems.Add(btn);
+            }
+        }
     }        private bool HandleMarketFilter (TreeModel model, TreeIter iter)    {     string itemName = model.GetValue (iter, 0).ToString ();     if (txtMarketFilter.Text == "")         return false;         if (itemName.Contains(txtMarketFilter.Text))         return true;     else         return false;    }    #endregion		#region Overview	protected void AddNewKey (object sender, System.EventArgs e)	{		ECMGTK.AddApiKey addKey = new ECMGTK.AddApiKey();				addKey.Run();	}
 	#endregion}

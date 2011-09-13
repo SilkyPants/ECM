@@ -1228,12 +1228,27 @@
               </packing>
             </child>
             <child>
-              <widget class="Gtk.VButtonBox" id="vbuttonbox1">
+              <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow11">
                 <property name="MemberName" />
-                <property name="Homogeneous">True</property>
-                <property name="Spacing">3</property>
-                <property name="BorderWidth">3</property>
-                <property name="Size">0</property>
+                <property name="HscrollbarPolicy">Never</property>
+                <property name="ShadowType">In</property>
+                <child>
+                  <widget class="Gtk.Viewport" id="GtkViewport1">
+                    <property name="MemberName" />
+                    <property name="ShadowType">None</property>
+                    <child>
+                      <widget class="Gtk.VButtonBox" id="vbbItems">
+                        <property name="MemberName" />
+                        <property name="ShowScrollbars">True</property>
+                        <property name="Homogeneous">True</property>
+                        <property name="Spacing">3</property>
+                        <property name="BorderWidth">3</property>
+                        <property name="Size">0</property>
+                        <property name="LayoutStyle">Start</property>
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
               </widget>
             </child>
           </widget>
