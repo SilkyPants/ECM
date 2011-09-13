@@ -1,20 +1,18 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ECM.Core\Database\ItemDatabase.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ECMGTK\MainWindow.cs">
     <Files>
-      <File FileName="ECM.Core\Database\ItemDatabase.cs" Line="129" Column="4" />
-      <File FileName="ECM.Core\EveClasses.cs" Line="13" Column="39" />
-      <File FileName="ECMGTK\MainWindow.cs" Line="212" Column="1" />
+      <File FileName="ECM.Core\Database\ItemDatabase.cs" Line="81" Column="10" />
+      <File FileName="ECM.Core\EveClasses.cs" Line="1" Column="1" />
+      <File FileName="ECMGTK\MainWindow.cs" Line="198" Column="28" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
+        <State expanded="True" selected="True">
           <Node name="ApiTestBed" expanded="True" />
           <Node name="ECM.Core" expanded="True">
             <Node name="References" expanded="True" />
-            <Node name="Database" expanded="True">
-              <Node name="ItemDatabase.cs" selected="True" />
-            </Node>
+            <Node name="Database" expanded="True" />
             <Node name="Resources" expanded="True">
               <Node name="Icons" expanded="True" />
             </Node>
@@ -34,7 +32,6 @@
     <BreakpointStore>
       <Breakpoint file="I:\ECM\ApiTestBed\MainWindow.cs" line="304" />
       <Breakpoint file="/Users/danielsilk/Desktop/ECM/ECMGTK/Main.cs" line="42" />
-      <Breakpoint file="C:\Programming\ECM\ECM.Core\Database\ItemDatabase.cs" line="138" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
