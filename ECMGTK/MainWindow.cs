@@ -20,11 +20,6 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using Gtk;
-using System.Data.SQLite;
-
-using SqlConn = System.Data.SQLite.SQLiteConnection;
-using SqlCmd = System.Data.SQLite.SQLiteCommand;
-using SqlReader = System.Data.SQLite.SQLiteDataReader;
 using System.ComponentModel;
 
 public partial class MainWindow: Gtk.Window
@@ -140,9 +135,7 @@ public partial class MainWindow: Gtk.Window
     }
     
     protected void OnDeleteEvent (object sender, DeleteEventArgs a)
-    {
-		CloseDatabase();
-		
+    {		
         Application.Quit ();
         a.RetVal = true;
     }
@@ -183,52 +176,11 @@ public partial class MainWindow: Gtk.Window
     }
     
     #region Database
-    SqlConn sqlConnection = null;
     TreeStore marketStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(string), typeof(long));
     TreeModelFilter marketFilter;
     
-    static string itemDatabasePath = "Resources/Database/eveItems.db";
-    static string skillsDatabasePath = "Resources/Database/eveSkills.db";
-    
-    public bool OpenDatabase()
-    {
-        Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
-        sqlConnection = new SqlConn(string.Format("Data Source={0};version=3", itemDatabasePath));
-        sqlConnection.Open();
-    
-        SqlCmd cmd = sqlConnection.CreateCommand();
-        cmd.CommandText = "PRAGMA cache_size=5000";
-        cmd.ExecuteNonQuery();
-    
-        cmd = sqlConnection.CreateCommand();
-        cmd.CommandText = "PRAGMA count_changes=OFF";
-        cmd.ExecuteNonQuery();
-    
-        cmd = sqlConnection.CreateCommand();
-        cmd.CommandText = "PRAGMA temp_store=MEMORY";
-        cmd.ExecuteNonQuery();
-    
-        cmd = sqlConnection.CreateCommand();
-        cmd.CommandText = string.Format("ATTACH DATABASE \'{0}\' AS {1}", skillsDatabasePath, 
-                                     System.IO.Path.GetFileNameWithoutExtension(skillsDatabasePath));
-        cmd.ExecuteNonQuery();
-    
-        cmd.Dispose();
-     
-        return true;
-    }
-    
-    public void CloseDatabase()
-    {
-        if(sqlConnection.State != System.Data.ConnectionState.Open) return;
-        
-        sqlConnection.Close();
-    }
-    
     public void LoadMarket()
-    {
-        OpenDatabase();
-        
+    {        
         marketStore.Clear();
         
         TreeViewColumn mainColumn = new TreeViewColumn();
@@ -245,8 +197,8 @@ public partial class MainWindow: Gtk.Window
         mainColumn.AddAttribute(label, "text", 1);
         
         trvMarket.AppendColumn(mainColumn);
-        
-        LoadMarketGroupsForID(-1, TreeIter.Zero);
+		
+		ECM.Core.ItemDatabase.LoadMarket(marketStore);
         
         trvMarket.ColumnsAutosize();
         
@@ -258,67 +210,24 @@ public partial class MainWindow: Gtk.Window
         sorted.SetSortColumnId(1, SortType.Ascending);
         
         trvMarket.Model = sorted;
-        
-        CloseDatabase();
+		
+		Console.WriteLine("Market should be loaded");
     }
     
     private bool HandleMarketFilter (TreeModel model, TreeIter iter)
     {
-     string itemName = model.GetValue (iter, 1).ToString ();
+     //string itemName = model.GetValue (iter, 1).ToString ();
     
-     if (txtMarketFilter.Text == "")
+     //if (txtMarketFilter.Text == "")
          return true;
      
-     if(model.IterHasChild(iter))
-         return true;
+     //if(model.IterHasChild(iter))
+     //    return true;
     
-     if (itemName.Contains(txtMarketFilter.Text))
-         return true;
-     else
-         return false;
-    }
-    
-    private void LoadMarketGroupsForID(long parentGroupID, TreeIter parentIter)
-    {
-     string selectCmd = "SELECT marketGroupID, marketGroupName, hasTypes FROM invMarketGroups WHERE parentGroupID ";
-     selectCmd += parentGroupID >= 0 ? string.Format("= {0}", parentGroupID) : "IS NULL";
-     
-        SqlCmd cmd = sqlConnection.CreateCommand();
-        cmd.CommandText = selectCmd;
-        SqlReader row = cmd.ExecuteReader();
-        
-        while(row.Read())
-        {
-            string groupName = row[1].ToString();
-            long groupID = Convert.ToInt64(row[0]);
-            int hasTypes = Convert.ToInt32(row[2]);
-         TreeIter groupIter;
-         
-         if(parentIter.Equals(TreeIter.Zero))
-             groupIter = marketStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.MarketGroup.png"), groupName);
-         else
-             groupIter = marketStore.AppendValues(parentIter, new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.MarketGroup.png"), groupName);
-             
-         LoadMarketGroupsForID(groupID, groupIter);
-         
-         if(hasTypes == 1)
-                 LoadMarketItemsForID(groupID, groupIter);
-        }
-    }
-    
-    private void LoadMarketItemsForID(long marketGroupID, TreeIter parentIter)
-    {
-        SqlCmd cmd = sqlConnection.CreateCommand();
-        cmd.CommandText = string.Format("SELECT typeID, typeName FROM invTypes WHERE marketGroupID = {0} UNION SELECT typeID, typeName FROM invSkills WHERE marketGroupID = {0}", marketGroupID);
-        SqlReader row = cmd.ExecuteReader();
-        
-        while(row.Read())
-        {
-            string itemName = row[1].ToString();
-            long typeID = Convert.ToInt64(row[0]);
-    
-            marketStore.AppendValues(parentIter, null, itemName, typeID);
-        }
+     //if (itemName.Contains(txtMarketFilter.Text))
+     //    return true;
+     //else
+     //    return false;
     }
 
 	protected void SelectRow (object o, Gtk.SelectCursorRowArgs args)

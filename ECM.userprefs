@@ -1,27 +1,31 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ApiTestBed/MainWindow.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ECM.Core\Database\ItemDatabase.cs">
     <Files>
-      <File FileName="EveApi/Api/EveCentralApi.cs" Line="80" Column="1" />
-      <File FileName="EveApi/Api/Requests/ApiRequest.cs" Line="210" Column="22" />
-      <File FileName="ApiTestBed/MainWindow.cs" Line="315" Column="9" />
+      <File FileName="ECM.Core\Database\ItemDatabase.cs" Line="129" Column="4" />
+      <File FileName="ECM.Core\EveClasses.cs" Line="13" Column="39" />
+      <File FileName="ECMGTK\MainWindow.cs" Line="212" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="ApiTestBed" expanded="True" />
-          <Node name="ECM.Core" expanded="True" />
-          <Node name="ECMGTK" expanded="True" selected="True">
-            <Node name="UserInterface" expanded="True">
-              <Node name="MainWindow" expanded="True" />
+          <Node name="ECM.Core" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="Database" expanded="True">
+              <Node name="ItemDatabase.cs" selected="True" />
             </Node>
-            <Node name="Resources" expanded="True" />
-          </Node>
-          <Node name="EveApi" expanded="True">
-            <Node name="Api" expanded="True">
-              <Node name="Requests" expanded="True" />
+            <Node name="Resources" expanded="True">
+              <Node name="Icons" expanded="True" />
             </Node>
           </Node>
+          <Node name="ECMGTK" expanded="True" />
+          <Node name="EveApi" expanded="True" />
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>m_MarketGroups</Value>
         </State>
       </Pad>
     </Pads>
@@ -30,6 +34,7 @@
     <BreakpointStore>
       <Breakpoint file="I:\ECM\ApiTestBed\MainWindow.cs" line="304" />
       <Breakpoint file="/Users/danielsilk/Desktop/ECM/ECMGTK/Main.cs" line="42" />
+      <Breakpoint file="C:\Programming\ECM\ECM.Core\Database\ItemDatabase.cs" line="138" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
