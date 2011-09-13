@@ -226,7 +226,7 @@ public partial class MainWindow {
         this.ntbPages = new global::Gtk.Notebook();
         this.ntbPages.CanFocus = true;
         this.ntbPages.Name = "ntbPages";
-        this.ntbPages.CurrentPage = 5;
+        this.ntbPages.CurrentPage = 0;
         this.ntbPages.EnablePopup = true;
         this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
         this.ntbPages.Scrollable = true;
@@ -264,6 +264,7 @@ public partial class MainWindow {
         w6.Fill = false;
         // Container child vbxOverview.Gtk.Box+BoxChild
         this.hbuttonbox1 = new global::Gtk.HButtonBox();
+        this.hbuttonbox1.Name = "hbuttonbox1";
         this.hbuttonbox1.Homogeneous = true;
         this.hbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
         // Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
@@ -900,7 +901,7 @@ public partial class MainWindow {
         this.hpnMarket = new global::Gtk.HPaned();
         this.hpnMarket.CanFocus = true;
         this.hpnMarket.Name = "hpnMarket";
-        this.hpnMarket.Position = 300;
+        this.hpnMarket.Position = 1;
         this.hpnMarket.BorderWidth = ((uint)(3));
         // Container child hpnMarket.Gtk.Paned+PanedChild
         this.notebook1 = new global::Gtk.Notebook();

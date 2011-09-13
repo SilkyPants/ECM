@@ -270,6 +270,7 @@ namespace ECMGTK {
             this.Show();
             this.label2.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler(this.NeedKeyClick);
             this.btnRetrieveApi.Clicked += new global::System.EventHandler(this.RetrieveApiInfo);
+            this.button47.Clicked += new global::System.EventHandler(this.ImportKey);
         }
     }
 }

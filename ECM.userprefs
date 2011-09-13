@@ -3,25 +3,26 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="ECMGTK\MainWindow.cs">
     <Files>
       <File FileName="ECM.Core\EveClasses.cs" Line="1" Column="1" />
-      <File FileName="ECMGTK\MainWindow.cs" Line="248" Column="48" />
+      <File FileName="ECMGTK\MainWindow.cs" Line="290" Column="80" />
       <File FileName="ECM.Core\Database\ItemDatabase.cs" Line="159" Column="64" />
-      <File FileName="ApiTestBed\MainWindow.cs" Line="1" Column="1" />
+      <File FileName="ECM.Core\Account.cs" Line="68" Column="10" />
+      <File FileName="EveApi\Api\Requests\ApiRequest.cs" Line="97" Column="36" />
+      <File FileName="ECM.Core\Character.cs" Line="14" Column="10" />
+      <File FileName="EveApi\Api\Sheets\CharacterSheet.cs" Line="10" Column="29" />
+      <File FileName="EveApi\Api\Requests\CharacterApiRequest.cs" Line="11" Column="40" />
+      <File FileName="ECM.Core\Data.cs" Line="22" Column="10" />
+      <File FileName="ECMGTK\AddApiKey.cs" Line="90" Column="49" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="ApiTestBed" expanded="True" />
-          <Node name="ECM.Core" expanded="True">
-            <Node name="References" expanded="True" />
-            <Node name="Database" expanded="True" />
-            <Node name="Resources" expanded="True">
-              <Node name="Icons" expanded="True" />
-            </Node>
-          </Node>
+          <Node name="ECM.Core" expanded="True" />
           <Node name="ECMGTK" expanded="True">
+            <Node name="UserInterface" expanded="True" />
+            <Node name="Resources" expanded="True" />
             <Node name="MainWindow.cs" selected="True" />
           </Node>
-          <Node name="EveApi" expanded="True" />
         </State>
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
