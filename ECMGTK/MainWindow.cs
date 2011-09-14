@@ -34,13 +34,7 @@
         {
             if(model.GetValue(iter, 0) == null)
             {
-                long ID = Convert.ToInt64(model.GetValue(iter, 2));
-                string name = model.GetValue(iter, 1).ToString();
-
-                Button btn = new Button(new Label(name + ID.ToString()));
-                btn.ShowAll();
-
-                vbbItems.Add(btn);
+                long ID = Convert.ToInt64(model.GetValue(iter, 2));                ECM.Core.EveItem item = ECM.Core.ItemDatabase.Items[ID];                Image itemPic = new Image(ECM.Core.ItemDatabase.ItemUnknownPNG);                itemPic.WidthRequest = 64;                itemPic.HeightRequest = 64;                Image skillsMet = new Image(ECM.Core.ItemDatabase.ItemUnknownPNG);                skillsMet.WidthRequest = 16;                skillsMet.HeightRequest = 16;                Label itemName = new Label(item.Name);                itemName.Xalign = 0;                Label itemDesc = new Label(item.Description);                itemDesc.Wrap = true;                itemDesc.Xalign = 0;                HBox inner = new HBox();                inner.PackStart(itemPic, false, false, 0);                inner.PackStart(skillsMet, false, false, 0);                inner.PackEnd(itemName, true, true, 0);                Button viewDets = new Button(new Label("View Details"));                HButtonBox itemButtons = new HButtonBox();                itemButtons.Layout = ButtonBoxStyle.End;                itemButtons.BorderWidth = 3;                itemButtons.Add(viewDets);                itemButtons.ShowAll();                HSeparator sep = new HSeparator();                VBox itemBlock = new VBox();                itemBlock.PackStart(inner, false, false, 0);                itemBlock.PackStart(itemDesc, true, true, 0);                itemBlock.PackEnd(itemButtons, false, false, 0);                Frame frame = new Frame();                frame.Shadow = ShadowType.EtchedOut;                frame.Add(itemBlock);//                VBox outer = new VBox();//                outer.PackStart(frame, false, false, 0);//                outer.PackStart(sep, true, true, 3);                frame.ShowAll();                vbbMarketGroups.PackStart(frame, true, true, 3);                //vbbMarketGroups.PackStart(sep, false, false, 3);                vbbMarketGroups.ShowAll();
             }
         }
     }        private bool HandleMarketFilter (TreeModel model, TreeIter iter)    {     string itemName = model.GetValue (iter, 0).ToString ();     if (txtMarketFilter.Text == "")         return false;         if (itemName.Contains(txtMarketFilter.Text))         return true;     else         return false;    }    #endregion		#region Overview	protected void AddNewKey (object sender, System.EventArgs e)	{		ECMGTK.AddApiKey addKey = new ECMGTK.AddApiKey();				addKey.Run();        foreach(ECM.Core.Character character in ECM.Core.Data.Characters.Values)        {            vbbCharacters.Add(CreateCharacterButton(character));        }	}
@@ -51,8 +45,6 @@
         frm.BorderWidth = 3;                Image img = new Image(null, "ECMGTK.Resources.NoPortrait_64.png");        img.WidthRequest = 64;        img.HeightRequest = 64;
 
         frm.Add(img);        box.PackStart(frm, false, false, 3);        Label text = new Label(character.Name);        text.Xalign = 0;        box.PackStart(text, true, true, 0);
-
-
         Button btn = new Button(box);
 
-        btn.ShowAll();        return btn;    }	#endregion}
+        btn.ShowAll();        return btn;    }    protected void DynamicLabelSizing (object sender, Gtk.SizeAllocatedArgs args)    {        Label lab = sender as Label;        if(lab != null)        {            lab.SetSizeRequest(args.Allocation.Width - 1, -1);        }    }	#endregion}

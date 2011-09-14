@@ -121,20 +121,21 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="MainWindow" design-size="617 532">
+  <widget class="Gtk.Window" id="MainWindow" design-size="806 685">
     <action-group name="Default" />
     <property name="MemberName" />
-    <property name="HeightRequest">532</property>
     <property name="Visible">False</property>
     <property name="Title" translatable="yes">Eve Character Monitor</property>
     <property name="Icon">resource:ECMGTK.Resources.Icons.Corpse.png</property>
     <property name="WindowPosition">Center</property>
+    <property name="DefaultWidth">800</property>
+    <property name="DefaultHeight">550</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
       <widget class="Gtk.Notebook" id="ntbPages">
         <property name="MemberName" />
         <property name="CanFocus">True</property>
-        <property name="CurrentPage">0</property>
+        <property name="CurrentPage">5</property>
         <property name="EnablePopup">True</property>
         <property name="TabPos">Left</property>
         <property name="Scrollable">True</property>
@@ -1112,7 +1113,7 @@
           <widget class="Gtk.HPaned" id="hpnMarket">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="Position">1</property>
+            <property name="Position">250</property>
             <property name="BorderWidth">3</property>
             <child>
               <widget class="Gtk.Notebook" id="notebook1">
@@ -1228,26 +1229,125 @@
               </packing>
             </child>
             <child>
-              <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow11">
+              <widget class="Gtk.Notebook" id="notebook2">
                 <property name="MemberName" />
-                <property name="HscrollbarPolicy">Never</property>
-                <property name="ShadowType">In</property>
+                <property name="CanFocus">True</property>
+                <property name="CurrentPage">2</property>
+                <property name="BorderWidth">3</property>
                 <child>
-                  <widget class="Gtk.Viewport" id="GtkViewport1">
+                  <placeholder />
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="label35">
                     <property name="MemberName" />
-                    <property name="ShadowType">None</property>
+                    <property name="LabelProp" translatable="yes">Details</property>
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow11">
+                    <property name="MemberName" />
+                    <property name="HscrollbarPolicy">Never</property>
+                    <property name="ShadowType">In</property>
+                    <property name="BorderWidth">3</property>
                     <child>
-                      <widget class="Gtk.VButtonBox" id="vbbItems">
+                      <widget class="Gtk.Viewport" id="GtkViewport1">
                         <property name="MemberName" />
-                        <property name="ShowScrollbars">True</property>
-                        <property name="Homogeneous">True</property>
-                        <property name="Spacing">3</property>
-                        <property name="BorderWidth">3</property>
-                        <property name="Size">0</property>
-                        <property name="LayoutStyle">Start</property>
+                        <property name="ShadowType">None</property>
+                        <child>
+                          <widget class="Gtk.VButtonBox" id="vbbMarketGroups">
+                            <property name="MemberName" />
+                            <property name="ShowScrollbars">True</property>
+                            <property name="Homogeneous">True</property>
+                            <property name="Spacing">3</property>
+                            <property name="BorderWidth">3</property>
+                            <property name="Size">0</property>
+                            <property name="LayoutStyle">Start</property>
+                          </widget>
+                        </child>
                       </widget>
                     </child>
                   </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="label27">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">Groups</property>
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow12">
+                    <property name="MemberName" />
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="Gtk.Viewport" id="GtkViewport2">
+                        <property name="MemberName" />
+                        <property name="ShadowType">None</property>
+                        <child>
+                          <widget class="Gtk.VBox" id="vbbMarketItems">
+                            <property name="MemberName" />
+                            <property name="ShowScrollbars">True</property>
+                            <child>
+                              <widget class="Gtk.VBox" id="vbox8">
+                                <property name="MemberName" />
+                                <property name="Spacing">6</property>
+                                <child>
+                                  <placeholder />
+                                </child>
+                                <child>
+                                  <widget class="Gtk.Label" id="label38">
+                                    <property name="MemberName" />
+                                    <property name="Xalign">0</property>
+                                    <property name="Yalign">0</property>
+                                    <property name="LabelProp" translatable="yes">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque id odio sit amet felis consequat euismod ut eu urna. Nunc lobortis leo non magna facilisis aliquet. Aliquam a augue et nunc blandit interdum quis in nunc. Maecenas sollicitudin augue in nunc faucibus sed tristique enim rhoncus. Fusce ac lacus eu eros condimentum pharetra. Nunc quis dui et est luctus dapibus. Curabitur vulputate sem ut mauris ultrices sed scelerisque dolor vehicula.</property>
+                                    <property name="Wrap">True</property>
+                                    <signal name="SizeAllocated" handler="DynamicLabelSizing" />
+                                  </widget>
+                                  <packing>
+                                    <property name="Position">1</property>
+                                    <property name="AutoSize">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <placeholder />
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="Position">0</property>
+                                <property name="AutoSize">True</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <placeholder />
+                            </child>
+                            <child>
+                              <placeholder />
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="label28">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">My Orders</property>
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                  </packing>
                 </child>
               </widget>
             </child>
@@ -1257,7 +1357,7 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.Label" id="label27">
+          <widget class="Gtk.Label" id="label29">
             <property name="MemberName" />
             <property name="LabelProp" translatable="yes">Market</property>
           </widget>
@@ -1269,7 +1369,7 @@
           <placeholder />
         </child>
         <child>
-          <widget class="Gtk.Label" id="label28">
+          <widget class="Gtk.Label" id="label30">
             <property name="MemberName" />
             <property name="LabelProp" translatable="yes">Science &amp; Industry</property>
           </widget>
@@ -1281,7 +1381,7 @@
           <placeholder />
         </child>
         <child>
-          <widget class="Gtk.Label" id="label29">
+          <widget class="Gtk.Label" id="label31">
             <property name="MemberName" />
             <property name="LabelProp" translatable="yes">Contracts</property>
           </widget>
@@ -1293,7 +1393,7 @@
           <placeholder />
         </child>
         <child>
-          <widget class="Gtk.Label" id="label30">
+          <widget class="Gtk.Label" id="label32">
             <property name="MemberName" />
             <property name="LabelProp" translatable="yes">Map</property>
           </widget>
@@ -1305,7 +1405,7 @@
           <placeholder />
         </child>
         <child>
-          <widget class="Gtk.Label" id="label31">
+          <widget class="Gtk.Label" id="label33">
             <property name="MemberName" />
             <property name="LabelProp" translatable="yes">Corporations</property>
           </widget>
@@ -1317,7 +1417,7 @@
           <placeholder />
         </child>
         <child>
-          <widget class="Gtk.Label" id="label32">
+          <widget class="Gtk.Label" id="label34">
             <property name="MemberName" />
             <property name="LabelProp" translatable="yes">Assets</property>
           </widget>
@@ -1329,7 +1429,7 @@
           <placeholder />
         </child>
         <child>
-          <widget class="Gtk.Label" id="label33">
+          <widget class="Gtk.Label" id="label36">
             <property name="MemberName" />
             <property name="LabelProp" translatable="yes">Money</property>
           </widget>
@@ -1341,7 +1441,7 @@
           <placeholder />
         </child>
         <child>
-          <widget class="Gtk.Label" id="label34">
+          <widget class="Gtk.Label" id="label37">
             <property name="MemberName" />
             <property name="LabelProp" translatable="yes">Help</property>
           </widget>
