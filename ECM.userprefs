@@ -1,36 +1,19 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ECMGTK\Classes\WrapLabel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ECMGTK/MainWindow.cs">
     <Files>
-      <File FileName="ECM.Core\Database\AccountDatabase.cs" Line="111" Column="35" />
-      <File FileName="ECM.Core\Account.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Enumerations.cs" Line="1" Column="1" />
-      <File FileName="EveApi\Api\Sheets\AccountStatus.cs" Line="1" Column="1" />
-      <File FileName="ECMGTK\AddApiKey.cs" Line="1" Column="1" />
-      <File FileName="ECM.Core\Character.cs" Line="1" Column="1" />
-      <File FileName="ECM.Core\Data.cs" Line="1" Column="1" />
-      <File FileName="ECM.Core\Database\ItemDatabase.cs" Line="1" Column="1" />
-      <File FileName="ECMGTK\MainWindow.cs" Line="308" Column="52" />
-      <File FileName="EveApi\Api\Requests\ApiRequest.cs" Line="131" Column="51" />
-      <File FileName="ECMGTK\Classes\WrapLabel.cs" Line="3" Column="42" />
+      <File FileName="ECM.Core/Database/ItemDatabase.cs" Line="186" Column="3" />
+      <File FileName="ECM.Core/Database/AccountDatabase.cs" Line="1" Column="1" />
+      <File FileName="ECM.Core/Data.cs" Line="1" Column="1" />
+      <File FileName="ECMGTK/MainWindow.cs" Line="316" Column="21" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="ECM.Core" expanded="True" />
-          <Node name="ECMGTK" expanded="True">
-            <Node name="UserInterface" expanded="True" />
-            <Node name="Classes" expanded="True">
-              <Node name="WrapLabel.cs" selected="True" />
-            </Node>
-            <Node name="Resources" expanded="True" />
+        <State expanded="True" selected="True">
+          <Node name="ECM.Core" expanded="True">
+            <Node name="Database" expanded="True" />
           </Node>
-          <Node name="EveApi" expanded="True">
-            <Node name="Api" expanded="True">
-              <Node name="Requests" expanded="True" />
-              <Node name="Sheets" expanded="True" />
-            </Node>
-          </Node>
+          <Node name="ECMGTK" expanded="True" />
         </State>
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">

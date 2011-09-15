@@ -32,3 +32,4 @@ PocketMine.userprefs
 *.pidb
 .DSStore
 .*
+*.userprefs

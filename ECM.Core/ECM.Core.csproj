@@ -60,7 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Database\eveItems.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Database\eveSkills.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -72,6 +72,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Icons\ItemUnknown.png">
       <LogicalName>ECM.Core.Icons.ItemUnknownPNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\SkillBook16.png">
+      <LogicalName>ECM.Core.Icons.Skillbook16PNG</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
