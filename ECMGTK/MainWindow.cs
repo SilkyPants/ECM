@@ -34,6 +34,14 @@ public partial class MainWindow: Gtk.Window
         public byte b;
         public byte a;
 
+        public Colour(byte red, byte green, byte blue, byte alpha)
+        {
+            r = red;
+            g = green;
+            b = blue;
+            a = alpha;
+        }
+
         public uint ToUint ()
         {
             return (uint)a | (uint)b << 8 | (uint)g << 16 | (uint)r << 24;
@@ -45,6 +53,7 @@ public partial class MainWindow: Gtk.Window
         Build ();
         
         ntbPages.CurrentPage = 0;
+        hpnMarket.Position = 300;
 		
 		FillTabsWithImages();
         
@@ -54,7 +63,7 @@ public partial class MainWindow: Gtk.Window
 		};
 		
 		worker.RunWorkerCompleted += HandleWorkerRunWorkerCompleted;
-		
+		hpnMarket.Sensitive = false;
 		worker.RunWorkerAsync();
 		
 		Visible = true;
@@ -72,6 +81,7 @@ public partial class MainWindow: Gtk.Window
 
     void HandleWorkerRunWorkerCompleted (object sender, RunWorkerCompletedEventArgs e)
     {
+        hpnMarket.Sensitive = true;
     }
 
 	public void FillTabsWithImages ()
@@ -275,31 +285,68 @@ public partial class MainWindow: Gtk.Window
             {
                 long ID = Convert.ToInt64(model.GetValue(iter, 2));
                 ECM.Core.EveItem item = ECM.Core.ItemDatabase.Items[ID];
+                // Item selected -
+                // TODO: need to do this better ^^
 
-                AddItemToCurrentMarketGroup(item);
+                // Add item's market group to the list
+                TreeIter parentIter;
+                // get children iterator
+                if(model.IterParent(out parentIter, iter))
+                {
+                    ShowMarketGroupItems(model, parentIter);
+
+                    // TODO: Open Item Market Details
+                    ShowItemMarketDetails(item, model, iter);
+                }
             }
             else if(hasItems)
             {
-                // Clear the VBox
-                while(vbbMarketGroups.Children.Length > 0)
-                {
-                    vbbMarketGroups.Remove(vbbMarketGroups.Children[0]);
-                }
-
-                TreeIter childIter;
-                // get children iterator
-                if(model.IterChildren(out childIter, iter))
-                {
-                    do
-                    {
-                        long ID = Convert.ToInt64(model.GetValue(childIter, 2));
-                        ECM.Core.EveItem item = ECM.Core.ItemDatabase.Items[ID];
-
-                        AddItemToCurrentMarketGroup(item);
-                    }
-                    while(model.IterNext(ref childIter));
-                }
+                ShowMarketGroupItems(model, iter);
             }
+        }
+    }
+
+    void ShowItemMarketDetails (ECM.Core.EveItem item, TreeModel model, TreeIter iter)
+    {
+        ntbMarketDetails.CurrentPage = 0;
+
+        // First work out the tree path
+        TreeIter parentIter;
+        string path = "";
+        while(model.IterParent(out parentIter, iter))
+        {
+            iter = parentIter;
+            path = model.GetValue(parentIter, 1).ToString() + " \\ " + path;
+        }
+
+        lblItemTreeDetails.Text = path;
+
+        lblItemNameDetails.Text = item.Name;
+    }
+
+    void ShowMarketGroupItems (TreeModel model, TreeIter iter)
+    {
+        // Clear the VBox
+        while(vbbMarketGroups.Children.Length > 0)
+        {
+            vbbMarketGroups.Remove(vbbMarketGroups.Children[0]);
+        }
+
+        TreeIter childIter;
+        // get children iterator
+        if(model.IterChildren(out childIter, iter))
+        {
+            do
+            {
+                // TODO: Need check to make sure it's an item
+                long ID = Convert.ToInt64(model.GetValue(childIter, 2));
+                ECM.Core.EveItem item = ECM.Core.ItemDatabase.Items[ID];
+
+                AddItemToCurrentMarketGroup(item);
+            }
+            while(model.IterNext(ref childIter));
+
+            ntbMarketDetails.CurrentPage = 1;
         }
     }
 
@@ -315,29 +362,29 @@ public partial class MainWindow: Gtk.Window
         Gdk.Pixbuf buf = new Gdk.Pixbuf(Gdk.Colorspace.Rgb, true, 8, 22, 22);
         Gdk.Pixbuf book = new Gdk.Pixbuf(ECM.Core.ItemDatabase.Skillbook16PNG);
 
-        Colour col = new Colour();
-        col.r = 128;
-        col.g = 0;
-        col.b = 0;
-        col.a = 128;
-
+        Colour col = new Colour(128, 0, 0, 128);
         buf.Fill(col.ToUint());
         book.Composite(buf, 0, 0, buf.Width, buf.Height, 0, 0, 1, 1, Gdk.InterpType.Hyper, 255);
 
         Image skillsMet = new Image(buf);
         skillsMet.WidthRequest = 22;
         skillsMet.HeightRequest = 22;
-        skillsMet.Yalign = 0;
+        skillsMet.Xalign = 0;
 
-        Label itemName = new Label(item.Name);
+        Label itemName = new Label();
+        itemName.UseMarkup = true;
+        itemName.Markup = string.Format("<b>{0}</b>", item.Name.ToUpper());
         itemName.Xalign = 0;
 
         WrapLabel itemDesc = new WrapLabel(item.Description);
 
+        VBox heading = new VBox();
+        heading.PackStart(skillsMet, false, false, 0);
+        heading.PackEnd(itemName, true, true, 0);
+
         HBox inner = new HBox();
         inner.PackStart(itemPic, false, false, 0);
-        inner.PackStart(skillsMet, false, false, 0);
-        inner.PackEnd(itemName, true, true, 0);
+        inner.PackStart(heading, true, true, 0);
 
         Button viewDets = new Button(new Label("View Details"));
 
