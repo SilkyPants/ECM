@@ -8,6 +8,16 @@ namespace ECM.Core
         static Dictionary<string, Account> m_Accounts = new Dictionary<string, Account>();
         static Dictionary<long, Character> m_Characters = new Dictionary<long, Character>();
 
+        #region Events
+        public static event EventHandler CharacterChanged;
+
+        public static void OnCharacterChanged()
+        {
+            if(CharacterChanged != null)
+                CharacterChanged(null, null);
+        }
+        
+        #endregion
         public static Dictionary<long, Character> Characters
         {
             get { return m_Characters; }

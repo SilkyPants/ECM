@@ -121,7 +121,7 @@ namespace ECM.Core
 	    
 	    private static void LoadMarketGroups()
 	    {
-	     	string selectCmd = "SELECT marketGroupID, marketGroupName, parentGroupID FROM invMarketGroups ORDER BY hasTypes, parentGroupID, marketGroupID";
+	     	string selectCmd = "SELECT marketGroupID, marketGroupName, parentGroupID, hasTypes FROM invMarketGroups ORDER BY hasTypes, parentGroupID, marketGroupID";
 	     
 	        SqlCmd cmd = sqlConnection.CreateCommand();
 	        cmd.CommandText = selectCmd;
@@ -132,11 +132,13 @@ namespace ECM.Core
 	            string groupName = row[1].ToString();
 	            long groupID = Convert.ToInt64(row[0]);
 	            long parentID = row[2] is DBNull ? -1 : Convert.ToInt64(row[2]);
+                bool hasItems = row[3] is DBNull ? false : Convert.ToInt32(row[3]) == 1;
 				
 				EveMarketGroup newGroup = new EveMarketGroup();
 				newGroup.Name = groupName;
 				newGroup.ID = groupID;
 				newGroup.ParentID = parentID;
+                newGroup.HasItems = hasItems;
 				newGroup.IconString = "ECM.Core.Icons.MarketGroupPNG";
 				
 				m_MarketGroups.Add(groupID, newGroup);
@@ -185,7 +187,7 @@ namespace ECM.Core
                     groupIter = marketStore.AppendNode();
                 }
 
-				marketStore.SetValues(groupIter, new Gdk.Pixbuf(MarketGroupPNG), group.Name, group.ID);
+				marketStore.SetValues(groupIter, new Gdk.Pixbuf(MarketGroupPNG), group.Name, group.ID, group.HasItems);
 				group.Tag = groupIter;
 			}
 

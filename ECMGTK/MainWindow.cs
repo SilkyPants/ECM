@@ -26,7 +26,20 @@ using System.Timers;
 using ECMGTK;
 
 public partial class MainWindow: Gtk.Window
-{    
+{
+    struct Colour
+    {
+        public byte r;
+        public byte g;
+        public byte b;
+        public byte a;
+
+        public uint ToUint ()
+        {
+            return (uint)a | (uint)b << 8 | (uint)g << 16 | (uint)r << 24;
+        }
+    }
+
     public MainWindow (): base (Gtk.WindowType.Toplevel)
     {
         Build ();
@@ -189,7 +202,7 @@ public partial class MainWindow: Gtk.Window
     }
     
     #region Database
-    TreeStore marketStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(string), typeof(long));
+    TreeStore marketStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(string), typeof(long), typeof(bool));
     ListStore itemStore = new ListStore(typeof(string), typeof(long));
     TreeModelFilter marketFilter;
     
@@ -256,62 +269,96 @@ public partial class MainWindow: Gtk.Window
         TreeModel model;
         if(trvMarket.Selection.GetSelected(out model, out iter))
         {
+            bool hasItems = (bool)model.GetValue(iter, 3);
+
             if(model.GetValue(iter, 0) == null)
             {
                 long ID = Convert.ToInt64(model.GetValue(iter, 2));
                 ECM.Core.EveItem item = ECM.Core.ItemDatabase.Items[ID];
 
-                Image itemPic = new Image(ECM.Core.ItemDatabase.ItemUnknownPNG);
-                itemPic.WidthRequest = 64;
-                itemPic.HeightRequest = 64;
+                AddItemToCurrentMarketGroup(item);
+            }
+            else if(hasItems)
+            {
+                // Clear the VBox
+                while(vbbMarketGroups.Children.Length > 0)
+                {
+                    vbbMarketGroups.Remove(vbbMarketGroups.Children[0]);
+                }
 
-                Image skillsMet = new Image(ECM.Core.ItemDatabase.Skillbook16PNG);
-                skillsMet.WidthRequest = 16;
-                skillsMet.HeightRequest = 16;
-                skillsMet.Yalign = 0;
+                TreeIter childIter;
+                // get children iterator
+                if(model.IterChildren(out childIter, iter))
+                {
+                    do
+                    {
+                        long ID = Convert.ToInt64(model.GetValue(childIter, 2));
+                        ECM.Core.EveItem item = ECM.Core.ItemDatabase.Items[ID];
 
-                Label itemName = new Label(item.Name);
-                itemName.Xalign = 0;
-
-                WrapLabel itemDesc = new WrapLabel(item.Description);
-
-                HBox inner = new HBox();
-                inner.PackStart(itemPic, false, false, 0);
-                inner.PackStart(skillsMet, false, false, 0);
-                inner.PackEnd(itemName, true, true, 0);
-
-                Button viewDets = new Button(new Label("View Details"));
-
-                HButtonBox itemButtons = new HButtonBox();
-                itemButtons.Layout = ButtonBoxStyle.End;
-                itemButtons.BorderWidth = 3;
-                itemButtons.Add(viewDets);
-                itemButtons.ShowAll();
-
-                HSeparator sep = new HSeparator();
-
-                VBox itemBlock = new VBox();
-                itemBlock.PackStart(inner, false, false, 0);
-                itemBlock.PackStart(itemDesc, true, true, 0);
-                itemBlock.PackEnd(itemButtons, false, false, 0);
-
-//                Frame frame = new Frame();
-//                frame.Shadow = ShadowType.EtchedOut;
-//                frame.Add(itemBlock);
-
-//                VBox outer = new VBox();
-//                outer.PackStart(frame, false, false, 0);
-//                outer.PackStart(sep, true, true, 3);
-
-                itemBlock.ShowAll();
-                sep.ShowAll();
-
-                vbbMarketGroups.PackStart(itemBlock, false, false, 3);
-                vbbMarketGroups.PackStart(sep, false, false, 3);
-
-                vbbMarketGroups.ShowAll();
+                        AddItemToCurrentMarketGroup(item);
+                    }
+                    while(model.IterNext(ref childIter));
+                }
             }
         }
+    }
+
+    void AddItemToCurrentMarketGroup (ECM.Core.EveItem item)
+    {
+        if(vbbMarketGroups.IsRealized == false)
+            vbbMarketGroups.Realize();
+
+        Image itemPic = new Image(ECM.Core.ItemDatabase.ItemUnknownPNG);
+        itemPic.WidthRequest = 64;
+        itemPic.HeightRequest = 64;
+
+        Gdk.Pixbuf buf = new Gdk.Pixbuf(Gdk.Colorspace.Rgb, true, 8, 22, 22);
+        Gdk.Pixbuf book = new Gdk.Pixbuf(ECM.Core.ItemDatabase.Skillbook16PNG);
+
+        Colour col = new Colour();
+        col.r = 128;
+        col.g = 0;
+        col.b = 0;
+        col.a = 128;
+
+        buf.Fill(col.ToUint());
+        book.Composite(buf, 0, 0, buf.Width, buf.Height, 0, 0, 1, 1, Gdk.InterpType.Hyper, 255);
+
+        Image skillsMet = new Image(buf);
+        skillsMet.WidthRequest = 22;
+        skillsMet.HeightRequest = 22;
+        skillsMet.Yalign = 0;
+
+        Label itemName = new Label(item.Name);
+        itemName.Xalign = 0;
+
+        WrapLabel itemDesc = new WrapLabel(item.Description);
+
+        HBox inner = new HBox();
+        inner.PackStart(itemPic, false, false, 0);
+        inner.PackStart(skillsMet, false, false, 0);
+        inner.PackEnd(itemName, true, true, 0);
+
+        Button viewDets = new Button(new Label("View Details"));
+
+        HButtonBox itemButtons = new HButtonBox();
+        itemButtons.Layout = ButtonBoxStyle.End;
+        itemButtons.BorderWidth = 3;
+        itemButtons.Add(viewDets);
+        itemButtons.ShowAll();
+
+        HSeparator sep = new HSeparator();
+
+        VBox itemBlock = new VBox();
+        itemBlock.PackStart(inner, false, false, 0);
+        itemBlock.PackStart(itemDesc, true, true, 0);
+        itemBlock.PackEnd(itemButtons, false, false, 0);
+
+        itemBlock.ShowAll();
+        sep.ShowAll();
+
+        vbbMarketGroups.PackStart(itemBlock, false, false, 3);
+        vbbMarketGroups.PackStart(sep, false, false, 3);
     }
     
     private bool HandleMarketFilter (TreeModel model, TreeIter iter)
