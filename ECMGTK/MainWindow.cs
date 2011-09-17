@@ -217,9 +217,7 @@ public partial class MainWindow: Gtk.Window
     TreeModelFilter marketFilter;
     
     public void LoadMarket()
-    {        
-		Stopwatch sw = Stopwatch.StartNew();
-		
+    {
         marketStore.Clear();
         itemStore.Clear();
         
@@ -371,10 +369,14 @@ public partial class MainWindow: Gtk.Window
         skillsMet.HeightRequest = 22;
         skillsMet.Xalign = 0;
 
+        Pango.FontDescription font = new Pango.FontDescription();
+        font.Size = 24;
+
         Label itemName = new Label();
         itemName.UseMarkup = true;
-        itemName.Markup = string.Format("<b>{0}</b>", item.Name);
+        itemName.Markup = string.Format("<span size=\"large\" weight=\"bold\">{0}</span>", item.Name);
         itemName.Xalign = 0;
+        //itemName.ModifyFont(font);
 
         Image infoPic = new Image(ECM.Core.ItemDatabase.Info16PNG);
         infoPic.WidthRequest = 16;
@@ -386,13 +388,18 @@ public partial class MainWindow: Gtk.Window
 
         WrapLabel itemDesc = new WrapLabel(item.Description);
 
+        Frame picFrame = new Frame();
+        picFrame.Shadow = ShadowType.Out;
+        picFrame.Add(itemPic);
+
         VBox heading = new VBox();
-        heading.PackStart(skillsMet, false, false, 0);
-        heading.PackStart(itemNameHeader, true, true, 0);
+        heading.Spacing = 6;
+        heading.PackEnd(itemNameHeader, false, false, 0);
+        heading.PackEnd(skillsMet, false, false, 0);
 
         HBox inner = new HBox();
-        inner.PackStart(itemPic, false, false, 0);
-        inner.PackStart(heading, true, true, 0);
+        inner.PackStart(picFrame, false, false, 0);
+        inner.PackStart(heading, true, true, 1);
 
         Button viewDets = new Button(new Label("View Details"));
 
@@ -405,6 +412,7 @@ public partial class MainWindow: Gtk.Window
         HSeparator sep = new HSeparator();
 
         VBox itemBlock = new VBox();
+        itemBlock.Spacing = 10;
         itemBlock.PackStart(inner, false, false, 0);
         itemBlock.PackStart(itemDesc, true, true, 0);
         itemBlock.PackEnd(itemButtons, false, false, 0);
