@@ -360,7 +360,7 @@ public partial class MainWindow: Gtk.Window
         itemPic.HeightRequest = 64;
 
         Gdk.Pixbuf buf = new Gdk.Pixbuf(Gdk.Colorspace.Rgb, true, 8, 22, 22);
-        Gdk.Pixbuf book = new Gdk.Pixbuf(ECM.Core.ItemDatabase.Skillbook16PNG);
+        Gdk.Pixbuf book = new Gdk.Pixbuf(ECM.Core.ItemDatabase.Skillbook22PNG);
 
         Colour col = new Colour(128, 0, 0, 128);
         buf.Fill(col.ToUint());
@@ -373,14 +373,22 @@ public partial class MainWindow: Gtk.Window
 
         Label itemName = new Label();
         itemName.UseMarkup = true;
-        itemName.Markup = string.Format("<b>{0}</b>", item.Name.ToUpper());
+        itemName.Markup = string.Format("<b>{0}</b>", item.Name);
         itemName.Xalign = 0;
+
+        Image infoPic = new Image(ECM.Core.ItemDatabase.Info16PNG);
+        infoPic.WidthRequest = 16;
+        infoPic.HeightRequest = 16;
+
+        HBox itemNameHeader = new HBox();
+        itemNameHeader.PackStart(itemName, false, false, 0);
+        itemNameHeader.PackStart(infoPic, false, false, 3);
 
         WrapLabel itemDesc = new WrapLabel(item.Description);
 
         VBox heading = new VBox();
         heading.PackStart(skillsMet, false, false, 0);
-        heading.PackEnd(itemName, true, true, 0);
+        heading.PackStart(itemNameHeader, true, true, 0);
 
         HBox inner = new HBox();
         inner.PackStart(itemPic, false, false, 0);

@@ -73,8 +73,11 @@
     <EmbeddedResource Include="Resources\Icons\ItemUnknown.png">
       <LogicalName>ECM.Core.Icons.ItemUnknownPNG</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Icons\SkillBook16.png">
-      <LogicalName>ECM.Core.Icons.Skillbook16PNG</LogicalName>
+    <EmbeddedResource Include="Resources\Icons\SkillBook22.png">
+      <LogicalName>ECM.Core.Icons.Skillbook22PNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\Info16.png">
+      <LogicalName>ECM.Core.Icons.Info16PNG</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

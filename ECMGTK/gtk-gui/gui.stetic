@@ -1293,7 +1293,8 @@
                               <widget class="Gtk.Label" id="lblItemNameDetails">
                                 <property name="MemberName" />
                                 <property name="Xalign">0</property>
-                                <property name="LabelProp" translatable="yes">label4</property>
+                                <property name="LabelProp" translatable="yes">Item Name</property>
+                                <property name="UseMarkup">True</property>
                               </widget>
                               <packing>
                                 <property name="Position">1</property>

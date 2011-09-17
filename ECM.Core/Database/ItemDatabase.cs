@@ -59,7 +59,7 @@ namespace ECM.Core
             }
         }
 
-        public static Stream Skillbook16PNG
+        public static Stream Skillbook22PNG
         {
             get
             {
@@ -67,7 +67,22 @@ namespace ECM.Core
 
                 if(ass != null)
                 {
-                    return ass.GetManifestResourceStream("ECM.Core.Icons.Skillbook16PNG");
+                    return ass.GetManifestResourceStream("ECM.Core.Icons.Skillbook22PNG");
+                }
+                
+                return null;
+            }
+        }
+
+        public static Stream Info16PNG
+        {
+            get
+            {
+                Assembly ass = Assembly.GetExecutingAssembly();
+
+                if(ass != null)
+                {
+                    return ass.GetManifestResourceStream("ECM.Core.Icons.Info16PNG");
                 }
                 
                 return null;
