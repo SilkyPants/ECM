@@ -23,6 +23,11 @@ namespace ECM.Core
             get { return m_Characters; }
         }
 
+        public static Dictionary<string, Account> Accounts
+        {
+            get { return m_Accounts; }
+        }
+
         public static void UpdateOnHeartbeat()
         {
             foreach(Account account in m_Accounts.Values)
@@ -39,6 +44,8 @@ namespace ECM.Core
         public static void LoadAccounts()
         {
             List<Account> accounts = AccountDatabase.GetAllAccounts();
+
+            accounts.Add(new Account("1234", "sadlkfjsjdkjqwdkljNFHs", EveApi.ApiKeyMask.Everything, DateTime.Now));
 
             foreach(Account acc in accounts)
             {

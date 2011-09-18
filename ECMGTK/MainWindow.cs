@@ -70,6 +70,8 @@ public partial class MainWindow: Gtk.Window
 
         ECM.Core.Data.LoadAccounts();
 
+        FillAccounts();
+
         Timer heartbeat = new Timer(1000);
         heartbeat.AutoReset = true;
         heartbeat.Elapsed += delegate
@@ -135,46 +137,16 @@ public partial class MainWindow: Gtk.Window
 		return box;
 	}
     
-    private Button CreateCharacterButton()
-    {
-        Button btnChar = new Button();
-        Image imgPortrait = new Image(null, "ECMGTK.Resources.NoPortrait_64.png");
-        Image imgRecycle = new Image(null, "ECMGTK.Resources.Icons.Recycle.png");
-        Button btnRecycle = new Button(imgRecycle);
-        Label lblStatus = new Label();
-        HBox hbxContainer = new HBox(false, 1);
-		        
-        lblStatus.Text = "This is some text\nIt spans multiple lines\nSo we can show cool stuff. This is to push the button out more, I can make it wrap with the WidthChar member";
-        lblStatus.WidthChars = 40;
-        lblStatus.Wrap = true;
-        
-        imgPortrait.WidthRequest = 64;
-        imgPortrait.HeightRequest = 64;
-        
-        hbxContainer.PackStart(imgPortrait);
-        hbxContainer.PackStart(lblStatus);
-        hbxContainer.PackStart(btnRecycle);
-        
-        btnChar.Add(hbxContainer);
-        
-        btnChar.ShowAll();
-		
-		btnChar.Clicked += delegate {
-			Console.WriteLine("Called Char Button Press");
-		};
-		
-		btnRecycle.Clicked += delegate {
-			Console.WriteLine("Called Char Recycle Button Press");
-		};
-        
-        return btnChar;
-    }
-    
     protected void OnDeleteEvent (object sender, DeleteEventArgs a)
     {		
         Application.Quit ();
         a.RetVal = true;
     }
+    
+    #region Market
+    TreeStore marketStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(string), typeof(long), typeof(bool));
+    ListStore itemStore = new ListStore(typeof(string), typeof(long));
+    TreeModelFilter marketFilter;
 
     protected void RowCollapsed (object sender, Gtk.RowCollapsedArgs args)
     {
@@ -197,11 +169,7 @@ public partial class MainWindow: Gtk.Window
         
         if(marketStore.GetIter(out iter, args.Path))
         {
-            if(marketStore.IterHasChild(iter) == false)
-            {
-                // Item or empty group
-            }
-            else
+            if(marketStore.IterHasChild(iter) )
             {
                 if(trvMarket.GetRowExpanded(args.Path))
                     trvMarket.CollapseRow(args.Path);
@@ -210,11 +178,6 @@ public partial class MainWindow: Gtk.Window
             }
         }
     }
-    
-    #region Database
-    TreeStore marketStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(string), typeof(long), typeof(bool));
-    ListStore itemStore = new ListStore(typeof(string), typeof(long));
-    TreeModelFilter marketFilter;
     
     public void LoadMarket()
     {
@@ -439,17 +402,42 @@ public partial class MainWindow: Gtk.Window
     #endregion
 	
 	#region Overview
+
 	protected void AddNewKey (object sender, System.EventArgs e)
 	{
 		ECMGTK.AddApiKey addKey = new ECMGTK.AddApiKey();
 		
 		addKey.Run();
 
-        foreach(ECM.Core.Character character in ECM.Core.Data.Characters.Values)
-        {
-            vbbCharacters.Add(CreateCharacterButton(character));
-        }
+        FillAccounts();
 	}
+
+    protected Widget CreateAccountWidget (ECM.Core.Account account)
+    {
+        VBox accWidget = new VBox();
+        accWidget.Spacing = 3;
+
+        Label accKey = new Label(string.Format("Account #{0}", account.KeyID));
+        accKey.Xalign = 0;
+
+        HSeparator sep = new HSeparator();
+
+        HBox accHeader = new HBox();
+        accHeader.Spacing = 2;
+        accHeader.PackStart(accKey, false, false, 0);
+        accHeader.PackStart(sep, true, true, 0);
+
+        accWidget.PackStart(accHeader, true, false, 0);
+
+        for(int i = 0; i < 3; i++)
+        {
+            accWidget.PackStart(CreateCharacterButton(null), true, false, 0);
+        }
+
+        accWidget.ShowAll();
+
+        return accWidget;
+    }
 
     protected Widget CreateCharacterButton (ECM.Core.Character character)
     {
@@ -467,15 +455,23 @@ public partial class MainWindow: Gtk.Window
 
         box.PackStart(frm, false, false, 3);
 
-        Label text = new Label(character.Name);
+        Label text = new Label("Character Name Goes Here");
         text.Xalign = 0;
 
-        box.PackStart(text, true, true, 0);
+        box.PackStart(text, true, false, 0);
         Button btn = new Button(box);
 
         btn.ShowAll();
         return btn;
 
+    }
+
+    public void FillAccounts ()
+    {
+        foreach(ECM.Core.Account account in ECM.Core.Data.Accounts.Values)
+        {
+            vbxAccounts.PackStart(CreateAccountWidget(account), false, false, 0);
+        }
     }
 	#endregion
 }

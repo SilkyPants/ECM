@@ -3,7 +3,7 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="ECMGTK/MainWindow.cs">
     <Files>
       <File FileName="ECMGTK/MainWindow.cs" Line="415" Column="31" />
-      <File FileName="ECM.Core/Database/ItemDatabase.cs" Line="68" Column="30" />
+      <File FileName="ECM.Core/Database/ItemDatabase.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
