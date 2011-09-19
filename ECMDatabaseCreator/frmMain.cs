@@ -419,7 +419,7 @@ namespace ECMDatabaseCreator
             worker.ReportProgress(-1, "invMarketGroups");
 
 
-            queryCmd = CreateDbCommand("SELECT * FROM invMarketGroups");
+            queryCmd = CreateDbCommand("SELECT invmarketgroups.*, eveicons.iconFile FROM invmarketgroups LEFT JOIN eveIcons ON invmarketgroups.iconID = eveicons.iconID");
 
             data = new DataSet();
             adapter = CreateDataAdapter(queryCmd);
@@ -447,7 +447,7 @@ namespace ECMDatabaseCreator
                 comm.Parameters.AddWithValue("@parentGroupID", reader["parentGroupID"]);
                 comm.Parameters.AddWithValue("@marketGroupName", reader["marketGroupName"]);
                 comm.Parameters.AddWithValue("@description", reader["description"]);
-                comm.Parameters.AddWithValue("@iconFile", GetIconFile(reader["iconID"]));
+                comm.Parameters.AddWithValue("@iconFile", reader["iconFile"]);
                 comm.Parameters.AddWithValue("@hasTypes", reader["hasTypes"]);
 
                 comm.ExecuteNonQuery();
