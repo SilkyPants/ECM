@@ -25,7 +25,7 @@ namespace ECMDatabaseCreator
         private string mySqlConnString = "Server={0};Database=evedb;Uid={1};Pwd={2};";
         private string msSqlConnStringLogin = "Data Source={0};Initial Catalog=evedb;User Id={1};Password={2}";
         private string msSqlConnStringIntegrated = "Data Source={0};Initial Catalog=evedb;Integrated Security=True";
-        private string sqliteConnString = "Data Source={0};";
+        //private string sqliteConnString = "Data Source={0};";
 
         public frmMain()
         {
@@ -426,7 +426,6 @@ namespace ECMDatabaseCreator
 
             adapter.Fill(data);
 
-
             reader = data.CreateDataReader();
 
             currRow = 0;
@@ -435,9 +434,6 @@ namespace ECMDatabaseCreator
 
             while (reader.Read())
             {
-                StringBuilder insertCmdText = new StringBuilder();
-                StringBuilder values = new StringBuilder();
-
                 worker.ReportProgress(-3, ++currRow);
                 
                 SQLiteCommand comm = outputSQLiteConn.CreateCommand();
@@ -474,31 +470,11 @@ namespace ECMDatabaseCreator
             CopyTable("invCategories");
             CopyTable("invContrabandTypes");
             CopyTable("invGroups");
-            //CopyTable("invMarketGroups");
             CopyTable("invMetaTypes");
             CopyTable("invTypeMaterials");
             CopyTable("invTypeReactions");
 
             outputSQLiteConn.Close();
-        }
-
-        private object GetIconFile(object iconID)
-        {
-            if (iconID is DBNull)
-                return iconID;
-
-            string iconFile = "";
-
-            IDataAdapter apt = CreateDataAdapter(CreateDbCommand("SELECT iconFile FROM eveIcons WHERE iconID = " + iconID.ToString()));
-            DataSet res = new DataSet();
-            apt.Fill(res);
-
-            if (res.Tables.Count == 1 && res.Tables[0].Rows.Count == 1)
-            {
-                iconFile = res.Tables[0].Rows[0].ItemArray[0].ToString();
-            }
-
-            return iconFile;
         }
 
         private void CreateSkillDb()
@@ -1039,6 +1015,7 @@ namespace ECMDatabaseCreator
                 catch (Exception e)
                 {
                     // ignore the exception
+                    Console.WriteLine(e.Message);
                 }
             }
             return param.SqlDbType.ToString(); ;
