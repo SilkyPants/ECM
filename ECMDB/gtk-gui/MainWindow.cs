@@ -5,15 +5,30 @@ public partial class MainWindow
 {
 	private global::Gtk.VBox vbox1;
 	private global::Gtk.HBox hbox1;
-	private global::Gtk.Notebook notebook1;
+	private global::Gtk.Notebook ntbServers;
 	private global::Gtk.Table table1;
+	private global::Gtk.CheckButton chkIntegratedSec;
+	private global::Gtk.Label label1;
+	private global::Gtk.Label label5;
+	private global::Gtk.Label label6;
+	private global::Gtk.Entry txtMSSQLPass;
+	private global::Gtk.Entry txtMSSQLSource;
+	private global::Gtk.Entry txtMSSQLUser;
 	private global::Gtk.Label label2;
 	private global::Gtk.Table table2;
 	private global::Gtk.Label label3;
-	private global::Gtk.FileChooserButton filechooserbutton1;
+	private global::Gtk.Label label8;
+	private global::Gtk.Label label9;
+	private global::Gtk.Entry txtMySqlPass;
+	private global::Gtk.Entry txtMySqlSource;
+	private global::Gtk.Entry txtMySqlUser;
 	private global::Gtk.Label label4;
+	private global::Gtk.VBox vbox2;
+	private global::Gtk.Label label7;
+	private global::Gtk.FileChooserButton fcbSqliteDB;
+	private global::Gtk.Label label10;
 	private global::Gtk.VButtonBox vbuttonbox1;
-	private global::Gtk.Button button1;
+	private global::Gtk.Button btnStartProcess;
 	private global::Gtk.Label lblStatus;
 	private global::Gtk.Label lblRecords;
 	private global::Gtk.ProgressBar pgbProgress;
@@ -34,109 +49,285 @@ public partial class MainWindow
 		this.hbox1 = new global::Gtk.HBox ();
 		this.hbox1.Name = "hbox1";
 		// Container child hbox1.Gtk.Box+BoxChild
-		this.notebook1 = new global::Gtk.Notebook ();
-		this.notebook1.CanFocus = true;
-		this.notebook1.Name = "notebook1";
-		this.notebook1.CurrentPage = 2;
-		this.notebook1.BorderWidth = ((uint)(3));
-		// Container child notebook1.Gtk.Notebook+NotebookChild
+		this.ntbServers = new global::Gtk.Notebook ();
+		this.ntbServers.CanFocus = true;
+		this.ntbServers.Name = "ntbServers";
+		this.ntbServers.CurrentPage = 1;
+		this.ntbServers.BorderWidth = ((uint)(3));
+		// Container child ntbServers.Gtk.Notebook+NotebookChild
 		this.table1 = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
 		this.table1.Name = "table1";
 		this.table1.RowSpacing = ((uint)(6));
 		this.table1.ColumnSpacing = ((uint)(6));
-		this.notebook1.Add (this.table1);
+		this.table1.BorderWidth = ((uint)(3));
+		// Container child table1.Gtk.Table+TableChild
+		this.chkIntegratedSec = new global::Gtk.CheckButton ();
+		this.chkIntegratedSec.CanFocus = true;
+		this.chkIntegratedSec.Name = "chkIntegratedSec";
+		this.chkIntegratedSec.Label = global::Mono.Unix.Catalog.GetString ("Integrated\nSecurity");
+		this.chkIntegratedSec.Active = true;
+		this.chkIntegratedSec.DrawIndicator = true;
+		this.chkIntegratedSec.UseUnderline = true;
+		this.table1.Add (this.chkIntegratedSec);
+		global::Gtk.Table.TableChild w1 = ((global::Gtk.Table.TableChild)(this.table1 [this.chkIntegratedSec]));
+		w1.TopAttach = ((uint)(1));
+		w1.BottomAttach = ((uint)(2));
+		w1.LeftAttach = ((uint)(2));
+		w1.RightAttach = ((uint)(3));
+		w1.YOptions = ((global::Gtk.AttachOptions)(4));
+		// Container child table1.Gtk.Table+TableChild
+		this.label1 = new global::Gtk.Label ();
+		this.label1.Name = "label1";
+		this.label1.Xalign = 1F;
+		this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Source");
+		this.table1.Add (this.label1);
+		global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.table1 [this.label1]));
+		w2.XOptions = ((global::Gtk.AttachOptions)(4));
+		w2.YOptions = ((global::Gtk.AttachOptions)(4));
+		// Container child table1.Gtk.Table+TableChild
+		this.label5 = new global::Gtk.Label ();
+		this.label5.Name = "label5";
+		this.label5.Xalign = 1F;
+		this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("User Name");
+		this.table1.Add (this.label5);
+		global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1 [this.label5]));
+		w3.TopAttach = ((uint)(1));
+		w3.BottomAttach = ((uint)(2));
+		w3.XOptions = ((global::Gtk.AttachOptions)(4));
+		w3.YOptions = ((global::Gtk.AttachOptions)(4));
+		// Container child table1.Gtk.Table+TableChild
+		this.label6 = new global::Gtk.Label ();
+		this.label6.Name = "label6";
+		this.label6.Xalign = 1F;
+		this.label6.LabelProp = global::Mono.Unix.Catalog.GetString ("Password");
+		this.table1.Add (this.label6);
+		global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.table1 [this.label6]));
+		w4.TopAttach = ((uint)(2));
+		w4.BottomAttach = ((uint)(3));
+		w4.XOptions = ((global::Gtk.AttachOptions)(4));
+		w4.YOptions = ((global::Gtk.AttachOptions)(4));
+		// Container child table1.Gtk.Table+TableChild
+		this.txtMSSQLPass = new global::Gtk.Entry ();
+		this.txtMSSQLPass.CanFocus = true;
+		this.txtMSSQLPass.Name = "txtMSSQLPass";
+		this.txtMSSQLPass.IsEditable = true;
+		this.txtMSSQLPass.InvisibleChar = '●';
+		this.table1.Add (this.txtMSSQLPass);
+		global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.table1 [this.txtMSSQLPass]));
+		w5.TopAttach = ((uint)(2));
+		w5.BottomAttach = ((uint)(3));
+		w5.LeftAttach = ((uint)(1));
+		w5.RightAttach = ((uint)(2));
+		w5.YOptions = ((global::Gtk.AttachOptions)(4));
+		// Container child table1.Gtk.Table+TableChild
+		this.txtMSSQLSource = new global::Gtk.Entry ();
+		this.txtMSSQLSource.CanFocus = true;
+		this.txtMSSQLSource.Name = "txtMSSQLSource";
+		this.txtMSSQLSource.IsEditable = true;
+		this.txtMSSQLSource.InvisibleChar = '●';
+		this.table1.Add (this.txtMSSQLSource);
+		global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.table1 [this.txtMSSQLSource]));
+		w6.LeftAttach = ((uint)(1));
+		w6.RightAttach = ((uint)(2));
+		w6.YOptions = ((global::Gtk.AttachOptions)(4));
+		// Container child table1.Gtk.Table+TableChild
+		this.txtMSSQLUser = new global::Gtk.Entry ();
+		this.txtMSSQLUser.CanFocus = true;
+		this.txtMSSQLUser.Name = "txtMSSQLUser";
+		this.txtMSSQLUser.IsEditable = true;
+		this.txtMSSQLUser.InvisibleChar = '●';
+		this.table1.Add (this.txtMSSQLUser);
+		global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.table1 [this.txtMSSQLUser]));
+		w7.TopAttach = ((uint)(1));
+		w7.BottomAttach = ((uint)(2));
+		w7.LeftAttach = ((uint)(1));
+		w7.RightAttach = ((uint)(2));
+		w7.YOptions = ((global::Gtk.AttachOptions)(4));
+		this.ntbServers.Add (this.table1);
 		// Notebook tab
 		this.label2 = new global::Gtk.Label ();
 		this.label2.Name = "label2";
 		this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("MS SQL");
-		this.notebook1.SetTabLabel (this.table1, this.label2);
+		this.ntbServers.SetTabLabel (this.table1, this.label2);
 		this.label2.ShowAll ();
-		// Container child notebook1.Gtk.Notebook+NotebookChild
-		this.table2 = new global::Gtk.Table (((uint)(3)), ((uint)(3)), false);
+		// Container child ntbServers.Gtk.Notebook+NotebookChild
+		this.table2 = new global::Gtk.Table (((uint)(3)), ((uint)(2)), false);
 		this.table2.Name = "table2";
 		this.table2.RowSpacing = ((uint)(6));
 		this.table2.ColumnSpacing = ((uint)(6));
-		this.notebook1.Add (this.table2);
-		global::Gtk.Notebook.NotebookChild w2 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.table2]));
-		w2.Position = 1;
-		// Notebook tab
+		this.table2.BorderWidth = ((uint)(3));
+		// Container child table2.Gtk.Table+TableChild
 		this.label3 = new global::Gtk.Label ();
 		this.label3.Name = "label3";
-		this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("MySql");
-		this.notebook1.SetTabLabel (this.table2, this.label3);
-		this.label3.ShowAll ();
-		// Container child notebook1.Gtk.Notebook+NotebookChild
-		this.filechooserbutton1 = new global::Gtk.FileChooserButton (global::Mono.Unix.Catalog.GetString ("Select A File"), ((global::Gtk.FileChooserAction)(0)));
-		this.filechooserbutton1.Name = "filechooserbutton1";
-		this.notebook1.Add (this.filechooserbutton1);
-		global::Gtk.Notebook.NotebookChild w3 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.filechooserbutton1]));
-		w3.Position = 2;
+		this.label3.Xalign = 1F;
+		this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Source");
+		this.table2.Add (this.label3);
+		global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.table2 [this.label3]));
+		w9.XOptions = ((global::Gtk.AttachOptions)(4));
+		w9.YOptions = ((global::Gtk.AttachOptions)(4));
+		// Container child table2.Gtk.Table+TableChild
+		this.label8 = new global::Gtk.Label ();
+		this.label8.Name = "label8";
+		this.label8.Xalign = 1F;
+		this.label8.LabelProp = global::Mono.Unix.Catalog.GetString ("Password");
+		this.table2.Add (this.label8);
+		global::Gtk.Table.TableChild w10 = ((global::Gtk.Table.TableChild)(this.table2 [this.label8]));
+		w10.TopAttach = ((uint)(2));
+		w10.BottomAttach = ((uint)(3));
+		w10.XOptions = ((global::Gtk.AttachOptions)(4));
+		w10.YOptions = ((global::Gtk.AttachOptions)(4));
+		// Container child table2.Gtk.Table+TableChild
+		this.label9 = new global::Gtk.Label ();
+		this.label9.Name = "label9";
+		this.label9.Xalign = 1F;
+		this.label9.LabelProp = global::Mono.Unix.Catalog.GetString ("User Name");
+		this.table2.Add (this.label9);
+		global::Gtk.Table.TableChild w11 = ((global::Gtk.Table.TableChild)(this.table2 [this.label9]));
+		w11.TopAttach = ((uint)(1));
+		w11.BottomAttach = ((uint)(2));
+		w11.XOptions = ((global::Gtk.AttachOptions)(4));
+		w11.YOptions = ((global::Gtk.AttachOptions)(4));
+		// Container child table2.Gtk.Table+TableChild
+		this.txtMySqlPass = new global::Gtk.Entry ();
+		this.txtMySqlPass.CanFocus = true;
+		this.txtMySqlPass.Name = "txtMySqlPass";
+		this.txtMySqlPass.IsEditable = true;
+		this.txtMySqlPass.InvisibleChar = '●';
+		this.table2.Add (this.txtMySqlPass);
+		global::Gtk.Table.TableChild w12 = ((global::Gtk.Table.TableChild)(this.table2 [this.txtMySqlPass]));
+		w12.TopAttach = ((uint)(2));
+		w12.BottomAttach = ((uint)(3));
+		w12.LeftAttach = ((uint)(1));
+		w12.RightAttach = ((uint)(2));
+		w12.YOptions = ((global::Gtk.AttachOptions)(4));
+		// Container child table2.Gtk.Table+TableChild
+		this.txtMySqlSource = new global::Gtk.Entry ();
+		this.txtMySqlSource.CanFocus = true;
+		this.txtMySqlSource.Name = "txtMySqlSource";
+		this.txtMySqlSource.IsEditable = true;
+		this.txtMySqlSource.InvisibleChar = '●';
+		this.table2.Add (this.txtMySqlSource);
+		global::Gtk.Table.TableChild w13 = ((global::Gtk.Table.TableChild)(this.table2 [this.txtMySqlSource]));
+		w13.LeftAttach = ((uint)(1));
+		w13.RightAttach = ((uint)(2));
+		w13.YOptions = ((global::Gtk.AttachOptions)(4));
+		// Container child table2.Gtk.Table+TableChild
+		this.txtMySqlUser = new global::Gtk.Entry ();
+		this.txtMySqlUser.CanFocus = true;
+		this.txtMySqlUser.Name = "txtMySqlUser";
+		this.txtMySqlUser.IsEditable = true;
+		this.txtMySqlUser.InvisibleChar = '●';
+		this.table2.Add (this.txtMySqlUser);
+		global::Gtk.Table.TableChild w14 = ((global::Gtk.Table.TableChild)(this.table2 [this.txtMySqlUser]));
+		w14.TopAttach = ((uint)(1));
+		w14.BottomAttach = ((uint)(2));
+		w14.LeftAttach = ((uint)(1));
+		w14.RightAttach = ((uint)(2));
+		w14.YOptions = ((global::Gtk.AttachOptions)(4));
+		this.ntbServers.Add (this.table2);
+		global::Gtk.Notebook.NotebookChild w15 = ((global::Gtk.Notebook.NotebookChild)(this.ntbServers [this.table2]));
+		w15.Position = 1;
 		// Notebook tab
 		this.label4 = new global::Gtk.Label ();
 		this.label4.Name = "label4";
-		this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("SQLite");
-		this.notebook1.SetTabLabel (this.filechooserbutton1, this.label4);
+		this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("MySql");
+		this.ntbServers.SetTabLabel (this.table2, this.label4);
 		this.label4.ShowAll ();
-		this.hbox1.Add (this.notebook1);
-		global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.notebook1]));
-		w4.Position = 0;
+		// Container child ntbServers.Gtk.Notebook+NotebookChild
+		this.vbox2 = new global::Gtk.VBox ();
+		this.vbox2.Name = "vbox2";
+		this.vbox2.Spacing = 6;
+		// Container child vbox2.Gtk.Box+BoxChild
+		this.label7 = new global::Gtk.Label ();
+		this.label7.Name = "label7";
+		this.label7.Xalign = 0F;
+		this.label7.Yalign = 1F;
+		this.label7.LabelProp = global::Mono.Unix.Catalog.GetString ("Database File:");
+		this.vbox2.Add (this.label7);
+		global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.label7]));
+		w16.Position = 0;
+		w16.Expand = false;
+		w16.Fill = false;
+		// Container child vbox2.Gtk.Box+BoxChild
+		this.fcbSqliteDB = new global::Gtk.FileChooserButton (global::Mono.Unix.Catalog.GetString ("Select SQLite3 Database"), ((global::Gtk.FileChooserAction)(0)));
+		this.fcbSqliteDB.Name = "fcbSqliteDB";
+		this.vbox2.Add (this.fcbSqliteDB);
+		global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.fcbSqliteDB]));
+		w17.Position = 1;
+		w17.Expand = false;
+		w17.Fill = false;
+		this.ntbServers.Add (this.vbox2);
+		global::Gtk.Notebook.NotebookChild w18 = ((global::Gtk.Notebook.NotebookChild)(this.ntbServers [this.vbox2]));
+		w18.Position = 2;
+		// Notebook tab
+		this.label10 = new global::Gtk.Label ();
+		this.label10.Name = "label10";
+		this.label10.LabelProp = global::Mono.Unix.Catalog.GetString ("SQLite");
+		this.ntbServers.SetTabLabel (this.vbox2, this.label10);
+		this.label10.ShowAll ();
+		this.hbox1.Add (this.ntbServers);
+		global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.ntbServers]));
+		w19.Position = 0;
 		// Container child hbox1.Gtk.Box+BoxChild
 		this.vbuttonbox1 = new global::Gtk.VButtonBox ();
 		this.vbuttonbox1.Name = "vbuttonbox1";
 		this.vbuttonbox1.BorderWidth = ((uint)(3));
 		this.vbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 		// Container child vbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
-		this.button1 = new global::Gtk.Button ();
-		this.button1.CanFocus = true;
-		this.button1.Name = "button1";
-		this.button1.UseUnderline = true;
-		this.button1.Label = global::Mono.Unix.Catalog.GetString ("GtkButton");
-		this.vbuttonbox1.Add (this.button1);
-		global::Gtk.ButtonBox.ButtonBoxChild w5 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.vbuttonbox1 [this.button1]));
-		w5.Expand = false;
-		w5.Fill = false;
+		this.btnStartProcess = new global::Gtk.Button ();
+		this.btnStartProcess.CanFocus = true;
+		this.btnStartProcess.Name = "btnStartProcess";
+		this.btnStartProcess.UseUnderline = true;
+		this.btnStartProcess.Label = global::Mono.Unix.Catalog.GetString ("Compact\nDatabase");
+		this.vbuttonbox1.Add (this.btnStartProcess);
+		global::Gtk.ButtonBox.ButtonBoxChild w20 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.vbuttonbox1 [this.btnStartProcess]));
+		w20.Expand = false;
+		w20.Fill = false;
 		this.hbox1.Add (this.vbuttonbox1);
-		global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbuttonbox1]));
-		w6.Position = 1;
-		w6.Expand = false;
-		w6.Fill = false;
+		global::Gtk.Box.BoxChild w21 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbuttonbox1]));
+		w21.Position = 1;
+		w21.Expand = false;
+		w21.Fill = false;
 		this.vbox1.Add (this.hbox1);
-		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
-		w7.Position = 0;
+		global::Gtk.Box.BoxChild w22 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.hbox1]));
+		w22.Position = 0;
+		w22.Expand = false;
+		w22.Fill = false;
 		// Container child vbox1.Gtk.Box+BoxChild
 		this.lblStatus = new global::Gtk.Label ();
 		this.lblStatus.Name = "lblStatus";
 		this.lblStatus.LabelProp = global::Mono.Unix.Catalog.GetString ("label1");
 		this.vbox1.Add (this.lblStatus);
-		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.lblStatus]));
-		w8.Position = 1;
-		w8.Expand = false;
-		w8.Fill = false;
+		global::Gtk.Box.BoxChild w23 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.lblStatus]));
+		w23.Position = 1;
+		w23.Expand = false;
+		w23.Fill = false;
 		// Container child vbox1.Gtk.Box+BoxChild
 		this.lblRecords = new global::Gtk.Label ();
 		this.lblRecords.Name = "lblRecords";
 		this.lblRecords.LabelProp = global::Mono.Unix.Catalog.GetString ("label4");
 		this.vbox1.Add (this.lblRecords);
-		global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.lblRecords]));
-		w9.Position = 2;
-		w9.Expand = false;
-		w9.Fill = false;
+		global::Gtk.Box.BoxChild w24 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.lblRecords]));
+		w24.Position = 2;
+		w24.Expand = false;
+		w24.Fill = false;
 		// Container child vbox1.Gtk.Box+BoxChild
 		this.pgbProgress = new global::Gtk.ProgressBar ();
 		this.pgbProgress.Name = "pgbProgress";
 		this.vbox1.Add (this.pgbProgress);
-		global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.pgbProgress]));
-		w10.PackType = ((global::Gtk.PackType)(1));
-		w10.Position = 3;
-		w10.Expand = false;
-		w10.Fill = false;
+		global::Gtk.Box.BoxChild w25 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.pgbProgress]));
+		w25.PackType = ((global::Gtk.PackType)(1));
+		w25.Position = 3;
+		w25.Expand = false;
+		w25.Fill = false;
 		this.Add (this.vbox1);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 400;
-		this.DefaultHeight = 158;
+		this.DefaultWidth = 434;
+		this.DefaultHeight = 208;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
+		this.btnStartProcess.Clicked += new global::System.EventHandler (this.StartProcess);
 	}
 }

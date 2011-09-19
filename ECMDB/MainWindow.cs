@@ -34,7 +34,7 @@ public partial class MainWindow: Gtk.Window
     private string mySqlConnString = "Server={0};Database=evedb;Uid={1};Pwd={2};";
     private string msSqlConnStringLogin = "Data Source={0};Initial Catalog=evedb;User Id={1};Password={2}";
     private string msSqlConnStringIntegrated = "Data Source={0};Initial Catalog=evedb;Integrated Security=True";
-    //private string sqliteConnString = "Data Source={0};";
+    private string sqliteConnString = "Data Source={0};";
 
 
     private void ServerTypeChanged(object sender, EventArgs e)
@@ -58,32 +58,37 @@ public partial class MainWindow: Gtk.Window
     private void CreateDatabase(object sender, System.ComponentModel.DoWorkEventArgs e)
     {
         // Open real DB
-//            if (rdoMySql.Checked)
-//            {
-//                connString = string.Format(mySqlConnString, txtSource.Text, txtUser.Text, txtPass.Text);
-//                dbConn = new MySqlConnection(connString);
-//            }
-//            else if (rdoMSSQL.Checked)
-//            {
-//                if(chkIntegratedSec.Checked)
-//                    connString = string.Format(msSqlConnStringIntegrated, txtSource.Text);
-//                else
-//                    connString = string.Format(msSqlConnStringLogin, txtSource.Text, txtUser.Text, txtPass.Text);
-//
-//                dbConn = new SqlConnection(connString);
-//            }
-//            else return;
+        if (ntbServers.CurrentPage == 1)
+        {
+            connString = string.Format(mySqlConnString, txtMySqlSource.Text, txtMySqlUser.Text, txtMySqlPass.Text);
+            dbConn = new MySqlConnection(connString);
+        }
+        else if (ntbServers.CurrentPage == 0)
+        {
+            if(chkIntegratedSec.Active)
+                connString = string.Format(msSqlConnStringIntegrated, txtMSSQLSource.Text);
+            else
+                connString = string.Format(msSqlConnStringLogin, txtMSSQLSource.Text, txtMSSQLUser.Text, txtMSSQLPass.Text);
+
+            dbConn = new SqlConnection(connString);
+        }
+        else if(ntbServers.CurrentPage == 2)
+        {
+            connString = string.Format(sqliteConnString, fcbSqliteDB.Filename);
+            dbConn = new SQLiteConnection(connString);
+        }
+        else return;
 
         dbConn.Open();
 
         // Do some work
-        //CreateAgentsDb();
-        //CreateCharacterDb();
-        //CreateCertificateDb();
-        //CreateSkillDb();
+        CreateAgentsDb();
+        CreateCharacterDb();
+        CreateCertificateDb();
+        CreateSkillDb();
         CreateItemDb();
-        //CreateMapDb();
-        //CreateMapObjectDb();
+        CreateMapDb();
+        CreateMapObjectDb();
 
         dbConn.Close();
     }
@@ -1032,6 +1037,8 @@ public partial class MainWindow: Gtk.Window
             return new SqlDataAdapter(cmd as SqlCommand);
         else if (dbConn is MySqlConnection)
             return new MySqlDataAdapter(cmd as MySqlCommand);
+        else if (dbConn is SQLiteConnection)
+            return new SQLiteDataAdapter(cmd as SQLiteCommand);
         else return null;
     }
 
@@ -1044,7 +1051,7 @@ public partial class MainWindow: Gtk.Window
         return cmd;
     }
 
-    private void StartWorker(object sender, EventArgs e)
+    protected void StartProcess (object sender, System.EventArgs e)
     {
         worker.RunWorkerAsync();
     }
