@@ -45,8 +45,6 @@ namespace ECM.Core
         {
             List<Account> accounts = AccountDatabase.GetAllAccounts();
 
-            accounts.Add(new Account("1234", "sadlkfjsjdkjqwdkljNFHs", EveApi.ApiKeyMask.Everything, DateTime.Now));
-
             foreach(Account acc in accounts)
             {
                 m_Accounts.Add(acc.KeyID, acc);
@@ -56,7 +54,19 @@ namespace ECM.Core
         public static void AddAccount(Account toAdd)
         {
             m_Accounts.Add(toAdd.KeyID, toAdd);
+
+            foreach (Character character in toAdd.Characters)
+            {
+                AddCharacter(character);
+            }
+
             AccountDatabase.AddAccount(toAdd);
+        }
+
+        private static void AddCharacter(Character charToAdd)
+        {
+            m_Characters.Add(charToAdd.ID, charToAdd);
+            AccountDatabase.AddCharacter(charToAdd);
         }
 
         public static void RemoveAccount(Account toRemove)

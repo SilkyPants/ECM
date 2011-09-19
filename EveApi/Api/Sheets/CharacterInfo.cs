@@ -1,40 +1,14 @@
 using System;
 using EveApi.Attributes;
 using System.Xml.Serialization;
+using EveApi.Api.Interfaces;
 
 namespace EveApi
 {
 	//[KeyNeedsMask(ApiKeyMask.CharacterInfoPublic)]
 	[NeedsCharacterID]
-	public class CharacterInfo
+	public class CharacterInfo : ICharacterInfo
 	{
-		/*
-		<?xml version="1.0" encoding="UTF-8"?>
-		<eveapi version="2">
-		  <currentTime>2011-09-07 06:33:51</currentTime>
-		  <result>
-		    <characterID>91145028</characterID>
-		    <characterName>Nyai Maricadie</characterName>
-		    <race>Gallente</race>
-		    <bloodline>Gallente</bloodline>
-		    <accountBalance>636101.10</accountBalance>
-		    <skillPoints>787152</skillPoints>
-		    <nextTrainingEnds>2011-09-06 10:58:04</nextTrainingEnds>
-		    <shipName />
-		    <shipTypeID>606</shipTypeID>
-		    <shipTypeName>Velator</shipTypeName>
-		    <corporationID>1000168</corporationID>
-		    <corporation>Federal Navy Academy</corporation>
-		    <corporationDate>2011-08-20 07:24:00</corporationDate>
-		    <lastKnownLocation>Couster</lastKnownLocation>
-		    <securityStatus>0.000999975000000042</securityStatus>
-		    <rowset name="employmentHistory" key="recordID" columns="recordID,corporationID,startDate">
-		      <row recordID="17681093" corporationID="1000168" startDate="2011-08-20 07:24:00" />
-		    </rowset>
-		  </result>
-		  <cachedUntil>2011-09-07 07:30:51</cachedUntil>
-		</eveapi> 
-		 */
         [XmlIgnore]
         public static string ApiUri { get { return "/eve/CharacterInfo.xml.aspx"; } }
 		

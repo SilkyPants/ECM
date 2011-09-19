@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using EveApi.Attributes;
+using EveApi.Api.Interfaces;
 
 namespace EveApi
 {
     [NeedsApiKey]
     [KeyNeedsMask(ApiKeyMask.CharacterSheet)]
-	public class CharacterSheet
+	public class CharacterSheet : ICharacterSheet
 	{
         [XmlIgnore]
         public static string ApiUri { get { return "/char/CharacterSheet.xml.aspx"; } }
@@ -30,7 +31,7 @@ namespace EveApi
 		*/
 		
         [XmlElement("characterID")]
-		public int ID
+		public long ID
 		{
 			get;
 			set;
@@ -92,28 +93,28 @@ namespace EveApi
 		}
 		
         [XmlElement("corporationName")]
-		public string CorporationName
+		public string Corporation
 		{
 			get;
 			set;
 		}
 		
         [XmlElement("corporationID")]
-		public int CorporationID
+        public long CorporationID
 		{
 			get;
 			set;
 		}
 		
         [XmlElement("allianceName")]
-		public string AllianceName
+		public string Alliance
 		{
 			get;
 			set;
 		}
 		
         [XmlElement("allianceID")]
-		public int AllianceID
+        public long AllianceID
 		{
 			get;
 			set;
@@ -134,7 +135,7 @@ namespace EveApi
 		}
 		
         [XmlElement("balance")]
-		public decimal Balance
+		public decimal AccountBalance
 		{
 			get;
 			set;

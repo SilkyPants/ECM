@@ -50,6 +50,10 @@ namespace ECM.Core
             SQLiteCommand cmd = sqlConnection.CreateCommand();
             cmd.CommandText = createCmd;
             cmd.ExecuteNonQuery();
+
+            cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = "CREATE TABLE IF NOT EXISTS ecmCharacters(ID INT PRIMARY KEY, Name TEXT, Expires TEXT, Access TEXT)";
+            cmd.ExecuteNonQuery();
         }
         #endregion
 
@@ -121,6 +125,11 @@ namespace ECM.Core
         public static void RemoveAccount (Account toRemove)
         {
             throw new NotImplementedException ();
+        }
+
+        internal static void AddCharacter(Character charToAdd)
+        {
+            throw new NotImplementedException();
         }
     }
 

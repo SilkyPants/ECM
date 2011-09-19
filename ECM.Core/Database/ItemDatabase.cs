@@ -136,7 +136,7 @@ namespace ECM.Core
 	    
 	    private static void LoadMarketGroups()
 	    {
-	     	string selectCmd = "SELECT marketGroupID, marketGroupName, parentGroupID, hasTypes FROM invMarketGroups ORDER BY hasTypes, parentGroupID, marketGroupID";
+	     	string selectCmd = "SELECT marketGroupID, marketGroupName, parentGroupID, hasTypes, iconFile FROM invMarketGroups ORDER BY hasTypes, parentGroupID, marketGroupID";
 	     
 	        SqlCmd cmd = sqlConnection.CreateCommand();
 	        cmd.CommandText = selectCmd;
@@ -148,13 +148,14 @@ namespace ECM.Core
 	            long groupID = Convert.ToInt64(row[0]);
 	            long parentID = row[2] is DBNull ? -1 : Convert.ToInt64(row[2]);
                 bool hasItems = row[3] is DBNull ? false : Convert.ToInt32(row[3]) == 1;
+                string iconFile = row[4] is DBNull ? string.Empty : row[4].ToString();
 				
 				EveMarketGroup newGroup = new EveMarketGroup();
 				newGroup.Name = groupName;
 				newGroup.ID = groupID;
 				newGroup.ParentID = parentID;
                 newGroup.HasItems = hasItems;
-				newGroup.IconString = "ECM.Core.Icons.MarketGroupPNG";
+                newGroup.IconString = iconFile;
 				
 				m_MarketGroups.Add(groupID, newGroup);
 	        }
@@ -202,7 +203,7 @@ namespace ECM.Core
                     groupIter = marketStore.AppendNode();
                 }
 
-				marketStore.SetValues(groupIter, new Gdk.Pixbuf(MarketGroupPNG), group.Name, group.ID, group.HasItems);
+				marketStore.SetValues(groupIter, new Gdk.Pixbuf(ECM.Core.ItemDatabase.GetMarketIconStream(group.IconString)), group.Name, group.ID, group.HasItems);
 				group.Tag = groupIter;
 			}
 
@@ -216,6 +217,26 @@ namespace ECM.Core
                 }
             }
 		}
+
+        private static Stream GetMarketIconStream(string iconFile)
+        {
+            Assembly ass = Assembly.GetExecutingAssembly();
+
+            if (ass != null && string.IsNullOrEmpty(iconFile) == false)
+            {
+                Stream s = ass.GetManifestResourceStream(string.Format("ECM.Core.Resources.Icons.MarketIcons.icon{0}.png", iconFile));
+
+                if(s == null)
+                {
+                    Console.WriteLine("Error: Cannot load ECM.Core.Resources.Icons.MarketIcons.icon{0}.png", iconFile);
+                    return MarketGroupPNG;
+                }
+
+                return s;
+            }
+
+            return MarketGroupPNG;
+        }
 	}
 }
 

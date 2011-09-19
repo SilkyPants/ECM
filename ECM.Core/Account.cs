@@ -1,5 +1,7 @@
 using System;
 using EveApi;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ECM.Core
 {
@@ -8,6 +10,7 @@ namespace ECM.Core
         AuthorisedApiRequest<ApiKeyInfo> m_accountKeyInfo;
         AuthorisedApiRequest<AccountStatus> m_accountStatus;
         ApiKeyMask m_KeyAccess;
+        List<Character> m_Characters = new List<Character>();
 
         public ApiKeyMask KeyAccess
         {
@@ -15,7 +18,7 @@ namespace ECM.Core
             private set
             {
                 m_KeyAccess = value;
-                m_accountStatus.Enabled = false;//m_KeyAccess.HasFlag(ApiKeyMask.AccountStatus);
+                m_accountStatus.Enabled = m_KeyAccess.HasFlag(ApiKeyMask.AccountStatus);
             }
         }
 
@@ -43,6 +46,22 @@ namespace ECM.Core
             private set;
         }
 
+        public List<Character> Characters
+        {
+            get { return m_Characters; }
+        }
+
+        public delegate void AccountUpdatedHandler(Account account, IApiResult result);
+        public event AccountUpdatedHandler AccountUpdated;
+
+        private void OnAccountUpdated(IApiResult result)
+        {
+            if (AccountUpdated != null)
+            {
+                AccountUpdated(this, result);
+            }
+        }
+
         private Account(string keyID, string vCode)
         {
             KeyID = keyID;
@@ -50,10 +69,10 @@ namespace ECM.Core
 
             m_accountKeyInfo = new AuthorisedApiRequest<ApiKeyInfo>(keyID, vCode);
             m_accountKeyInfo.OnRequestUpdate += AccountKeyInfoUpdate;
-            m_accountKeyInfo.Enabled = false;
+            m_accountKeyInfo.Enabled = true;
 
             m_accountStatus = new AuthorisedApiRequest<AccountStatus>(keyID, vCode);
-            m_accountStatus.OnRequestUpdate += AccountStatusUpdate;            m_accountKeyInfo.Enabled = false;
+            m_accountStatus.OnRequestUpdate += AccountStatusUpdate;
         }
 
         public Account (string keyID, string vCode, ApiKeyMask access, DateTime expires)
@@ -69,6 +88,13 @@ namespace ECM.Core
             {
                 KeyAccess = result.Result.Key.AccessMask;
                 Expires = result.Result.Key.Expires;
+
+                foreach (CharacterListItem character in result.Result.Key.Characters)
+                {
+                    m_Characters.Add(new Character(KeyID, character.CharacterID, character.Name));
+                }
+
+                OnAccountUpdated(result);
             }
         }
 
@@ -77,6 +103,8 @@ namespace ECM.Core
             if(result != null && result.Error == null)
             {
                 Status = result.Result;
+
+                OnAccountUpdated(result);
             }
         }
 

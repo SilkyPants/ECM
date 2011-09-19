@@ -76,9 +76,9 @@ namespace ECMDatabaseCreator
             //CreateCharacterDb();
             //CreateCertificateDb();
             //CreateSkillDb();
-            //CreateItemDb();
+            CreateItemDb();
             //CreateMapDb();
-            CreateMapObjectDb();
+            //CreateMapObjectDb();
 
             dbConn.Close();
         }
@@ -406,6 +406,62 @@ namespace ECMDatabaseCreator
 
             reader.Close();
 
+            // Marketgroup Table
+            columns = new Dictionary<string, string>();
+            columns.Add("marketGroupID", "int");
+            columns.Add("parentGroupID", "int");
+            columns.Add("marketGroupName", "nvarchar(100)");
+            columns.Add("description", "nvarchar(3000)");
+            columns.Add("iconFile", "text");
+            columns.Add("hasTypes", "bit");
+
+            CreateTable("invMarketGroups", columns);
+            worker.ReportProgress(-1, "invMarketGroups");
+
+
+            queryCmd = CreateDbCommand("SELECT * FROM invMarketGroups");
+
+            data = new DataSet();
+            adapter = CreateDataAdapter(queryCmd);
+
+            adapter.Fill(data);
+
+
+            reader = data.CreateDataReader();
+
+            currRow = 0;
+            totalRows = data.Tables[0].Rows.Count;
+            worker.ReportProgress(-2, totalRows);
+
+            while (reader.Read())
+            {
+                StringBuilder insertCmdText = new StringBuilder();
+                StringBuilder values = new StringBuilder();
+
+                worker.ReportProgress(-3, ++currRow);
+                
+                SQLiteCommand comm = outputSQLiteConn.CreateCommand();
+                comm.CommandText = "INSERT INTO invMarketGroups(marketGroupID, parentGroupID, marketGroupName, description, iconFile, hasTypes) VALUES (@marketGroupID, @parentGroupID, @marketGroupName, @description, @iconFile, @hasTypes)";
+
+                comm.Parameters.AddWithValue("@marketGroupID", reader["marketGroupID"]);
+                comm.Parameters.AddWithValue("@parentGroupID", reader["parentGroupID"]);
+                comm.Parameters.AddWithValue("@marketGroupName", reader["marketGroupName"]);
+                comm.Parameters.AddWithValue("@description", reader["description"]);
+                comm.Parameters.AddWithValue("@iconFile", GetIconFile(reader["iconID"]));
+                comm.Parameters.AddWithValue("@hasTypes", reader["hasTypes"]);
+
+                comm.ExecuteNonQuery();
+
+                float perc = (float)currRow / (float)totalRows;
+                perc *= 100;
+
+                worker.ReportProgress((int)perc);
+            }
+
+            reader.Close();
+
+            // -------------------
+
             CopyTable("dgmAttributeCategories");
             CopyTable("dgmAttributeTypes");
             CopyTable("dgmEffects");
@@ -418,12 +474,31 @@ namespace ECMDatabaseCreator
             CopyTable("invCategories");
             CopyTable("invContrabandTypes");
             CopyTable("invGroups");
-            CopyTable("invMarketGroups");
+            //CopyTable("invMarketGroups");
             CopyTable("invMetaTypes");
             CopyTable("invTypeMaterials");
             CopyTable("invTypeReactions");
 
             outputSQLiteConn.Close();
+        }
+
+        private object GetIconFile(object iconID)
+        {
+            if (iconID is DBNull)
+                return iconID;
+
+            string iconFile = "";
+
+            IDataAdapter apt = CreateDataAdapter(CreateDbCommand("SELECT iconFile FROM eveIcons WHERE iconID = " + iconID.ToString()));
+            DataSet res = new DataSet();
+            apt.Fill(res);
+
+            if (res.Tables.Count == 1 && res.Tables[0].Rows.Count == 1)
+            {
+                iconFile = res.Tables[0].Rows[0].ItemArray[0].ToString();
+            }
+
+            return iconFile;
         }
 
         private void CreateSkillDb()

@@ -468,6 +468,11 @@ public partial class MainWindow: Gtk.Window
 
     public void FillAccounts ()
     {
+        while (vbxAccounts.Children.Length > 0)
+        {
+            vbxAccounts.Remove(vbxAccounts.Children[0]);
+        }
+
         foreach(ECM.Core.Account account in ECM.Core.Data.Accounts.Values)
         {
             vbxAccounts.PackStart(CreateAccountWidget(account), false, false, 0);
