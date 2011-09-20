@@ -11,18 +11,7 @@ using MySql.Data.MySqlClient;
 using System.Data.SqlClient;
 
 public partial class MainWindow: Gtk.Window
-{    
-    public MainWindow (): base (Gtk.WindowType.Toplevel)
-    {
-        Build ();
-    }
-    
-    protected void OnDeleteEvent (object sender, DeleteEventArgs a)
-    {
-        Application.Quit ();
-        a.RetVal = true;
-    }
-
+{
     IDbConnection dbConn;
     BackgroundWorker worker = new BackgroundWorker();
     string connString;
@@ -31,11 +20,26 @@ public partial class MainWindow: Gtk.Window
     private int maxRecord = 0;
     private int curRecord = 0;
 
-    private string mySqlConnString = "Server={0};Database=evedb;Uid={1};Pwd={2};";
-    private string msSqlConnStringLogin = "Data Source={0};Initial Catalog=evedb;User Id={1};Password={2}";
-    private string msSqlConnStringIntegrated = "Data Source={0};Initial Catalog=evedb;Integrated Security=True";
+    private string mySqlConnString = "Server={0};Port={4};Database={3};Uid={1};Pwd={2};";
+    private string msSqlConnStringLogin = "Data Source={0};Initial Catalog={3};User Id={1};Password={2}";
+    private string msSqlConnStringIntegrated = "Data Source={0};Initial Catalog={1};Integrated Security=True";
     private string sqliteConnString = "Data Source={0};";
 
+    public MainWindow (): base (Gtk.WindowType.Toplevel)
+    {
+        Build ();
+
+        worker.WorkerReportsProgress = true;
+        worker.DoWork += CreateDatabase;
+        worker.RunWorkerCompleted += WorkCompleted;
+        worker.ProgressChanged += UpdateProgress;
+    }
+    
+    protected void OnDeleteEvent (object sender, DeleteEventArgs a)
+    {
+        Application.Quit ();
+        a.RetVal = true;
+    }
 
     private void ServerTypeChanged(object sender, EventArgs e)
     {
@@ -60,15 +64,15 @@ public partial class MainWindow: Gtk.Window
         // Open real DB
         if (ntbServers.CurrentPage == 1)
         {
-            connString = string.Format(mySqlConnString, txtMySqlSource.Text, txtMySqlUser.Text, txtMySqlPass.Text);
+            connString = string.Format(mySqlConnString, txtMySqlSource.Text, txtMySqlUser.Text, txtMySqlPass.Text, txtMySqlDbName.Text, spbPort.ValueAsInt);
             dbConn = new MySqlConnection(connString);
         }
         else if (ntbServers.CurrentPage == 0)
         {
             if(chkIntegratedSec.Active)
-                connString = string.Format(msSqlConnStringIntegrated, txtMSSQLSource.Text);
+                connString = string.Format(msSqlConnStringIntegrated, txtMSSQLSource.Text, txtMSSQLDbname.Text);
             else
-                connString = string.Format(msSqlConnStringLogin, txtMSSQLSource.Text, txtMSSQLUser.Text, txtMSSQLPass.Text);
+                connString = string.Format(msSqlConnStringLogin, txtMSSQLSource.Text, txtMSSQLUser.Text, txtMSSQLPass.Text, txtMSSQLDbname.Text);
 
             dbConn = new SqlConnection(connString);
         }
@@ -79,18 +83,26 @@ public partial class MainWindow: Gtk.Window
         }
         else return;
 
-        dbConn.Open();
+        try
+        {
+            dbConn.Open();
 
-        // Do some work
-        CreateAgentsDb();
-        CreateCharacterDb();
-        CreateCertificateDb();
-        CreateSkillDb();
-        CreateItemDb();
-        CreateMapDb();
-        CreateMapObjectDb();
+            // Do some work
+//            CreateAgentsDb();
+//            CreateCharacterDb();
+//            CreateCertificateDb();
+            CreateSkillDb();
+            CreateItemDb();
+//            CreateMapDb();
+//            CreateMapObjectDb();
 
-        dbConn.Close();
+            dbConn.Close();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return;
+        }
     }
 
     private void CreateMapDb()
@@ -813,34 +825,37 @@ public partial class MainWindow: Gtk.Window
 
     private void UpdateProgress(object sender, System.ComponentModel.ProgressChangedEventArgs e)
     {
-        if (e.ProgressPercentage >= 0)
+        Gtk.Application.Invoke(delegate
         {
-            pgbProgress.Fraction = e.ProgressPercentage;
-
-            if (e.ProgressPercentage >= 100)
+            if (e.ProgressPercentage >= 0)
             {
-                lblRecords.Text = "";
-                lblStatus.Text = "Convert complete";
+                pgbProgress.Fraction = (double)e.ProgressPercentage / 100;
+
+                if (e.ProgressPercentage >= 100)
+                {
+                    lblRecords.Text = "";
+                    lblStatus.Text = "Convert complete";
+                }
             }
-        }
-        else
-        {
-            if (e.ProgressPercentage == -1)
-                lblStatus.Text = "Processing table " + e.UserState.ToString();
-            else if (e.ProgressPercentage == -2)
-                maxRecord = (int)e.UserState;
-            else if (e.ProgressPercentage == -3)
-                curRecord = (int)e.UserState;
-            if (e.ProgressPercentage == -4)
-                lblRecords.Text = "Querying Database...";
             else
-                lblRecords.Text = string.Format("{0} of {1}", curRecord, maxRecord);
-        }
+            {
+                if (e.ProgressPercentage == -1)
+                    lblStatus.Text = "Processing table " + e.UserState.ToString();
+                else if (e.ProgressPercentage == -2)
+                    maxRecord = (int)e.UserState;
+                else if (e.ProgressPercentage == -3)
+                    curRecord = (int)e.UserState;
+                if (e.ProgressPercentage == -4)
+                    lblRecords.Text = "Querying Database...";
+                else
+                    lblRecords.Text = string.Format("{0} of {1}", curRecord, maxRecord);
+            }
+        });
     }
 
     private void WorkCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
     {
-
+        Console.WriteLine("Completed");
     }
 
     private void CopyTable(string tableName)
@@ -1054,5 +1069,11 @@ public partial class MainWindow: Gtk.Window
     protected void StartProcess (object sender, System.EventArgs e)
     {
         worker.RunWorkerAsync();
+    }
+
+    protected void IntegratedSecToggle (object sender, System.EventArgs e)
+    {
+        txtMSSQLPass.Sensitive = chkIntegratedSec.Active;
+        txtMSSQLUser.Sensitive = chkIntegratedSec.Active;
     }
 }

@@ -62,7 +62,7 @@ namespace ECM.Core
             }
         }
 
-        private Account(string keyID, string vCode)
+        public Account(string keyID, string vCode)
         {
             KeyID = keyID;
             VCode = vCode;
@@ -75,11 +75,10 @@ namespace ECM.Core
             m_accountStatus.OnRequestUpdate += AccountStatusUpdate;
         }
 
-        public Account (string keyID, string vCode, ApiKeyMask access, DateTime expires)
-            : this (keyID, vCode)
+        public Account(string keyID, string vCode, ApiKeyMask access, DateTime expiry) : this(keyID, vCode)
         {
             KeyAccess = access;
-            Expires = expires;
+            Expires = expiry;
         }
 
         void AccountKeyInfoUpdate (ApiResult<ApiKeyInfo> result)
@@ -91,7 +90,7 @@ namespace ECM.Core
 
                 foreach (CharacterListItem character in result.Result.Key.Characters)
                 {
-                    m_Characters.Add(new Character(KeyID, character.CharacterID, character.Name));
+                    m_Characters.Add(new Character(this, character.CharacterID, character.Name));
                 }
 
                 OnAccountUpdated(result);

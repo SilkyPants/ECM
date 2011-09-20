@@ -1,11 +1,21 @@
-using System;using EveApi;
+using System;
+using EveApi;
 using EveApi.Api.Interfaces;
-using System.Collections.Generic;namespace ECM.Core{
+using System.Collections.Generic;
+
+namespace ECM.Core
+{
     public class Character : ICharacterInfo, ICharacterSheet
     {
         CharacterApiRequest<CharacterSheet> m_charSheetRequest;
         CharacterApiRequest<CharacterInfo> m_charInfoRequest;
-        bool m_AutoUpdate = true;        public string AccountKeyID        {            get;            private set;        }        public Account Account        {            get            {                return Data.RetrieveAccount(AccountKeyID);            }        }
+        bool m_AutoUpdate = true;
+
+        public Account Account
+        {
+            get;
+            private set;
+        }
 
         public bool AutoUpdate
         {
@@ -13,8 +23,8 @@ using System.Collections.Generic;namespace ECM.Core{
             set
             {
                 m_AutoUpdate = value;
-                m_charInfoRequest.Enabled = value;
-                m_charSheetRequest.Enabled = value;
+                m_charInfoRequest.Enabled = value && Account.KeyAccess.HasFlag(ApiKeyMask.CharacterSheet);
+                m_charSheetRequest.Enabled = value && (Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPublic) || Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPrivate));
             }
         }
 
@@ -171,11 +181,13 @@ using System.Collections.Generic;namespace ECM.Core{
         {
             get;
             set;
-        }        public Character (string accountID, long characterID, string name)        {
-            AccountKeyID = accountID;
+        }
+
+        public Character (Account account, long characterID, string name)
+        {
+            Account = account;
             ID = characterID;
             Name = name;
-            AutoUpdate = true;
 
             m_charSheetRequest = new CharacterApiRequest<CharacterSheet>(characterID, Account.KeyID, Account.VCode);
             m_charSheetRequest.OnRequestUpdate += SheetRequestUpdated;
@@ -183,7 +195,10 @@ using System.Collections.Generic;namespace ECM.Core{
 
             m_charInfoRequest = new CharacterApiRequest<CharacterInfo>(characterID, Account.KeyID, Account.VCode);
             m_charInfoRequest.OnRequestUpdate += InfoRequestUpdated;
-            m_charInfoRequest.Enabled = Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPublic) || Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPrivate);        }
+            m_charInfoRequest.Enabled = Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPublic) || Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPrivate);
+
+            AutoUpdate = true;
+        }
 
         void SheetRequestUpdated(ApiResult<CharacterSheet> result)
         {
@@ -242,5 +257,12 @@ using System.Collections.Generic;namespace ECM.Core{
             Name = characterSheet.Name;
             Race = characterSheet.Race;
             Skills = characterSheet.Skills;
-        }        public void UpdateOnHeartbeat()        {            m_charSheetRequest.UpdateOnSecTick();        }
-    }}
+        }
+
+        public void UpdateOnHeartbeat()
+        {
+            m_charSheetRequest.UpdateOnSecTick();
+        }
+    }
+}
+
