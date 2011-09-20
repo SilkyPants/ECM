@@ -54,7 +54,7 @@ namespace ECMGTK
 
 		protected void RetrieveApiInfo (object sender, System.EventArgs e)
 		{
-	        apiAccount = new ECM.Core.Account(txtApiKeyID.Text, txtVerificationCode.Text);
+	        apiAccount = new ECM.Core.Account(txtApiKeyID.Text, txtVerificationCode.Buffer.Text);
             apiAccount.AccountUpdated += HandleApiAccountAccountUpdated;
 
             apiAccount.UpdateOnHeartbeat();
