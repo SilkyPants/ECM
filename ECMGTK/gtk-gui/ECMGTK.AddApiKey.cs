@@ -8,7 +8,9 @@ namespace ECMGTK {
         
         private global::Gtk.Alignment GtkAlignment2;
         
-        private global::Gtk.Label label2;
+        private global::Gtk.VBox vbox3;
+        
+        private global::Gtk.Button button159;
         
         private global::Gtk.Label GtkLabel2;
         
@@ -28,13 +30,7 @@ namespace ECMGTK {
         
         private global::Gtk.HSeparator hseparator1;
         
-        private global::Gtk.Frame frame2;
-        
-        private global::Gtk.Alignment GtkAlignment3;
-        
-        private global::Gtk.Table table2;
-        
-        private global::Gtk.Label GtkLabel3;
+        private global::Gtk.VBox vbxAccountInfo;
         
         private global::Gtk.Frame frame8;
         
@@ -43,6 +39,70 @@ namespace ECMGTK {
         private global::Gtk.TreeView trvCharacters;
         
         private global::Gtk.Label GtkLabel10;
+        
+        private global::Gtk.Frame frame2;
+        
+        private global::Gtk.Alignment GtkAlignment3;
+        
+        private global::Gtk.Table table2;
+        
+        private global::Gtk.Image image1;
+        
+        private global::Gtk.Image image10;
+        
+        private global::Gtk.Image image11;
+        
+        private global::Gtk.Image image12;
+        
+        private global::Gtk.Image image13;
+        
+        private global::Gtk.Image image14;
+        
+        private global::Gtk.Image image15;
+        
+        private global::Gtk.Image image16;
+        
+        private global::Gtk.Image image17;
+        
+        private global::Gtk.Image image18;
+        
+        private global::Gtk.Image image19;
+        
+        private global::Gtk.Image image2;
+        
+        private global::Gtk.Image image20;
+        
+        private global::Gtk.Image image21;
+        
+        private global::Gtk.Image image22;
+        
+        private global::Gtk.Image image23;
+        
+        private global::Gtk.Image image24;
+        
+        private global::Gtk.Image image25;
+        
+        private global::Gtk.Image image26;
+        
+        private global::Gtk.Image image27;
+        
+        private global::Gtk.Image image28;
+        
+        private global::Gtk.Image image3;
+        
+        private global::Gtk.Image image4;
+        
+        private global::Gtk.Image image5;
+        
+        private global::Gtk.Image image6;
+        
+        private global::Gtk.Image image7;
+        
+        private global::Gtk.Image image8;
+        
+        private global::Gtk.Image image9;
+        
+        private global::Gtk.Label GtkLabel3;
         
         private global::Gtk.Button buttonCancel;
         
@@ -79,14 +139,22 @@ namespace ECMGTK {
             this.GtkAlignment2.RightPadding = ((uint)(3));
             this.GtkAlignment2.BottomPadding = ((uint)(3));
             // Container child GtkAlignment2.Gtk.Container+ContainerChild
-            this.label2 = new global::Gtk.Label();
-            this.label2.WidthRequest = 365;
-            this.label2.Name = "label2";
-            this.label2.Xalign = 0F;
-            this.label2.LabelProp = global::Mono.Unix.Catalog.GetString("Go to https://support.eveonline.com/api/ or click here to generate a key.\n\nClicki" +
-                    "ng here will suggest a key to use all features available in this program.");
-            this.label2.Wrap = true;
-            this.GtkAlignment2.Add(this.label2);
+            this.vbox3 = new global::Gtk.VBox();
+            this.vbox3.Name = "vbox3";
+            this.vbox3.Spacing = 6;
+            // Container child vbox3.Gtk.Box+BoxChild
+            this.button159 = new global::Gtk.Button();
+            this.button159.CanFocus = true;
+            this.button159.Name = "button159";
+            this.button159.UseUnderline = true;
+            this.button159.Relief = ((global::Gtk.ReliefStyle)(2));
+            this.button159.Label = global::Mono.Unix.Catalog.GetString("Click here for a suggested key design");
+            this.vbox3.Add(this.button159);
+            global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.button159]));
+            w2.Position = 0;
+            w2.Expand = false;
+            w2.Fill = false;
+            this.GtkAlignment2.Add(this.vbox3);
             this.frame1.Add(this.GtkAlignment2);
             this.GtkLabel2 = new global::Gtk.Label();
             this.GtkLabel2.Name = "GtkLabel2";
@@ -94,10 +162,10 @@ namespace ECMGTK {
             this.GtkLabel2.UseMarkup = true;
             this.frame1.LabelWidget = this.GtkLabel2;
             this.vbox2.Add(this.frame1);
-            global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.frame1]));
-            w4.Position = 0;
-            w4.Expand = false;
-            w4.Fill = false;
+            global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.frame1]));
+            w5.Position = 0;
+            w5.Expand = false;
+            w5.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.table1 = new global::Gtk.Table(((uint)(2)), ((uint)(2)), false);
             this.table1.Name = "table1";
@@ -109,20 +177,20 @@ namespace ECMGTK {
             this.label3.Xalign = 1F;
             this.label3.LabelProp = global::Mono.Unix.Catalog.GetString("Api Key ID:");
             this.table1.Add(this.label3);
-            global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.table1[this.label3]));
-            w5.XOptions = ((global::Gtk.AttachOptions)(4));
-            w5.YOptions = ((global::Gtk.AttachOptions)(4));
+            global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.table1[this.label3]));
+            w6.XOptions = ((global::Gtk.AttachOptions)(4));
+            w6.YOptions = ((global::Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.label4 = new global::Gtk.Label();
             this.label4.Name = "label4";
             this.label4.Xalign = 0F;
             this.label4.LabelProp = global::Mono.Unix.Catalog.GetString("Verification Code:");
             this.table1.Add(this.label4);
-            global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.table1[this.label4]));
-            w6.TopAttach = ((uint)(1));
-            w6.BottomAttach = ((uint)(2));
-            w6.XOptions = ((global::Gtk.AttachOptions)(4));
-            w6.YOptions = ((global::Gtk.AttachOptions)(4));
+            global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.table1[this.label4]));
+            w7.TopAttach = ((uint)(1));
+            w7.BottomAttach = ((uint)(2));
+            w7.XOptions = ((global::Gtk.AttachOptions)(4));
+            w7.YOptions = ((global::Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.txtApiKeyID = new global::Gtk.Entry();
             this.txtApiKeyID.CanFocus = true;
@@ -131,10 +199,10 @@ namespace ECMGTK {
             this.txtApiKeyID.IsEditable = true;
             this.txtApiKeyID.InvisibleChar = '●';
             this.table1.Add(this.txtApiKeyID);
-            global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.table1[this.txtApiKeyID]));
-            w7.LeftAttach = ((uint)(1));
-            w7.RightAttach = ((uint)(2));
-            w7.YOptions = ((global::Gtk.AttachOptions)(4));
+            global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.table1[this.txtApiKeyID]));
+            w8.LeftAttach = ((uint)(1));
+            w8.RightAttach = ((uint)(2));
+            w8.YOptions = ((global::Gtk.AttachOptions)(4));
             // Container child table1.Gtk.Table+TableChild
             this.txtVerificationCode = new global::Gtk.Entry();
             this.txtVerificationCode.CanFocus = true;
@@ -143,17 +211,17 @@ namespace ECMGTK {
             this.txtVerificationCode.IsEditable = true;
             this.txtVerificationCode.InvisibleChar = '●';
             this.table1.Add(this.txtVerificationCode);
-            global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.table1[this.txtVerificationCode]));
-            w8.TopAttach = ((uint)(1));
-            w8.BottomAttach = ((uint)(2));
-            w8.LeftAttach = ((uint)(1));
-            w8.RightAttach = ((uint)(2));
-            w8.YOptions = ((global::Gtk.AttachOptions)(4));
+            global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.table1[this.txtVerificationCode]));
+            w9.TopAttach = ((uint)(1));
+            w9.BottomAttach = ((uint)(2));
+            w9.LeftAttach = ((uint)(1));
+            w9.RightAttach = ((uint)(2));
+            w9.YOptions = ((global::Gtk.AttachOptions)(4));
             this.vbox2.Add(this.table1);
-            global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.table1]));
-            w9.Position = 1;
-            w9.Expand = false;
-            w9.Fill = false;
+            global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.table1]));
+            w10.Position = 1;
+            w10.Expand = false;
+            w10.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.hbuttonbox2 = new global::Gtk.HButtonBox();
             this.hbuttonbox2.Name = "hbuttonbox2";
@@ -165,51 +233,27 @@ namespace ECMGTK {
             this.btnRetrieveApi.UseUnderline = true;
             this.btnRetrieveApi.Label = global::Mono.Unix.Catalog.GetString("Retrieve Key Details");
             this.hbuttonbox2.Add(this.btnRetrieveApi);
-            global::Gtk.ButtonBox.ButtonBoxChild w10 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2[this.btnRetrieveApi]));
-            w10.Expand = false;
-            w10.Fill = false;
-            this.vbox2.Add(this.hbuttonbox2);
-            global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbuttonbox2]));
-            w11.Position = 2;
+            global::Gtk.ButtonBox.ButtonBoxChild w11 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2[this.btnRetrieveApi]));
             w11.Expand = false;
             w11.Fill = false;
+            this.vbox2.Add(this.hbuttonbox2);
+            global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbuttonbox2]));
+            w12.Position = 2;
+            w12.Expand = false;
+            w12.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
             this.hseparator1 = new global::Gtk.HSeparator();
             this.hseparator1.Name = "hseparator1";
             this.vbox2.Add(this.hseparator1);
-            global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hseparator1]));
-            w12.Position = 3;
-            w12.Expand = false;
-            w12.Fill = false;
+            global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hseparator1]));
+            w13.Position = 3;
+            w13.Expand = false;
+            w13.Fill = false;
             // Container child vbox2.Gtk.Box+BoxChild
-            this.frame2 = new global::Gtk.Frame();
-            this.frame2.Name = "frame2";
-            // Container child frame2.Gtk.Container+ContainerChild
-            this.GtkAlignment3 = new global::Gtk.Alignment(0F, 0F, 1F, 1F);
-            this.GtkAlignment3.Name = "GtkAlignment3";
-            this.GtkAlignment3.LeftPadding = ((uint)(3));
-            this.GtkAlignment3.TopPadding = ((uint)(3));
-            this.GtkAlignment3.RightPadding = ((uint)(3));
-            this.GtkAlignment3.BottomPadding = ((uint)(3));
-            // Container child GtkAlignment3.Gtk.Container+ContainerChild
-            this.table2 = new global::Gtk.Table(((uint)(3)), ((uint)(3)), false);
-            this.table2.Name = "table2";
-            this.table2.RowSpacing = ((uint)(6));
-            this.table2.ColumnSpacing = ((uint)(6));
-            this.GtkAlignment3.Add(this.table2);
-            this.frame2.Add(this.GtkAlignment3);
-            this.GtkLabel3 = new global::Gtk.Label();
-            this.GtkLabel3.Name = "GtkLabel3";
-            this.GtkLabel3.LabelProp = global::Mono.Unix.Catalog.GetString("Key Allows:");
-            this.GtkLabel3.UseMarkup = true;
-            this.frame2.LabelWidget = this.GtkLabel3;
-            this.vbox2.Add(this.frame2);
-            global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.frame2]));
-            w15.Position = 4;
-            w1.Add(this.vbox2);
-            global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(w1[this.vbox2]));
-            w16.Position = 0;
-            // Container child dialog1_VBox.Gtk.Box+BoxChild
+            this.vbxAccountInfo = new global::Gtk.VBox();
+            this.vbxAccountInfo.Name = "vbxAccountInfo";
+            this.vbxAccountInfo.Spacing = 6;
+            // Container child vbxAccountInfo.Gtk.Box+BoxChild
             this.frame8 = new global::Gtk.Frame();
             this.frame8.Name = "frame8";
             // Container child frame8.Gtk.Container+ContainerChild
@@ -224,21 +268,371 @@ namespace ECMGTK {
             this.trvCharacters.HeightRequest = 100;
             this.trvCharacters.CanFocus = true;
             this.trvCharacters.Name = "trvCharacters";
+            this.trvCharacters.EnableSearch = false;
+            this.trvCharacters.HeadersVisible = false;
             this.GtkAlignment9.Add(this.trvCharacters);
             this.frame8.Add(this.GtkAlignment9);
             this.GtkLabel10 = new global::Gtk.Label();
             this.GtkLabel10.Name = "GtkLabel10";
             this.GtkLabel10.LabelProp = global::Mono.Unix.Catalog.GetString("Characters");
             this.frame8.LabelWidget = this.GtkLabel10;
-            w1.Add(this.frame8);
-            global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(w1[this.frame8]));
-            w19.Position = 1;
+            this.vbxAccountInfo.Add(this.frame8);
+            global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.vbxAccountInfo[this.frame8]));
+            w16.Position = 0;
+            w16.Expand = false;
+            w16.Fill = false;
+            // Container child vbxAccountInfo.Gtk.Box+BoxChild
+            this.frame2 = new global::Gtk.Frame();
+            this.frame2.Name = "frame2";
+            // Container child frame2.Gtk.Container+ContainerChild
+            this.GtkAlignment3 = new global::Gtk.Alignment(0F, 0F, 1F, 1F);
+            this.GtkAlignment3.Name = "GtkAlignment3";
+            this.GtkAlignment3.LeftPadding = ((uint)(50));
+            this.GtkAlignment3.TopPadding = ((uint)(3));
+            this.GtkAlignment3.RightPadding = ((uint)(3));
+            this.GtkAlignment3.BottomPadding = ((uint)(3));
+            // Container child GtkAlignment3.Gtk.Container+ContainerChild
+            this.table2 = new global::Gtk.Table(((uint)(4)), ((uint)(7)), false);
+            this.table2.Name = "table2";
+            this.table2.RowSpacing = ((uint)(6));
+            this.table2.ColumnSpacing = ((uint)(6));
+            // Container child table2.Gtk.Table+TableChild
+            this.image1 = new global::Gtk.Image();
+            this.image1.Name = "image1";
+            this.image1.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image1);
+            global::Gtk.Table.TableChild w17 = ((global::Gtk.Table.TableChild)(this.table2[this.image1]));
+            w17.LeftAttach = ((uint)(3));
+            w17.RightAttach = ((uint)(4));
+            w17.XOptions = ((global::Gtk.AttachOptions)(4));
+            w17.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image10 = new global::Gtk.Image();
+            this.image10.Name = "image10";
+            this.image10.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image10);
+            global::Gtk.Table.TableChild w18 = ((global::Gtk.Table.TableChild)(this.table2[this.image10]));
+            w18.LeftAttach = ((uint)(5));
+            w18.RightAttach = ((uint)(6));
+            w18.XOptions = ((global::Gtk.AttachOptions)(4));
+            w18.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image11 = new global::Gtk.Image();
+            this.image11.Name = "image11";
+            this.image11.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image11);
+            global::Gtk.Table.TableChild w19 = ((global::Gtk.Table.TableChild)(this.table2[this.image11]));
+            w19.LeftAttach = ((uint)(6));
+            w19.RightAttach = ((uint)(7));
+            w19.XOptions = ((global::Gtk.AttachOptions)(4));
+            w19.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image12 = new global::Gtk.Image();
+            this.image12.Name = "image12";
+            this.image12.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image12);
+            global::Gtk.Table.TableChild w20 = ((global::Gtk.Table.TableChild)(this.table2[this.image12]));
+            w20.TopAttach = ((uint)(2));
+            w20.BottomAttach = ((uint)(3));
+            w20.LeftAttach = ((uint)(6));
+            w20.RightAttach = ((uint)(7));
+            w20.XOptions = ((global::Gtk.AttachOptions)(4));
+            w20.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image13 = new global::Gtk.Image();
+            this.image13.Name = "image13";
+            this.image13.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image13);
+            global::Gtk.Table.TableChild w21 = ((global::Gtk.Table.TableChild)(this.table2[this.image13]));
+            w21.LeftAttach = ((uint)(2));
+            w21.RightAttach = ((uint)(3));
+            w21.XOptions = ((global::Gtk.AttachOptions)(4));
+            w21.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image14 = new global::Gtk.Image();
+            this.image14.Name = "image14";
+            this.image14.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image14);
+            global::Gtk.Table.TableChild w22 = ((global::Gtk.Table.TableChild)(this.table2[this.image14]));
+            w22.LeftAttach = ((uint)(1));
+            w22.RightAttach = ((uint)(2));
+            w22.XOptions = ((global::Gtk.AttachOptions)(4));
+            w22.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image15 = new global::Gtk.Image();
+            this.image15.Name = "image15";
+            this.image15.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image15);
+            global::Gtk.Table.TableChild w23 = ((global::Gtk.Table.TableChild)(this.table2[this.image15]));
+            w23.XOptions = ((global::Gtk.AttachOptions)(4));
+            w23.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image16 = new global::Gtk.Image();
+            this.image16.Name = "image16";
+            this.image16.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image16);
+            global::Gtk.Table.TableChild w24 = ((global::Gtk.Table.TableChild)(this.table2[this.image16]));
+            w24.TopAttach = ((uint)(1));
+            w24.BottomAttach = ((uint)(2));
+            w24.XOptions = ((global::Gtk.AttachOptions)(4));
+            w24.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image17 = new global::Gtk.Image();
+            this.image17.Name = "image17";
+            this.image17.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image17);
+            global::Gtk.Table.TableChild w25 = ((global::Gtk.Table.TableChild)(this.table2[this.image17]));
+            w25.TopAttach = ((uint)(2));
+            w25.BottomAttach = ((uint)(3));
+            w25.XOptions = ((global::Gtk.AttachOptions)(4));
+            w25.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image18 = new global::Gtk.Image();
+            this.image18.Name = "image18";
+            this.image18.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image18);
+            global::Gtk.Table.TableChild w26 = ((global::Gtk.Table.TableChild)(this.table2[this.image18]));
+            w26.TopAttach = ((uint)(3));
+            w26.BottomAttach = ((uint)(4));
+            w26.XOptions = ((global::Gtk.AttachOptions)(4));
+            w26.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image19 = new global::Gtk.Image();
+            this.image19.Name = "image19";
+            this.image19.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image19);
+            global::Gtk.Table.TableChild w27 = ((global::Gtk.Table.TableChild)(this.table2[this.image19]));
+            w27.TopAttach = ((uint)(3));
+            w27.BottomAttach = ((uint)(4));
+            w27.LeftAttach = ((uint)(1));
+            w27.RightAttach = ((uint)(2));
+            w27.XOptions = ((global::Gtk.AttachOptions)(4));
+            w27.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image2 = new global::Gtk.Image();
+            this.image2.Name = "image2";
+            this.image2.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image2);
+            global::Gtk.Table.TableChild w28 = ((global::Gtk.Table.TableChild)(this.table2[this.image2]));
+            w28.LeftAttach = ((uint)(4));
+            w28.RightAttach = ((uint)(5));
+            w28.XOptions = ((global::Gtk.AttachOptions)(4));
+            w28.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image20 = new global::Gtk.Image();
+            this.image20.Name = "image20";
+            this.image20.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image20);
+            global::Gtk.Table.TableChild w29 = ((global::Gtk.Table.TableChild)(this.table2[this.image20]));
+            w29.TopAttach = ((uint)(3));
+            w29.BottomAttach = ((uint)(4));
+            w29.LeftAttach = ((uint)(2));
+            w29.RightAttach = ((uint)(3));
+            w29.XOptions = ((global::Gtk.AttachOptions)(4));
+            w29.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image21 = new global::Gtk.Image();
+            this.image21.Name = "image21";
+            this.image21.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image21);
+            global::Gtk.Table.TableChild w30 = ((global::Gtk.Table.TableChild)(this.table2[this.image21]));
+            w30.TopAttach = ((uint)(3));
+            w30.BottomAttach = ((uint)(4));
+            w30.LeftAttach = ((uint)(3));
+            w30.RightAttach = ((uint)(4));
+            w30.XOptions = ((global::Gtk.AttachOptions)(4));
+            w30.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image22 = new global::Gtk.Image();
+            this.image22.Name = "image22";
+            this.image22.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image22);
+            global::Gtk.Table.TableChild w31 = ((global::Gtk.Table.TableChild)(this.table2[this.image22]));
+            w31.TopAttach = ((uint)(3));
+            w31.BottomAttach = ((uint)(4));
+            w31.LeftAttach = ((uint)(4));
+            w31.RightAttach = ((uint)(5));
+            w31.XOptions = ((global::Gtk.AttachOptions)(4));
+            w31.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image23 = new global::Gtk.Image();
+            this.image23.Name = "image23";
+            this.image23.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image23);
+            global::Gtk.Table.TableChild w32 = ((global::Gtk.Table.TableChild)(this.table2[this.image23]));
+            w32.TopAttach = ((uint)(3));
+            w32.BottomAttach = ((uint)(4));
+            w32.LeftAttach = ((uint)(5));
+            w32.RightAttach = ((uint)(6));
+            w32.XOptions = ((global::Gtk.AttachOptions)(4));
+            w32.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image24 = new global::Gtk.Image();
+            this.image24.Name = "image24";
+            this.image24.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image24);
+            global::Gtk.Table.TableChild w33 = ((global::Gtk.Table.TableChild)(this.table2[this.image24]));
+            w33.TopAttach = ((uint)(3));
+            w33.BottomAttach = ((uint)(4));
+            w33.LeftAttach = ((uint)(6));
+            w33.RightAttach = ((uint)(7));
+            w33.XOptions = ((global::Gtk.AttachOptions)(4));
+            w33.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image25 = new global::Gtk.Image();
+            this.image25.Name = "image25";
+            this.image25.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image25);
+            global::Gtk.Table.TableChild w34 = ((global::Gtk.Table.TableChild)(this.table2[this.image25]));
+            w34.TopAttach = ((uint)(2));
+            w34.BottomAttach = ((uint)(3));
+            w34.LeftAttach = ((uint)(2));
+            w34.RightAttach = ((uint)(3));
+            w34.XOptions = ((global::Gtk.AttachOptions)(4));
+            w34.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image26 = new global::Gtk.Image();
+            this.image26.Name = "image26";
+            this.image26.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image26);
+            global::Gtk.Table.TableChild w35 = ((global::Gtk.Table.TableChild)(this.table2[this.image26]));
+            w35.TopAttach = ((uint)(2));
+            w35.BottomAttach = ((uint)(3));
+            w35.LeftAttach = ((uint)(1));
+            w35.RightAttach = ((uint)(2));
+            w35.XOptions = ((global::Gtk.AttachOptions)(4));
+            w35.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image27 = new global::Gtk.Image();
+            this.image27.Name = "image27";
+            this.image27.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image27);
+            global::Gtk.Table.TableChild w36 = ((global::Gtk.Table.TableChild)(this.table2[this.image27]));
+            w36.TopAttach = ((uint)(1));
+            w36.BottomAttach = ((uint)(2));
+            w36.LeftAttach = ((uint)(1));
+            w36.RightAttach = ((uint)(2));
+            w36.XOptions = ((global::Gtk.AttachOptions)(4));
+            w36.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image28 = new global::Gtk.Image();
+            this.image28.Name = "image28";
+            this.image28.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image28);
+            global::Gtk.Table.TableChild w37 = ((global::Gtk.Table.TableChild)(this.table2[this.image28]));
+            w37.TopAttach = ((uint)(1));
+            w37.BottomAttach = ((uint)(2));
+            w37.LeftAttach = ((uint)(2));
+            w37.RightAttach = ((uint)(3));
+            w37.XOptions = ((global::Gtk.AttachOptions)(4));
+            w37.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image3 = new global::Gtk.Image();
+            this.image3.Name = "image3";
+            this.image3.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image3);
+            global::Gtk.Table.TableChild w38 = ((global::Gtk.Table.TableChild)(this.table2[this.image3]));
+            w38.TopAttach = ((uint)(1));
+            w38.BottomAttach = ((uint)(2));
+            w38.LeftAttach = ((uint)(3));
+            w38.RightAttach = ((uint)(4));
+            w38.XOptions = ((global::Gtk.AttachOptions)(4));
+            w38.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image4 = new global::Gtk.Image();
+            this.image4.Name = "image4";
+            this.image4.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image4);
+            global::Gtk.Table.TableChild w39 = ((global::Gtk.Table.TableChild)(this.table2[this.image4]));
+            w39.TopAttach = ((uint)(1));
+            w39.BottomAttach = ((uint)(2));
+            w39.LeftAttach = ((uint)(4));
+            w39.RightAttach = ((uint)(5));
+            w39.XOptions = ((global::Gtk.AttachOptions)(4));
+            w39.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image5 = new global::Gtk.Image();
+            this.image5.Name = "image5";
+            this.image5.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image5);
+            global::Gtk.Table.TableChild w40 = ((global::Gtk.Table.TableChild)(this.table2[this.image5]));
+            w40.TopAttach = ((uint)(2));
+            w40.BottomAttach = ((uint)(3));
+            w40.LeftAttach = ((uint)(3));
+            w40.RightAttach = ((uint)(4));
+            w40.XOptions = ((global::Gtk.AttachOptions)(4));
+            w40.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image6 = new global::Gtk.Image();
+            this.image6.Name = "image6";
+            this.image6.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image6);
+            global::Gtk.Table.TableChild w41 = ((global::Gtk.Table.TableChild)(this.table2[this.image6]));
+            w41.TopAttach = ((uint)(2));
+            w41.BottomAttach = ((uint)(3));
+            w41.LeftAttach = ((uint)(4));
+            w41.RightAttach = ((uint)(5));
+            w41.XOptions = ((global::Gtk.AttachOptions)(4));
+            w41.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image7 = new global::Gtk.Image();
+            this.image7.Name = "image7";
+            this.image7.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image7);
+            global::Gtk.Table.TableChild w42 = ((global::Gtk.Table.TableChild)(this.table2[this.image7]));
+            w42.TopAttach = ((uint)(2));
+            w42.BottomAttach = ((uint)(3));
+            w42.LeftAttach = ((uint)(5));
+            w42.RightAttach = ((uint)(6));
+            w42.XOptions = ((global::Gtk.AttachOptions)(4));
+            w42.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image8 = new global::Gtk.Image();
+            this.image8.Name = "image8";
+            this.image8.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image8);
+            global::Gtk.Table.TableChild w43 = ((global::Gtk.Table.TableChild)(this.table2[this.image8]));
+            w43.TopAttach = ((uint)(1));
+            w43.BottomAttach = ((uint)(2));
+            w43.LeftAttach = ((uint)(6));
+            w43.RightAttach = ((uint)(7));
+            w43.XOptions = ((global::Gtk.AttachOptions)(4));
+            w43.YOptions = ((global::Gtk.AttachOptions)(4));
+            // Container child table2.Gtk.Table+TableChild
+            this.image9 = new global::Gtk.Image();
+            this.image9.Name = "image9";
+            this.image9.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("ECMGTK.Resources.Icons.CharSheet.png");
+            this.table2.Add(this.image9);
+            global::Gtk.Table.TableChild w44 = ((global::Gtk.Table.TableChild)(this.table2[this.image9]));
+            w44.TopAttach = ((uint)(1));
+            w44.BottomAttach = ((uint)(2));
+            w44.LeftAttach = ((uint)(5));
+            w44.RightAttach = ((uint)(6));
+            w44.XOptions = ((global::Gtk.AttachOptions)(4));
+            w44.YOptions = ((global::Gtk.AttachOptions)(4));
+            this.GtkAlignment3.Add(this.table2);
+            this.frame2.Add(this.GtkAlignment3);
+            this.GtkLabel3 = new global::Gtk.Label();
+            this.GtkLabel3.Name = "GtkLabel3";
+            this.GtkLabel3.LabelProp = global::Mono.Unix.Catalog.GetString("Key Allows:");
+            this.GtkLabel3.UseMarkup = true;
+            this.frame2.LabelWidget = this.GtkLabel3;
+            this.vbxAccountInfo.Add(this.frame2);
+            global::Gtk.Box.BoxChild w47 = ((global::Gtk.Box.BoxChild)(this.vbxAccountInfo[this.frame2]));
+            w47.Position = 1;
+            this.vbox2.Add(this.vbxAccountInfo);
+            global::Gtk.Box.BoxChild w48 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.vbxAccountInfo]));
+            w48.PackType = ((global::Gtk.PackType)(1));
+            w48.Position = 4;
+            w1.Add(this.vbox2);
+            global::Gtk.Box.BoxChild w49 = ((global::Gtk.Box.BoxChild)(w1[this.vbox2]));
+            w49.Position = 0;
             // Internal child ECMGTK.AddApiKey.ActionArea
-            global::Gtk.HButtonBox w20 = this.ActionArea;
-            w20.Name = "dialog1_ActionArea";
-            w20.Spacing = 10;
-            w20.BorderWidth = ((uint)(5));
-            w20.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
+            global::Gtk.HButtonBox w50 = this.ActionArea;
+            w50.Name = "dialog1_ActionArea";
+            w50.Spacing = 10;
+            w50.BorderWidth = ((uint)(5));
+            w50.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.buttonCancel = new global::Gtk.Button();
             this.buttonCancel.CanDefault = true;
@@ -247,9 +641,9 @@ namespace ECMGTK {
             this.buttonCancel.UseUnderline = true;
             this.buttonCancel.Label = global::Mono.Unix.Catalog.GetString("Cancel");
             this.AddActionWidget(this.buttonCancel, -6);
-            global::Gtk.ButtonBox.ButtonBoxChild w21 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w20[this.buttonCancel]));
-            w21.Expand = false;
-            w21.Fill = false;
+            global::Gtk.ButtonBox.ButtonBoxChild w51 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w50[this.buttonCancel]));
+            w51.Expand = false;
+            w51.Fill = false;
             // Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
             this.button47 = new global::Gtk.Button();
             this.button47.CanFocus = true;
@@ -257,18 +651,17 @@ namespace ECMGTK {
             this.button47.UseUnderline = true;
             this.button47.Label = global::Mono.Unix.Catalog.GetString("Import");
             this.AddActionWidget(this.button47, 0);
-            global::Gtk.ButtonBox.ButtonBoxChild w22 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w20[this.button47]));
-            w22.Position = 1;
-            w22.Expand = false;
-            w22.Fill = false;
+            global::Gtk.ButtonBox.ButtonBoxChild w52 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w50[this.button47]));
+            w52.Position = 1;
+            w52.Expand = false;
+            w52.Fill = false;
             if ((this.Child != null)) {
                 this.Child.ShowAll();
             }
             this.DefaultWidth = 400;
-            this.DefaultHeight = 580;
-            this.label2.MnemonicWidget = this.label2;
+            this.DefaultHeight = 546;
             this.Show();
-            this.label2.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler(this.NeedKeyClick);
+            this.button159.Clicked += new global::System.EventHandler(this.NeedApiKeyClick);
             this.btnRetrieveApi.Clicked += new global::System.EventHandler(this.RetrieveApiInfo);
             this.button47.Clicked += new global::System.EventHandler(this.ImportKey);
         }

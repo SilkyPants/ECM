@@ -47,11 +47,6 @@ namespace ECMGTK
 			}
 		}
 
-		protected void NeedKeyClick (object o, Gtk.ButtonPressEventArgs args)
-		{
-			throw new System.NotImplementedException ();
-		}
-
 		protected void RetrieveApiInfo (object sender, System.EventArgs e)
 		{
 	        apiAccount = new ECM.Core.Account(txtApiKeyID.Text, txtVerificationCode.Text);
@@ -71,8 +66,8 @@ namespace ECMGTK
 
                     accCharacters.Clear();
     
-                    foreach (CharacterListItem character in keyData.Characters)
-                        accCharacters.AppendValues(true, character.Name, character.CharacterID);
+                    foreach (ECM.Core.Character character in account.Characters)
+                        accCharacters.AppendValues(character.AutoUpdate, character.Name, character.ID);
                 }
             }
         }
@@ -104,6 +99,11 @@ namespace ECMGTK
                 this.Destroy();
             }
 		}
+
+        protected void NeedApiKeyClick (object sender, System.EventArgs e)
+        {
+            System.Diagnostics.Process.Start("");
+        }
 	}
 }
 
