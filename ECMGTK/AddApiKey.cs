@@ -73,6 +73,8 @@ namespace ECMGTK
     
                     foreach (CharacterListItem character in keyData.Characters)
                         accCharacters.AppendValues(true, character.Name, character.CharacterID);
+
+                    // Show key access
                 }
             }
         }
@@ -81,25 +83,19 @@ namespace ECMGTK
 		{
             if(apiAccount != null)
             {
-                ECM.Core.Data.AddAccount(apiAccount);
-
                 TreeIter it = new TreeIter ();
                 accCharacters.GetIterFirst (out it);
+                int index = 0;
                 while (accCharacters.IterIsValid (it))
                 {
                     bool selected = (bool) accCharacters.GetValue (it, 0);
-                    string name = (string) accCharacters.GetValue (it, 1);
-                    long id = (long) accCharacters.GetValue (it, 2);
-    
-                    if(selected)
-                    {
-                        ECM.Core.Character newChar = new ECM.Core.Character(apiAccount, id, name);
-                        ECM.Core.Data.Characters.Add(id, newChar);
-                        newChar.UpdateOnHeartbeat();
-                    }
+
+                    apiAccount.Characters[index].AutoUpdate = selected;
     
                     accCharacters.IterNext (ref it);
                 }
+
+                ECM.Core.Data.AddAccount(apiAccount);
     
                 this.Destroy();
             }
