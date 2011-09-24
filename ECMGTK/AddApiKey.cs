@@ -14,6 +14,8 @@ namespace ECMGTK
 			this.Build ();
 			
 			SetupTreeview();
+
+            vbxKeyInfo.Sensitive = false;
 		}
 
 		public void SetupTreeview ()
@@ -47,9 +49,9 @@ namespace ECMGTK
 			}
 		}
 
-		protected void NeedKeyClick (object o, Gtk.ButtonPressEventArgs args)
+		protected void NeedKeyClick (object o, System.EventArgs args)
 		{
-			throw new System.NotImplementedException ();
+
 		}
 
 		protected void RetrieveApiInfo (object sender, System.EventArgs e)
@@ -66,6 +68,9 @@ namespace ECMGTK
             {
                 if(result is ApiResult<ApiKeyInfo>)
                 {
+                    vbxKeyInfo.Sensitive = true;
+                    btnImport.Sensitive = true;
+
                     ApiResult<ApiKeyInfo> keyInfo = result as ApiResult<ApiKeyInfo>;
                     ApiKeyData keyData = keyInfo.Result.Key;
 
@@ -75,6 +80,29 @@ namespace ECMGTK
                         accCharacters.AppendValues(true, character.Name, character.CharacterID);
 
                     // Show key access
+                    imgAccBalance.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.AccountBalance);
+                    imgAccountStatus.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.AccountStatus);
+                    imgAssetList.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.AssetList);
+                    imgCalEvents.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.CalendarEventAttendees) && keyData.AccessMask.HasFlag(ApiKeyMask.UpcomingCalendarEvents);
+                    imgCharInfo.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.CharacterInfoPrivate) || keyData.AccessMask.HasFlag(ApiKeyMask.CharacterInfoPublic);
+                    imgCharSheet.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.CharacterSheet);
+                    imgContactNotifications.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.ContactNotifications);
+                    imgContacts.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.ContactList);
+                    imgContracts.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.Contracts);
+                    imgFacWarStats.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.FacWarStats);
+                    imgIndJobs.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.IndustryJobs);
+                    imgKillLog.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.KillLog);
+                    // TODO: What about mailing lists?
+                    imgMail.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.MailBodies) && keyData.AccessMask.HasFlag(ApiKeyMask.MailMessages);
+                    imgMarketOrders.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.MarketOrders);
+                    imgMedals.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.Medals);
+                    ImgNotifications.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.Notifications) && keyData.AccessMask.HasFlag(ApiKeyMask.NotificationTexts);
+                    imgReseach.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.Research);
+                    imgSkillQueue.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.SkillQueue);
+                    imgSkillTraining.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.SkillInTraining);
+                    imgStandings.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.Standings);
+                    imgWallJournal.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.WalletJournal);
+                    imgWallTransactions.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.WalletTransactions);
                 }
             }
         }

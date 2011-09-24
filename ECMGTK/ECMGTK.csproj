@@ -88,6 +88,16 @@
     <EmbeddedResource Include="Resources\Icons\MarketGroup.png" />
     <EmbeddedResource Include="Resources\Icons\CharInfo.png" />
     <EmbeddedResource Include="Resources\Icons\Info16.png" />
+    <EmbeddedResource Include="Resources\Icons\Calender.png" />
+    <EmbeddedResource Include="Resources\Icons\FacWarStats.png" />
+    <EmbeddedResource Include="Resources\Icons\Industry.png" />
+    <EmbeddedResource Include="Resources\Icons\WallTransactions.png" />
+    <EmbeddedResource Include="Resources\Icons\ContactNotifications.png" />
+    <EmbeddedResource Include="Resources\Icons\Journal.png" />
+    <EmbeddedResource Include="Resources\Icons\SkillTraining.png" />
+    <EmbeddedResource Include="Resources\Icons\SkillQueue.png" />
+    <EmbeddedResource Include="Resources\Icons\Notifications.png" />
+    <EmbeddedResource Include="Resources\Icons\Plex.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
