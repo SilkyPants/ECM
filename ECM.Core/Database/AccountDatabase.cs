@@ -131,6 +131,16 @@ namespace ECM.Core
         {
             throw new NotImplementedException();
         }
+
+        internal static void RemoveCharacter(Character charToRemove)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static List<Character> GetAccountCharacters(long accID)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

@@ -14,6 +14,8 @@ namespace ECMGTK
 			this.Build ();
 			
 			SetupTreeview();
+
+            vbxKeyInfo.Sensitive = false;
 		}
 
 		public void SetupTreeview ()
@@ -47,9 +49,14 @@ namespace ECMGTK
 			}
 		}
 
+		protected void NeedKeyClick (object o, System.EventArgs args)
+		{
+
+		}
+
 		protected void RetrieveApiInfo (object sender, System.EventArgs e)
 		{
-	        apiAccount = new ECM.Core.Account(txtApiKeyID.Text, txtVerificationCode.Text);
+	        apiAccount = new ECM.Core.Account(txtApiKeyID.Text, txtVerificationCode.Buffer.Text);
             apiAccount.AccountUpdated += HandleApiAccountAccountUpdated;
 
             apiAccount.UpdateOnHeartbeat();
@@ -61,13 +68,41 @@ namespace ECMGTK
             {
                 if(result is ApiResult<ApiKeyInfo>)
                 {
+                    vbxKeyInfo.Sensitive = true;
+                    btnImport.Sensitive = true;
+
                     ApiResult<ApiKeyInfo> keyInfo = result as ApiResult<ApiKeyInfo>;
                     ApiKeyData keyData = keyInfo.Result.Key;
 
                     accCharacters.Clear();
     
-                    foreach (ECM.Core.Character character in account.Characters)
-                        accCharacters.AppendValues(character.AutoUpdate, character.Name, character.ID);
+                    foreach (CharacterListItem character in keyData.Characters)
+                        accCharacters.AppendValues(true, character.Name, character.CharacterID);
+
+                    // Show key access
+                    imgAccBalance.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.AccountBalance);
+                    imgAccountStatus.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.AccountStatus);
+                    imgAssetList.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.AssetList);
+                    imgCalEvents.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.CalendarEventAttendees) && keyData.AccessMask.HasFlag(ApiKeyMask.UpcomingCalendarEvents);
+                    imgCharInfo.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.CharacterInfoPrivate) || keyData.AccessMask.HasFlag(ApiKeyMask.CharacterInfoPublic);
+                    imgCharSheet.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.CharacterSheet);
+                    imgContactNotifications.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.ContactNotifications);
+                    imgContacts.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.ContactList);
+                    imgContracts.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.Contracts);
+                    imgFacWarStats.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.FacWarStats);
+                    imgIndJobs.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.IndustryJobs);
+                    imgKillLog.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.KillLog);
+                    // TODO: What about mailing lists?
+                    imgMail.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.MailBodies) && keyData.AccessMask.HasFlag(ApiKeyMask.MailMessages);
+                    imgMarketOrders.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.MarketOrders);
+                    imgMedals.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.Medals);
+                    ImgNotifications.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.Notifications) && keyData.AccessMask.HasFlag(ApiKeyMask.NotificationTexts);
+                    imgReseach.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.Research);
+                    imgSkillQueue.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.SkillQueue);
+                    imgSkillTraining.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.SkillInTraining);
+                    imgStandings.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.Standings);
+                    imgWallJournal.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.WalletJournal);
+                    imgWallTransactions.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.WalletTransactions);
                 }
             }
         }
@@ -76,34 +111,23 @@ namespace ECMGTK
 		{
             if(apiAccount != null)
             {
-                ECM.Core.Data.AddAccount(apiAccount);
-
                 TreeIter it = new TreeIter ();
                 accCharacters.GetIterFirst (out it);
+                int index = 0;
                 while (accCharacters.IterIsValid (it))
                 {
                     bool selected = (bool) accCharacters.GetValue (it, 0);
-                    string name = (string) accCharacters.GetValue (it, 1);
-                    long id = (long) accCharacters.GetValue (it, 2);
-    
-                    if(selected)
-                    {
-                        ECM.Core.Character newChar = new ECM.Core.Character(apiAccount, id, name);
-                        ECM.Core.Data.Characters.Add(id, newChar);
-                        newChar.UpdateOnHeartbeat();
-                    }
+
+                    apiAccount.Characters[index].AutoUpdate = selected;
     
                     accCharacters.IterNext (ref it);
                 }
+
+                ECM.Core.Data.AddAccount(apiAccount);
     
                 this.Destroy();
             }
 		}
-
-        protected void NeedApiKeyClick (object sender, System.EventArgs e)
-        {
-            System.Diagnostics.Process.Start("");
-        }
 	}
 }
 
