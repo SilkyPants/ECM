@@ -193,7 +193,87 @@ namespace ECM.Core
 
         internal static void AddCharacter(Character charToAdd)
         {
-            throw new NotImplementedException();
+            // Insert/Update the character
+            string createCmd = @"INSERT OR REPLACE INTO ecmCharacters(ID,
+                                    AccountID,
+                                    AutoUpdate,
+                                    Name,
+                                    Race,
+                                    Bloodline,
+                                    Ancestry,
+                                    AccountBalance,
+                                    Skillpoints,
+                                    ShipName,
+                                    ShipTypeID,
+                                    ShipTypeName,
+                                    CorporationID,
+                                    Corporation,
+                                    CorporationDate,
+                                    AllianceID,
+                                    Alliance,
+                                    AllianceDate,
+                                    LastKnownLocation,
+                                    SecurityStatus,
+                                    Birthday,
+                                    Gender,
+                                    CloneName,
+                                    CloneSkillpoints,
+                                    Intelligence,
+                                    Memory,
+                                    Perception,
+                                    Willpower,
+                                    Charisma)
+                                VALUES(@ID,
+                                    @AccountID,
+                                    @AutoUpdate,
+                                    @Name,
+                                    @Race,
+                                    @Bloodline,
+                                    @Ancestry,
+                                    @AccountBalance,
+                                    @Skillpoints,
+                                    @ShipName,
+                                    @ShipTypeID,
+                                    @ShipTypeName,
+                                    @CorporationID,
+                                    @Corporation,
+                                    @CorporationDate,
+                                    @AllianceID,
+                                    @Alliance,
+                                    @AllianceDate,
+                                    @LastKnownLocation,
+                                    @SecurityStatus,
+                                    @Birthday,
+                                    @Gender,
+                                    @CloneName,
+                                    @CloneSkillpoints,
+                                    @Intelligence,
+                                    @Memory,
+                                    @Perception,
+                                    @Willpower,
+                                    @Charisma)";
+            bool mustClose = false;
+
+            if(sqlConnection == null || sqlConnection.State != System.Data.ConnectionState.Open)
+            {
+                OpenDatabase();
+                mustClose = true;
+            }
+
+            SQLiteCommand cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = createCmd;
+
+//            cmd.Parameters.AddWithValue("@KeyID", toAdd.KeyID);
+//            cmd.Parameters.AddWithValue("@VCode", toAdd.VCode);
+//            cmd.Parameters.AddWithValue("@Expires", toAdd.Expires.ToString());
+//            cmd.Parameters.AddWithValue("@Access", toAdd.KeyAccess);
+
+            cmd.ExecuteNonQuery();
+
+            if(mustClose)
+            {
+                CloseDatabase();
+            }
         }
 
         internal static void RemoveCharacter(Character charToRemove)
