@@ -19,7 +19,7 @@ namespace ECM.Core
 
         public bool AutoUpdate
         {
-            get { return m_AutoUpdate; }
+            get { return m_AutoUpdate && Account != null; }
             set
             {
                 m_AutoUpdate = value;

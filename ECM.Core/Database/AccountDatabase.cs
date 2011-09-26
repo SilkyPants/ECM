@@ -29,7 +29,9 @@ namespace ECM.Core
 
             cmd = sqlConnection.CreateCommand();
             cmd.CommandText = "PRAGMA temp_store=MEMORY";
-            cmd.ExecuteNonQuery();            CreateAccountsTable();
+            cmd.ExecuteNonQuery();
+
+            CreateAccountsTables();
             
             cmd.Dispose();
             return true;
@@ -43,7 +45,7 @@ namespace ECM.Core
         }
 
         #region Create Tables
-        private static void CreateAccountsTable()
+        private static void CreateAccountsTables()
         {
             string createCmd = "CREATE TABLE IF NOT EXISTS ecmAccounts(KeyID TEXT PRIMARY KEY, VCode TEXT, Expires TEXT, Access TEXT)";
 
@@ -52,7 +54,69 @@ namespace ECM.Core
             cmd.ExecuteNonQuery();
 
             cmd = sqlConnection.CreateCommand();
-            cmd.CommandText = "CREATE TABLE IF NOT EXISTS ecmCharacters(ID INT PRIMARY KEY, Name TEXT, Expires TEXT, Access TEXT)";
+            cmd.CommandText = @"CREATE TABLE IF NOT EXISTS ecmCharacters (
+                                    ID                INT     PRIMARY KEY,
+                                    AccountID         INT     REFERENCES ecmAccounts ( KeyID ),
+                                    AutoUpdate        BOOLEAN,
+                                    Name              TEXT,
+                                    Race              TEXT,
+                                    Bloodline         TEXT,
+                                    Ancestry          TEXT,
+                                    AccountBalance    REAL,
+                                    Skillpoints       INT,
+                                    ShipName          TEXT,
+                                    ShipTypeID        INT,
+                                    ShipTypeName      TEXT,
+                                    CorporationID     INT,
+                                    Corporation       TEXT,
+                                    CorporationDate   TEXT,
+                                    AllianceID        INT,
+                                    Alliance          TEXT,
+                                    AllianceDate      TEXT,
+                                    LastKnownLocation TEXT,
+                                    SecurityStatus    REAL,
+                                    Birthday          TEXT,
+                                    Gender            TEXT,
+                                    CloneName         TEXT,
+                                    CloneSkillpoints  INT,
+                                    Intelligence      INT,
+                                    Memory            INT,
+                                    Perception        INT,
+                                    Willpower         INT,
+                                    Charisma          INT
+                                );";
+            cmd.ExecuteNonQuery();
+
+            cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = @"CREATE TABLE IF NOT EXISTS ecmImplants (
+                                    ImplantName  TEXT PRIMARY KEY,
+                                    ImplantValue INT
+                                );";
+            cmd.ExecuteNonQuery();
+
+            cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = @"CREATE TABLE IF NOT EXISTS ecmCharacterImplants (
+                                    CharacterID INT  REFERENCES ecmCharacters ( ID ) MATCH FULL,
+                                    ImplantName TEXT REFERENCES ecmImplants ( ImplantName ) MATCH FULL
+                                );";
+            cmd.ExecuteNonQuery();
+
+            cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = @"CREATE TABLE IF NOT EXISTS ecmCharacterCertificates (
+                                    Records       INTEGER PRIMARY KEY AUTOINCREMENT,
+                                    CharacterID   INT     REFERENCES ecmCharacters ( ID ) MATCH FULL,
+                                    CertificateID INT
+                                );";
+            cmd.ExecuteNonQuery();
+
+            cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = @"CREATE TABLE IF NOT EXISTS ecmCharacterSkills (
+                                    Record      INTEGER PRIMARY KEY AUTOINCREMENT,
+                                    CharacterID INT     REFERENCES ecmCharacters ( ID ) MATCH FULL,
+                                    SkillTypeID INT,
+                                    SkillLevel  INT,
+                                    Skillpoints INT
+                                );";
             cmd.ExecuteNonQuery();
         }
         #endregion
