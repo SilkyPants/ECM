@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using EveApi;
 
 namespace ECM.Core
 {
@@ -263,12 +264,66 @@ namespace ECM.Core
             SQLiteCommand cmd = sqlConnection.CreateCommand();
             cmd.CommandText = createCmd;
 
-//            cmd.Parameters.AddWithValue("@KeyID", toAdd.KeyID);
-//            cmd.Parameters.AddWithValue("@VCode", toAdd.VCode);
-//            cmd.Parameters.AddWithValue("@Expires", toAdd.Expires.ToString());
-//            cmd.Parameters.AddWithValue("@Access", toAdd.KeyAccess);
+            cmd.Parameters.AddWithValue("@ID", charToAdd.ID);
+            cmd.Parameters.AddWithValue("@AccountID", charToAdd.Account.KeyID);
+            cmd.Parameters.AddWithValue("@AutoUpdate", charToAdd.AutoUpdate);
+            cmd.Parameters.AddWithValue("@Name", charToAdd.Name);
+            cmd.Parameters.AddWithValue("@Race", charToAdd.Race);
+            cmd.Parameters.AddWithValue("@Bloodline", charToAdd.Bloodline);
+            cmd.Parameters.AddWithValue("@Ancestry", charToAdd.Ancestry);
+            cmd.Parameters.AddWithValue("@AccountBalance", charToAdd.AccountBalance);
+            cmd.Parameters.AddWithValue("@Skillpoints", charToAdd.SkillPoints);
+            cmd.Parameters.AddWithValue("@ShipName", charToAdd.ShipName);
+            cmd.Parameters.AddWithValue("@ShipTypeID", charToAdd.ShipTypeID);
+            cmd.Parameters.AddWithValue("@ShipTypeName", charToAdd.ShipTypeName);
+            cmd.Parameters.AddWithValue("@CorporationID", charToAdd.CorporationID);
+            cmd.Parameters.AddWithValue("@Corporation", charToAdd.Corporation);
+            cmd.Parameters.AddWithValue("@CorporationDate", charToAdd.CorporationDate);
+            cmd.Parameters.AddWithValue("@AllianceID", charToAdd.AllianceID);
+            cmd.Parameters.AddWithValue("@Alliance", charToAdd.Alliance);
+            cmd.Parameters.AddWithValue("@AllianceDate", charToAdd.AllianceDate);
+            cmd.Parameters.AddWithValue("@LastKnownLocation", charToAdd.LastKnownLocation);
+            cmd.Parameters.AddWithValue("@SecurityStatus", charToAdd.SecurityStatus);
+            cmd.Parameters.AddWithValue("@Birthday", charToAdd.Birthday);
+            cmd.Parameters.AddWithValue("@Gender", charToAdd.Gender);
+            cmd.Parameters.AddWithValue("@CloneName", charToAdd.CloneName);
+            cmd.Parameters.AddWithValue("@CloneSkillpoints", charToAdd.CloneSkillPoints);
+            cmd.Parameters.AddWithValue("@Intelligence", charToAdd.Attributes.Intelligence);
+            cmd.Parameters.AddWithValue("@Memory", charToAdd.Attributes.Memory);
+            cmd.Parameters.AddWithValue("@Perception", charToAdd.Attributes.Perception);
+            cmd.Parameters.AddWithValue("@Willpower", charToAdd.Attributes.Willpower);
+            cmd.Parameters.AddWithValue("@Charisma", charToAdd.Attributes.Charisma);
 
             cmd.ExecuteNonQuery();
+
+            // Add Implants
+            // Link implants
+
+            // Add Skills
+            foreach(CharacterSkills skill in charToAdd.Skills)
+            {
+                cmd = sqlConnection.CreateCommand();
+                cmd.CommandText = @"INSERT OR REPLACE INTO ecmCharacterSkills(CharacterID, SkillTypeID, SkillLevel, Skillpoints) VALUES (@CharacterID, @SkillTypeID, @SkillLevel, @Skillpoints)";
+
+                cmd.Parameters.AddWithValue("@CharacterID", charToAdd.ID);
+                cmd.Parameters.AddWithValue("@SkillTypeID", skill.ID);
+                cmd.Parameters.AddWithValue("@SkillLevel", skill.Level);
+                cmd.Parameters.AddWithValue("@Skillpoints", skill.Skillpoints);
+
+                cmd.ExecuteNonQuery();
+            }
+
+            // Add Certificates
+            foreach(CharacterCertificates cert in charToAdd.Certificates)
+            {
+                cmd = sqlConnection.CreateCommand();
+                cmd.CommandText = @"INSERT OR REPLACE INTO ecmCharacterCertificates(CharacterID, CertificateID) VALUES (@CharacterID, @CertificateID)";
+
+                cmd.Parameters.AddWithValue("@CharacterID", charToAdd.ID);
+                cmd.Parameters.AddWithValue("@SkillTypeID", cert.ID);
+
+                cmd.ExecuteNonQuery();
+            }
 
             if(mustClose)
             {
