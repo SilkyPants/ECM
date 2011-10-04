@@ -75,6 +75,8 @@ namespace ECMGTK
                     ApiKeyData keyData = keyInfo.Result.Key;
 
                     accCharacters.Clear();
+
+                    apiAccount.UpdateOnHeartbeat();
     
                     foreach (CharacterListItem character in keyData.Characters)
                         accCharacters.AppendValues(true, character.Name, character.CharacterID);

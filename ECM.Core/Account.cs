@@ -111,6 +111,11 @@ namespace ECM.Core
         {
             m_accountKeyInfo.UpdateOnSecTick();
             m_accountStatus.UpdateOnSecTick();
+
+            foreach(Character character in Characters)
+            {
+                character.UpdateOnHeartbeat();
+            }
         }
     }
 }
