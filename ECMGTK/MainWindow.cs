@@ -429,6 +429,12 @@ public partial class MainWindow: Gtk.Window
 
         accWidget.PackStart(accHeader, true, false, 0);
 
+        TextView accStats = new TextView();
+        accWidget.PackStart(accStats, true, false, 0);
+
+        accStats.Buffer.Text = string.Format("Paid Until: {0}\nMinutes Played: {1}",
+            account.Status.PaidUntil.ToLocalTime().ToString(), account.Status.LogonMinutes);
+
         for(int i = 0; i < 3; i++)
         {
             accWidget.PackStart(CreateCharacterButton(null), true, false, 0);
