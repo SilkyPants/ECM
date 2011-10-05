@@ -253,15 +253,18 @@ namespace ECM.Core
             CorporationID = characterSheet.CorporationID;
             Gender = characterSheet.Gender;
             ID = characterSheet.ID;
-            Implants = characterSheet.Implants;
             Name = characterSheet.Name;
             Race = characterSheet.Race;
             Skills = characterSheet.Skills;
+
+            // we want to store implants with their TypeIDs
+            Implants = characterSheet.Implants;
         }
 
         public void UpdateOnHeartbeat()
         {
             m_charSheetRequest.UpdateOnSecTick();
+            m_charInfoRequest.UpdateOnSecTick();
         }
     }
 }

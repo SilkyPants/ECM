@@ -320,7 +320,7 @@ namespace ECM.Core
                 cmd.CommandText = @"INSERT OR REPLACE INTO ecmCharacterCertificates(CharacterID, CertificateID) VALUES (@CharacterID, @CertificateID)";
 
                 cmd.Parameters.AddWithValue("@CharacterID", charToAdd.ID);
-                cmd.Parameters.AddWithValue("@SkillTypeID", cert.ID);
+                cmd.Parameters.AddWithValue("@CertificateID", cert.ID);
 
                 cmd.ExecuteNonQuery();
             }

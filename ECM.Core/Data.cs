@@ -34,11 +34,6 @@ namespace ECM.Core
             {
                 account.UpdateOnHeartbeat();
             }
-
-            foreach(Character character in m_Characters.Values)
-            {
-                character.UpdateOnHeartbeat();
-            }
         }
 
         public static void LoadAccounts()
