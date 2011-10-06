@@ -48,7 +48,8 @@ namespace ECM.Core
         #region Create Tables
         private static void CreateAccountsTables()
         {
-            string createCmd = "CREATE TABLE IF NOT EXISTS ecmAccounts(KeyID TEXT PRIMARY KEY, VCode TEXT, Expires TEXT, Access TEXT)";
+            string createCmd = @"CREATE TABLE IF NOT EXISTS ecmAccounts(KeyID TEXT PRIMARY KEY, VCode TEXT, Expires TEXT, Access TEXT, LogonCount INTEGER, MinPlayed INTEGER,
+                                                                        CreateDate TEXT, PaidUntil TEXT)";
 
             SQLiteCommand cmd = sqlConnection.CreateCommand();
             cmd.CommandText = createCmd;
@@ -124,7 +125,8 @@ namespace ECM.Core
 
         public static void AddAccount(Account toAdd)
         {
-            string createCmd = "INSERT OR REPLACE INTO ecmAccounts(KeyID, VCode, Expires, Access) VALUES(@KeyID, @VCode, @Expires, @Access)";
+            string createCmd = @"INSERT OR REPLACE INTO ecmAccounts(KeyID, VCode, Expires, Access, LogonCount, MinPlayed, CreateDate, PaidUntil)
+                                    VALUES(@KeyID, @VCode, @Expires, @Access, @LogonCount, @MinPlayed, @CreateDate, @PaidUntil)";
             bool mustClose = false;
 
             if(sqlConnection == null || sqlConnection.State != System.Data.ConnectionState.Open)
@@ -140,6 +142,10 @@ namespace ECM.Core
             cmd.Parameters.AddWithValue("@VCode", toAdd.VCode);
             cmd.Parameters.AddWithValue("@Expires", toAdd.Expires.ToString());
             cmd.Parameters.AddWithValue("@Access", toAdd.KeyAccess);
+            cmd.Parameters.AddWithValue("@LogonCount", toAdd.LogonCount);
+            cmd.Parameters.AddWithValue("@MinPlayed", toAdd.LogonMinutes);
+            cmd.Parameters.AddWithValue("@CreateDate", toAdd.CreateDate.ToString());
+            cmd.Parameters.AddWithValue("@PaidUntil", toAdd.PaidUntil.ToString());
 
             cmd.ExecuteNonQuery();
 
@@ -175,7 +181,17 @@ namespace ECM.Core
                     EveApi.ApiKeyMask access = (EveApi.ApiKeyMask)Enum.Parse(typeof(EveApi.ApiKeyMask), reader["Access"].ToString());
                     DateTime expires = Convert.ToDateTime(reader["Expires"].ToString());
 
-                    accounts.Add(new Account(keyID, vCode, access, expires));
+                    Account newAcc = new Account(keyID, vCode, access, expires);
+
+                    newAcc.LogonCount = Convert.ToInt32(reader["LogonCount"].ToString());
+                    newAcc.LogonMinutes = Convert.ToInt32(reader["MinPlayed"].ToString());
+                    newAcc.CreateDate = Convert.ToDateTime(reader["CreateDate"].ToString());
+                    newAcc.PaidUntil = Convert.ToDateTime(reader["PaidUntil"].ToString());
+
+                    accounts.Add(newAcc);
+
+                    // get Characters for account
+                    GetAccountCharacters(newAcc);
                 }
             }
 
@@ -336,9 +352,70 @@ namespace ECM.Core
             throw new NotImplementedException();
         }
 
-        internal static List<Character> GetAccountCharacters(long accID)
+        internal static void GetAccountCharacters(Account account)
         {
-            throw new NotImplementedException();
+            string selectCmd = "SELECT * FROM ecmCharacters WHERE AccountID = " + account.KeyID;
+            bool mustClose = false;
+
+            if(sqlConnection == null || sqlConnection.State != System.Data.ConnectionState.Open)
+            {
+                OpenDatabase();
+                mustClose = true;
+            }
+
+            SQLiteCommand cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = selectCmd;
+
+            SQLiteDataReader reader = cmd.ExecuteReader();
+
+            if(reader.HasRows)
+            {
+                while(reader.Read())
+                {
+                    string name = reader["Name"].ToString();
+                    long charID = Convert.ToInt64(reader["ID"].ToString());
+                    Character newChar = new Character(account, charID, name);
+
+                    newChar.AutoUpdate = Convert.ToBoolean(reader["AutoUpdate"].ToString());
+                    newChar.Race = reader["Race"].ToString();
+                    newChar.Bloodline = reader["Bloodline"].ToString();
+                    newChar.Ancestry = reader["Ancestry"].ToString();
+                    string tmp = reader["AccountBalance"].ToString();
+                    newChar.AccountBalance = Convert.ToDouble(tmp);
+                    newChar.SkillPoints = Convert.ToInt32(reader["Skillpoints"].ToString());
+                    newChar.ShipName = reader["ShipName"].ToString();
+                    newChar.ShipTypeID = Convert.ToInt64(reader["ShipTypeID"].ToString());
+                    newChar.ShipTypeName = reader["ShipTypeName"].ToString();
+                    newChar.CorporationID = Convert.ToInt64(reader["CorporationID"].ToString());
+                    newChar.Corporation = reader["Corporation"].ToString();
+                    newChar.CorporationDate = Convert.ToDateTime(reader["CorporationDate"].ToString());
+                    newChar.AllianceID = Convert.ToInt64(reader["AllianceID"].ToString());
+                    newChar.Alliance = reader["Alliance"].ToString();
+                    newChar.AllianceDate = Convert.ToDateTime(reader["AllianceDate"].ToString());
+                    newChar.LastKnownLocation = reader["LastKnownLocation"].ToString();
+                    newChar.SecurityStatus = Convert.ToDouble(reader["SecurityStatus"].ToString());
+                    newChar.Birthday = Convert.ToDateTime(reader["Birthday"].ToString());
+                    newChar.Gender = reader["Gender"].ToString();
+                    newChar.CloneName = reader["CloneName"].ToString();
+                    newChar.CloneSkillPoints = Convert.ToInt64(reader["CloneSkillpoints"].ToString());
+                    newChar.Attributes.Intelligence = Convert.ToInt32(reader["Intelligence"].ToString());
+                    newChar.Attributes.Memory = Convert.ToInt32(reader["Memory"].ToString());
+                    newChar.Attributes.Perception = Convert.ToInt32(reader["Perception"].ToString());
+                    newChar.Attributes.Willpower = Convert.ToInt32(reader["Willpower"].ToString());
+                    newChar.Attributes.Charisma = Convert.ToInt32(reader["Charisma"].ToString());
+
+                    account.Characters.Add(newChar);
+
+                    // Get Implants
+                    // Get Skills
+                    // Get Certificates
+                }
+            }
+
+            if(mustClose)
+            {
+                CloseDatabase();
+            }
         }
     }
 

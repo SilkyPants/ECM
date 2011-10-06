@@ -85,7 +85,7 @@ namespace EveApi.Api.Interfaces
             set;
         }
 
-        decimal AccountBalance
+        double AccountBalance
         {
             get;
             set;

@@ -400,6 +400,42 @@ public partial class MainWindow: Gtk.Window
          return false;
     }
     #endregion
+
+    #region Move Later To Helper Class?
+    public static string GetDurationInWords( TimeSpan aTimeSpan )
+    {
+        string timeTaken = string.Empty;
+    
+        if( aTimeSpan.Days > 0 )
+            timeTaken += aTimeSpan.Days + " day" + ( aTimeSpan.Days > 1 ? "s" : "" );
+    
+        if( aTimeSpan.Hours > 0 )
+        {
+            if( !string.IsNullOrEmpty( timeTaken ) )
+               timeTaken += " ";
+            timeTaken += aTimeSpan.Hours + " hour" + ( aTimeSpan.Hours > 1 ? "s" : "" );
+        }
+    
+        if( aTimeSpan.Minutes > 0 )
+        {
+           if( !string.IsNullOrEmpty( timeTaken ) )
+               timeTaken += " ";
+           timeTaken += aTimeSpan.Minutes + " minute" + ( aTimeSpan.Minutes > 1 ? "s" : "" );
+        }
+    
+        if( aTimeSpan.Seconds > 0 )
+        {
+           if( !string.IsNullOrEmpty( timeTaken ) )
+               timeTaken += " ";
+           timeTaken += aTimeSpan.Seconds + " second" + ( aTimeSpan.Seconds > 1 ? "s" : "" );
+        }
+    
+        if( string.IsNullOrEmpty( timeTaken ) )
+            timeTaken = "0 seconds.";
+    
+         return timeTaken;
+    }
+    #endregion
 	
 	#region Overview
 
@@ -422,22 +458,34 @@ public partial class MainWindow: Gtk.Window
 
         HSeparator sep = new HSeparator();
 
+        Button delAccBtn = new Button();
+        delAccBtn.Relief = ReliefStyle.None;
+        delAccBtn.TooltipText = "Delete Account";
+        delAccBtn.Add(new Image("gtk-delete", IconSize.Menu));
+
         HBox accHeader = new HBox();
         accHeader.Spacing = 2;
         accHeader.PackStart(accKey, false, false, 0);
         accHeader.PackStart(sep, true, true, 0);
+        accHeader.PackStart(delAccBtn, false, false, 0);
 
         accWidget.PackStart(accHeader, true, false, 0);
 
         TextView accStats = new TextView();
         accWidget.PackStart(accStats, true, false, 0);
 
-        accStats.Buffer.Text = string.Format("Paid Until: {0}\nMinutes Played: {1}",
-            account.Status.PaidUntil.ToLocalTime().ToString(), account.Status.LogonMinutes);
+        accStats.Editable = false;
+        accStats.Sensitive = false;
 
-        for(int i = 0; i < 3; i++)
+        DateTime paidUntilLocal = account.PaidUntil.ToLocalTime();
+        TimeSpan playTime = new TimeSpan(0, account.LogonMinutes, 0);
+
+        accStats.Buffer.Text = string.Format("Paid Until: {0}\nTime spent playing: {1}",
+            paidUntilLocal.ToString(), GetDurationInWords(playTime));
+
+        foreach(ECM.Core.Character ecmChar in account.Characters)
         {
-            accWidget.PackStart(CreateCharacterButton(null), true, false, 0);
+            accWidget.PackStart(CreateCharacterButton(ecmChar), true, false, 0);
         }
 
         accWidget.ShowAll();
@@ -457,14 +505,27 @@ public partial class MainWindow: Gtk.Window
         img.WidthRequest = 64;
         img.HeightRequest = 64;
 
+        BackgroundWorker imgWorker = new BackgroundWorker();
+
+        imgWorker.DoWork += delegate(object sender, DoWorkEventArgs e)
+        {
+            img.Pixbuf = EveApi.ImageApi.GetCharacterPortraitGTK(character.ID, EveApi.ImageApi.ImageRequestSize.Size64x64);
+        };
+
+        imgWorker.RunWorkerAsync();
+
         frm.Add(img);
 
         box.PackStart(frm, false, false, 3);
 
-        Label text = new Label("Character Name Goes Here");
+        Label text = new Label();
+        text.UseMarkup = true;
+        text.Markup = string.Format("<span size=\"larger\" weight=\"bold\">{0}</span>\n<span size=\"small\">{1} - {2} - {3}\n{4:0,0.00} ISK\nLocation: {5}</span>",
+                            character.Name, character.Race, character.Bloodline, character.Ancestry, character.AccountBalance, character.LastKnownLocation);
         text.Xalign = 0;
+        text.Yalign = 0;
 
-        box.PackStart(text, true, false, 0);
+        box.PackStart(text, true, true, 0);
         Button btn = new Button(box);
 
         btn.ShowAll();

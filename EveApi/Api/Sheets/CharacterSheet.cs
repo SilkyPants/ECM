@@ -135,7 +135,7 @@ namespace EveApi
 		}
 		
         [XmlElement("balance")]
-		public decimal AccountBalance
+		public double AccountBalance
 		{
 			get;
 			set;

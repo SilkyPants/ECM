@@ -25,17 +25,17 @@ namespace EveApi
         }
 		
 		#region .Net Image Helpers
-        public static Bitmap GetCharacterPortraitNET(int charID, ImageRequestSize size)
+        public static Bitmap GetCharacterPortraitNET(long charID, ImageRequestSize size)
 		{
 			return new Bitmap(GetCharacterPortrait(charID, size));
 		}
 		
-        public static Bitmap GetCorporationLogoNET(int corpID, ImageRequestSize size)
+        public static Bitmap GetCorporationLogoNET(long corpID, ImageRequestSize size)
 		{
 			return new Bitmap(GetCorporationLogo(corpID, size));
 		}
 			
-        public static Bitmap GetAllianceLogoNET(int allianceID, ImageRequestSize size)
+        public static Bitmap GetAllianceLogoNET(long allianceID, ImageRequestSize size)
 		{
 			return new Bitmap(GetAllianceLogo(allianceID, size));
 		}
@@ -52,29 +52,40 @@ namespace EveApi
 		#endregion
 		
 		#region Gtk# Image Helpers
-        public static Pixbuf GetCharacterPortraitGTK(int charID, ImageRequestSize size)
+        private static Gdk.Pixbuf ImageToPixbuf(Bitmap image)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                stream.Position = 0;
+                Gdk.Pixbuf pixbuf = new Gdk.Pixbuf(stream);
+                return pixbuf;
+            }
+        }
+
+        public static Pixbuf GetCharacterPortraitGTK(long charID, ImageRequestSize size)
 		{
-			return new Pixbuf(GetCharacterPortrait(charID, size));
+			return ImageToPixbuf(GetCharacterPortraitNET(charID, size));
 		}
 		
-        public static Pixbuf GetCorporationLogoGTK(int corpID, ImageRequestSize size)
+        public static Pixbuf GetCorporationLogoGTK(long corpID, ImageRequestSize size)
 		{
-			return new Pixbuf(GetCorporationLogo(corpID, size));
+			return ImageToPixbuf(GetCorporationLogoNET(corpID, size));
 		}
 			
-        public static Pixbuf GetAllianceLogoGTK(int allianceID, ImageRequestSize size)
+        public static Pixbuf GetAllianceLogoGTK(long allianceID, ImageRequestSize size)
 		{
-			return new Pixbuf(GetAllianceLogo(allianceID, size));
+			return ImageToPixbuf(GetAllianceLogoNET(allianceID, size));
 		}
 		
         public static Pixbuf GetItemImageGTK(long typeID, ImageRequestSize size)
 		{
-			return new Pixbuf(GetItemImage(typeID, size));
+			return ImageToPixbuf(GetItemImageNET(typeID, size));
 		}
 		
         public static Pixbuf GetItemRenderGTK(long typeID, ImageRequestSize size)
 		{
-			return new Pixbuf(GetItemRender(typeID, size));
+			return ImageToPixbuf(GetItemRenderNET(typeID, size));
 		}
 		#endregion
 			
@@ -86,9 +97,10 @@ namespace EveApi
         /// <param name="charID">The Character's ID</param>
         /// <param name="size">The Size of the image wanted</param>
         /// <returns>null on error, or the requested Image MemoryStream</returns>
-        public static MemoryStream GetCharacterPortrait(int charID, ImageRequestSize size)
+        public static MemoryStream GetCharacterPortrait(long charID, ImageRequestSize size)
         {
-            string url = m_ImageApiUrl + "/Character/" + charID.ToString();
+            string id = charID > 0 ? charID.ToString() : "1";
+            string url = m_ImageApiUrl + "Character/" + id;
 
             switch (size)
             {
@@ -129,7 +141,7 @@ namespace EveApi
         /// <param name="charID">The Corporation ID</param>
         /// <param name="size">The Size of the image wanted</param>
         /// <returns>null on error, or the requested Image MemoryStream</returns>
-        public static MemoryStream GetCorporationLogo(int corpID, ImageRequestSize size)
+        public static MemoryStream GetCorporationLogo(long corpID, ImageRequestSize size)
         {
             string url = m_ImageApiUrl + "/Corporation/" + corpID.ToString();
 
@@ -166,7 +178,7 @@ namespace EveApi
         /// <param name="charID">The Alliance ID</param>
         /// <param name="size">The Size of the image wanted</param>
         /// <returns>null on error, or the requested Image MemoryStream</returns>
-        public static MemoryStream GetAllianceLogo(int allianceID, ImageRequestSize size)
+        public static MemoryStream GetAllianceLogo(long allianceID, ImageRequestSize size)
         {
             string url = m_ImageApiUrl + "/Alliance/" + allianceID.ToString();
 
@@ -273,7 +285,7 @@ namespace EveApi
             WebClient webClient = new WebClient();
             WebProxy myProxy = new WebProxy();
             MemoryStream imgStream = null;
-            
+
             // TODO: Download Form Interface
             //NeoComm.Forms.DownloadDialog downloadInfoForm = new NeoComm.Forms.DownloadDialog();
 
@@ -298,8 +310,6 @@ namespace EveApi
             try
             {
                 imgStream = new MemoryStream(webClient.DownloadData(url));
-
-
             }
             catch
             {

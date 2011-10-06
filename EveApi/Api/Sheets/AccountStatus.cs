@@ -9,7 +9,7 @@ namespace EveApi
 {
     [NeedsApiKey]
     [KeyNeedsMask(ApiKeyMask.AccountStatus)]
-    public class AccountStatus
+    public class AccountStatus : IAccountStatus
     {
         [XmlIgnore]
         public static string ApiUri { get { return "/account/AccountStatus.xml.aspx"; } }

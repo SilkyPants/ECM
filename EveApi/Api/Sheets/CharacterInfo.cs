@@ -46,7 +46,7 @@ namespace EveApi
 		
 		// Amount of ISK the character has. 
 		[XmlElement("accountBalance")]
-		public decimal	AccountBalance
+		public double	AccountBalance
 		{
 			get;
 			set;

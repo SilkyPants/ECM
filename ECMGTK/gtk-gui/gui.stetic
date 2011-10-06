@@ -1127,7 +1127,7 @@
               <widget class="Gtk.HPaned" id="hpnMarket">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">300</property>
+                <property name="Position">1</property>
                 <property name="BorderWidth">3</property>
                 <child>
                   <widget class="Gtk.Notebook" id="ntbMarketGroups">
@@ -1624,6 +1624,7 @@
           <widget class="Gtk.Statusbar" id="statusbar1">
             <property name="MemberName" />
             <property name="Spacing">6</property>
+            <property name="BorderWidth">3</property>
             <child>
               <widget class="Gtk.Label" id="label40">
                 <property name="MemberName" />
@@ -1650,9 +1651,10 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="ECMGTK.AddApiKey" design-size="326 464">
+  <widget class="Gtk.Dialog" id="ECMGTK.AddApiKey" design-size="339 497">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Add new Api Key</property>
+    <property name="Icon">resource:ECMGTK.Resources.Icons.Internet.png</property>
     <property name="WindowPosition">Center</property>
     <property name="Modal">True</property>
     <property name="BorderWidth">3</property>

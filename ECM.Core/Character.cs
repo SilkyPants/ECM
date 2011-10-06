@@ -51,7 +51,7 @@ namespace ECM.Core
             set;
         }
 
-        public decimal AccountBalance
+        public double AccountBalance
         {
             get;
             set;
@@ -188,6 +188,11 @@ namespace ECM.Core
             Account = account;
             ID = characterID;
             Name = name;
+
+            Attributes = new CharacterAttributes();
+            Implants = new ImplantSet();
+            Skills = new List<CharacterSkills>();
+            Certificates = new List<CharacterCertificates>();
 
             m_charSheetRequest = new CharacterApiRequest<CharacterSheet>(characterID, Account.KeyID, Account.VCode);
             m_charSheetRequest.OnRequestUpdate += SheetRequestUpdated;

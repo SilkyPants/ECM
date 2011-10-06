@@ -75,7 +75,7 @@ namespace EveApi.Api.Interfaces
         /// <summary>
         /// Amount of ISK the character has. 
         /// </summary>
-        decimal AccountBalance
+        double AccountBalance
         {
             get;
             set;

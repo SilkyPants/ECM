@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace ECM.Core
 {
-    public class Account
+    public class Account : IAccountStatus
     {
         AuthorisedApiRequest<ApiKeyInfo> m_accountKeyInfo;
         AuthorisedApiRequest<AccountStatus> m_accountStatus;
@@ -28,11 +28,27 @@ namespace ECM.Core
          set;
         }
 
-        public AccountStatus Status
-        {
+        #region IAccountStatus implementation
+        public int LogonCount {
             get;
-            private set;
+            set;
         }
+
+        public int LogonMinutes {
+            get;
+            set;
+        }
+
+        public DateTime PaidUntil {
+            get;
+            set;
+        }
+
+        public DateTime CreateDate {
+            get;
+            set;
+        }
+        #endregion
 
         public string KeyID
         {
@@ -101,7 +117,10 @@ namespace ECM.Core
         {
             if(result != null && result.Error == null)
             {
-                Status = result.Result;
+                LogonCount = result.Result.LogonCount;
+                LogonMinutes = result.Result.LogonMinutes;
+                CreateDate = result.Result.CreateDate;
+                PaidUntil = result.Result.PaidUntil;
 
                 OnAccountUpdated(result);
             }
