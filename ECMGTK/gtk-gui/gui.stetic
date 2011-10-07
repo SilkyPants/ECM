@@ -121,7 +121,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="MainWindow" design-size="617 426">
+  <widget class="Gtk.Window" id="MainWindow" design-size="598 728">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -139,7 +139,7 @@
           <widget class="Gtk.Notebook" id="ntbPages">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">0</property>
+            <property name="CurrentPage">1</property>
             <property name="EnablePopup">True</property>
             <property name="TabPos">Left</property>
             <property name="Scrollable">True</property>
@@ -702,13 +702,14 @@
                         <child>
                           <widget class="Gtk.HBox" id="hbox8">
                             <property name="MemberName" />
-                            <property name="Spacing">6</property>
+                            <property name="Spacing">3</property>
                             <child>
                               <widget class="Gtk.Button" id="btnRecycleChar">
                                 <property name="MemberName" />
                                 <property name="Tooltip" translatable="yes">Send to Biomass</property>
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
+                                <property name="Relief">None</property>
                                 <child>
                                   <widget class="Gtk.Image" id="image1">
                                     <property name="MemberName" />
@@ -729,6 +730,7 @@
                                 <property name="Tooltip" translatable="yes">Export Character</property>
                                 <property name="CanFocus">True</property>
                                 <property name="Type">Custom</property>
+                                <property name="Relief">None</property>
                                 <child>
                                   <widget class="Gtk.Image" id="image4">
                                     <property name="MemberName" />
@@ -780,7 +782,7 @@
                       <widget class="Gtk.Notebook" id="ntbCharSheetPages">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="CurrentPage">7</property>
+                        <property name="CurrentPage">0</property>
                         <property name="TabPos">Left</property>
                         <child>
                           <widget class="Gtk.VBox" id="vbox5">
@@ -1127,7 +1129,7 @@
               <widget class="Gtk.HPaned" id="hpnMarket">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">1</property>
+                <property name="Position">189</property>
                 <property name="BorderWidth">3</property>
                 <child>
                   <widget class="Gtk.Notebook" id="ntbMarketGroups">
