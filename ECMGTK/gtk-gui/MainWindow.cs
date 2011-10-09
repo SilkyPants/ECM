@@ -154,7 +154,7 @@ public partial class MainWindow
 		this.ntbPages = new global::Gtk.Notebook ();
 		this.ntbPages.CanFocus = true;
 		this.ntbPages.Name = "ntbPages";
-		this.ntbPages.CurrentPage = 0;
+		this.ntbPages.CurrentPage = 1;
 		this.ntbPages.EnablePopup = true;
 		this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
 		this.ntbPages.Scrollable = true;
@@ -520,12 +520,13 @@ public partial class MainWindow
 		// Container child vbox6.Gtk.Box+BoxChild
 		this.hbox8 = new global::Gtk.HBox ();
 		this.hbox8.Name = "hbox8";
-		this.hbox8.Spacing = 6;
+		this.hbox8.Spacing = 3;
 		// Container child hbox8.Gtk.Box+BoxChild
 		this.btnRecycleChar = new global::Gtk.Button ();
 		this.btnRecycleChar.TooltipMarkup = "Send to Biomass";
 		this.btnRecycleChar.CanFocus = true;
 		this.btnRecycleChar.Name = "btnRecycleChar";
+		this.btnRecycleChar.Relief = ((global::Gtk.ReliefStyle)(2));
 		// Container child btnRecycleChar.Gtk.Container+ContainerChild
 		this.image1 = new global::Gtk.Image ();
 		this.image1.Name = "image1";
@@ -542,6 +543,7 @@ public partial class MainWindow
 		this.btnExport.TooltipMarkup = "Export Character";
 		this.btnExport.CanFocus = true;
 		this.btnExport.Name = "btnExport";
+		this.btnExport.Relief = ((global::Gtk.ReliefStyle)(2));
 		// Container child btnExport.Gtk.Container+ContainerChild
 		this.image4 = new global::Gtk.Image ();
 		this.image4.Name = "image4";
@@ -578,7 +580,7 @@ public partial class MainWindow
 		this.ntbCharSheetPages = new global::Gtk.Notebook ();
 		this.ntbCharSheetPages.CanFocus = true;
 		this.ntbCharSheetPages.Name = "ntbCharSheetPages";
-		this.ntbCharSheetPages.CurrentPage = 7;
+		this.ntbCharSheetPages.CurrentPage = 0;
 		this.ntbCharSheetPages.TabPos = ((global::Gtk.PositionType)(0));
 		// Container child ntbCharSheetPages.Gtk.Notebook+NotebookChild
 		this.vbox5 = new global::Gtk.VBox ();
@@ -830,7 +832,7 @@ public partial class MainWindow
 		this.hpnMarket = new global::Gtk.HPaned ();
 		this.hpnMarket.CanFocus = true;
 		this.hpnMarket.Name = "hpnMarket";
-		this.hpnMarket.Position = 1;
+		this.hpnMarket.Position = 189;
 		this.hpnMarket.BorderWidth = ((uint)(3));
 		// Container child hpnMarket.Gtk.Paned+PanedChild
 		this.ntbMarketGroups = new global::Gtk.Notebook ();
