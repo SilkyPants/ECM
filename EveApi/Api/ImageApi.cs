@@ -52,7 +52,12 @@ namespace EveApi
 		#endregion
 		
 		#region Gtk# Image Helpers
-        private static Gdk.Pixbuf ImageToPixbuf(Bitmap image)
+        public static Gdk.Pixbuf StreamToPixbuf(Stream imageStream)
+        {
+            return ImageToPixbuf(new Bitmap(imageStream));
+        }
+
+        public static Gdk.Pixbuf ImageToPixbuf(Bitmap image)
         {
             using (MemoryStream stream = new MemoryStream())
             {

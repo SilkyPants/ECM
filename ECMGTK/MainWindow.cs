@@ -519,14 +519,19 @@ public partial class MainWindow: Gtk.Window
         img.WidthRequest = 64;
         img.HeightRequest = 64;
 
-        BackgroundWorker imgWorker = new BackgroundWorker();
+//        BackgroundWorker imgWorker = new BackgroundWorker();
+//
+//        imgWorker.DoWork += delegate(object sender, DoWorkEventArgs e)
+//        {
+//            img.Pixbuf = EveApi.ImageApi.GetCharacterPortraitGTK(character.ID, EveApi.ImageApi.ImageRequestSize.Size128x128).ScaleSimple(64,64,Gdk.InterpType.Bilinear);
+//        };
+//
+//        imgWorker.RunWorkerAsync();
 
-        imgWorker.DoWork += delegate(object sender, DoWorkEventArgs e)
+        if(character.Portrait != null)
         {
-            img.Pixbuf = EveApi.ImageApi.GetCharacterPortraitGTK(character.ID, EveApi.ImageApi.ImageRequestSize.Size64x64);
-        };
-
-        imgWorker.RunWorkerAsync();
+            img.Pixbuf = EveApi.ImageApi.StreamToPixbuf(character.Portrait).ScaleSimple(64, 64, Gdk.InterpType.Bilinear);
+        }
 
         frm.Add(img);
 

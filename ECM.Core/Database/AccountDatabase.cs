@@ -85,7 +85,8 @@ namespace ECM
                                     Memory            INT,
                                     Perception        INT,
                                     Willpower         INT,
-                                    Charisma          INT
+                                    Charisma          INT,
+                                    Portrait          BLOB
                                 );";
             cmd.ExecuteNonQuery();
 
@@ -239,7 +240,8 @@ namespace ECM
                                     Memory,
                                     Perception,
                                     Willpower,
-                                    Charisma)
+                                    Charisma,
+                                    Portrait)
                                 VALUES(@ID,
                                     @AccountID,
                                     @AutoUpdate,
@@ -268,7 +270,8 @@ namespace ECM
                                     @Memory,
                                     @Perception,
                                     @Willpower,
-                                    @Charisma)";
+                                    @Charisma,
+                                    @Portrait)";
             bool mustClose = false;
 
             if(sqlConnection == null || sqlConnection.State != System.Data.ConnectionState.Open)
@@ -309,6 +312,7 @@ namespace ECM
             cmd.Parameters.AddWithValue("@Perception", charToAdd.Attributes.Perception);
             cmd.Parameters.AddWithValue("@Willpower", charToAdd.Attributes.Willpower);
             cmd.Parameters.AddWithValue("@Charisma", charToAdd.Attributes.Charisma);
+            cmd.Parameters.AddWithValue("@Portrait", charToAdd.Portrait.ToArray());
 
             cmd.ExecuteNonQuery();
 
@@ -403,6 +407,7 @@ namespace ECM
                     newChar.Attributes.Perception = Convert.ToInt32(reader["Perception"].ToString());
                     newChar.Attributes.Willpower = Convert.ToInt32(reader["Willpower"].ToString());
                     newChar.Attributes.Charisma = Convert.ToInt32(reader["Charisma"].ToString());
+                    newChar.Portrait = new System.IO.MemoryStream((byte[])reader["Portrait"]);
 
                     account.AddCharacter(newChar);
 

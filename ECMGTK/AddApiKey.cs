@@ -155,7 +155,9 @@ namespace ECMGTK
                 bool selected = (bool)accCharacters.GetValue(it, 0);
 
                 apiAccount.Characters[index].AutoUpdate = selected;
-                apiAccount.Characters[index].UpdateOnHeartbeat();
+
+                if(selected)
+                    apiAccount.Characters[index].DoInitialUpdate();
 
                 index++;
 

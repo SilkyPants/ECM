@@ -2,6 +2,7 @@ using System;
 using EveApi;
 using EveApi.Api.Interfaces;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ECM
 {
@@ -193,6 +194,12 @@ namespace ECM
                 return m_charInfoRequest.IsUpdating || m_charSheetRequest.IsUpdating;
             }
         }
+
+        public MemoryStream Portrait
+        {
+            get;
+            set;
+        }
         #endregion
 
         public Character (Account account, long characterID, string name)
@@ -237,21 +244,19 @@ namespace ECM
             }
         }
 
-        //void SheetRequestUpdated(ApiResult<CharacterSheet> result)
-        //{
-        //    if (result != null && result.Error == null)
-        //    {
-        //        UpdateCharacter(result.Result);
-        //    }
-        //}
+        public void DoInitialUpdate()
+        {
+            // Do a heartbeat
+            UpdateOnHeartbeat();
 
-        //void InfoRequestUpdated(ApiResult<CharacterInfo> result)
-        //{
-        //    if (result != null && result.Error == null)
-        //    {
-        //        UpdateCharacter(result.Result);
-        //    }
-        //}
+            // Get the characters Portrait
+            UpdateCharacterPortrait();
+        }
+
+        public void UpdateCharacterPortrait ()
+        {
+            Portrait = EveApi.ImageApi.GetCharacterPortrait(ID, ImageApi.ImageRequestSize.Size128x128);
+        }
 
         private void UpdateCharacter(CharacterInfo characterInfo)
         {
