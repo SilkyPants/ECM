@@ -32,6 +32,11 @@ namespace ECM
             }
         }
 
+        public string Background
+        {
+            get { return string.Format("{0} - {1} - {2}", Race, Bloodline, Ancestry); }
+        }
+
         public long ID
         {
             get;

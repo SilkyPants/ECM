@@ -9,6 +9,7 @@ namespace ECM
     {
         static Dictionary<string, Account> m_Accounts = new Dictionary<string, Account>();
         static Dictionary<long, Character> m_Characters = new Dictionary<long, Character>();
+        static Character m_CurrentCharacter = null;
 
         #region Events
         public static event EventHandler OnCharacterChanged;
@@ -27,6 +28,18 @@ namespace ECM
         }
         
         #endregion
+
+        public static Character CurrentCharacter
+        {
+            get { return m_CurrentCharacter; }
+            set
+            {
+                m_CurrentCharacter = value;
+
+                CharacterChanged();
+            }
+        }
+
         public static Dictionary<long, Character> Characters
         {
             get { return m_Characters; }
@@ -130,6 +143,16 @@ namespace ECM
             foreach(Account acc in accounts)
             {
                 m_Accounts.Add(acc.KeyID, acc);
+
+                foreach (Character character in acc.Characters)
+                {
+                    if(CurrentCharacter == null)
+                    {
+                        CurrentCharacter = character;
+                    }
+                    
+                    m_Characters.Add(character.ID, character);
+                }
             }
         }
 

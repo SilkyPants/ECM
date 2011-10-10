@@ -69,6 +69,7 @@ public partial class MainWindow: Gtk.Window
 		Visible = true;
 
         ECM.Core.OnUpdateGui += new EventHandler(UpdateGui);
+        ECM.Core.OnCharacterChanged += CharacterChanged;
         ECM.Core.LoadAccounts();
 
         FillAccounts();
@@ -80,6 +81,36 @@ public partial class MainWindow: Gtk.Window
             ECM.Core.UpdateOnHeartbeat();
         };
         heartbeat.Start();
+    }
+
+    void CharacterChanged (object sender, EventArgs e)
+    {
+        lblCharName.Text = ECM.Core.CurrentCharacter.Name;
+        imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(ECM.Core.CurrentCharacter.Portrait);
+        lblBackground.Text = ECM.Core.CurrentCharacter.Background;
+        lblSkillpoints.Text = ECM.Core.CurrentCharacter.SkillPoints.ToString("#0,0");
+        lblCone.Text = string.Format("{0} ({1:0,0})", ECM.Core.CurrentCharacter.CloneName, ECM.Core.CurrentCharacter.CloneSkillPoints);
+        lblDoB.Text = ECM.Core.CurrentCharacter.Birthday.ToString();
+        lblSecStatus.Text = ECM.Core.CurrentCharacter.SecurityStatus.ToString("#0.00");
+
+        if(string.IsNullOrEmpty(ECM.Core.CurrentCharacter.Corporation))
+        {
+            lblCorporation.Text = string.Empty;
+            lblAlliance.Text = string.Empty;
+        }
+        else
+        {
+            lblCorporation.Text = ECM.Core.CurrentCharacter.Corporation;
+
+            if(string.IsNullOrEmpty(ECM.Core.CurrentCharacter.Alliance))
+            {
+                lblAlliance.Text = string.Empty;
+            }
+        }
+
+
+
+        ntbPages.CurrentPage = 1;
     }
 
     void UpdateGui(object sender, EventArgs e)
@@ -539,13 +570,19 @@ public partial class MainWindow: Gtk.Window
 
         Label text = new Label();
         text.UseMarkup = true;
-        text.Markup = string.Format("<span size=\"larger\" weight=\"bold\">{0}</span>\n<span size=\"small\">{1} - {2} - {3}\n{4:0,0.00} ISK\nLocation: {5}</span>",
-                            character.Name, character.Race, character.Bloodline, character.Ancestry, character.AccountBalance, character.LastKnownLocation);
+        text.Markup = string.Format("<span size=\"larger\" weight=\"bold\">{0}</span>\n<span size=\"small\">{1}\n{2:0,0.00} ISK\nLocation: {3}</span>",
+                            character.Name, character.Background, character.AccountBalance, character.LastKnownLocation);
         text.Xalign = 0;
         text.Yalign = 0;
 
         box.PackStart(text, true, true, 0);
         Button btn = new Button(box);
+
+        btn.Name = string.Format("btn{0}", character.ID);
+        btn.Clicked += delegate(object sender, EventArgs e)
+        {
+            ECM.Core.CurrentCharacter = character;
+        };
 
         btn.ShowAll();
         return btn;
