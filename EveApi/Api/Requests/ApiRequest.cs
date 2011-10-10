@@ -139,24 +139,37 @@ namespace EveApi
 
             string xmlResult = string.Empty;
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            try
             {
-                using (Stream responseStream = response.GetResponseStream())
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    using (StreamReader readStream = new StreamReader(responseStream, Encoding.UTF8))
+                    using (Stream responseStream = response.GetResponseStream())
                     {
-                        xmlResult = readStream.ReadToEnd();
+                        using (StreamReader readStream = new StreamReader(responseStream, Encoding.UTF8))
+                        {
+                            xmlResult = readStream.ReadToEnd();
+                        }
                     }
                 }
+    
+                XmlDocument doc = new XmlDocument();
+    			doc.PreserveWhitespace = true;
+                doc.InnerXml = xmlResult;
+    
+                m_LastResult = DeserializeAPIResultCore<T>(RowsetTransform, doc);
+    
+                m_LastUpdate = DateTime.UtcNow;
+            }
+            //TODO: Something here with the exceptions
+            catch (WebException we)
+            {
+                Console.WriteLine(we.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
 
-            XmlDocument doc = new XmlDocument();
-			doc.PreserveWhitespace = true;
-            doc.InnerXml = xmlResult;
-
-            m_LastResult = DeserializeAPIResultCore<T>(RowsetTransform, doc);
-
-            m_LastUpdate = DateTime.UtcNow;
             m_ActuallyUpdating = false;
 
             if(OnRequestUpdate != null)
