@@ -1,6 +1,6 @@
 using System;
 
-namespace ECM.Core
+namespace ECM
 {
 	public class EveBase
 	{

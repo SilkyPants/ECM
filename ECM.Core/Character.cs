@@ -3,14 +3,17 @@ using EveApi;
 using EveApi.Api.Interfaces;
 using System.Collections.Generic;
 
-namespace ECM.Core
+namespace ECM
 {
     public class Character : ICharacterInfo, ICharacterSheet
     {
         CharacterApiRequest<CharacterSheet> m_charSheetRequest;
         CharacterApiRequest<CharacterInfo> m_charInfoRequest;
-        bool m_AutoUpdate = true;
+        bool m_AutoUpdate = false;
 
+        public event EventHandler CharacterUpdated;
+
+        #region Properties
         public Account Account
         {
             get;
@@ -183,6 +186,15 @@ namespace ECM.Core
             set;
         }
 
+        public bool IsUpdating
+        {
+            get
+            {
+                return m_charInfoRequest.IsUpdating || m_charSheetRequest.IsUpdating;
+            }
+        }
+        #endregion
+
         public Character (Account account, long characterID, string name)
         {
             Account = account;
@@ -195,31 +207,51 @@ namespace ECM.Core
             Certificates = new List<CharacterCertificates>();
 
             m_charSheetRequest = new CharacterApiRequest<CharacterSheet>(characterID, Account.KeyID, Account.VCode);
-            m_charSheetRequest.OnRequestUpdate += SheetRequestUpdated;
-            m_charSheetRequest.Enabled = Account.KeyAccess.HasFlag(ApiKeyMask.CharacterSheet);
+            m_charSheetRequest.OnRequestUpdate += ApiRequestUpdate;
+            //m_charSheetRequest.Enabled = Account.KeyAccess.HasFlag(ApiKeyMask.CharacterSheet);
 
             m_charInfoRequest = new CharacterApiRequest<CharacterInfo>(characterID, Account.KeyID, Account.VCode);
-            m_charInfoRequest.OnRequestUpdate += InfoRequestUpdated;
-            m_charInfoRequest.Enabled = Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPublic) || Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPrivate);
-
-            AutoUpdate = true;
+            m_charInfoRequest.OnRequestUpdate += ApiRequestUpdate;
+            //m_charInfoRequest.Enabled = Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPublic) || Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPrivate);
         }
 
-        void SheetRequestUpdated(ApiResult<CharacterSheet> result)
+        void ApiRequestUpdate(IApiResult result)
         {
             if (result != null && result.Error == null)
             {
-                UpdateCharacter(result.Result);
+                if (result is ApiResult<CharacterSheet>)
+                {
+                    ApiResult<CharacterSheet> charSheet = result as ApiResult<CharacterSheet>;
+                    UpdateCharacter(charSheet.Result);
+                }
+                else if (result is ApiResult<CharacterInfo>)
+                {
+                    ApiResult<CharacterInfo> charInfo = result as ApiResult<CharacterInfo>;
+                    UpdateCharacter(charInfo.Result);
+                }
+            }
+
+            if (!IsUpdating && CharacterUpdated != null)
+            {
+                CharacterUpdated(this, null);
             }
         }
 
-        void InfoRequestUpdated(ApiResult<CharacterInfo> result)
-        {
-            if (result != null && result.Error == null)
-            {
-                UpdateCharacter(result.Result);
-            }
-        }
+        //void SheetRequestUpdated(ApiResult<CharacterSheet> result)
+        //{
+        //    if (result != null && result.Error == null)
+        //    {
+        //        UpdateCharacter(result.Result);
+        //    }
+        //}
+
+        //void InfoRequestUpdated(ApiResult<CharacterInfo> result)
+        //{
+        //    if (result != null && result.Error == null)
+        //    {
+        //        UpdateCharacter(result.Result);
+        //    }
+        //}
 
         private void UpdateCharacter(CharacterInfo characterInfo)
         {

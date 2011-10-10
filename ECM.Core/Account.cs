@@ -3,14 +3,14 @@ using EveApi;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ECM.Core
+namespace ECM
 {
     public class Account : IAccountStatus
     {
         AuthorisedApiRequest<ApiKeyInfo> m_accountKeyInfo;
         AuthorisedApiRequest<AccountStatus> m_accountStatus;
         ApiKeyMask m_KeyAccess;
-        List<Character> m_Characters = new List<Character>();
+        Dictionary<long, Character> m_Characters = new Dictionary<long, Character>();
 
         public ApiKeyMask KeyAccess
         {
@@ -62,9 +62,9 @@ namespace ECM.Core
             private set;
         }
 
-        public List<Character> Characters
+        public ReadOnlyCollection<Character> Characters
         {
-            get { return m_Characters; }
+            get { return new ReadOnlyCollection<Character>(new List<Character>(m_Characters.Values)); }
         }
 
         public delegate void AccountUpdatedHandler(Account account, IApiResult result);
@@ -106,7 +106,7 @@ namespace ECM.Core
 
                 foreach (CharacterListItem character in result.Result.Key.Characters)
                 {
-                    m_Characters.Add(new Character(this, character.CharacterID, character.Name));
+                    AddCharacter(new Character(this, character.CharacterID, character.Name));
                 }
 
                 OnAccountUpdated(result);
@@ -135,6 +135,12 @@ namespace ECM.Core
             {
                 character.UpdateOnHeartbeat();
             }
+        }
+
+        internal void AddCharacter(Character newChar)
+        {
+            if (m_Characters.ContainsKey(newChar.ID) == false)
+                m_Characters.Add(newChar.ID, newChar);
         }
     }
 }

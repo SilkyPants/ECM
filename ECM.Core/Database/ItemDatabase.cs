@@ -8,7 +8,7 @@ using SqlConn = System.Data.SQLite.SQLiteConnection;
 using SqlCmd = System.Data.SQLite.SQLiteCommand;
 using SqlReader = System.Data.SQLite.SQLiteDataReader;
 
-namespace ECM.Core
+namespace ECM
 {
 	public class ItemDatabase
 	{		
@@ -27,68 +27,6 @@ namespace ECM.Core
                 return m_Items;
             }
         }
-		
-		#region Resources
-		public static Stream MarketGroupPNG
-		{
-			get
-			{
-				Assembly ass = Assembly.GetExecutingAssembly();
-				
-				if(ass != null)
-				{
-					return ass.GetManifestResourceStream("ECM.Core.Icons.MarketGroupPNG");
-				}
-				
-				return null;
-			}
-		}
-
-        public static Stream ItemUnknownPNG
-        {
-            get
-            {
-                Assembly ass = Assembly.GetExecutingAssembly();
-
-                if(ass != null)
-                {
-                    return ass.GetManifestResourceStream("ECM.Core.Icons.ItemUnknownPNG");
-                }
-                
-                return null;
-            }
-        }
-
-        public static Stream Skillbook22PNG
-        {
-            get
-            {
-                Assembly ass = Assembly.GetExecutingAssembly();
-
-                if(ass != null)
-                {
-                    return ass.GetManifestResourceStream("ECM.Core.Icons.Skillbook22PNG");
-                }
-                
-                return null;
-            }
-        }
-
-        public static Stream Info16PNG
-        {
-            get
-            {
-                Assembly ass = Assembly.GetExecutingAssembly();
-
-                if(ass != null)
-                {
-                    return ass.GetManifestResourceStream("ECM.Core.Icons.Info16PNG");
-                }
-                
-                return null;
-            }
-        }
-		#endregion
 	    
 	    private static bool OpenDatabase()
 	    {
@@ -203,7 +141,7 @@ namespace ECM.Core
                     groupIter = marketStore.AppendNode();
                 }
 
-				marketStore.SetValues(groupIter, new Gdk.Pixbuf(ECM.Core.ItemDatabase.GetMarketIconStream(group.IconString)), group.Name, group.ID, group.HasItems);
+				marketStore.SetValues(groupIter, new Gdk.Pixbuf(ItemDatabase.GetMarketIconStream(group.IconString)), group.Name, group.ID, group.HasItems);
 				group.Tag = groupIter;
 			}
 
@@ -224,18 +162,18 @@ namespace ECM.Core
 
             if (ass != null && string.IsNullOrEmpty(iconFile) == false)
             {
-                Stream s = ass.GetManifestResourceStream(string.Format("ECM.Core.Resources.Icons.MarketIcons.icon{0}.png", iconFile));
+                Stream s = ass.GetManifestResourceStream(string.Format("ECM.Resources.Icons.MarketIcons.icon{0}.png", iconFile));
 
                 if(s == null)
                 {
-                    Console.WriteLine("Error: Cannot load ECM.Core.Resources.Icons.MarketIcons.icon{0}.png", iconFile);
-                    return MarketGroupPNG;
+                    Console.WriteLine("Error: Cannot load ECM.Resources.Icons.MarketIcons.icon{0}.png", iconFile);
+                    return Core.MarketGroupPNG;
                 }
 
                 return s;
             }
 
-            return MarketGroupPNG;
+            return Core.MarketGroupPNG;
         }
 	}
 }

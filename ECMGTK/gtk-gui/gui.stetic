@@ -1129,7 +1129,7 @@
               <widget class="Gtk.HPaned" id="hpnMarket">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">189</property>
+                <property name="Position">1</property>
                 <property name="BorderWidth">3</property>
                 <child>
                   <widget class="Gtk.Notebook" id="ntbMarketGroups">
@@ -1653,16 +1653,18 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="ECMGTK.AddApiKey" design-size="339 497">
+  <widget class="Gtk.Dialog" id="ECMGTK.AddApiKey" design-size="339 506">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Add new Api Key</property>
     <property name="Icon">resource:ECMGTK.Resources.Icons.Internet.png</property>
+    <property name="TypeHint">Dialog</property>
     <property name="WindowPosition">Center</property>
     <property name="Modal">True</property>
     <property name="BorderWidth">3</property>
     <property name="Resizable">False</property>
     <property name="AllowGrow">False</property>
     <property name="DestroyWithParent">True</property>
+    <property name="SkipTaskbarHint">True</property>
     <property name="Buttons">2</property>
     <property name="HelpButton">False</property>
     <child internal-child="VBox">
@@ -1853,578 +1855,637 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.VBox" id="vbxKeyInfo">
+          <widget class="Gtk.Notebook" id="ntbInfoAndLoading">
             <property name="MemberName" />
-            <property name="Spacing">6</property>
+            <property name="CanFocus">True</property>
+            <property name="CurrentPage">0</property>
+            <property name="ShowBorder">False</property>
+            <property name="ShowTabs">False</property>
             <child>
-              <widget class="Gtk.Frame" id="frame8">
+              <widget class="Gtk.VBox" id="vbxKeyInfo">
                 <property name="MemberName" />
+                <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.Alignment" id="GtkAlignment9">
+                  <widget class="Gtk.Frame" id="frame8">
                     <property name="MemberName" />
-                    <property name="Xalign">0</property>
-                    <property name="Yalign">0</property>
-                    <property name="LeftPadding">3</property>
-                    <property name="TopPadding">3</property>
-                    <property name="RightPadding">3</property>
-                    <property name="BottomPadding">3</property>
                     <child>
-                      <widget class="Gtk.TreeView" id="trvCharacters">
+                      <widget class="Gtk.Alignment" id="GtkAlignment9">
                         <property name="MemberName" />
-                        <property name="HeightRequest">65</property>
-                        <property name="CanFocus">True</property>
-                        <property name="EnableSearch">False</property>
-                        <property name="HeadersVisible">False</property>
+                        <property name="Xalign">0</property>
+                        <property name="Yalign">0</property>
+                        <property name="LeftPadding">3</property>
+                        <property name="TopPadding">3</property>
+                        <property name="RightPadding">3</property>
+                        <property name="BottomPadding">3</property>
+                        <child>
+                          <widget class="Gtk.TreeView" id="trvCharacters">
+                            <property name="MemberName" />
+                            <property name="HeightRequest">65</property>
+                            <property name="CanFocus">True</property>
+                            <property name="EnableSearch">False</property>
+                            <property name="HeadersVisible">False</property>
+                          </widget>
+                        </child>
                       </widget>
                     </child>
-                  </widget>
-                </child>
-                <child>
-                  <widget class="Gtk.Label" id="GtkLabel10">
-                    <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">Characters</property>
+                    <child>
+                      <widget class="Gtk.Label" id="GtkLabel10">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Characters</property>
+                      </widget>
+                      <packing>
+                        <property name="type">label_item</property>
+                      </packing>
+                    </child>
                   </widget>
                   <packing>
-                    <property name="type">label_item</property>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Frame" id="frame2">
+                    <property name="MemberName" />
+                    <child>
+                      <widget class="Gtk.Alignment" id="GtkAlignment3">
+                        <property name="MemberName" />
+                        <property name="Xalign">0</property>
+                        <property name="Yalign">0</property>
+                        <property name="LeftPadding">3</property>
+                        <property name="TopPadding">3</property>
+                        <property name="RightPadding">3</property>
+                        <property name="BottomPadding">3</property>
+                        <child>
+                          <widget class="Gtk.Table" id="table2">
+                            <property name="MemberName" />
+                            <property name="NRows">3</property>
+                            <property name="NColumns">8</property>
+                            <property name="Homogeneous">True</property>
+                            <property name="RowSpacing">6</property>
+                            <property name="ColumnSpacing">6</property>
+                            <property name="BorderWidth">3</property>
+                            <child>
+                              <placeholder />
+                            </child>
+                            <child>
+                              <placeholder />
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgAccBalance">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Account Balance</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Money.png</property>
+                              </widget>
+                              <packing>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgAccountStatus">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Account Status</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Plex.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">2</property>
+                                <property name="BottomAttach">3</property>
+                                <property name="LeftAttach">1</property>
+                                <property name="RightAttach">2</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgAssetList">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Asset List</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Assets.png</property>
+                              </widget>
+                              <packing>
+                                <property name="LeftAttach">1</property>
+                                <property name="RightAttach">2</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgCalEvents">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Calender Events</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Calender.png</property>
+                              </widget>
+                              <packing>
+                                <property name="LeftAttach">2</property>
+                                <property name="RightAttach">3</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgCharInfo">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Character Info</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.CharInfo.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">2</property>
+                                <property name="BottomAttach">3</property>
+                                <property name="LeftAttach">3</property>
+                                <property name="RightAttach">4</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgCharSheet">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Character Sheet</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.CharSheet.png</property>
+                              </widget>
+                              <packing>
+                                <property name="LeftAttach">3</property>
+                                <property name="RightAttach">4</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgContactNotifications">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Contact Notifications</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.ContactNotifications.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">2</property>
+                                <property name="BottomAttach">3</property>
+                                <property name="LeftAttach">5</property>
+                                <property name="RightAttach">6</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgContacts">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Contacts</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Contacts.png</property>
+                              </widget>
+                              <packing>
+                                <property name="LeftAttach">4</property>
+                                <property name="RightAttach">5</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgContracts">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Contracts</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Contracts.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">2</property>
+                                <property name="BottomAttach">3</property>
+                                <property name="LeftAttach">2</property>
+                                <property name="RightAttach">3</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgFacWarStats">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Faction Warfare Stats</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.FacWarStats.png</property>
+                              </widget>
+                              <packing>
+                                <property name="LeftAttach">5</property>
+                                <property name="RightAttach">6</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgIndJobs">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Industry Jobs</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Industry.png</property>
+                              </widget>
+                              <packing>
+                                <property name="LeftAttach">6</property>
+                                <property name="RightAttach">7</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgKillLog">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Kill Logs</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.KillLogs.png</property>
+                              </widget>
+                              <packing>
+                                <property name="LeftAttach">7</property>
+                                <property name="RightAttach">8</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgMail">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Mail</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Mail.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">1</property>
+                                <property name="BottomAttach">2</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgMarketOrders">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Market Orders</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Market.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">1</property>
+                                <property name="BottomAttach">2</property>
+                                <property name="LeftAttach">1</property>
+                                <property name="RightAttach">2</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgMedals">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Medals</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Medal.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">1</property>
+                                <property name="BottomAttach">2</property>
+                                <property name="LeftAttach">2</property>
+                                <property name="RightAttach">3</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="ImgNotifications">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Notifications</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Notifications.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">2</property>
+                                <property name="BottomAttach">3</property>
+                                <property name="LeftAttach">4</property>
+                                <property name="RightAttach">5</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgReseach">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Research</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Research.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">1</property>
+                                <property name="BottomAttach">2</property>
+                                <property name="LeftAttach">3</property>
+                                <property name="RightAttach">4</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgSkillQueue">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Skill Queue</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.SkillQueue.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">1</property>
+                                <property name="BottomAttach">2</property>
+                                <property name="LeftAttach">5</property>
+                                <property name="RightAttach">6</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgSkillTraining">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Skill In Training</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.SkillTraining.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">1</property>
+                                <property name="BottomAttach">2</property>
+                                <property name="LeftAttach">4</property>
+                                <property name="RightAttach">5</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgStandings">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Standings</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Standings.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">1</property>
+                                <property name="BottomAttach">2</property>
+                                <property name="LeftAttach">6</property>
+                                <property name="RightAttach">7</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgWallJournal">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Wallet Journal</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Journal.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">1</property>
+                                <property name="BottomAttach">2</property>
+                                <property name="LeftAttach">7</property>
+                                <property name="RightAttach">8</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Image" id="imgWallTransactions">
+                                <property name="MemberName" />
+                                <property name="Sensitive">False</property>
+                                <property name="Tooltip" translatable="yes">Wallet Transactions</property>
+                                <property name="Pixbuf">resource:ECMGTK.Resources.Icons.WallTransactions.png</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">2</property>
+                                <property name="BottomAttach">3</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="Gtk.Label" id="GtkLabel7">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">Key Allows:</property>
+                        <property name="UseMarkup">True</property>
+                      </widget>
+                      <packing>
+                        <property name="type">label_item</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
                   </packing>
                 </child>
               </widget>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label2">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">page1</property>
+              </widget>
               <packing>
-                <property name="Position">0</property>
-                <property name="AutoSize">True</property>
+                <property name="type">tab</property>
               </packing>
             </child>
             <child>
-              <widget class="Gtk.Frame" id="frame2">
+              <widget class="Gtk.HBox" id="hbox1">
                 <property name="MemberName" />
+                <property name="Spacing">6</property>
                 <child>
-                  <widget class="Gtk.Alignment" id="GtkAlignment3">
+                  <widget class="Gtk.Image" id="imgSpinner">
                     <property name="MemberName" />
-                    <property name="Xalign">0</property>
-                    <property name="Yalign">0</property>
-                    <property name="LeftPadding">3</property>
-                    <property name="TopPadding">3</property>
-                    <property name="RightPadding">3</property>
-                    <property name="BottomPadding">3</property>
-                    <child>
-                      <widget class="Gtk.Table" id="table2">
-                        <property name="MemberName" />
-                        <property name="NRows">3</property>
-                        <property name="NColumns">8</property>
-                        <property name="Homogeneous">True</property>
-                        <property name="RowSpacing">6</property>
-                        <property name="ColumnSpacing">6</property>
-                        <property name="BorderWidth">3</property>
-                        <child>
-                          <placeholder />
-                        </child>
-                        <child>
-                          <placeholder />
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgAccBalance">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Account Balance</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Money.png</property>
-                          </widget>
-                          <packing>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgAccountStatus">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Account Status</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Plex.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">2</property>
-                            <property name="BottomAttach">3</property>
-                            <property name="LeftAttach">1</property>
-                            <property name="RightAttach">2</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgAssetList">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Asset List</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Assets.png</property>
-                          </widget>
-                          <packing>
-                            <property name="LeftAttach">1</property>
-                            <property name="RightAttach">2</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgCalEvents">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Calender Events</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Calender.png</property>
-                          </widget>
-                          <packing>
-                            <property name="LeftAttach">2</property>
-                            <property name="RightAttach">3</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgCharInfo">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Character Info</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.CharInfo.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">2</property>
-                            <property name="BottomAttach">3</property>
-                            <property name="LeftAttach">3</property>
-                            <property name="RightAttach">4</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgCharSheet">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Character Sheet</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.CharSheet.png</property>
-                          </widget>
-                          <packing>
-                            <property name="LeftAttach">3</property>
-                            <property name="RightAttach">4</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgContactNotifications">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Contact Notifications</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.ContactNotifications.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">2</property>
-                            <property name="BottomAttach">3</property>
-                            <property name="LeftAttach">5</property>
-                            <property name="RightAttach">6</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgContacts">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Contacts</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Contacts.png</property>
-                          </widget>
-                          <packing>
-                            <property name="LeftAttach">4</property>
-                            <property name="RightAttach">5</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgContracts">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Contracts</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Contracts.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">2</property>
-                            <property name="BottomAttach">3</property>
-                            <property name="LeftAttach">2</property>
-                            <property name="RightAttach">3</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgFacWarStats">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Faction Warfare Stats</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.FacWarStats.png</property>
-                          </widget>
-                          <packing>
-                            <property name="LeftAttach">5</property>
-                            <property name="RightAttach">6</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgIndJobs">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Industry Jobs</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Industry.png</property>
-                          </widget>
-                          <packing>
-                            <property name="LeftAttach">6</property>
-                            <property name="RightAttach">7</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgKillLog">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Kill Logs</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.KillLogs.png</property>
-                          </widget>
-                          <packing>
-                            <property name="LeftAttach">7</property>
-                            <property name="RightAttach">8</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgMail">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Mail</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Mail.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgMarketOrders">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Market Orders</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Market.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
-                            <property name="LeftAttach">1</property>
-                            <property name="RightAttach">2</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgMedals">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Medals</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Medal.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
-                            <property name="LeftAttach">2</property>
-                            <property name="RightAttach">3</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="ImgNotifications">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Notifications</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Notifications.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">2</property>
-                            <property name="BottomAttach">3</property>
-                            <property name="LeftAttach">4</property>
-                            <property name="RightAttach">5</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgReseach">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Research</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Research.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
-                            <property name="LeftAttach">3</property>
-                            <property name="RightAttach">4</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgSkillQueue">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Skill Queue</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.SkillQueue.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
-                            <property name="LeftAttach">5</property>
-                            <property name="RightAttach">6</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgSkillTraining">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Skill In Training</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.SkillTraining.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
-                            <property name="LeftAttach">4</property>
-                            <property name="RightAttach">5</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgStandings">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Standings</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Standings.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
-                            <property name="LeftAttach">6</property>
-                            <property name="RightAttach">7</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgWallJournal">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Wallet Journal</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.Journal.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">1</property>
-                            <property name="BottomAttach">2</property>
-                            <property name="LeftAttach">7</property>
-                            <property name="RightAttach">8</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="Gtk.Image" id="imgWallTransactions">
-                            <property name="MemberName" />
-                            <property name="Sensitive">False</property>
-                            <property name="Tooltip" translatable="yes">Wallet Transactions</property>
-                            <property name="Pixbuf">resource:ECMGTK.Resources.Icons.WallTransactions.png</property>
-                          </widget>
-                          <packing>
-                            <property name="TopAttach">2</property>
-                            <property name="BottomAttach">3</property>
-                            <property name="AutoSize">True</property>
-                            <property name="XOptions">Fill</property>
-                            <property name="YOptions">Fill</property>
-                            <property name="XExpand">False</property>
-                            <property name="XFill">True</property>
-                            <property name="XShrink">False</property>
-                            <property name="YExpand">False</property>
-                            <property name="YFill">True</property>
-                            <property name="YShrink">False</property>
-                          </packing>
-                        </child>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
-                <child>
-                  <widget class="Gtk.Label" id="GtkLabel4">
-                    <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes">Key Allows:</property>
-                    <property name="UseMarkup">True</property>
+                    <property name="WidthRequest">32</property>
+                    <property name="HeightRequest">32</property>
+                    <property name="Xalign">1</property>
                   </widget>
                   <packing>
-                    <property name="type">label_item</property>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="label1">
+                    <property name="MemberName" />
+                    <property name="Xalign">0</property>
+                    <property name="LabelProp" translatable="yes">Fetching data...</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">False</property>
                   </packing>
                 </child>
               </widget>
               <packing>
                 <property name="Position">1</property>
-                <property name="AutoSize">True</property>
-                <property name="Expand">False</property>
-                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label4">
+                <property name="MemberName" />
+                <property name="LabelProp" translatable="yes">page2</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
               </packing>
             </child>
           </widget>
@@ -2451,6 +2512,7 @@
             <property name="Label" translatable="yes">Cancel</property>
             <property name="UseUnderline">True</property>
             <property name="ResponseId">-6</property>
+            <signal name="Clicked" handler="CancelClicked" />
           </widget>
           <packing>
             <property name="Expand">False</property>

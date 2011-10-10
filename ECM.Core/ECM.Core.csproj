@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{57BE04A7-D657-4A74-828A-BBE9D994AEDA}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>ECM.Core</RootNamespace>
+    <RootNamespace>ECM</RootNamespace>
     <AssemblyName>ECM.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
@@ -48,7 +48,7 @@
     <Compile Include="EveClasses.cs" />
     <Compile Include="Account.cs" />
     <Compile Include="Character.cs" />
-    <Compile Include="Data.cs" />
+    <Compile Include="Core.cs" />
     <Compile Include="Database\AccountDatabase.cs" />
     <Compile Include="Attributes\SQLiteDatabaseAttribute.cs" />
   </ItemGroup>
@@ -170,6 +170,9 @@
     <EmbeddedResource Include="Resources\Icons\MarketIcons\icon95_04.png" />
     <EmbeddedResource Include="Resources\Icons\MarketIcons\icon95_12.png" />
     <EmbeddedResource Include="Resources\Icons\MarketIcons\icon99_06.png" />
+    <EmbeddedResource Include="Resources\Icons\LoadingSpinner.gif">
+      <LogicalName>ECM.Core.Icons.LoadingSpinnerGIF</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="sqlite3.dll">
@@ -188,7 +191,5 @@
       <Name>EveApi</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

@@ -68,7 +68,8 @@ public partial class MainWindow: Gtk.Window
 		
 		Visible = true;
 
-        ECM.Core.Data.LoadAccounts();
+        ECM.Core.OnUpdateGui += new EventHandler(UpdateGui);
+        ECM.Core.LoadAccounts();
 
         FillAccounts();
 
@@ -76,9 +77,17 @@ public partial class MainWindow: Gtk.Window
         heartbeat.AutoReset = true;
         heartbeat.Elapsed += delegate
         {
-            ECM.Core.Data.UpdateOnHeartbeat();
+            ECM.Core.UpdateOnHeartbeat();
         };
         heartbeat.Start();
+    }
+
+    void UpdateGui(object sender, EventArgs e)
+    {
+        Gtk.Application.Invoke(delegate
+        {
+            FillAccounts();
+        });
     }
 
     void HandleWorkerRunWorkerCompleted (object sender, RunWorkerCompletedEventArgs e)
@@ -199,7 +208,7 @@ public partial class MainWindow: Gtk.Window
         
         trvMarket.AppendColumn(mainColumn);
 		
-		ECM.Core.ItemDatabase.LoadMarket(marketStore, itemStore);
+		ECM.ItemDatabase.LoadMarket(marketStore, itemStore);
         
         trvMarket.ColumnsAutosize();
         
@@ -245,7 +254,7 @@ public partial class MainWindow: Gtk.Window
             if(model.GetValue(iter, 0) == null)
             {
                 long ID = Convert.ToInt64(model.GetValue(iter, 2));
-                ECM.Core.EveItem item = ECM.Core.ItemDatabase.Items[ID];
+                ECM.EveItem item = ECM.ItemDatabase.Items[ID];
                 // Item selected -
                 // TODO: need to do this better ^^
 
@@ -267,7 +276,7 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
-    void ShowItemMarketDetails (ECM.Core.EveItem item, TreeModel model, TreeIter iter)
+    void ShowItemMarketDetails (ECM.EveItem item, TreeModel model, TreeIter iter)
     {
         ntbMarketDetails.CurrentPage = 0;
 
@@ -301,7 +310,7 @@ public partial class MainWindow: Gtk.Window
             {
                 // TODO: Need check to make sure it's an item
                 long ID = Convert.ToInt64(model.GetValue(childIter, 2));
-                ECM.Core.EveItem item = ECM.Core.ItemDatabase.Items[ID];
+                ECM.EveItem item = ECM.ItemDatabase.Items[ID];
 
                 AddItemToCurrentMarketGroup(item);
             }
@@ -311,17 +320,17 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
-    void AddItemToCurrentMarketGroup (ECM.Core.EveItem item)
+    void AddItemToCurrentMarketGroup (ECM.EveItem item)
     {
         if(vbbMarketGroups.IsRealized == false)
             vbbMarketGroups.Realize();
 
-        Image itemPic = new Image(ECM.Core.ItemDatabase.ItemUnknownPNG);
+        Image itemPic = new Image(ECM.Core.ItemUnknownPNG);
         itemPic.WidthRequest = 64;
         itemPic.HeightRequest = 64;
 
         Gdk.Pixbuf buf = new Gdk.Pixbuf(Gdk.Colorspace.Rgb, true, 8, 22, 22);
-        Gdk.Pixbuf book = new Gdk.Pixbuf(ECM.Core.ItemDatabase.Skillbook22PNG);
+        Gdk.Pixbuf book = new Gdk.Pixbuf(ECM.Core.Skillbook22PNG);
 
         Colour col = new Colour(128, 0, 0, 128);
         buf.Fill(col.ToUint());
@@ -341,7 +350,7 @@ public partial class MainWindow: Gtk.Window
         itemName.Xalign = 0;
         //itemName.ModifyFont(font);
 
-        Image infoPic = new Image(ECM.Core.ItemDatabase.Info16PNG);
+        Image infoPic = new Image(ECM.Core.Info16PNG);
         infoPic.WidthRequest = 16;
         infoPic.HeightRequest = 16;
 
@@ -444,11 +453,9 @@ public partial class MainWindow: Gtk.Window
 		ECMGTK.AddApiKey addKey = new ECMGTK.AddApiKey();
 		
 		addKey.Run();
-
-        FillAccounts();
 	}
 
-    protected Widget CreateAccountWidget (ECM.Core.Account account)
+    protected Widget CreateAccountWidget (ECM.Account account)
     {
         VBox accWidget = new VBox();
         accWidget.Spacing = 3;
@@ -463,10 +470,16 @@ public partial class MainWindow: Gtk.Window
         delAccBtn.TooltipText = "Delete Account";
         delAccBtn.Add(new Image("gtk-delete", IconSize.Menu));
 
+        Button editAccBtn = new Button();
+        editAccBtn.Relief = ReliefStyle.None;
+        editAccBtn.TooltipText = "Edit Account";
+        editAccBtn.Add(new Image("gtk-edit", IconSize.Menu));
+
         HBox accHeader = new HBox();
         accHeader.Spacing = 2;
         accHeader.PackStart(accKey, false, false, 0);
         accHeader.PackStart(sep, true, true, 0);
+        accHeader.PackStart(editAccBtn, false, false, 0);
         accHeader.PackStart(delAccBtn, false, false, 0);
 
         accWidget.PackStart(accHeader, true, false, 0);
@@ -483,9 +496,10 @@ public partial class MainWindow: Gtk.Window
         accStats.Buffer.Text = string.Format("Paid Until: {0}\nTime spent playing: {1}",
             paidUntilLocal.ToString(), GetDurationInWords(playTime));
 
-        foreach(ECM.Core.Character ecmChar in account.Characters)
+        foreach(ECM.Character ecmChar in account.Characters)
         {
-            accWidget.PackStart(CreateCharacterButton(ecmChar), true, false, 0);
+            if(ecmChar.AutoUpdate)
+                accWidget.PackStart(CreateCharacterButton(ecmChar), true, false, 0);
         }
 
         accWidget.ShowAll();
@@ -493,7 +507,7 @@ public partial class MainWindow: Gtk.Window
         return accWidget;
     }
 
-    protected Widget CreateCharacterButton (ECM.Core.Character character)
+    protected Widget CreateCharacterButton (ECM.Character character)
     {
         HBox box = new HBox();
 
@@ -540,7 +554,7 @@ public partial class MainWindow: Gtk.Window
             vbxAccounts.Remove(vbxAccounts.Children[0]);
         }
 
-        foreach(ECM.Core.Account account in ECM.Core.Data.Accounts.Values)
+        foreach(ECM.Account account in ECM.Core.Accounts.Values)
         {
             vbxAccounts.PackStart(CreateAccountWidget(account), false, false, 0);
         }

@@ -1,21 +1,25 @@
 using System;
 using EveApi;
 using Gtk;
+using System.ComponentModel;
+using System.Threading;
 
 namespace ECMGTK
 {
 	public partial class AddApiKey : Gtk.Dialog
 	{
 		ListStore accCharacters = new ListStore(typeof(bool), typeof(string), typeof(long));
-        ECM.Core.Account apiAccount = null;
+        ECM.Account apiAccount = null;
 		
 		public AddApiKey ()
 		{
 			this.Build ();
 			
 			SetupTreeview();
-
+            Deletable = false;
             vbxKeyInfo.Sensitive = false;
+            ntbInfoAndLoading.CurrentPage = 0;
+            imgSpinner.PixbufAnimation = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF);
 		}
 
 		public void SetupTreeview ()
@@ -56,13 +60,14 @@ namespace ECMGTK
 
 		protected void RetrieveApiInfo (object sender, System.EventArgs e)
 		{
-	        apiAccount = new ECM.Core.Account(txtApiKeyID.Text, txtVerificationCode.Buffer.Text);
+            ntbInfoAndLoading.CurrentPage = 1;
+	        apiAccount = new ECM.Account(txtApiKeyID.Text, txtVerificationCode.Buffer.Text);
             apiAccount.AccountUpdated += HandleApiAccountAccountUpdated;
 
             apiAccount.UpdateOnHeartbeat();
 		}
 
-        void HandleApiAccountAccountUpdated (ECM.Core.Account account, IApiResult result)
+        void HandleApiAccountAccountUpdated (ECM.Account account, IApiResult result)
         {
             if (result != null && result.Error == null)
             {
@@ -77,9 +82,11 @@ namespace ECMGTK
                     accCharacters.Clear();
 
                     apiAccount.UpdateOnHeartbeat();
-    
-                    foreach (CharacterListItem character in keyData.Characters)
-                        accCharacters.AppendValues(true, character.Name, character.CharacterID);
+
+                    foreach (ECM.Character character in apiAccount.Characters)
+                    {
+                        accCharacters.AppendValues(true, character.Name, character.ID);
+                    }
 
                     // Show key access
                     imgAccBalance.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.AccountBalance);
@@ -105,31 +112,78 @@ namespace ECMGTK
                     imgStandings.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.Standings);
                     imgWallJournal.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.WalletJournal);
                     imgWallTransactions.Sensitive = keyData.AccessMask.HasFlag(ApiKeyMask.WalletTransactions);
+
+                    ntbInfoAndLoading.CurrentPage = 0;
                 }
             }
+        }
+
+        int charactersUpdated = 0;
+        void CharacterUpdated(object sender, EventArgs e)
+        {
+            charactersUpdated++;
         }
 
 		protected void ImportKey (object sender, System.EventArgs e)
 		{
             if(apiAccount != null)
             {
-                TreeIter it = new TreeIter ();
-                accCharacters.GetIterFirst (out it);
-                int index = 0;
-                while (accCharacters.IterIsValid (it))
-                {
-                    bool selected = (bool) accCharacters.GetValue (it, 0);
+                ntbInfoAndLoading.CurrentPage = 1;
 
-                    apiAccount.Characters[index].AutoUpdate = selected;
-    
-                    accCharacters.IterNext (ref it);
+                BackgroundWorker fetchCharDetails = new BackgroundWorker();
+
+                fetchCharDetails.DoWork += new DoWorkEventHandler(FetchCharacterDetails);
+                fetchCharDetails.RunWorkerCompleted += new RunWorkerCompletedEventHandler(CharacterDetailsFetched);
+
+                foreach (ECM.Character character in apiAccount.Characters)
+                {
+                    character.CharacterUpdated += new EventHandler(CharacterUpdated);
                 }
 
-                ECM.Core.Data.AddAccount(apiAccount);
-    
-                this.Destroy();
+                charactersUpdated = 0;
+                fetchCharDetails.RunWorkerAsync();                
             }
 		}
+
+        void FetchCharacterDetails(object sender, DoWorkEventArgs e)
+        {
+            TreeIter it = new TreeIter();
+            accCharacters.GetIterFirst(out it);
+            int index = 0;
+            while (accCharacters.IterIsValid(it))
+            {
+                bool selected = (bool)accCharacters.GetValue(it, 0);
+
+                apiAccount.Characters[index].AutoUpdate = selected;
+                apiAccount.Characters[index].UpdateOnHeartbeat();
+
+                index++;
+
+                accCharacters.IterNext(ref it);
+            }
+
+            bool allDone = false;
+            while (!allDone)
+            {
+                Thread.Sleep(500);
+
+                allDone = charactersUpdated == apiAccount.Characters.Count;
+            }
+
+            Console.WriteLine("Fetched Character Details");
+        }
+
+        void CharacterDetailsFetched(object sender, RunWorkerCompletedEventArgs e)
+        {
+            ECM.Core.AddAccount(apiAccount);
+            ECM.Core.UpdateGui();
+            this.Destroy();
+        }
+
+        protected void CancelClicked (object sender, System.EventArgs e)
+        {
+            this.Destroy();
+        }
 	}
 }
 

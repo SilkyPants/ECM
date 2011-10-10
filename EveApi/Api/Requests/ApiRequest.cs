@@ -23,6 +23,7 @@ namespace EveApi
         private ApiResult<T> m_LastResult = null;
         private Thread m_UpdatingThread = null;
         private bool m_Enabled = false;
+        private bool m_ActuallyUpdating = false;
 
         public event RequestUpdated OnRequestUpdate;
         public delegate void RequestUpdated(ApiResult<T> result);
@@ -55,7 +56,7 @@ namespace EveApi
 
         public bool IsUpdating
         {
-            get { return m_UpdatingThread != null && m_UpdatingThread.IsAlive; }
+            get { return m_UpdatingThread != null && m_UpdatingThread.IsAlive && m_ActuallyUpdating; }
         }
 
         public IApiResult LastResult
@@ -110,6 +111,7 @@ namespace EveApi
 
         private void QueryApi()
         {
+            m_ActuallyUpdating = true;
             Console.WriteLine("Updating from API for {0}", typeof(T).Name);
 
             PropertyInfo pi = typeof(T).GetProperty("ApiUri", typeof(string));
@@ -155,6 +157,7 @@ namespace EveApi
             m_LastResult = DeserializeAPIResultCore<T>(RowsetTransform, doc);
 
             m_LastUpdate = DateTime.UtcNow;
+            m_ActuallyUpdating = false;
 
             if(OnRequestUpdate != null)
                 OnRequestUpdate(m_LastResult);

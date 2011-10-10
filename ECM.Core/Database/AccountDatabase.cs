@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using EveApi;
 
-namespace ECM.Core
+namespace ECM
 {
     public static class AccountDatabase
     {
@@ -404,7 +404,7 @@ namespace ECM.Core
                     newChar.Attributes.Willpower = Convert.ToInt32(reader["Willpower"].ToString());
                     newChar.Attributes.Charisma = Convert.ToInt32(reader["Charisma"].ToString());
 
-                    account.Characters.Add(newChar);
+                    account.AddCharacter(newChar);
 
                     // Get Implants
                     // Get Skills
