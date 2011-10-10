@@ -83,6 +83,7 @@ public partial class MainWindow: Gtk.Window
         heartbeat.Start();
     }
 
+    #region Event Handlers
     void CharacterChanged (object sender, EventArgs e)
     {
         lblCharName.Text = ECM.Core.CurrentCharacter.Name;
@@ -125,7 +126,16 @@ public partial class MainWindow: Gtk.Window
     {
         hpnMarket.Sensitive = true;
     }
+    
+    protected void OnDeleteEvent (object sender, DeleteEventArgs a)
+    {        
+        Application.Quit ();
+        a.RetVal = true;
+    }
 
+    #endregion
+
+    #region Gui Setup
 	public void FillTabsWithImages ()
 	{
 		ntbPages.SetTabLabelPacking(vbxOverview, false, false, PackType.Start);
@@ -176,12 +186,7 @@ public partial class MainWindow: Gtk.Window
 		
 		return box;
 	}
-    
-    protected void OnDeleteEvent (object sender, DeleteEventArgs a)
-    {		
-        Application.Quit ();
-        a.RetVal = true;
-    }
+    #endregion
     
     #region Market
     TreeStore marketStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(string), typeof(long), typeof(bool));
@@ -440,42 +445,6 @@ public partial class MainWindow: Gtk.Window
          return false;
     }
     #endregion
-
-    #region Move Later To Helper Class?
-    public static string GetDurationInWords( TimeSpan aTimeSpan )
-    {
-        string timeTaken = string.Empty;
-    
-        if( aTimeSpan.Days > 0 )
-            timeTaken += aTimeSpan.Days + " day" + ( aTimeSpan.Days > 1 ? "s" : "" );
-    
-        if( aTimeSpan.Hours > 0 )
-        {
-            if( !string.IsNullOrEmpty( timeTaken ) )
-               timeTaken += " ";
-            timeTaken += aTimeSpan.Hours + " hour" + ( aTimeSpan.Hours > 1 ? "s" : "" );
-        }
-    
-        if( aTimeSpan.Minutes > 0 )
-        {
-           if( !string.IsNullOrEmpty( timeTaken ) )
-               timeTaken += " ";
-           timeTaken += aTimeSpan.Minutes + " minute" + ( aTimeSpan.Minutes > 1 ? "s" : "" );
-        }
-    
-        if( aTimeSpan.Seconds > 0 )
-        {
-           if( !string.IsNullOrEmpty( timeTaken ) )
-               timeTaken += " ";
-           timeTaken += aTimeSpan.Seconds + " second" + ( aTimeSpan.Seconds > 1 ? "s" : "" );
-        }
-    
-        if( string.IsNullOrEmpty( timeTaken ) )
-            timeTaken = "0 seconds.";
-    
-         return timeTaken;
-    }
-    #endregion
 	
 	#region Overview
 
@@ -525,7 +494,7 @@ public partial class MainWindow: Gtk.Window
         TimeSpan playTime = new TimeSpan(0, account.LogonMinutes, 0);
 
         accStats.Buffer.Text = string.Format("Paid Until: {0}\nTime spent playing: {1}",
-            paidUntilLocal.ToString(), GetDurationInWords(playTime));
+            paidUntilLocal.ToString(), ECM.Helper.GetDurationInWords(playTime));
 
         foreach(ECM.Character ecmChar in account.Characters)
         {
@@ -549,15 +518,6 @@ public partial class MainWindow: Gtk.Window
         Image img = new Image(null, "ECMGTK.Resources.NoPortrait_64.png");
         img.WidthRequest = 64;
         img.HeightRequest = 64;
-
-//        BackgroundWorker imgWorker = new BackgroundWorker();
-//
-//        imgWorker.DoWork += delegate(object sender, DoWorkEventArgs e)
-//        {
-//            img.Pixbuf = EveApi.ImageApi.GetCharacterPortraitGTK(character.ID, EveApi.ImageApi.ImageRequestSize.Size128x128).ScaleSimple(64,64,Gdk.InterpType.Bilinear);
-//        };
-//
-//        imgWorker.RunWorkerAsync();
 
         if(character.Portrait != null)
         {
@@ -602,4 +562,12 @@ public partial class MainWindow: Gtk.Window
         }
     }
 	#endregion
+
+    #region Character Sheet
+
+    #endregion
+
+    #region Mail
+
+    #endregion
 }
