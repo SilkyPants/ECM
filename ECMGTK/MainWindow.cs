@@ -86,32 +86,7 @@ public partial class MainWindow: Gtk.Window
     #region Event Handlers
     void CharacterChanged (object sender, EventArgs e)
     {
-        lblCharName.Text = ECM.Core.CurrentCharacter.Name;
-        imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(ECM.Core.CurrentCharacter.Portrait);
-        lblBackground.Text = ECM.Core.CurrentCharacter.Background;
-        lblSkillpoints.Text = ECM.Core.CurrentCharacter.SkillPoints.ToString("#0,0");
-        lblCone.Text = string.Format("{0} ({1:0,0})", ECM.Core.CurrentCharacter.CloneName, ECM.Core.CurrentCharacter.CloneSkillPoints);
-        lblDoB.Text = ECM.Core.CurrentCharacter.Birthday.ToString();
-        lblSecStatus.Text = ECM.Core.CurrentCharacter.SecurityStatus.ToString("#0.00");
-
-        if(string.IsNullOrEmpty(ECM.Core.CurrentCharacter.Corporation))
-        {
-            lblCorporation.Text = string.Empty;
-            lblAlliance.Text = string.Empty;
-        }
-        else
-        {
-            lblCorporation.Text = ECM.Core.CurrentCharacter.Corporation;
-
-            if(string.IsNullOrEmpty(ECM.Core.CurrentCharacter.Alliance))
-            {
-                lblAlliance.Text = string.Empty;
-            }
-        }
-
-
-
-        ntbPages.CurrentPage = 1;
+        ShowCharacterSheet(ECM.Core.CurrentCharacter);
     }
 
     void UpdateGui(object sender, EventArgs e)
@@ -326,8 +301,32 @@ public partial class MainWindow: Gtk.Window
         }
 
         lblItemTreeDetails.Text = path;
+        lblItemNameDetails.Markup = string.Format("<b>{0}</b>", item.Name);
+        imgItemIconDetails.PixbufAnimation = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF);
 
-        lblItemNameDetails.Text = item.Name;
+        BackgroundWorker fetchImage = new BackgroundWorker();
+        fetchImage.DoWork += delegate(object sender, DoWorkEventArgs e)
+        {
+            imgItemIconDetails.Pixbuf = EveApi.ImageApi.GetItemImageGTK(item.ID, EveApi.ImageApi.ImageRequestSize.Size64x64);
+        };
+
+        btnShowRender.Name = item.ID.ToString();
+
+        fetchImage.RunWorkerAsync();
+
+        lblItemTreeDetails.Visible = true;
+        imgItemIconDetails.Visible = true;
+        btnItemInfo.Visible = true;
+        vbxBuySell.Visible = true;
+        frmItemImage.ShadowType = ShadowType.EtchedOut;
+    }
+
+    protected void ShowItemRender (object sender, System.EventArgs e)
+    {
+        long itemID = Convert.ToInt64(btnShowRender.Name);
+        ViewItemRender viewRender = new ViewItemRender(itemID);
+
+        viewRender.ShowAll();
     }
 
     void ShowMarketGroupItems (TreeModel model, TreeIter iter)
@@ -361,9 +360,18 @@ public partial class MainWindow: Gtk.Window
         if(vbbMarketGroups.IsRealized == false)
             vbbMarketGroups.Realize();
 
-        Image itemPic = new Image(ECM.Core.ItemUnknownPNG);
+        Image itemPic = new Image();
+        itemPic.PixbufAnimation = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF);
         itemPic.WidthRequest = 64;
         itemPic.HeightRequest = 64;
+
+        BackgroundWorker fetchImage = new BackgroundWorker();
+        fetchImage.DoWork += delegate(object sender, DoWorkEventArgs e)
+        {
+            itemPic.Pixbuf = EveApi.ImageApi.GetItemImageGTK(item.ID, EveApi.ImageApi.ImageRequestSize.Size64x64);
+        };
+        
+        fetchImage.RunWorkerAsync();
 
         Gdk.Pixbuf buf = new Gdk.Pixbuf(Gdk.Colorspace.Rgb, true, 8, 22, 22);
         Gdk.Pixbuf book = new Gdk.Pixbuf(ECM.Core.Skillbook22PNG);
@@ -390,9 +398,13 @@ public partial class MainWindow: Gtk.Window
         infoPic.WidthRequest = 16;
         infoPic.HeightRequest = 16;
 
+        Button btnInfo = new Button();
+        btnInfo.Relief = ReliefStyle.None;
+        btnInfo.Add(infoPic);
+
         HBox itemNameHeader = new HBox();
         itemNameHeader.PackStart(itemName, false, false, 0);
-        itemNameHeader.PackStart(infoPic, false, false, 3);
+        itemNameHeader.PackStart(btnInfo, false, false, 3);
 
         WrapLabel itemDesc = new WrapLabel(item.Description);
 
@@ -564,6 +576,47 @@ public partial class MainWindow: Gtk.Window
 	#endregion
 
     #region Character Sheet
+
+    ListStore charAttributeStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string), typeof(string));
+
+    void ShowCharacterSheet (ECM.Character currentCharacter)
+    {
+        lblCharName.Markup = string.Format("<b>{0}</b>", currentCharacter.Name);
+        imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(currentCharacter.Portrait);
+        lblBackground.Text = currentCharacter.Background;
+        lblSkillpoints.Text = currentCharacter.SkillPoints.ToString("#0,0");
+        lblCone.Text = string.Format("{0} ({1:0,0})", currentCharacter.CloneName, currentCharacter.CloneSkillPoints);
+        lblDoB.Text = currentCharacter.Birthday.ToString();
+        lblSecStatus.Text = currentCharacter.SecurityStatus.ToString("#0.00");
+
+        if(string.IsNullOrEmpty(currentCharacter.Corporation))
+        {
+            lblCorporation.Text = string.Empty;
+            lblAlliance.Text = string.Empty;
+        }
+        else
+        {
+            lblCorporation.Text = currentCharacter.Corporation;
+
+            if(string.IsNullOrEmpty(currentCharacter.Alliance))
+            {
+                lblAlliance.Text = string.Empty;
+            }
+        }
+
+        lblCorporation.Visible = !string.IsNullOrEmpty(lblCorporation.Text);
+        lblAlliance.Visible = !string.IsNullOrEmpty(lblAlliance.Text);
+
+        lblAllianceTag.Visible = lblAlliance.Visible;
+        lblCorporationTag.Visible = lblCorporation.Visible;
+
+        ntbPages.CurrentPage = 1;
+    }
+
+    private void SetupCharacterSheet()
+    {
+        trvAttributes.EnableGridLines = TreeViewGridLines.Horizontal;
+    }
 
     #endregion
 

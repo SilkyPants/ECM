@@ -109,6 +109,8 @@
     <Compile Include="gtk-gui\ECMGTK.AddApiKey.cs" />
     <Compile Include="Classes\ApiKeyAccount.cs" />
     <Compile Include="Classes\WrapLabel.cs" />
+    <Compile Include="ViewItemRender.cs" />
+    <Compile Include="gtk-gui\ECMGTK.ViewItemRender.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
