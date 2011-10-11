@@ -2597,7 +2597,10 @@
   <widget class="Gtk.Window" id="ECMGTK.ViewItemRender" design-size="512 512">
     <property name="MemberName" />
     <property name="Title" translatable="yes">ViewItemRender</property>
+    <property name="TypeHint">Utility</property>
     <property name="WindowPosition">Center</property>
+    <property name="Resizable">False</property>
+    <property name="AllowGrow">False</property>
     <child>
       <widget class="Gtk.Image" id="imgItemRender">
         <property name="MemberName" />

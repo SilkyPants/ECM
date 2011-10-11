@@ -58,9 +58,7 @@ public partial class MainWindow: Gtk.Window
 		FillTabsWithImages();
         
 		BackgroundWorker worker = new BackgroundWorker();
-		worker.DoWork += delegate {
-			LoadMarket();
-		};
+		worker.DoWork += delegate { LoadMarket(); };
 		
 		worker.RunWorkerCompleted += HandleWorkerRunWorkerCompleted;
 		hpnMarket.Sensitive = false;
@@ -68,18 +66,15 @@ public partial class MainWindow: Gtk.Window
 		
 		Visible = true;
 
+        ECM.Core.LoadAccounts();
+        FillAccounts();
+
         ECM.Core.OnUpdateGui += new EventHandler(UpdateGui);
         ECM.Core.OnCharacterChanged += CharacterChanged;
-        ECM.Core.LoadAccounts();
-
-        FillAccounts();
 
         Timer heartbeat = new Timer(1000);
         heartbeat.AutoReset = true;
-        heartbeat.Elapsed += delegate
-        {
-            ECM.Core.UpdateOnHeartbeat();
-        };
+        heartbeat.Elapsed += delegate { ECM.Core.UpdateOnHeartbeat(); };
         heartbeat.Start();
     }
 
@@ -324,7 +319,7 @@ public partial class MainWindow: Gtk.Window
     protected void ShowItemRender (object sender, System.EventArgs e)
     {
         long itemID = Convert.ToInt64(btnShowRender.Name);
-        ViewItemRender viewRender = new ViewItemRender(itemID);
+        ViewItemRender viewRender = new ViewItemRender(ECM.ItemDatabase.Items[itemID]);
 
         viewRender.ShowAll();
     }

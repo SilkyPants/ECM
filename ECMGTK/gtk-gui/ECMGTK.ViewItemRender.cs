@@ -12,7 +12,10 @@ namespace ECMGTK
 			// Widget ECMGTK.ViewItemRender
 			this.Name = "ECMGTK.ViewItemRender";
 			this.Title = global::Mono.Unix.Catalog.GetString ("ViewItemRender");
+			this.TypeHint = ((global::Gdk.WindowTypeHint)(5));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
+			this.Resizable = false;
+			this.AllowGrow = false;
 			// Container child ECMGTK.ViewItemRender.Gtk.Container+ContainerChild
 			this.imgItemRender = new global::Gtk.Image ();
 			this.imgItemRender.WidthRequest = 512;
