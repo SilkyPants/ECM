@@ -98,6 +98,21 @@
     <EmbeddedResource Include="Resources\Icons\SkillQueue.png" />
     <EmbeddedResource Include="Resources\Icons\Notifications.png" />
     <EmbeddedResource Include="Resources\Icons\Plex.png" />
+    <EmbeddedResource Include="Resources\Icons\CharismaBrain.png">
+      <LogicalName>ECMGTK.Resources.Icons.CharismaBrain</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\IntelligenceBrain.png">
+      <LogicalName>ECMGTK.Resources.Icons.IntelligenceBrain</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\MemoryBrain.png">
+      <LogicalName>ECMGTK.Resources.Icons.MemoryBrain</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\PerceptionBrain.png">
+      <LogicalName>ECMGTK.Resources.Icons.PerceptionBrain</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\WillpowerBrain.png">
+      <LogicalName>ECMGTK.Resources.Icons.WillpowerBrain</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />

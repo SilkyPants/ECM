@@ -66,16 +66,38 @@ public partial class MainWindow: Gtk.Window
 		
 		Visible = true;
 
-        ECM.Core.LoadAccounts();
-        FillAccounts();
+        SetupCharacterSheet();
 
         ECM.Core.OnUpdateGui += new EventHandler(UpdateGui);
         ECM.Core.OnCharacterChanged += CharacterChanged;
+        ECM.Core.OnTQServerUpdate += TQServerUpdate;
+
+        ECM.Core.Init();
+        FillAccounts();
+
+        ntbPages.CurrentPage = 0;
 
         Timer heartbeat = new Timer(1000);
         heartbeat.AutoReset = true;
         heartbeat.Elapsed += delegate { ECM.Core.UpdateOnHeartbeat(); };
         heartbeat.Start();
+    }
+
+    void TQServerUpdate (EveApi.ServerStatus status)
+    {
+        string serverStatus = string.Empty;
+
+        if(status.ServerOnline)
+        {
+            serverStatus = string.Format("Tranquility is online with {0} pilots", status.NumberOfPlayers);
+        }
+        else
+        {
+            serverStatus = "Tranquility is offline";
+        }
+
+        stbStatus.Pop(0);
+        stbStatus.Push(0, serverStatus);
     }
 
     #region Event Handlers
@@ -140,6 +162,31 @@ public partial class MainWindow: Gtk.Window
 //		
 //		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
 //		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
+
+        // Character Sheet
+        ntbCharSheetPages.SetTabLabelPacking(vbxSkills, false, false, PackType.Start);
+        ntbCharSheetPages.SetTabLabel(vbxSkills, CreateTabLabel("Skills", "ECMGTK.Resources.Icons.Skills.png"));
+
+        ntbCharSheetPages.SetTabLabelPacking(vbxCertificates, false, false, PackType.Start);
+        ntbCharSheetPages.SetTabLabel(vbxCertificates, CreateTabLabel("Certificates", "ECMGTK.Resources.Icons.Certificates.png"));
+
+        ntbCharSheetPages.SetTabLabelPacking(scwMedals, false, false, PackType.Start);
+        ntbCharSheetPages.SetTabLabel(scwMedals, CreateTabLabel("Decorations", "ECMGTK.Resources.Icons.Medal.png"));
+
+        ntbCharSheetPages.SetTabLabelPacking(scwAttributes, false, false, PackType.Start);
+        ntbCharSheetPages.SetTabLabel(scwAttributes, CreateTabLabel("Attributes", "ECMGTK.Resources.Icons.Attributes.png"));
+
+        ntbCharSheetPages.SetTabLabelPacking(scwImplants, false, false, PackType.Start);
+        ntbCharSheetPages.SetTabLabel(scwImplants, CreateTabLabel("Augmentations", "ECMGTK.Resources.Icons.Implants.png"));
+
+        ntbCharSheetPages.SetTabLabelPacking(scwEmployment, false, false, PackType.Start);
+        ntbCharSheetPages.SetTabLabel(scwEmployment, CreateTabLabel("Employment", "ECMGTK.Resources.Icons.Corporations.png"));
+
+        ntbCharSheetPages.SetTabLabelPacking(scwStandings, false, false, PackType.Start);
+        ntbCharSheetPages.SetTabLabel(scwStandings, CreateTabLabel("Standings", "ECMGTK.Resources.Icons.Standings.png"));
+
+        ntbCharSheetPages.SetTabLabelPacking(scwCombatLogs, false, false, PackType.Start);
+        ntbCharSheetPages.SetTabLabel(scwCombatLogs, CreateTabLabel("Combat Log", "ECMGTK.Resources.Icons.KillLogs.png"));
 	}
 
 	public Widget CreateTabLabel (string title, string imageResource)
@@ -149,13 +196,42 @@ public partial class MainWindow: Gtk.Window
 		Label label = new Label(title);
 		label.Xalign = 0;
 		
-		box.PackEnd(icon, false, false, 0);
-		box.PackStart(label, true, true, 0);
+		box.PackStart(icon, false, false, 0);
+		box.PackStart(label, true, true, 6);
 		
 		box.ShowAll();
 		
 		return box;
 	}
+
+    private void SetupCharacterSheet()
+    {
+        trvAttributes.EnableGridLines = TreeViewGridLines.Horizontal;
+
+        TreeViewColumn attributeColumn = new TreeViewColumn();
+        attributeColumn.Title = "Attribute";
+
+        CellRendererPixbuf attributeImg = new CellRendererPixbuf();
+        attributeImg.Xalign = 0;
+
+        Gtk.CellRendererText attributeName = new Gtk.CellRendererText ();
+
+        attributeColumn.PackStart(attributeImg, false);
+        attributeColumn.PackStart (attributeName, true);
+
+        attributeColumn.AddAttribute(attributeImg, "pixbuf", 0);
+        attributeColumn.AddAttribute(attributeName, "text", 1);
+
+        trvAttributes.AppendColumn(attributeColumn);
+
+        attributeColumn.SetCellDataFunc (attributeName, new Gtk.TreeCellDataFunc (RenderAttribute));
+    }
+
+    private void RenderAttribute (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+    {
+        string[] attribute = model.GetValue (iter, 1).ToString().Split('\n');
+        (cell as Gtk.CellRendererText).Markup = string.Format("<span size=\"smaller\" weight=\"bold\">{0}</span>\n<span size=\"small\">{1}</span>", attribute[0], attribute[1]);
+    }
     #endregion
     
     #region Market
@@ -342,7 +418,7 @@ public partial class MainWindow: Gtk.Window
                 long ID = Convert.ToInt64(model.GetValue(childIter, 2));
                 ECM.EveItem item = ECM.ItemDatabase.Items[ID];
 
-                AddItemToCurrentMarketGroup(item);
+                AddItemToCurrentMarketGroup(item, model, childIter);
             }
             while(model.IterNext(ref childIter));
 
@@ -350,7 +426,7 @@ public partial class MainWindow: Gtk.Window
         }
     }
 
-    void AddItemToCurrentMarketGroup (ECM.EveItem item)
+    void AddItemToCurrentMarketGroup (ECM.EveItem item, TreeModel model, TreeIter iter)
     {
         if(vbbMarketGroups.IsRealized == false)
             vbbMarketGroups.Realize();
@@ -417,6 +493,10 @@ public partial class MainWindow: Gtk.Window
         inner.PackStart(heading, true, true, 1);
 
         Button viewDets = new Button(new Label("View Details"));
+        viewDets.Clicked += delegate(object sender, EventArgs e)
+        {
+            ShowItemMarketDetails(item, model, iter);
+        };
 
         HButtonBox itemButtons = new HButtonBox();
         itemButtons.Layout = ButtonBoxStyle.End;
@@ -572,10 +652,12 @@ public partial class MainWindow: Gtk.Window
 
     #region Character Sheet
 
-    ListStore charAttributeStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string), typeof(string));
+    ListStore charAttributeStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string));
 
     void ShowCharacterSheet (ECM.Character currentCharacter)
     {
+        charAttributeStore.Clear();
+
         lblCharName.Markup = string.Format("<b>{0}</b>", currentCharacter.Name);
         imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(currentCharacter.Portrait);
         lblBackground.Text = currentCharacter.Background;
@@ -605,14 +687,17 @@ public partial class MainWindow: Gtk.Window
         lblAllianceTag.Visible = lblAlliance.Visible;
         lblCorporationTag.Visible = lblCorporation.Visible;
 
+        // Load Attributes
+        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.CharismaBrain"), string.Format("CHARISMA\n{0} points", currentCharacter.Attributes.Charisma));
+        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.IntelligenceBrain"), string.Format("INTELLIGENCE\n{0} points", currentCharacter.Attributes.Intelligence));
+        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.MemoryBrain"), string.Format("MEMORY\n{0} points", currentCharacter.Attributes.Memory));
+        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.PerceptionBrain"), string.Format("PERCEPTION\n{0} points", currentCharacter.Attributes.Perception));
+        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.WillpowerBrain"), string.Format("WILLPOWER\n{0} points", currentCharacter.Attributes.Willpower));
+
+        trvAttributes.Model = charAttributeStore;
+
         ntbPages.CurrentPage = 1;
     }
-
-    private void SetupCharacterSheet()
-    {
-        trvAttributes.EnableGridLines = TreeViewGridLines.Horizontal;
-    }
-
     #endregion
 
     #region Mail

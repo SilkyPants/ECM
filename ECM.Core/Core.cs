@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using EveApi;
 
 namespace ECM
 {
@@ -11,9 +12,14 @@ namespace ECM
         static Dictionary<long, Character> m_Characters = new Dictionary<long, Character>();
         static Character m_CurrentCharacter = null;
 
+        static ApiRequest<ServerStatus> m_TQServerStatus;
+
         #region Events
+        public delegate void ServerStatusUpdated(ServerStatus status);
+
         public static event EventHandler OnCharacterChanged;
         public static event EventHandler OnUpdateGui;
+        public static event ServerStatusUpdated OnTQServerUpdate;
 
         public static void CharacterChanged()
         {
@@ -128,15 +134,37 @@ namespace ECM
 
         #endregion
 
+        public static void Init()
+        {
+            m_TQServerStatus = new ApiRequest<ServerStatus>();
+            m_TQServerStatus.OnRequestUpdate += TQServerStatusUpdate;
+            m_TQServerStatus.Enabled = true;
+
+            LoadAccounts();
+        }
+
+        static void TQServerStatusUpdate (ApiResult<ServerStatus> result)
+        {
+            if (result != null && result.Error == null)
+            {
+                ServerStatus status = result.Result;
+
+                if(OnTQServerUpdate != null)
+                    OnTQServerUpdate(status);
+            }
+        }
+
         public static void UpdateOnHeartbeat()
         {
+            m_TQServerStatus.UpdateOnSecTick();
+
             foreach(Account account in m_Accounts.Values)
             {
                 account.UpdateOnHeartbeat();
             }
         }
 
-        public static void LoadAccounts()
+        private static void LoadAccounts()
         {
             List<Account> accounts = AccountDatabase.GetAllAccounts();
 

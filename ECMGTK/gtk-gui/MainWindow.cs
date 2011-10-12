@@ -100,7 +100,7 @@ public partial class MainWindow {
     
     private global::Gtk.Notebook ntbCharSheetPages;
     
-    private global::Gtk.VBox vbox5;
+    private global::Gtk.VBox vbxSkills;
     
     private global::Gtk.HButtonBox hbuttonbox2;
     
@@ -112,7 +112,7 @@ public partial class MainWindow {
     
     private global::Gtk.Label label7;
     
-    private global::Gtk.VBox vbox7;
+    private global::Gtk.VBox vbxCertificates;
     
     private global::Gtk.HButtonBox hbuttonbox3;
     
@@ -124,37 +124,37 @@ public partial class MainWindow {
     
     private global::Gtk.Label label8;
     
-    private global::Gtk.ScrolledWindow GtkScrolledWindow3;
+    private global::Gtk.ScrolledWindow scwMedals;
     
     private global::Gtk.TreeView trvMedals;
     
     private global::Gtk.Label label9;
     
-    private global::Gtk.ScrolledWindow GtkScrolledWindow4;
+    private global::Gtk.ScrolledWindow scwAttributes;
     
     private global::Gtk.TreeView trvAttributes;
     
     private global::Gtk.Label label10;
     
-    private global::Gtk.ScrolledWindow GtkScrolledWindow5;
+    private global::Gtk.ScrolledWindow scwImplants;
     
     private global::Gtk.TreeView trvImplants;
     
     private global::Gtk.Label label11;
     
-    private global::Gtk.ScrolledWindow GtkScrolledWindow6;
+    private global::Gtk.ScrolledWindow scwEmployment;
     
     private global::Gtk.TreeView trvEmployment;
     
     private global::Gtk.Label label12;
     
-    private global::Gtk.ScrolledWindow GtkScrolledWindow7;
+    private global::Gtk.ScrolledWindow scwStandings;
     
     private global::Gtk.TreeView trvStandings;
     
     private global::Gtk.Label label13;
     
-    private global::Gtk.ScrolledWindow GtkScrolledWindow8;
+    private global::Gtk.ScrolledWindow scwCombatLogs;
     
     private global::Gtk.TreeView trvKillLogs;
     
@@ -264,9 +264,7 @@ public partial class MainWindow {
     
     private global::Gtk.Label label37;
     
-    private global::Gtk.Statusbar statusbar1;
-    
-    private global::Gtk.Label label40;
+    private global::Gtk.Statusbar stbStatus;
     
     protected virtual void Build() {
         global::Stetic.Gui.Initialize(this);
@@ -289,7 +287,7 @@ public partial class MainWindow {
         this.ntbPages = new global::Gtk.Notebook();
         this.ntbPages.CanFocus = true;
         this.ntbPages.Name = "ntbPages";
-        this.ntbPages.CurrentPage = 5;
+        this.ntbPages.CurrentPage = 1;
         this.ntbPages.EnablePopup = true;
         this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
         this.ntbPages.Scrollable = true;
@@ -329,7 +327,6 @@ public partial class MainWindow {
         w6.Fill = false;
         // Container child vbxOverview.Gtk.Box+BoxChild
         this.hbuttonbox1 = new global::Gtk.HButtonBox();
-        this.hbuttonbox1.Name = "hbuttonbox1";
         this.hbuttonbox1.Homogeneous = true;
         this.hbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
         // Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
@@ -720,9 +717,9 @@ public partial class MainWindow {
         this.ntbCharSheetPages.CurrentPage = 3;
         this.ntbCharSheetPages.TabPos = ((global::Gtk.PositionType)(0));
         // Container child ntbCharSheetPages.Gtk.Notebook+NotebookChild
-        this.vbox5 = new global::Gtk.VBox();
-        this.vbox5.Name = "vbox5";
-        // Container child vbox5.Gtk.Box+BoxChild
+        this.vbxSkills = new global::Gtk.VBox();
+        this.vbxSkills.Name = "vbxSkills";
+        // Container child vbxSkills.Gtk.Box+BoxChild
         this.hbuttonbox2 = new global::Gtk.HButtonBox();
         this.hbuttonbox2.Name = "hbuttonbox2";
         this.hbuttonbox2.BorderWidth = ((uint)(3));
@@ -737,12 +734,12 @@ public partial class MainWindow {
         global::Gtk.ButtonBox.ButtonBoxChild w46 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox2[this.button103]));
         w46.Expand = false;
         w46.Fill = false;
-        this.vbox5.Add(this.hbuttonbox2);
-        global::Gtk.Box.BoxChild w47 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.hbuttonbox2]));
+        this.vbxSkills.Add(this.hbuttonbox2);
+        global::Gtk.Box.BoxChild w47 = ((global::Gtk.Box.BoxChild)(this.vbxSkills[this.hbuttonbox2]));
         w47.Position = 0;
         w47.Expand = false;
         w47.Fill = false;
-        // Container child vbox5.Gtk.Box+BoxChild
+        // Container child vbxSkills.Gtk.Box+BoxChild
         this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow();
         this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
         this.GtkScrolledWindow1.ShadowType = ((global::Gtk.ShadowType)(1));
@@ -751,21 +748,21 @@ public partial class MainWindow {
         this.trvSkills.CanFocus = true;
         this.trvSkills.Name = "trvSkills";
         this.GtkScrolledWindow1.Add(this.trvSkills);
-        this.vbox5.Add(this.GtkScrolledWindow1);
-        global::Gtk.Box.BoxChild w49 = ((global::Gtk.Box.BoxChild)(this.vbox5[this.GtkScrolledWindow1]));
+        this.vbxSkills.Add(this.GtkScrolledWindow1);
+        global::Gtk.Box.BoxChild w49 = ((global::Gtk.Box.BoxChild)(this.vbxSkills[this.GtkScrolledWindow1]));
         w49.Position = 1;
-        this.ntbCharSheetPages.Add(this.vbox5);
+        this.ntbCharSheetPages.Add(this.vbxSkills);
         // Notebook tab
         this.label7 = new global::Gtk.Label();
         this.label7.Name = "label7";
         this.label7.Xalign = 0F;
         this.label7.LabelProp = global::Mono.Unix.Catalog.GetString("Skills");
-        this.ntbCharSheetPages.SetTabLabel(this.vbox5, this.label7);
+        this.ntbCharSheetPages.SetTabLabel(this.vbxSkills, this.label7);
         this.label7.ShowAll();
         // Container child ntbCharSheetPages.Gtk.Notebook+NotebookChild
-        this.vbox7 = new global::Gtk.VBox();
-        this.vbox7.Name = "vbox7";
-        // Container child vbox7.Gtk.Box+BoxChild
+        this.vbxCertificates = new global::Gtk.VBox();
+        this.vbxCertificates.Name = "vbxCertificates";
+        // Container child vbxCertificates.Gtk.Box+BoxChild
         this.hbuttonbox3 = new global::Gtk.HButtonBox();
         this.hbuttonbox3.Name = "hbuttonbox3";
         this.hbuttonbox3.BorderWidth = ((uint)(3));
@@ -780,12 +777,12 @@ public partial class MainWindow {
         global::Gtk.ButtonBox.ButtonBoxChild w51 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.hbuttonbox3[this.button104]));
         w51.Expand = false;
         w51.Fill = false;
-        this.vbox7.Add(this.hbuttonbox3);
-        global::Gtk.Box.BoxChild w52 = ((global::Gtk.Box.BoxChild)(this.vbox7[this.hbuttonbox3]));
+        this.vbxCertificates.Add(this.hbuttonbox3);
+        global::Gtk.Box.BoxChild w52 = ((global::Gtk.Box.BoxChild)(this.vbxCertificates[this.hbuttonbox3]));
         w52.Position = 0;
         w52.Expand = false;
         w52.Fill = false;
-        // Container child vbox7.Gtk.Box+BoxChild
+        // Container child vbxCertificates.Gtk.Box+BoxChild
         this.GtkScrolledWindow2 = new global::Gtk.ScrolledWindow();
         this.GtkScrolledWindow2.Name = "GtkScrolledWindow2";
         this.GtkScrolledWindow2.ShadowType = ((global::Gtk.ShadowType)(1));
@@ -794,127 +791,127 @@ public partial class MainWindow {
         this.trvCertificates.CanFocus = true;
         this.trvCertificates.Name = "trvCertificates";
         this.GtkScrolledWindow2.Add(this.trvCertificates);
-        this.vbox7.Add(this.GtkScrolledWindow2);
-        global::Gtk.Box.BoxChild w54 = ((global::Gtk.Box.BoxChild)(this.vbox7[this.GtkScrolledWindow2]));
+        this.vbxCertificates.Add(this.GtkScrolledWindow2);
+        global::Gtk.Box.BoxChild w54 = ((global::Gtk.Box.BoxChild)(this.vbxCertificates[this.GtkScrolledWindow2]));
         w54.Position = 1;
-        this.ntbCharSheetPages.Add(this.vbox7);
-        global::Gtk.Notebook.NotebookChild w55 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.vbox7]));
+        this.ntbCharSheetPages.Add(this.vbxCertificates);
+        global::Gtk.Notebook.NotebookChild w55 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.vbxCertificates]));
         w55.Position = 1;
         // Notebook tab
         this.label8 = new global::Gtk.Label();
         this.label8.Name = "label8";
         this.label8.Xalign = 0F;
         this.label8.LabelProp = global::Mono.Unix.Catalog.GetString("Certificates");
-        this.ntbCharSheetPages.SetTabLabel(this.vbox7, this.label8);
+        this.ntbCharSheetPages.SetTabLabel(this.vbxCertificates, this.label8);
         this.label8.ShowAll();
         // Container child ntbCharSheetPages.Gtk.Notebook+NotebookChild
-        this.GtkScrolledWindow3 = new global::Gtk.ScrolledWindow();
-        this.GtkScrolledWindow3.Name = "GtkScrolledWindow3";
-        this.GtkScrolledWindow3.ShadowType = ((global::Gtk.ShadowType)(1));
-        // Container child GtkScrolledWindow3.Gtk.Container+ContainerChild
+        this.scwMedals = new global::Gtk.ScrolledWindow();
+        this.scwMedals.Name = "scwMedals";
+        this.scwMedals.ShadowType = ((global::Gtk.ShadowType)(1));
+        // Container child scwMedals.Gtk.Container+ContainerChild
         this.trvMedals = new global::Gtk.TreeView();
         this.trvMedals.CanFocus = true;
         this.trvMedals.Name = "trvMedals";
-        this.GtkScrolledWindow3.Add(this.trvMedals);
-        this.ntbCharSheetPages.Add(this.GtkScrolledWindow3);
-        global::Gtk.Notebook.NotebookChild w57 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.GtkScrolledWindow3]));
+        this.scwMedals.Add(this.trvMedals);
+        this.ntbCharSheetPages.Add(this.scwMedals);
+        global::Gtk.Notebook.NotebookChild w57 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.scwMedals]));
         w57.Position = 2;
         // Notebook tab
         this.label9 = new global::Gtk.Label();
         this.label9.Name = "label9";
         this.label9.Xalign = 0F;
         this.label9.LabelProp = global::Mono.Unix.Catalog.GetString("Decorations");
-        this.ntbCharSheetPages.SetTabLabel(this.GtkScrolledWindow3, this.label9);
+        this.ntbCharSheetPages.SetTabLabel(this.scwMedals, this.label9);
         this.label9.ShowAll();
         // Container child ntbCharSheetPages.Gtk.Notebook+NotebookChild
-        this.GtkScrolledWindow4 = new global::Gtk.ScrolledWindow();
-        this.GtkScrolledWindow4.Name = "GtkScrolledWindow4";
-        this.GtkScrolledWindow4.ShadowType = ((global::Gtk.ShadowType)(1));
-        // Container child GtkScrolledWindow4.Gtk.Container+ContainerChild
+        this.scwAttributes = new global::Gtk.ScrolledWindow();
+        this.scwAttributes.Name = "scwAttributes";
+        this.scwAttributes.ShadowType = ((global::Gtk.ShadowType)(1));
+        // Container child scwAttributes.Gtk.Container+ContainerChild
         this.trvAttributes = new global::Gtk.TreeView();
         this.trvAttributes.CanFocus = true;
         this.trvAttributes.Name = "trvAttributes";
         this.trvAttributes.EnableSearch = false;
         this.trvAttributes.HeadersVisible = false;
-        this.GtkScrolledWindow4.Add(this.trvAttributes);
-        this.ntbCharSheetPages.Add(this.GtkScrolledWindow4);
-        global::Gtk.Notebook.NotebookChild w59 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.GtkScrolledWindow4]));
+        this.scwAttributes.Add(this.trvAttributes);
+        this.ntbCharSheetPages.Add(this.scwAttributes);
+        global::Gtk.Notebook.NotebookChild w59 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.scwAttributes]));
         w59.Position = 3;
         // Notebook tab
         this.label10 = new global::Gtk.Label();
         this.label10.Name = "label10";
         this.label10.Xalign = 0F;
         this.label10.LabelProp = global::Mono.Unix.Catalog.GetString("Attributes");
-        this.ntbCharSheetPages.SetTabLabel(this.GtkScrolledWindow4, this.label10);
+        this.ntbCharSheetPages.SetTabLabel(this.scwAttributes, this.label10);
         this.label10.ShowAll();
         // Container child ntbCharSheetPages.Gtk.Notebook+NotebookChild
-        this.GtkScrolledWindow5 = new global::Gtk.ScrolledWindow();
-        this.GtkScrolledWindow5.Name = "GtkScrolledWindow5";
-        this.GtkScrolledWindow5.ShadowType = ((global::Gtk.ShadowType)(1));
-        // Container child GtkScrolledWindow5.Gtk.Container+ContainerChild
+        this.scwImplants = new global::Gtk.ScrolledWindow();
+        this.scwImplants.Name = "scwImplants";
+        this.scwImplants.ShadowType = ((global::Gtk.ShadowType)(1));
+        // Container child scwImplants.Gtk.Container+ContainerChild
         this.trvImplants = new global::Gtk.TreeView();
         this.trvImplants.CanFocus = true;
         this.trvImplants.Name = "trvImplants";
-        this.GtkScrolledWindow5.Add(this.trvImplants);
-        this.ntbCharSheetPages.Add(this.GtkScrolledWindow5);
-        global::Gtk.Notebook.NotebookChild w61 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.GtkScrolledWindow5]));
+        this.scwImplants.Add(this.trvImplants);
+        this.ntbCharSheetPages.Add(this.scwImplants);
+        global::Gtk.Notebook.NotebookChild w61 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.scwImplants]));
         w61.Position = 4;
         // Notebook tab
         this.label11 = new global::Gtk.Label();
         this.label11.Name = "label11";
         this.label11.Xalign = 0F;
         this.label11.LabelProp = global::Mono.Unix.Catalog.GetString("Augmentations");
-        this.ntbCharSheetPages.SetTabLabel(this.GtkScrolledWindow5, this.label11);
+        this.ntbCharSheetPages.SetTabLabel(this.scwImplants, this.label11);
         this.label11.ShowAll();
         // Container child ntbCharSheetPages.Gtk.Notebook+NotebookChild
-        this.GtkScrolledWindow6 = new global::Gtk.ScrolledWindow();
-        this.GtkScrolledWindow6.Name = "GtkScrolledWindow6";
-        this.GtkScrolledWindow6.ShadowType = ((global::Gtk.ShadowType)(1));
-        // Container child GtkScrolledWindow6.Gtk.Container+ContainerChild
+        this.scwEmployment = new global::Gtk.ScrolledWindow();
+        this.scwEmployment.Name = "scwEmployment";
+        this.scwEmployment.ShadowType = ((global::Gtk.ShadowType)(1));
+        // Container child scwEmployment.Gtk.Container+ContainerChild
         this.trvEmployment = new global::Gtk.TreeView();
         this.trvEmployment.CanFocus = true;
         this.trvEmployment.Name = "trvEmployment";
-        this.GtkScrolledWindow6.Add(this.trvEmployment);
-        this.ntbCharSheetPages.Add(this.GtkScrolledWindow6);
-        global::Gtk.Notebook.NotebookChild w63 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.GtkScrolledWindow6]));
+        this.scwEmployment.Add(this.trvEmployment);
+        this.ntbCharSheetPages.Add(this.scwEmployment);
+        global::Gtk.Notebook.NotebookChild w63 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.scwEmployment]));
         w63.Position = 5;
         // Notebook tab
         this.label12 = new global::Gtk.Label();
         this.label12.Name = "label12";
         this.label12.Xalign = 0F;
         this.label12.LabelProp = global::Mono.Unix.Catalog.GetString("Employment History");
-        this.ntbCharSheetPages.SetTabLabel(this.GtkScrolledWindow6, this.label12);
+        this.ntbCharSheetPages.SetTabLabel(this.scwEmployment, this.label12);
         this.label12.ShowAll();
         // Container child ntbCharSheetPages.Gtk.Notebook+NotebookChild
-        this.GtkScrolledWindow7 = new global::Gtk.ScrolledWindow();
-        this.GtkScrolledWindow7.Name = "GtkScrolledWindow7";
-        this.GtkScrolledWindow7.ShadowType = ((global::Gtk.ShadowType)(1));
-        // Container child GtkScrolledWindow7.Gtk.Container+ContainerChild
+        this.scwStandings = new global::Gtk.ScrolledWindow();
+        this.scwStandings.Name = "scwStandings";
+        this.scwStandings.ShadowType = ((global::Gtk.ShadowType)(1));
+        // Container child scwStandings.Gtk.Container+ContainerChild
         this.trvStandings = new global::Gtk.TreeView();
         this.trvStandings.CanFocus = true;
         this.trvStandings.Name = "trvStandings";
-        this.GtkScrolledWindow7.Add(this.trvStandings);
-        this.ntbCharSheetPages.Add(this.GtkScrolledWindow7);
-        global::Gtk.Notebook.NotebookChild w65 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.GtkScrolledWindow7]));
+        this.scwStandings.Add(this.trvStandings);
+        this.ntbCharSheetPages.Add(this.scwStandings);
+        global::Gtk.Notebook.NotebookChild w65 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.scwStandings]));
         w65.Position = 6;
         // Notebook tab
         this.label13 = new global::Gtk.Label();
         this.label13.Name = "label13";
         this.label13.Xalign = 0F;
         this.label13.LabelProp = global::Mono.Unix.Catalog.GetString("Standings");
-        this.ntbCharSheetPages.SetTabLabel(this.GtkScrolledWindow7, this.label13);
+        this.ntbCharSheetPages.SetTabLabel(this.scwStandings, this.label13);
         this.label13.ShowAll();
         // Container child ntbCharSheetPages.Gtk.Notebook+NotebookChild
-        this.GtkScrolledWindow8 = new global::Gtk.ScrolledWindow();
-        this.GtkScrolledWindow8.Name = "GtkScrolledWindow8";
-        this.GtkScrolledWindow8.ShadowType = ((global::Gtk.ShadowType)(1));
-        // Container child GtkScrolledWindow8.Gtk.Container+ContainerChild
+        this.scwCombatLogs = new global::Gtk.ScrolledWindow();
+        this.scwCombatLogs.Name = "scwCombatLogs";
+        this.scwCombatLogs.ShadowType = ((global::Gtk.ShadowType)(1));
+        // Container child scwCombatLogs.Gtk.Container+ContainerChild
         this.trvKillLogs = new global::Gtk.TreeView();
         this.trvKillLogs.CanFocus = true;
         this.trvKillLogs.Name = "trvKillLogs";
-        this.GtkScrolledWindow8.Add(this.trvKillLogs);
-        this.ntbCharSheetPages.Add(this.GtkScrolledWindow8);
-        global::Gtk.Notebook.NotebookChild w67 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.GtkScrolledWindow8]));
+        this.scwCombatLogs.Add(this.trvKillLogs);
+        this.ntbCharSheetPages.Add(this.scwCombatLogs);
+        global::Gtk.Notebook.NotebookChild w67 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages[this.scwCombatLogs]));
         w67.Position = 7;
         // Notebook tab
         this.label14 = new global::Gtk.Label();
@@ -923,7 +920,7 @@ public partial class MainWindow {
         this.label14.Name = "label14";
         this.label14.Xalign = 0F;
         this.label14.LabelProp = global::Mono.Unix.Catalog.GetString("Combat Log");
-        this.ntbCharSheetPages.SetTabLabel(this.GtkScrolledWindow8, this.label14);
+        this.ntbCharSheetPages.SetTabLabel(this.scwCombatLogs, this.label14);
         this.label14.ShowAll();
         this.hbox6.Add(this.ntbCharSheetPages);
         global::Gtk.Box.BoxChild w68 = ((global::Gtk.Box.BoxChild)(this.hbox6[this.ntbCharSheetPages]));
@@ -1352,24 +1349,16 @@ public partial class MainWindow {
         global::Gtk.Box.BoxChild w120 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.ntbPages]));
         w120.Position = 0;
         // Container child vbox3.Gtk.Box+BoxChild
-        this.statusbar1 = new global::Gtk.Statusbar();
-        this.statusbar1.Name = "statusbar1";
-        this.statusbar1.Spacing = 6;
-        this.statusbar1.BorderWidth = ((uint)(3));
-        // Container child statusbar1.Gtk.Box+BoxChild
-        this.label40 = new global::Gtk.Label();
-        this.label40.Name = "label40";
-        this.label40.LabelProp = global::Mono.Unix.Catalog.GetString("label1");
-        this.statusbar1.Add(this.label40);
-        global::Gtk.Box.BoxChild w121 = ((global::Gtk.Box.BoxChild)(this.statusbar1[this.label40]));
+        this.stbStatus = new global::Gtk.Statusbar();
+        this.stbStatus.Name = "stbStatus";
+        this.stbStatus.Spacing = 6;
+        this.stbStatus.BorderWidth = ((uint)(3));
+        this.stbStatus.HasResizeGrip = false;
+        this.vbox3.Add(this.stbStatus);
+        global::Gtk.Box.BoxChild w121 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.stbStatus]));
         w121.Position = 1;
         w121.Expand = false;
         w121.Fill = false;
-        this.vbox3.Add(this.statusbar1);
-        global::Gtk.Box.BoxChild w122 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.statusbar1]));
-        w122.Position = 1;
-        w122.Expand = false;
-        w122.Fill = false;
         this.Add(this.vbox3);
         if ((this.Child != null)) {
             this.Child.ShowAll();
