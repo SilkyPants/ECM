@@ -174,6 +174,15 @@ namespace EveApi
 	
 	public class ImplantSet
 	{
+        public ImplantSet()
+        {
+            Intelligence = new Implant();
+            Memory = new Implant();
+            Willpower = new Implant();
+            Perception = new Implant();
+            Charisma = new Implant();
+        }
+
         [XmlElement("intelligenceBonus")]
         public Implant Intelligence
         {
@@ -212,6 +221,12 @@ namespace EveApi
 	
 	public class Implant
 	{
+        public Implant()
+        {
+            Name = string.Empty;
+            Amount = 0;
+        }
+
         [XmlElement("augmentatorName")]
         public string Name
         {

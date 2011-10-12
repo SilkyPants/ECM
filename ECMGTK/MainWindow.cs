@@ -104,6 +104,8 @@ public partial class MainWindow: Gtk.Window
     void CharacterChanged (object sender, EventArgs e)
     {
         ShowCharacterSheet(ECM.Core.CurrentCharacter);
+
+        ntbPages.CurrentPage = 1;
     }
 
     void UpdateGui(object sender, EventArgs e)
@@ -111,6 +113,7 @@ public partial class MainWindow: Gtk.Window
         Gtk.Application.Invoke(delegate
         {
             FillAccounts();
+            ShowCharacterSheet(ECM.Core.CurrentCharacter);
         });
     }
 
@@ -690,15 +693,19 @@ public partial class MainWindow: Gtk.Window
         lblCorporationTag.Visible = lblCorporation.Visible;
 
         // Load Attributes
-        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.CharismaBrain"), string.Format("CHARISMA\n{0} points", currentCharacter.Attributes.Charisma));
-        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.IntelligenceBrain"), string.Format("INTELLIGENCE\n{0} points", currentCharacter.Attributes.Intelligence));
-        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.MemoryBrain"), string.Format("MEMORY\n{0} points", currentCharacter.Attributes.Memory));
-        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.PerceptionBrain"), string.Format("PERCEPTION\n{0} points", currentCharacter.Attributes.Perception));
-        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.WillpowerBrain"), string.Format("WILLPOWER\n{0} points", currentCharacter.Attributes.Willpower));
+        int charisma = currentCharacter.Attributes.Charisma + currentCharacter.Implants.Charisma.Amount;
+        int intelligence = currentCharacter.Attributes.Intelligence + currentCharacter.Implants.Intelligence.Amount;
+        int memory = currentCharacter.Attributes.Memory + currentCharacter.Implants.Memory.Amount;
+        int perception = currentCharacter.Attributes.Perception + currentCharacter.Implants.Perception.Amount;
+        int willpower = currentCharacter.Attributes.Willpower + currentCharacter.Implants.Willpower.Amount;
+
+        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.CharismaBrain"), string.Format("CHARISMA\n{0} points", charisma));
+        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.IntelligenceBrain"), string.Format("INTELLIGENCE\n{0} points", intelligence));
+        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.MemoryBrain"), string.Format("MEMORY\n{0} points", memory));
+        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.PerceptionBrain"), string.Format("PERCEPTION\n{0} points", perception));
+        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.WillpowerBrain"), string.Format("WILLPOWER\n{0} points", willpower));
 
         trvAttributes.Model = charAttributeStore;
-
-        ntbPages.CurrentPage = 1;
     }
     #endregion
 

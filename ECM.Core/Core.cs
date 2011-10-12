@@ -170,18 +170,11 @@ namespace ECM
 
             foreach(Account acc in accounts)
             {
-                m_Accounts.Add(acc.KeyID, acc);
-
-                foreach (Character character in acc.Characters)
-                {
-                    if(CurrentCharacter == null)
-                    {
-                        CurrentCharacter = character;
-                    }
-                    
-                    m_Characters.Add(character.ID, character);
-                }
+                AddAccount(acc);
             }
+
+            // HACK: to get first character - need to find better way (and store settings!)
+            CurrentCharacter = new List<Character>(m_Characters.Values)[0];
         }
 
         public static void AddAccount(Account toAdd)
@@ -200,6 +193,12 @@ namespace ECM
         {
             m_Characters.Add(charToAdd.ID, charToAdd);
             AccountDatabase.AddCharacter(charToAdd);
+
+            charToAdd.CharacterUpdated += delegate
+            {
+                if(charToAdd == CurrentCharacter)
+                    UpdateGui();
+            };
         }
 
         public static void RemoveAccount(Account toRemove)
