@@ -287,7 +287,7 @@ public partial class MainWindow {
         this.ntbPages = new global::Gtk.Notebook();
         this.ntbPages.CanFocus = true;
         this.ntbPages.Name = "ntbPages";
-        this.ntbPages.CurrentPage = 1;
+        this.ntbPages.CurrentPage = 5;
         this.ntbPages.EnablePopup = true;
         this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
         this.ntbPages.Scrollable = true;
@@ -327,6 +327,7 @@ public partial class MainWindow {
         w6.Fill = false;
         // Container child vbxOverview.Gtk.Box+BoxChild
         this.hbuttonbox1 = new global::Gtk.HButtonBox();
+        this.hbuttonbox1.Name = "hbuttonbox1";
         this.hbuttonbox1.Homogeneous = true;
         this.hbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
         // Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
@@ -968,13 +969,13 @@ public partial class MainWindow {
         this.hpnMarket = new global::Gtk.HPaned();
         this.hpnMarket.CanFocus = true;
         this.hpnMarket.Name = "hpnMarket";
-        this.hpnMarket.Position = 1;
+        this.hpnMarket.Position = 215;
         this.hpnMarket.BorderWidth = ((uint)(3));
         // Container child hpnMarket.Gtk.Paned+PanedChild
         this.ntbMarketGroups = new global::Gtk.Notebook();
         this.ntbMarketGroups.CanFocus = true;
         this.ntbMarketGroups.Name = "ntbMarketGroups";
-        this.ntbMarketGroups.CurrentPage = 1;
+        this.ntbMarketGroups.CurrentPage = 0;
         this.ntbMarketGroups.ShowBorder = false;
         this.ntbMarketGroups.BorderWidth = ((uint)(1));
         // Container child ntbMarketGroups.Gtk.Notebook+NotebookChild
@@ -1370,6 +1371,7 @@ public partial class MainWindow {
         this.Hide();
         this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
         this.btnAddNewApiKey.Clicked += new global::System.EventHandler(this.AddNewKey);
+        this.trvAttributes.RowActivated += new global::Gtk.RowActivatedHandler(this.ClearSelection);
         this.trvMarket.RowCollapsed += new global::Gtk.RowCollapsedHandler(this.RowCollapsed);
         this.trvMarket.RowActivated += new global::Gtk.RowActivatedHandler(this.RowActivated);
         this.txtMarketFilter.Changed += new global::System.EventHandler(this.SearchTextChanged);

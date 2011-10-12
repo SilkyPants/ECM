@@ -225,6 +225,8 @@ public partial class MainWindow: Gtk.Window
         trvAttributes.AppendColumn(attributeColumn);
 
         attributeColumn.SetCellDataFunc (attributeName, new Gtk.TreeCellDataFunc (RenderAttribute));
+
+        trvAttributes.Selection.Changed += ClearSelection;
     }
 
     private void RenderAttribute (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
@@ -701,6 +703,21 @@ public partial class MainWindow: Gtk.Window
     #endregion
 
     #region Mail
+
+    #endregion
+
+    #region Helper Events
+
+    // Used to stop selection on a treeview
+    // Must be manually tied to the TreeView.Selection.Changed event
+    protected void ClearSelection (object sender, EventArgs e)
+    {
+        if(sender is Gtk.TreeSelection)
+        {
+            TreeSelection ts = sender as TreeSelection;
+            ts.UnselectAll();
+        }
+    }
 
     #endregion
 }
