@@ -142,6 +142,8 @@ public partial class MainWindow
 	private global::Gtk.Label label34;
 	private global::Gtk.Fixed tmpMoney;
 	private global::Gtk.Label label36;
+	private global::Gtk.Fixed tmpNews;
+	private global::Gtk.Label label6;
 	private global::Gtk.Fixed tmpHelp;
 	private global::Gtk.Label label37;
 	private global::Gtk.Statusbar stbStatus;
@@ -1040,7 +1042,7 @@ public partial class MainWindow
 		this.lblItemNameDetails = new global::Gtk.Label ();
 		this.lblItemNameDetails.Name = "lblItemNameDetails";
 		this.lblItemNameDetails.Xalign = 0F;
-		this.lblItemNameDetails.LabelProp = global::Mono.Unix.Catalog.GetString ("<b>No Type Selected</b>");
+		this.lblItemNameDetails.LabelProp = global::Mono.Unix.Catalog.GetString ("<span size=\"large\" weight=\"bold\">No Type Selected</span>");
 		this.lblItemNameDetails.UseMarkup = true;
 		this.vbox9.Add (this.lblItemNameDetails);
 		global::Gtk.Box.BoxChild w91 = ((global::Gtk.Box.BoxChild)(this.vbox9 [this.lblItemNameDetails]));
@@ -1266,12 +1268,26 @@ public partial class MainWindow
 		this.ntbPages.SetTabLabel (this.tmpMoney, this.label36);
 		this.label36.ShowAll ();
 		// Container child ntbPages.Gtk.Notebook+NotebookChild
+		this.tmpNews = new global::Gtk.Fixed ();
+		this.tmpNews.Name = "tmpNews";
+		this.tmpNews.HasWindow = false;
+		this.ntbPages.Add (this.tmpNews);
+		global::Gtk.Notebook.NotebookChild w119 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages [this.tmpNews]));
+		w119.Position = 12;
+		// Notebook tab
+		this.label6 = new global::Gtk.Label ();
+		this.label6.HeightRequest = 32;
+		this.label6.Name = "label6";
+		this.label6.LabelProp = global::Mono.Unix.Catalog.GetString ("News");
+		this.ntbPages.SetTabLabel (this.tmpNews, this.label6);
+		this.label6.ShowAll ();
+		// Container child ntbPages.Gtk.Notebook+NotebookChild
 		this.tmpHelp = new global::Gtk.Fixed ();
 		this.tmpHelp.Name = "tmpHelp";
 		this.tmpHelp.HasWindow = false;
 		this.ntbPages.Add (this.tmpHelp);
-		global::Gtk.Notebook.NotebookChild w119 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages [this.tmpHelp]));
-		w119.Position = 12;
+		global::Gtk.Notebook.NotebookChild w120 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages [this.tmpHelp]));
+		w120.Position = 13;
 		// Notebook tab
 		this.label37 = new global::Gtk.Label ();
 		this.label37.HeightRequest = 32;
@@ -1280,8 +1296,8 @@ public partial class MainWindow
 		this.ntbPages.SetTabLabel (this.tmpHelp, this.label37);
 		this.label37.ShowAll ();
 		this.vbox3.Add (this.ntbPages);
-		global::Gtk.Box.BoxChild w120 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.ntbPages]));
-		w120.Position = 0;
+		global::Gtk.Box.BoxChild w121 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.ntbPages]));
+		w121.Position = 0;
 		// Container child vbox3.Gtk.Box+BoxChild
 		this.stbStatus = new global::Gtk.Statusbar ();
 		this.stbStatus.Name = "stbStatus";
@@ -1294,16 +1310,16 @@ public partial class MainWindow
 		this.imgNetworkIndicator.HeightRequest = 16;
 		this.imgNetworkIndicator.Name = "imgNetworkIndicator";
 		this.stbStatus.Add (this.imgNetworkIndicator);
-		global::Gtk.Box.BoxChild w121 = ((global::Gtk.Box.BoxChild)(this.stbStatus [this.imgNetworkIndicator]));
-		w121.PackType = ((global::Gtk.PackType)(1));
-		w121.Position = 1;
-		w121.Expand = false;
-		w121.Fill = false;
-		this.vbox3.Add (this.stbStatus);
-		global::Gtk.Box.BoxChild w122 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.stbStatus]));
+		global::Gtk.Box.BoxChild w122 = ((global::Gtk.Box.BoxChild)(this.stbStatus [this.imgNetworkIndicator]));
+		w122.PackType = ((global::Gtk.PackType)(1));
 		w122.Position = 1;
 		w122.Expand = false;
 		w122.Fill = false;
+		this.vbox3.Add (this.stbStatus);
+		global::Gtk.Box.BoxChild w123 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.stbStatus]));
+		w123.Position = 1;
+		w123.Expand = false;
+		w123.Fill = false;
 		this.Add (this.vbox3);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();

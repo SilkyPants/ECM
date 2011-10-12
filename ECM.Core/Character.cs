@@ -241,11 +241,11 @@ namespace ECM
                     ApiResult<CharacterInfo> charInfo = result as ApiResult<CharacterInfo>;
                     UpdateCharacter(charInfo.Result);
                 }
-            }
 
-            if (!IsUpdating && CharacterUpdated != null)
-            {
-                CharacterUpdated(this, null);
+                if (!IsUpdating && CharacterUpdated != null)
+                {
+                    CharacterUpdated(this, null);
+                }
             }
         }
 

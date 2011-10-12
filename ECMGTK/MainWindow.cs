@@ -171,6 +171,9 @@ public partial class MainWindow: Gtk.Window
         ntbPages.SetTabLabelPacking(tmpMoney, false, false, PackType.Start);
         ntbPages.SetTabLabel(tmpMoney, CreateTabLabel("Money", "ECMGTK.Resources.Icons.Money.png", true));
         
+        ntbPages.SetTabLabelPacking(tmpNews, false, false, PackType.Start);
+        ntbPages.SetTabLabel(tmpNews, CreateTabLabel("News", "ECMGTK.Resources.Icons.News.png", true));
+        
         ntbPages.SetTabLabelPacking(tmpHelp, false, false, PackType.Start);
         ntbPages.SetTabLabel(tmpHelp, CreateTabLabel("Help & Settings", "ECMGTK.Resources.Icons.Help.png", true));
 

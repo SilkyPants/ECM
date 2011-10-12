@@ -121,7 +121,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="MainWindow" design-size="613 619">
+  <widget class="Gtk.Window" id="MainWindow" design-size="626 653">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -1386,7 +1386,7 @@
                                   <widget class="Gtk.Label" id="lblItemNameDetails">
                                     <property name="MemberName" />
                                     <property name="Xalign">0</property>
-                                    <property name="LabelProp" translatable="yes">&lt;b&gt;No Type Selected&lt;/b&gt;</property>
+                                    <property name="LabelProp" translatable="yes">&lt;span size="large" weight="bold"&gt;No Type Selected&lt;/span&gt;</property>
                                     <property name="UseMarkup">True</property>
                                   </widget>
                                   <packing>
@@ -1726,12 +1726,31 @@
               </packing>
             </child>
             <child>
-              <widget class="Gtk.Fixed" id="tmpHelp">
+              <widget class="Gtk.Fixed" id="tmpNews">
                 <property name="MemberName" />
                 <property name="HasWindow">False</property>
               </widget>
               <packing>
                 <property name="Position">12</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Label" id="label6">
+                <property name="MemberName" />
+                <property name="HeightRequest">32</property>
+                <property name="LabelProp" translatable="yes">News</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.Fixed" id="tmpHelp">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+              </widget>
+              <packing>
+                <property name="Position">13</property>
               </packing>
             </child>
             <child>
