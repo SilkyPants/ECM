@@ -53,7 +53,7 @@ public partial class MainWindow: Gtk.Window
         Build ();
         
         ntbPages.CurrentPage = 0;
-        hpnMarket.Position = 300;
+        hpnMarket.Position = 250;
 		
 		FillTabsWithImages();
         
@@ -136,72 +136,82 @@ public partial class MainWindow: Gtk.Window
 	public void FillTabsWithImages ()
 	{
 		ntbPages.SetTabLabelPacking(vbxOverview, false, false, PackType.Start);
-		ntbPages.SetTabLabel(vbxOverview, CreateTabLabel("Overview", "ECMGTK.Resources.Icons.Home.png"));
+		ntbPages.SetTabLabel(vbxOverview, CreateTabLabel("Overview", "ECMGTK.Resources.Icons.Home.png", true));
 		
 		ntbPages.SetTabLabelPacking(vbxCharSheet, false, false, PackType.Start);
-		ntbPages.SetTabLabel(vbxCharSheet, CreateTabLabel("Character Sheet", "ECMGTK.Resources.Icons.CharSheet.png"));
+		ntbPages.SetTabLabel(vbxCharSheet, CreateTabLabel("Character Sheet", "ECMGTK.Resources.Icons.CharSheet.png", true));
+     
+        ntbPages.SetTabLabelPacking(tmpContacts, false, false, PackType.Start);
+        ntbPages.SetTabLabel(tmpContacts, CreateTabLabel("People & Places", "ECMGTK.Resources.Icons.Contacts.png", true));
+        
+        ntbPages.SetTabLabelPacking(tmpMail, false, false, PackType.Start);
+        ntbPages.SetTabLabel(tmpMail, CreateTabLabel("Mail", "ECMGTK.Resources.Icons.Mail.png", true));
+        
+        ntbPages.SetTabLabelPacking(tmpFittings, false, false, PackType.Start);
+        ntbPages.SetTabLabel(tmpFittings, CreateTabLabel("Fittings", "ECMGTK.Resources.Icons.Fitting.png", true));
 		
 		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
-		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
-		
-//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
-//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
-//		
-//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
-//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
-//		
-//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
-//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
-//		
-//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
-//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
-//		
-//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
-//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
-//		
-//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
-//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
-//		
-//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
-//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
-//		
-//		ntbPages.SetTabLabelPacking(hpnMarket, false, false, PackType.Start);
-//		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png"));
+		ntbPages.SetTabLabel(hpnMarket, CreateTabLabel("Market", "ECMGTK.Resources.Icons.Market.png", true));
+
+		ntbPages.SetTabLabelPacking(tmpResearch, false, false, PackType.Start);
+		ntbPages.SetTabLabel(tmpResearch, CreateTabLabel("Science & Industry", "ECMGTK.Resources.Icons.Research.png", true));
+
+		ntbPages.SetTabLabelPacking(tmpContracts, false, false, PackType.Start);
+		ntbPages.SetTabLabel(tmpContracts, CreateTabLabel("Contracts", "ECMGTK.Resources.Icons.Contracts.png", true));
+
+		ntbPages.SetTabLabelPacking(tmpMap, false, false, PackType.Start);
+		ntbPages.SetTabLabel(tmpMap, CreateTabLabel("Map", "ECMGTK.Resources.Icons.Map.png", true));
+
+		ntbPages.SetTabLabelPacking(tmpCorporations, false, false, PackType.Start);
+		ntbPages.SetTabLabel(tmpCorporations, CreateTabLabel("Corporations", "ECMGTK.Resources.Icons.Corporations.png", true));
+
+        ntbPages.SetTabLabelPacking(tmpAssets, false, false, PackType.Start);
+        ntbPages.SetTabLabel(tmpAssets, CreateTabLabel("Assets", "ECMGTK.Resources.Icons.Assets.png", true));
+        
+        ntbPages.SetTabLabelPacking(tmpMoney, false, false, PackType.Start);
+        ntbPages.SetTabLabel(tmpMoney, CreateTabLabel("Money", "ECMGTK.Resources.Icons.Money.png", true));
+        
+        ntbPages.SetTabLabelPacking(tmpHelp, false, false, PackType.Start);
+        ntbPages.SetTabLabel(tmpHelp, CreateTabLabel("Help & Settings", "ECMGTK.Resources.Icons.Help.png", true));
 
         // Character Sheet
         ntbCharSheetPages.SetTabLabelPacking(vbxSkills, false, false, PackType.Start);
-        ntbCharSheetPages.SetTabLabel(vbxSkills, CreateTabLabel("Skills", "ECMGTK.Resources.Icons.Skills.png"));
+        ntbCharSheetPages.SetTabLabel(vbxSkills, CreateTabLabel("Skills", "ECMGTK.Resources.Icons.Skills.png", false));
 
         ntbCharSheetPages.SetTabLabelPacking(vbxCertificates, false, false, PackType.Start);
-        ntbCharSheetPages.SetTabLabel(vbxCertificates, CreateTabLabel("Certificates", "ECMGTK.Resources.Icons.Certificates.png"));
+        ntbCharSheetPages.SetTabLabel(vbxCertificates, CreateTabLabel("Certificates", "ECMGTK.Resources.Icons.Certificates.png", false));
 
         ntbCharSheetPages.SetTabLabelPacking(scwMedals, false, false, PackType.Start);
-        ntbCharSheetPages.SetTabLabel(scwMedals, CreateTabLabel("Decorations", "ECMGTK.Resources.Icons.Medal.png"));
+        ntbCharSheetPages.SetTabLabel(scwMedals, CreateTabLabel("Decorations", "ECMGTK.Resources.Icons.Medal.png", false));
 
         ntbCharSheetPages.SetTabLabelPacking(scwAttributes, false, false, PackType.Start);
-        ntbCharSheetPages.SetTabLabel(scwAttributes, CreateTabLabel("Attributes", "ECMGTK.Resources.Icons.Attributes.png"));
+        ntbCharSheetPages.SetTabLabel(scwAttributes, CreateTabLabel("Attributes", "ECMGTK.Resources.Icons.Attributes.png", false));
 
         ntbCharSheetPages.SetTabLabelPacking(scwImplants, false, false, PackType.Start);
-        ntbCharSheetPages.SetTabLabel(scwImplants, CreateTabLabel("Augmentations", "ECMGTK.Resources.Icons.Implants.png"));
+        ntbCharSheetPages.SetTabLabel(scwImplants, CreateTabLabel("Augmentations", "ECMGTK.Resources.Icons.Implants.png", false));
 
         ntbCharSheetPages.SetTabLabelPacking(scwEmployment, false, false, PackType.Start);
-        ntbCharSheetPages.SetTabLabel(scwEmployment, CreateTabLabel("Employment", "ECMGTK.Resources.Icons.Corporations.png"));
+        ntbCharSheetPages.SetTabLabel(scwEmployment, CreateTabLabel("Employment", "ECMGTK.Resources.Icons.Corporations.png", false));
 
         ntbCharSheetPages.SetTabLabelPacking(scwStandings, false, false, PackType.Start);
-        ntbCharSheetPages.SetTabLabel(scwStandings, CreateTabLabel("Standings", "ECMGTK.Resources.Icons.Standings.png"));
+        ntbCharSheetPages.SetTabLabel(scwStandings, CreateTabLabel("Standings", "ECMGTK.Resources.Icons.Standings.png", false));
 
         ntbCharSheetPages.SetTabLabelPacking(scwCombatLogs, false, false, PackType.Start);
-        ntbCharSheetPages.SetTabLabel(scwCombatLogs, CreateTabLabel("Combat Log", "ECMGTK.Resources.Icons.KillLogs.png"));
+        ntbCharSheetPages.SetTabLabel(scwCombatLogs, CreateTabLabel("Combat Log", "ECMGTK.Resources.Icons.KillLogs.png", false));
 	}
 
-	public Widget CreateTabLabel (string title, string imageResource)
+	public Widget CreateTabLabel (string title, string imageResource, bool iconAfterText)
 	{
 		HBox box = new HBox();
 		Image icon = new Image(null, imageResource);
 		Label label = new Label(title);
 		label.Xalign = 0;
-		
-		box.PackStart(icon, false, false, 0);
+
+        if(iconAfterText)
+            box.PackEnd(icon, false, false, 0);
+        else
+		    box.PackStart(icon, false, false, 0);
+
 		box.PackStart(label, true, true, 6);
 		
 		box.ShowAll();
@@ -215,6 +225,7 @@ public partial class MainWindow: Gtk.Window
 
         TreeViewColumn attributeColumn = new TreeViewColumn();
         attributeColumn.Title = "Attribute";
+        attributeColumn.Spacing = 6;
 
         CellRendererPixbuf attributeImg = new CellRendererPixbuf();
         attributeImg.Xalign = 0;
@@ -236,8 +247,12 @@ public partial class MainWindow: Gtk.Window
 
     private void RenderAttribute (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
     {
-        string[] attribute = model.GetValue (iter, 1).ToString().Split('\n');
-        (cell as Gtk.CellRendererText).Markup = string.Format("<span size=\"smaller\" weight=\"bold\">{0}</span>\n<span size=\"small\">{1}</span>", attribute[0], attribute[1]);
+        if(cell is Gtk.CellRendererText)
+        {
+            CellRendererText realCell = cell as Gtk.CellRendererText;
+            string[] attribute = model.GetValue (iter, 1).ToString().Split('\n');
+            realCell.Markup = string.Format("<span size=\"smaller\" weight=\"bold\">{0}</span>\n<span size=\"small\">{1}</span>", attribute[0], attribute[1]);
+        }
     }
     #endregion
     

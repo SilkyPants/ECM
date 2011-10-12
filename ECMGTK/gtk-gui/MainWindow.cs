@@ -162,9 +162,15 @@ public partial class MainWindow {
     
     private global::Gtk.Label label22;
     
+    private global::Gtk.Fixed tmpContacts;
+    
     private global::Gtk.Label label4;
     
+    private global::Gtk.Fixed tmpMail;
+    
     private global::Gtk.Label label23;
+    
+    private global::Gtk.Fixed tmpFittings;
     
     private global::Gtk.Label label24;
     
@@ -250,17 +256,31 @@ public partial class MainWindow {
     
     private global::Gtk.Label label29;
     
+    private global::Gtk.Fixed tmpResearch;
+    
     private global::Gtk.Label label30;
+    
+    private global::Gtk.Fixed tmpContracts;
     
     private global::Gtk.Label label31;
     
+    private global::Gtk.Fixed tmpMap;
+    
     private global::Gtk.Label label32;
+    
+    private global::Gtk.Fixed tmpCorporations;
     
     private global::Gtk.Label label33;
     
+    private global::Gtk.Fixed tmpAssets;
+    
     private global::Gtk.Label label34;
     
+    private global::Gtk.Fixed tmpMoney;
+    
     private global::Gtk.Label label36;
+    
+    private global::Gtk.Fixed tmpHelp;
     
     private global::Gtk.Label label37;
     
@@ -292,7 +312,6 @@ public partial class MainWindow {
         this.ntbPages.CurrentPage = 5;
         this.ntbPages.EnablePopup = true;
         this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
-        this.ntbPages.Scrollable = true;
         this.ntbPages.BorderWidth = ((uint)(3));
         // Container child ntbPages.Gtk.Notebook+NotebookChild
         this.vbxOverview = new global::Gtk.VBox();
@@ -405,6 +424,7 @@ public partial class MainWindow {
         this.ntbPages.Add(this.vbxOverview);
         // Notebook tab
         this.label3 = new global::Gtk.Label();
+        this.label3.HeightRequest = 32;
         this.label3.Name = "label3";
         this.label3.LabelProp = global::Mono.Unix.Catalog.GetString("Home");
         this.ntbPages.SetTabLabel(this.vbxOverview, this.label3);
@@ -935,42 +955,58 @@ public partial class MainWindow {
         w70.Position = 1;
         // Notebook tab
         this.label22 = new global::Gtk.Label();
+        this.label22.HeightRequest = 32;
         this.label22.Name = "label22";
         this.label22.LabelProp = global::Mono.Unix.Catalog.GetString("Character Sheet");
         this.ntbPages.SetTabLabel(this.vbxCharSheet, this.label22);
         this.label22.ShowAll();
+        // Container child ntbPages.Gtk.Notebook+NotebookChild
+        this.tmpContacts = new global::Gtk.Fixed();
+        this.tmpContacts.Name = "tmpContacts";
+        this.tmpContacts.HasWindow = false;
+        this.ntbPages.Add(this.tmpContacts);
+        global::Gtk.Notebook.NotebookChild w71 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages[this.tmpContacts]));
+        w71.Position = 2;
         // Notebook tab
-        global::Gtk.Label w71 = new global::Gtk.Label();
-        w71.Visible = true;
-        this.ntbPages.Add(w71);
         this.label4 = new global::Gtk.Label();
+        this.label4.HeightRequest = 32;
         this.label4.Name = "label4";
         this.label4.LabelProp = global::Mono.Unix.Catalog.GetString("People & Places");
-        this.ntbPages.SetTabLabel(w71, this.label4);
+        this.ntbPages.SetTabLabel(this.tmpContacts, this.label4);
         this.label4.ShowAll();
+        // Container child ntbPages.Gtk.Notebook+NotebookChild
+        this.tmpMail = new global::Gtk.Fixed();
+        this.tmpMail.Name = "tmpMail";
+        this.tmpMail.HasWindow = false;
+        this.ntbPages.Add(this.tmpMail);
+        global::Gtk.Notebook.NotebookChild w72 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages[this.tmpMail]));
+        w72.Position = 3;
         // Notebook tab
-        global::Gtk.Label w72 = new global::Gtk.Label();
-        w72.Visible = true;
-        this.ntbPages.Add(w72);
         this.label23 = new global::Gtk.Label();
+        this.label23.HeightRequest = 32;
         this.label23.Name = "label23";
         this.label23.LabelProp = global::Mono.Unix.Catalog.GetString("Mail");
-        this.ntbPages.SetTabLabel(w72, this.label23);
+        this.ntbPages.SetTabLabel(this.tmpMail, this.label23);
         this.label23.ShowAll();
+        // Container child ntbPages.Gtk.Notebook+NotebookChild
+        this.tmpFittings = new global::Gtk.Fixed();
+        this.tmpFittings.Name = "tmpFittings";
+        this.tmpFittings.HasWindow = false;
+        this.ntbPages.Add(this.tmpFittings);
+        global::Gtk.Notebook.NotebookChild w73 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages[this.tmpFittings]));
+        w73.Position = 4;
         // Notebook tab
-        global::Gtk.Label w73 = new global::Gtk.Label();
-        w73.Visible = true;
-        this.ntbPages.Add(w73);
         this.label24 = new global::Gtk.Label();
+        this.label24.HeightRequest = 32;
         this.label24.Name = "label24";
         this.label24.LabelProp = global::Mono.Unix.Catalog.GetString("Fittings");
-        this.ntbPages.SetTabLabel(w73, this.label24);
+        this.ntbPages.SetTabLabel(this.tmpFittings, this.label24);
         this.label24.ShowAll();
         // Container child ntbPages.Gtk.Notebook+NotebookChild
         this.hpnMarket = new global::Gtk.HPaned();
         this.hpnMarket.CanFocus = true;
         this.hpnMarket.Name = "hpnMarket";
-        this.hpnMarket.Position = 215;
+        this.hpnMarket.Position = 203;
         this.hpnMarket.BorderWidth = ((uint)(3));
         // Container child hpnMarket.Gtk.Paned+PanedChild
         this.ntbMarketGroups = new global::Gtk.Notebook();
@@ -1280,72 +1316,108 @@ public partial class MainWindow {
         w112.Position = 5;
         // Notebook tab
         this.label29 = new global::Gtk.Label();
+        this.label29.HeightRequest = 32;
         this.label29.Name = "label29";
         this.label29.LabelProp = global::Mono.Unix.Catalog.GetString("Market");
         this.ntbPages.SetTabLabel(this.hpnMarket, this.label29);
         this.label29.ShowAll();
+        // Container child ntbPages.Gtk.Notebook+NotebookChild
+        this.tmpResearch = new global::Gtk.Fixed();
+        this.tmpResearch.Name = "tmpResearch";
+        this.tmpResearch.HasWindow = false;
+        this.ntbPages.Add(this.tmpResearch);
+        global::Gtk.Notebook.NotebookChild w113 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages[this.tmpResearch]));
+        w113.Position = 6;
         // Notebook tab
-        global::Gtk.Label w113 = new global::Gtk.Label();
-        w113.Visible = true;
-        this.ntbPages.Add(w113);
         this.label30 = new global::Gtk.Label();
+        this.label30.HeightRequest = 32;
         this.label30.Name = "label30";
         this.label30.LabelProp = global::Mono.Unix.Catalog.GetString("Science & Industry");
-        this.ntbPages.SetTabLabel(w113, this.label30);
+        this.ntbPages.SetTabLabel(this.tmpResearch, this.label30);
         this.label30.ShowAll();
+        // Container child ntbPages.Gtk.Notebook+NotebookChild
+        this.tmpContracts = new global::Gtk.Fixed();
+        this.tmpContracts.Name = "tmpContracts";
+        this.tmpContracts.HasWindow = false;
+        this.ntbPages.Add(this.tmpContracts);
+        global::Gtk.Notebook.NotebookChild w114 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages[this.tmpContracts]));
+        w114.Position = 7;
         // Notebook tab
-        global::Gtk.Label w114 = new global::Gtk.Label();
-        w114.Visible = true;
-        this.ntbPages.Add(w114);
         this.label31 = new global::Gtk.Label();
+        this.label31.HeightRequest = 32;
         this.label31.Name = "label31";
         this.label31.LabelProp = global::Mono.Unix.Catalog.GetString("Contracts");
-        this.ntbPages.SetTabLabel(w114, this.label31);
+        this.ntbPages.SetTabLabel(this.tmpContracts, this.label31);
         this.label31.ShowAll();
+        // Container child ntbPages.Gtk.Notebook+NotebookChild
+        this.tmpMap = new global::Gtk.Fixed();
+        this.tmpMap.Name = "tmpMap";
+        this.tmpMap.HasWindow = false;
+        this.ntbPages.Add(this.tmpMap);
+        global::Gtk.Notebook.NotebookChild w115 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages[this.tmpMap]));
+        w115.Position = 8;
         // Notebook tab
-        global::Gtk.Label w115 = new global::Gtk.Label();
-        w115.Visible = true;
-        this.ntbPages.Add(w115);
         this.label32 = new global::Gtk.Label();
+        this.label32.HeightRequest = 32;
         this.label32.Name = "label32";
         this.label32.LabelProp = global::Mono.Unix.Catalog.GetString("Map");
-        this.ntbPages.SetTabLabel(w115, this.label32);
+        this.ntbPages.SetTabLabel(this.tmpMap, this.label32);
         this.label32.ShowAll();
+        // Container child ntbPages.Gtk.Notebook+NotebookChild
+        this.tmpCorporations = new global::Gtk.Fixed();
+        this.tmpCorporations.Name = "tmpCorporations";
+        this.tmpCorporations.HasWindow = false;
+        this.ntbPages.Add(this.tmpCorporations);
+        global::Gtk.Notebook.NotebookChild w116 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages[this.tmpCorporations]));
+        w116.Position = 9;
         // Notebook tab
-        global::Gtk.Label w116 = new global::Gtk.Label();
-        w116.Visible = true;
-        this.ntbPages.Add(w116);
         this.label33 = new global::Gtk.Label();
+        this.label33.HeightRequest = 32;
         this.label33.Name = "label33";
         this.label33.LabelProp = global::Mono.Unix.Catalog.GetString("Corporations");
-        this.ntbPages.SetTabLabel(w116, this.label33);
+        this.ntbPages.SetTabLabel(this.tmpCorporations, this.label33);
         this.label33.ShowAll();
+        // Container child ntbPages.Gtk.Notebook+NotebookChild
+        this.tmpAssets = new global::Gtk.Fixed();
+        this.tmpAssets.Name = "tmpAssets";
+        this.tmpAssets.HasWindow = false;
+        this.ntbPages.Add(this.tmpAssets);
+        global::Gtk.Notebook.NotebookChild w117 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages[this.tmpAssets]));
+        w117.Position = 10;
         // Notebook tab
-        global::Gtk.Label w117 = new global::Gtk.Label();
-        w117.Visible = true;
-        this.ntbPages.Add(w117);
         this.label34 = new global::Gtk.Label();
+        this.label34.HeightRequest = 32;
         this.label34.Name = "label34";
         this.label34.LabelProp = global::Mono.Unix.Catalog.GetString("Assets");
-        this.ntbPages.SetTabLabel(w117, this.label34);
+        this.ntbPages.SetTabLabel(this.tmpAssets, this.label34);
         this.label34.ShowAll();
+        // Container child ntbPages.Gtk.Notebook+NotebookChild
+        this.tmpMoney = new global::Gtk.Fixed();
+        this.tmpMoney.Name = "tmpMoney";
+        this.tmpMoney.HasWindow = false;
+        this.ntbPages.Add(this.tmpMoney);
+        global::Gtk.Notebook.NotebookChild w118 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages[this.tmpMoney]));
+        w118.Position = 11;
         // Notebook tab
-        global::Gtk.Label w118 = new global::Gtk.Label();
-        w118.Visible = true;
-        this.ntbPages.Add(w118);
         this.label36 = new global::Gtk.Label();
+        this.label36.HeightRequest = 32;
         this.label36.Name = "label36";
         this.label36.LabelProp = global::Mono.Unix.Catalog.GetString("Money");
-        this.ntbPages.SetTabLabel(w118, this.label36);
+        this.ntbPages.SetTabLabel(this.tmpMoney, this.label36);
         this.label36.ShowAll();
+        // Container child ntbPages.Gtk.Notebook+NotebookChild
+        this.tmpHelp = new global::Gtk.Fixed();
+        this.tmpHelp.Name = "tmpHelp";
+        this.tmpHelp.HasWindow = false;
+        this.ntbPages.Add(this.tmpHelp);
+        global::Gtk.Notebook.NotebookChild w119 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages[this.tmpHelp]));
+        w119.Position = 12;
         // Notebook tab
-        global::Gtk.Label w119 = new global::Gtk.Label();
-        w119.Visible = true;
-        this.ntbPages.Add(w119);
         this.label37 = new global::Gtk.Label();
+        this.label37.HeightRequest = 32;
         this.label37.Name = "label37";
         this.label37.LabelProp = global::Mono.Unix.Catalog.GetString("Help And Settings");
-        this.ntbPages.SetTabLabel(w119, this.label37);
+        this.ntbPages.SetTabLabel(this.tmpHelp, this.label37);
         this.label37.ShowAll();
         this.vbox3.Add(this.ntbPages);
         global::Gtk.Box.BoxChild w120 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.ntbPages]));

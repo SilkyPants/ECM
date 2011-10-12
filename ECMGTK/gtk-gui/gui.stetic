@@ -121,7 +121,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="MainWindow" design-size="613 728">
+  <widget class="Gtk.Window" id="MainWindow" design-size="613 619">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -142,7 +142,6 @@
             <property name="CurrentPage">5</property>
             <property name="EnablePopup">True</property>
             <property name="TabPos">Left</property>
-            <property name="Scrollable">True</property>
             <property name="BorderWidth">3</property>
             <child>
               <widget class="Gtk.VBox" id="vbxOverview">
@@ -300,6 +299,7 @@
             <child>
               <widget class="Gtk.Label" id="label3">
                 <property name="MemberName" />
+                <property name="HeightRequest">32</property>
                 <property name="LabelProp" translatable="yes">Home</property>
               </widget>
               <packing>
@@ -1087,6 +1087,7 @@
             <child>
               <widget class="Gtk.Label" id="label22">
                 <property name="MemberName" />
+                <property name="HeightRequest">32</property>
                 <property name="LabelProp" translatable="yes">Character Sheet</property>
               </widget>
               <packing>
@@ -1094,11 +1095,18 @@
               </packing>
             </child>
             <child>
-              <placeholder />
+              <widget class="Gtk.Fixed" id="tmpContacts">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+              </packing>
             </child>
             <child>
               <widget class="Gtk.Label" id="label4">
                 <property name="MemberName" />
+                <property name="HeightRequest">32</property>
                 <property name="LabelProp" translatable="yes">People &amp; Places</property>
               </widget>
               <packing>
@@ -1106,11 +1114,18 @@
               </packing>
             </child>
             <child>
-              <placeholder />
+              <widget class="Gtk.Fixed" id="tmpMail">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+              </widget>
+              <packing>
+                <property name="Position">3</property>
+              </packing>
             </child>
             <child>
               <widget class="Gtk.Label" id="label23">
                 <property name="MemberName" />
+                <property name="HeightRequest">32</property>
                 <property name="LabelProp" translatable="yes">Mail</property>
               </widget>
               <packing>
@@ -1118,11 +1133,18 @@
               </packing>
             </child>
             <child>
-              <placeholder />
+              <widget class="Gtk.Fixed" id="tmpFittings">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+              </widget>
+              <packing>
+                <property name="Position">4</property>
+              </packing>
             </child>
             <child>
               <widget class="Gtk.Label" id="label24">
                 <property name="MemberName" />
+                <property name="HeightRequest">32</property>
                 <property name="LabelProp" translatable="yes">Fittings</property>
               </widget>
               <packing>
@@ -1133,7 +1155,7 @@
               <widget class="Gtk.HPaned" id="hpnMarket">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">215</property>
+                <property name="Position">203</property>
                 <property name="BorderWidth">3</property>
                 <child>
                   <widget class="Gtk.Notebook" id="ntbMarketGroups">
@@ -1582,6 +1604,7 @@
             <child>
               <widget class="Gtk.Label" id="label29">
                 <property name="MemberName" />
+                <property name="HeightRequest">32</property>
                 <property name="LabelProp" translatable="yes">Market</property>
               </widget>
               <packing>
@@ -1589,11 +1612,18 @@
               </packing>
             </child>
             <child>
-              <placeholder />
+              <widget class="Gtk.Fixed" id="tmpResearch">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+              </widget>
+              <packing>
+                <property name="Position">6</property>
+              </packing>
             </child>
             <child>
               <widget class="Gtk.Label" id="label30">
                 <property name="MemberName" />
+                <property name="HeightRequest">32</property>
                 <property name="LabelProp" translatable="yes">Science &amp; Industry</property>
               </widget>
               <packing>
@@ -1601,11 +1631,18 @@
               </packing>
             </child>
             <child>
-              <placeholder />
+              <widget class="Gtk.Fixed" id="tmpContracts">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+              </widget>
+              <packing>
+                <property name="Position">7</property>
+              </packing>
             </child>
             <child>
               <widget class="Gtk.Label" id="label31">
                 <property name="MemberName" />
+                <property name="HeightRequest">32</property>
                 <property name="LabelProp" translatable="yes">Contracts</property>
               </widget>
               <packing>
@@ -1613,11 +1650,18 @@
               </packing>
             </child>
             <child>
-              <placeholder />
+              <widget class="Gtk.Fixed" id="tmpMap">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+              </widget>
+              <packing>
+                <property name="Position">8</property>
+              </packing>
             </child>
             <child>
               <widget class="Gtk.Label" id="label32">
                 <property name="MemberName" />
+                <property name="HeightRequest">32</property>
                 <property name="LabelProp" translatable="yes">Map</property>
               </widget>
               <packing>
@@ -1625,11 +1669,18 @@
               </packing>
             </child>
             <child>
-              <placeholder />
+              <widget class="Gtk.Fixed" id="tmpCorporations">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+              </widget>
+              <packing>
+                <property name="Position">9</property>
+              </packing>
             </child>
             <child>
               <widget class="Gtk.Label" id="label33">
                 <property name="MemberName" />
+                <property name="HeightRequest">32</property>
                 <property name="LabelProp" translatable="yes">Corporations</property>
               </widget>
               <packing>
@@ -1637,11 +1688,18 @@
               </packing>
             </child>
             <child>
-              <placeholder />
+              <widget class="Gtk.Fixed" id="tmpAssets">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+              </widget>
+              <packing>
+                <property name="Position">10</property>
+              </packing>
             </child>
             <child>
               <widget class="Gtk.Label" id="label34">
                 <property name="MemberName" />
+                <property name="HeightRequest">32</property>
                 <property name="LabelProp" translatable="yes">Assets</property>
               </widget>
               <packing>
@@ -1649,11 +1707,18 @@
               </packing>
             </child>
             <child>
-              <placeholder />
+              <widget class="Gtk.Fixed" id="tmpMoney">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+              </widget>
+              <packing>
+                <property name="Position">11</property>
+              </packing>
             </child>
             <child>
               <widget class="Gtk.Label" id="label36">
                 <property name="MemberName" />
+                <property name="HeightRequest">32</property>
                 <property name="LabelProp" translatable="yes">Money</property>
               </widget>
               <packing>
@@ -1661,11 +1726,18 @@
               </packing>
             </child>
             <child>
-              <placeholder />
+              <widget class="Gtk.Fixed" id="tmpHelp">
+                <property name="MemberName" />
+                <property name="HasWindow">False</property>
+              </widget>
+              <packing>
+                <property name="Position">12</property>
+              </packing>
             </child>
             <child>
               <widget class="Gtk.Label" id="label37">
                 <property name="MemberName" />
+                <property name="HeightRequest">32</property>
                 <property name="LabelProp" translatable="yes">Help And Settings</property>
               </widget>
               <packing>
