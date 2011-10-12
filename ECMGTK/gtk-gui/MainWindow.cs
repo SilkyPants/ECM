@@ -266,6 +266,8 @@ public partial class MainWindow {
     
     private global::Gtk.Statusbar stbStatus;
     
+    private global::Gtk.Image imgNetworkIndicator;
+    
     protected virtual void Build() {
         global::Stetic.Gui.Initialize(this);
         // Widget MainWindow
@@ -1354,11 +1356,22 @@ public partial class MainWindow {
         this.stbStatus.Spacing = 6;
         this.stbStatus.BorderWidth = ((uint)(3));
         this.stbStatus.HasResizeGrip = false;
-        this.vbox3.Add(this.stbStatus);
-        global::Gtk.Box.BoxChild w121 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.stbStatus]));
+        // Container child stbStatus.Gtk.Box+BoxChild
+        this.imgNetworkIndicator = new global::Gtk.Image();
+        this.imgNetworkIndicator.WidthRequest = 16;
+        this.imgNetworkIndicator.HeightRequest = 16;
+        this.imgNetworkIndicator.Name = "imgNetworkIndicator";
+        this.stbStatus.Add(this.imgNetworkIndicator);
+        global::Gtk.Box.BoxChild w121 = ((global::Gtk.Box.BoxChild)(this.stbStatus[this.imgNetworkIndicator]));
+        w121.PackType = ((global::Gtk.PackType)(1));
         w121.Position = 1;
         w121.Expand = false;
         w121.Fill = false;
+        this.vbox3.Add(this.stbStatus);
+        global::Gtk.Box.BoxChild w122 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.stbStatus]));
+        w122.Position = 1;
+        w122.Expand = false;
+        w122.Fill = false;
         this.Add(this.vbox3);
         if ((this.Child != null)) {
             this.Child.ShowAll();

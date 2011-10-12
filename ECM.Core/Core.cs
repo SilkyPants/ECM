@@ -132,6 +132,21 @@ namespace ECM
             }
         }
 
+        public static Stream LoadingSpinnerGIF16
+        {
+            get
+            {
+                Assembly ass = Assembly.GetExecutingAssembly();
+
+                if (ass != null)
+                {
+                    return ass.GetManifestResourceStream("ECM.Core.Icons.Loading16GIF");
+                }
+
+                return null;
+            }
+        }
+
         #endregion
 
         public static void Init()

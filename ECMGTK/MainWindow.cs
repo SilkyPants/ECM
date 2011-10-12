@@ -65,6 +65,8 @@ public partial class MainWindow: Gtk.Window
 		worker.RunWorkerAsync();
 		
 		Visible = true;
+        imgNetworkIndicator.PixbufAnimation = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF16);
+        imgNetworkIndicator.Visible = false;
 
         SetupCharacterSheet();
 
