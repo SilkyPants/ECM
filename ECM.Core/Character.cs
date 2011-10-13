@@ -260,7 +260,7 @@ namespace ECM
 
         public void UpdateCharacterPortrait ()
         {
-            Portrait = EveApi.ImageApi.GetCharacterPortrait(ID, ImageApi.ImageRequestSize.Size128x128);
+            Portrait = EveApi.ImageApi.GetCharacterPortrait(ID, ImageApi.ImageRequestSize.Size200x200);
         }
 
         private void UpdateCharacter(CharacterInfo characterInfo)

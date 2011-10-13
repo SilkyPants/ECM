@@ -233,6 +233,7 @@ public partial class MainWindow: Gtk.Window
     private void SetupCharacterSheet()
     {
         imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(ECM.Core.NoPortraitJPG).ScaleSimple(198,198,Gdk.InterpType.Hyper);
+        evtCharPortrait.ButtonPressEvent += UpdateCharacterPortrait;
 
         trvAttributes.EnableGridLines = TreeViewGridLines.Horizontal;
 
@@ -256,6 +257,30 @@ public partial class MainWindow: Gtk.Window
         attributeColumn.SetCellDataFunc (attributeName, new Gtk.TreeCellDataFunc (RenderAttribute));
 
         trvAttributes.Selection.Changed += ClearSelection;
+    }
+
+    void UpdateCharacterPortrait (object o, ButtonPressEventArgs args)
+    {
+        if(args.Event.Button == 3)
+        {
+            Menu m = new Menu();
+
+            MenuItem update = new MenuItem("Update Character Portrait");
+            m.Add(update);
+
+            update.ButtonPressEvent += delegate(object sender, ButtonPressEventArgs e)
+            {
+                if(e.Event.Button == 1)
+                {
+                    imgCharPortrait.PixbufAnimation = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF);
+                    ECM.Core.CurrentCharacter.UpdateCharacterPortrait();
+                    ECM.Core.UpdateGui();
+                }
+            };
+
+            m.ShowAll();
+            m.Popup();
+        }
     }
 
     private void RenderAttribute (Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
