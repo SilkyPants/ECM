@@ -64,7 +64,7 @@ namespace ECM
                                     Race              TEXT,
                                     Bloodline         TEXT,
                                     Ancestry          TEXT,
-                                    AccountBalance    REAL,
+                                    AccountBalance    TEXT,
                                     Skillpoints       INT,
                                     ShipName          TEXT,
                                     ShipTypeID        INT,
@@ -91,34 +91,36 @@ namespace ECM
             cmd.ExecuteNonQuery();
 
             cmd = sqlConnection.CreateCommand();
-            cmd.CommandText = @"CREATE TABLE IF NOT EXISTS ecmImplants (
-                                    ImplantName  TEXT PRIMARY KEY,
-                                    ImplantValue INT
-                                );";
-            cmd.ExecuteNonQuery();
-
-            cmd = sqlConnection.CreateCommand();
             cmd.CommandText = @"CREATE TABLE IF NOT EXISTS ecmCharacterImplants (
-                                    CharacterID INT  REFERENCES ecmCharacters ( ID ) MATCH FULL,
-                                    ImplantName TEXT REFERENCES ecmImplants ( ImplantName ) MATCH FULL
+                                    CharacterID     INTEGER PRIMARY KEY REFERENCES ecmCharacters ( ID ) MATCH FULL,
+                                    IntImplantName  TEXT,
+                                    IntImplantValue INT,
+                                    ChaImplantName  TEXT,
+                                    ChaImplantValue INT,
+                                    MemImplantName  TEXT,
+                                    MemImplantValue INT,
+                                    WilImplantName  TEXT,
+                                    WilImplantValue INT,
+                                    PerImplantName  TEXT,
+                                    PerImplantValue INT
                                 );";
             cmd.ExecuteNonQuery();
 
             cmd = sqlConnection.CreateCommand();
             cmd.CommandText = @"CREATE TABLE IF NOT EXISTS ecmCharacterCertificates (
-                                    Records       INTEGER PRIMARY KEY AUTOINCREMENT,
-                                    CharacterID   INT     REFERENCES ecmCharacters ( ID ) MATCH FULL,
-                                    CertificateID INT
+                                    CharacterID   INTEGER REFERENCES ecmCharacters ( ID ) MATCH FULL,
+                                    CertificateID INT,
+                                    PRIMARY KEY(CharacterID, CertificateID)  
                                 );";
             cmd.ExecuteNonQuery();
 
             cmd = sqlConnection.CreateCommand();
             cmd.CommandText = @"CREATE TABLE IF NOT EXISTS ecmCharacterSkills (
-                                    Record      INTEGER PRIMARY KEY AUTOINCREMENT,
-                                    CharacterID INT     REFERENCES ecmCharacters ( ID ) MATCH FULL,
+                                    CharacterID INTEGER REFERENCES ecmCharacters ( ID ) MATCH FULL,
                                     SkillTypeID INT,
                                     SkillLevel  INT,
-                                    Skillpoints INT
+                                    Skillpoints INT,
+                                    PRIMARY KEY(CharacterID, SkillTypeID)
                                 );";
             cmd.ExecuteNonQuery();
         }
@@ -317,7 +319,29 @@ namespace ECM
             cmd.ExecuteNonQuery();
 
             // Add Implants
-            // Link implants
+            cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = @"INSERT OR REPLACE INTO ecmCharacterImplants(CharacterID, IntImplantName, IntImplantValue, ChaImplantName, ChaImplantValue, MemImplantName, MemImplantValue, WilImplantName,
+                                WilImplantValue, PerImplantName, PerImplantValue) VALUES (@CharacterID, @IntImplantName, @IntImplantValue, @ChaImplantName, @ChaImplantValue, @MemImplantName, @MemImplantValue, 
+                                @WilImplantName, @WilImplantValue, @PerImplantName, @PerImplantValue)";
+
+            cmd.Parameters.AddWithValue("@CharacterID", charToAdd.ID);
+
+            cmd.Parameters.AddWithValue("@IntImplantName", charToAdd.Implants.Intelligence.Name);
+            cmd.Parameters.AddWithValue("@IntImplantValue", charToAdd.Implants.Intelligence.Amount);
+
+            cmd.Parameters.AddWithValue("@ChaImplantName", charToAdd.Implants.Charisma.Name);
+            cmd.Parameters.AddWithValue("@ChaImplantValue", charToAdd.Implants.Charisma.Amount);
+
+            cmd.Parameters.AddWithValue("@MemImplantName", charToAdd.Implants.Memory.Name);
+            cmd.Parameters.AddWithValue("@MemImplantValue", charToAdd.Implants.Memory.Amount);
+
+            cmd.Parameters.AddWithValue("@WilImplantName", charToAdd.Implants.Willpower.Name);
+            cmd.Parameters.AddWithValue("@WilImplantValue", charToAdd.Implants.Willpower.Amount);
+
+            cmd.Parameters.AddWithValue("@PerImplantName", charToAdd.Implants.Perception.Name);
+            cmd.Parameters.AddWithValue("@PerImplantValue", charToAdd.Implants.Perception.Amount);
+
+            cmd.ExecuteNonQuery();
 
             // Add Skills
             foreach(CharacterSkills skill in charToAdd.Skills)
@@ -384,8 +408,7 @@ namespace ECM
                     newChar.Race = reader["Race"].ToString();
                     newChar.Bloodline = reader["Bloodline"].ToString();
                     newChar.Ancestry = reader["Ancestry"].ToString();
-                    string tmp = reader["AccountBalance"].ToString();
-                    newChar.AccountBalance = Convert.ToDouble(tmp);
+                    newChar.AccountBalance = Convert.ToDouble(reader["AccountBalance"].ToString());
                     newChar.SkillPoints = Convert.ToInt32(reader["Skillpoints"].ToString());
                     newChar.ShipName = reader["ShipName"].ToString();
                     newChar.ShipTypeID = Convert.ToInt64(reader["ShipTypeID"].ToString());

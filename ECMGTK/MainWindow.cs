@@ -105,9 +105,12 @@ public partial class MainWindow: Gtk.Window
     #region Event Handlers
     void CharacterChanged (object sender, EventArgs e)
     {
-        ShowCharacterSheet(ECM.Core.CurrentCharacter);
+        Gtk.Application.Invoke(delegate
+        {
+            ShowCharacterSheet(ECM.Core.CurrentCharacter);
 
-        ntbPages.CurrentPage = 1;
+            ntbPages.CurrentPage = 1;
+        });
     }
 
     void UpdateGui(object sender, EventArgs e)
@@ -115,7 +118,11 @@ public partial class MainWindow: Gtk.Window
         Gtk.Application.Invoke(delegate
         {
             FillAccounts();
-            ShowCharacterSheet(ECM.Core.CurrentCharacter);
+
+            vbxCharSheet.Sensitive = ECM.Core.CurrentCharacter != null;
+
+            if(ECM.Core.CurrentCharacter != null)
+                ShowCharacterSheet(ECM.Core.CurrentCharacter);
         });
     }
 
@@ -125,7 +132,8 @@ public partial class MainWindow: Gtk.Window
     }
     
     protected void OnDeleteEvent (object sender, DeleteEventArgs a)
-    {        
+    {
+        ECM.Core.SaveAccounts();
         Application.Quit ();
         a.RetVal = true;
     }

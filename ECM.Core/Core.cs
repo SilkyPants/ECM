@@ -11,6 +11,7 @@ namespace ECM
         static Dictionary<string, Account> m_Accounts = new Dictionary<string, Account>();
         static Dictionary<long, Character> m_Characters = new Dictionary<long, Character>();
         static Character m_CurrentCharacter = null;
+        static long m_FirstCharID = -1;
 
         static ApiRequest<ServerStatus> m_TQServerStatus;
 
@@ -179,6 +180,19 @@ namespace ECM
             }
         }
 
+        public static void SaveAccounts ()
+        {
+            foreach(Account acc in m_Accounts.Values)
+            {
+                AccountDatabase.AddAccount(acc);
+
+                foreach (Character character in acc.Characters)
+                {
+                    AccountDatabase.AddCharacter(character);
+                }
+            }
+        }
+
         private static void LoadAccounts()
         {
             List<Account> accounts = AccountDatabase.GetAllAccounts();
@@ -187,9 +201,6 @@ namespace ECM
             {
                 AddAccount(acc);
             }
-
-            // HACK: to get first character - need to find better way (and store settings!)
-            CurrentCharacter = new List<Character>(m_Characters.Values)[0];
         }
 
         public static void AddAccount(Account toAdd)
@@ -202,10 +213,19 @@ namespace ECM
             }
 
             AccountDatabase.AddAccount(toAdd);
+
+            // HACK: to get first character - need to find better way (and store settings!)
+            if(CurrentCharacter == null && m_Characters.Count > 0)
+                CurrentCharacter = m_Characters[m_FirstCharID];
+
+            UpdateGui();
         }
 
         private static void AddCharacter(Character charToAdd)
         {
+            if (m_FirstCharID == -1)
+                m_FirstCharID = charToAdd.ID;
+
             m_Characters.Add(charToAdd.ID, charToAdd);
             AccountDatabase.AddCharacter(charToAdd);
 

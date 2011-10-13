@@ -178,7 +178,6 @@ namespace ECMGTK
         void CharacterDetailsFetched(object sender, RunWorkerCompletedEventArgs e)
         {
             ECM.Core.AddAccount(apiAccount);
-            ECM.Core.UpdateGui();
             this.Destroy();
         }
 
