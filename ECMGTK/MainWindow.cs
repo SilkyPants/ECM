@@ -273,8 +273,16 @@ public partial class MainWindow: Gtk.Window
                 if(e.Event.Button == 1)
                 {
                     imgCharPortrait.PixbufAnimation = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF);
-                    ECM.Core.CurrentCharacter.UpdateCharacterPortrait();
-                    ECM.Core.UpdateGui();
+
+                    BackgroundWorker tmp = new BackgroundWorker();
+                    tmp.DoWork += delegate
+                    {
+                        ECM.Core.CurrentCharacter.UpdateCharacterPortrait();
+                        ECM.Core.UpdateGui();
+
+                    };
+
+                    tmp.RunWorkerAsync();
                 }
             };
 
