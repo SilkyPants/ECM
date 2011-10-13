@@ -435,8 +435,12 @@ namespace ECM
                     account.AddCharacter(newChar);
 
                     // Get Implants
+                    GetCharacterImplants(newChar);
+
                     // Get Skills
+
                     // Get Certificates
+
                 }
             }
 
@@ -444,6 +448,39 @@ namespace ECM
             {
                 CloseDatabase();
             }
+        }
+
+        private static void GetCharacterImplants (Character newChar)
+        {
+            SQLiteConnection implantConn = sqlConnection.Clone() as SQLiteConnection;
+
+            SQLiteCommand cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = string.Format("SELECT * FROM ecmCharacterImplants WHERE CharacterID = {0}", newChar.ID);
+
+            SQLiteDataReader reader = cmd.ExecuteReader();
+
+            if(reader.HasRows)
+            {
+                while(reader.Read())
+                {
+                    newChar.Implants.Intelligence.Name = reader["IntImplantName"].ToString();
+                    newChar.Implants.Intelligence.Amount = Convert.ToInt32(reader["IntImplantValue"].ToString());
+
+                    newChar.Implants.Charisma.Name = reader["ChaImplantName"].ToString();
+                    newChar.Implants.Charisma.Amount = Convert.ToInt32(reader["ChaImplantValue"].ToString());
+
+                    newChar.Implants.Memory.Name = reader["MemImplantName"].ToString();
+                    newChar.Implants.Memory.Amount = Convert.ToInt32(reader["MemImplantValue"].ToString());
+
+                    newChar.Implants.Willpower.Name = reader["WilImplantName"].ToString();
+                    newChar.Implants.Willpower.Amount = Convert.ToInt32(reader["WilImplantValue"].ToString());
+
+                    newChar.Implants.Perception.Name = reader["PerImplantName"].ToString();
+                    newChar.Implants.Perception.Amount = Convert.ToInt32(reader["PerImplantValue"].ToString());
+                }
+            }
+
+            implantConn.Close();
         }
     }
 

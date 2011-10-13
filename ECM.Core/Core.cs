@@ -148,6 +148,21 @@ namespace ECM
             }
         }
 
+        public static Stream NoPortraitJPG
+        {
+            get
+            {
+                Assembly ass = Assembly.GetExecutingAssembly();
+
+                if (ass != null)
+                {
+                    return ass.GetManifestResourceStream("ECM.Core.NoPortraitJPG");
+                }
+
+                return null;
+            }
+        }
+
         #endregion
 
         public static void Init()

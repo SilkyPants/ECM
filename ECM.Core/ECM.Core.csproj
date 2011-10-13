@@ -177,6 +177,9 @@
     <EmbeddedResource Include="Resources\Icons\Loading16.gif">
       <LogicalName>ECM.Core.Icons.Loading16GIF</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\NoPortrait.jpg">
+      <LogicalName>ECM.Core.NoPortraitJPG</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="sqlite3.dll">

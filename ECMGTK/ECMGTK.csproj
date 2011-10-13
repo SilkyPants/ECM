@@ -80,8 +80,6 @@
     <EmbeddedResource Include="Resources\Icons\Undock.png" />
     <EmbeddedResource Include="Resources\Icons\Internet.png" />
     <EmbeddedResource Include="Resources\Icons\Medal.png" />
-    <EmbeddedResource Include="Resources\NoPortrait.png" />
-    <EmbeddedResource Include="Resources\NoPortrait_64.png" />
     <EmbeddedResource Include="Resources\Icons\Corpse.png" />
     <EmbeddedResource Include="Resources\Icons\Recycle.png" />
     <EmbeddedResource Include="Resources\Icons\ExportChar.png" />

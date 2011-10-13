@@ -121,7 +121,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="MainWindow" design-size="626 653">
+  <widget class="Gtk.Window" id="MainWindow" design-size="817 774">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -139,7 +139,7 @@
           <widget class="Gtk.Notebook" id="ntbPages">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">5</property>
+            <property name="CurrentPage">1</property>
             <property name="EnablePopup">True</property>
             <property name="TabPos">Left</property>
             <property name="BorderWidth">3</property>
@@ -331,9 +331,8 @@
                             <child>
                               <widget class="Gtk.Image" id="imgCharPortrait">
                                 <property name="MemberName" />
-                                <property name="WidthRequest">128</property>
-                                <property name="HeightRequest">128</property>
-                                <property name="Pixbuf">resource:ECMGTK.Resources.NoPortrait.png</property>
+                                <property name="WidthRequest">160</property>
+                                <property name="HeightRequest">160</property>
                               </widget>
                             </child>
                           </widget>
@@ -378,7 +377,7 @@
                         <child>
                           <widget class="Gtk.Table" id="table3">
                             <property name="MemberName" />
-                            <property name="NRows">7</property>
+                            <property name="NRows">8</property>
                             <property name="NColumns">2</property>
                             <property name="ColumnSpacing">6</property>
                             <child>
@@ -388,8 +387,6 @@
                                 <property name="LabelProp" translatable="yes">Skillpoints</property>
                               </widget>
                               <packing>
-                                <property name="TopAttach">1</property>
-                                <property name="BottomAttach">2</property>
                                 <property name="AutoSize">True</property>
                                 <property name="XOptions">Fill</property>
                                 <property name="YOptions">Fill</property>
@@ -408,8 +405,8 @@
                                 <property name="LabelProp" translatable="yes">Clone</property>
                               </widget>
                               <packing>
-                                <property name="TopAttach">2</property>
-                                <property name="BottomAttach">3</property>
+                                <property name="TopAttach">1</property>
+                                <property name="BottomAttach">2</property>
                                 <property name="AutoSize">True</property>
                                 <property name="XOptions">Fill</property>
                                 <property name="YOptions">Fill</property>
@@ -428,8 +425,8 @@
                                 <property name="LabelProp" translatable="yes">Date of Birth</property>
                               </widget>
                               <packing>
-                                <property name="TopAttach">3</property>
-                                <property name="BottomAttach">4</property>
+                                <property name="TopAttach">4</property>
+                                <property name="BottomAttach">5</property>
                                 <property name="AutoSize">True</property>
                                 <property name="XOptions">Fill</property>
                                 <property name="YOptions">Fill</property>
@@ -448,6 +445,28 @@
                                 <property name="LabelProp" translatable="yes">Background</property>
                               </widget>
                               <packing>
+                                <property name="TopAttach">3</property>
+                                <property name="BottomAttach">4</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Label" id="label19">
+                                <property name="MemberName" />
+                                <property name="Xalign">0</property>
+                                <property name="LabelProp" translatable="yes">Current System</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">2</property>
+                                <property name="BottomAttach">3</property>
                                 <property name="AutoSize">True</property>
                                 <property name="XOptions">Fill</property>
                                 <property name="YOptions">Fill</property>
@@ -466,8 +485,8 @@
                                 <property name="LabelProp" translatable="yes">Security Status</property>
                               </widget>
                               <packing>
-                                <property name="TopAttach">6</property>
-                                <property name="BottomAttach">7</property>
+                                <property name="TopAttach">7</property>
+                                <property name="BottomAttach">8</property>
                                 <property name="AutoSize">True</property>
                                 <property name="XOptions">Fill</property>
                                 <property name="YOptions">Fill</property>
@@ -483,11 +502,10 @@
                               <widget class="Gtk.Label" id="lblAlliance">
                                 <property name="MemberName" />
                                 <property name="Xalign">0</property>
-                                <property name="LabelProp" translatable="yes">label1</property>
                               </widget>
                               <packing>
-                                <property name="TopAttach">5</property>
-                                <property name="BottomAttach">6</property>
+                                <property name="TopAttach">6</property>
+                                <property name="BottomAttach">7</property>
                                 <property name="LeftAttach">1</property>
                                 <property name="RightAttach">2</property>
                                 <property name="AutoSize">True</property>
@@ -508,8 +526,8 @@
                                 <property name="LabelProp" translatable="yes">Alliance</property>
                               </widget>
                               <packing>
-                                <property name="TopAttach">5</property>
-                                <property name="BottomAttach">6</property>
+                                <property name="TopAttach">6</property>
+                                <property name="BottomAttach">7</property>
                                 <property name="AutoSize">True</property>
                                 <property name="XOptions">Fill</property>
                                 <property name="YOptions">Fill</property>
@@ -525,9 +543,10 @@
                               <widget class="Gtk.Label" id="lblBackground">
                                 <property name="MemberName" />
                                 <property name="Xalign">0</property>
-                                <property name="LabelProp" translatable="yes">label1</property>
                               </widget>
                               <packing>
+                                <property name="TopAttach">3</property>
+                                <property name="BottomAttach">4</property>
                                 <property name="LeftAttach">1</property>
                                 <property name="RightAttach">2</property>
                                 <property name="AutoSize">True</property>
@@ -545,11 +564,10 @@
                               <widget class="Gtk.Label" id="lblCone">
                                 <property name="MemberName" />
                                 <property name="Xalign">0</property>
-                                <property name="LabelProp" translatable="yes">label1</property>
                               </widget>
                               <packing>
-                                <property name="TopAttach">2</property>
-                                <property name="BottomAttach">3</property>
+                                <property name="TopAttach">1</property>
+                                <property name="BottomAttach">2</property>
                                 <property name="LeftAttach">1</property>
                                 <property name="RightAttach">2</property>
                                 <property name="AutoSize">True</property>
@@ -567,11 +585,10 @@
                               <widget class="Gtk.Label" id="lblCorporation">
                                 <property name="MemberName" />
                                 <property name="Xalign">0</property>
-                                <property name="LabelProp" translatable="yes">label1</property>
                               </widget>
                               <packing>
-                                <property name="TopAttach">4</property>
-                                <property name="BottomAttach">5</property>
+                                <property name="TopAttach">5</property>
+                                <property name="BottomAttach">6</property>
                                 <property name="LeftAttach">1</property>
                                 <property name="RightAttach">2</property>
                                 <property name="AutoSize">True</property>
@@ -592,8 +609,29 @@
                                 <property name="LabelProp" translatable="yes">Corporation</property>
                               </widget>
                               <packing>
-                                <property name="TopAttach">4</property>
-                                <property name="BottomAttach">5</property>
+                                <property name="TopAttach">5</property>
+                                <property name="BottomAttach">6</property>
+                                <property name="AutoSize">True</property>
+                                <property name="XOptions">Fill</property>
+                                <property name="YOptions">Fill</property>
+                                <property name="XExpand">False</property>
+                                <property name="XFill">True</property>
+                                <property name="XShrink">False</property>
+                                <property name="YExpand">False</property>
+                                <property name="YFill">True</property>
+                                <property name="YShrink">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="Gtk.Label" id="lblCurrentLocation">
+                                <property name="MemberName" />
+                                <property name="Xalign">0</property>
+                              </widget>
+                              <packing>
+                                <property name="TopAttach">2</property>
+                                <property name="BottomAttach">3</property>
+                                <property name="LeftAttach">1</property>
+                                <property name="RightAttach">2</property>
                                 <property name="AutoSize">True</property>
                                 <property name="XOptions">Fill</property>
                                 <property name="YOptions">Fill</property>
@@ -609,11 +647,10 @@
                               <widget class="Gtk.Label" id="lblDoB">
                                 <property name="MemberName" />
                                 <property name="Xalign">0</property>
-                                <property name="LabelProp" translatable="yes">label1</property>
                               </widget>
                               <packing>
-                                <property name="TopAttach">3</property>
-                                <property name="BottomAttach">4</property>
+                                <property name="TopAttach">4</property>
+                                <property name="BottomAttach">5</property>
                                 <property name="LeftAttach">1</property>
                                 <property name="RightAttach">2</property>
                                 <property name="AutoSize">True</property>
@@ -631,11 +668,10 @@
                               <widget class="Gtk.Label" id="lblSecStatus">
                                 <property name="MemberName" />
                                 <property name="Xalign">0</property>
-                                <property name="LabelProp" translatable="yes">label1</property>
                               </widget>
                               <packing>
-                                <property name="TopAttach">6</property>
-                                <property name="BottomAttach">7</property>
+                                <property name="TopAttach">7</property>
+                                <property name="BottomAttach">8</property>
                                 <property name="LeftAttach">1</property>
                                 <property name="RightAttach">2</property>
                                 <property name="AutoSize">True</property>
@@ -653,11 +689,8 @@
                               <widget class="Gtk.Label" id="lblSkillpoints">
                                 <property name="MemberName" />
                                 <property name="Xalign">0</property>
-                                <property name="LabelProp" translatable="yes">label1</property>
                               </widget>
                               <packing>
-                                <property name="TopAttach">1</property>
-                                <property name="BottomAttach">2</property>
                                 <property name="LeftAttach">1</property>
                                 <property name="RightAttach">2</property>
                                 <property name="AutoSize">True</property>
@@ -784,7 +817,9 @@
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="CurrentPage">3</property>
+                        <property name="EnablePopup">True</property>
                         <property name="TabPos">Left</property>
+                        <property name="ShowBorder">False</property>
                         <child>
                           <widget class="Gtk.VBox" id="vbxSkills">
                             <property name="MemberName" />
@@ -1155,7 +1190,7 @@
               <widget class="Gtk.HPaned" id="hpnMarket">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">203</property>
+                <property name="Position">1</property>
                 <property name="BorderWidth">3</property>
                 <child>
                   <widget class="Gtk.Notebook" id="ntbMarketGroups">

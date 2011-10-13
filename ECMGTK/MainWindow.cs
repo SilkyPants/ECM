@@ -202,7 +202,7 @@ public partial class MainWindow: Gtk.Window
         ntbCharSheetPages.SetTabLabel(scwImplants, CreateTabLabel("Augmentations", "ECMGTK.Resources.Icons.Implants.png", false));
 
         ntbCharSheetPages.SetTabLabelPacking(scwEmployment, false, false, PackType.Start);
-        ntbCharSheetPages.SetTabLabel(scwEmployment, CreateTabLabel("Employment", "ECMGTK.Resources.Icons.Corporations.png", false));
+        ntbCharSheetPages.SetTabLabel(scwEmployment, CreateTabLabel("Employment History", "ECMGTK.Resources.Icons.Corporations.png", false));
 
         ntbCharSheetPages.SetTabLabelPacking(scwStandings, false, false, PackType.Start);
         ntbCharSheetPages.SetTabLabel(scwStandings, CreateTabLabel("Standings", "ECMGTK.Resources.Icons.Standings.png", false));
@@ -232,6 +232,8 @@ public partial class MainWindow: Gtk.Window
 
     private void SetupCharacterSheet()
     {
+        imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(ECM.Core.NoPortraitJPG).ScaleSimple(198,198,Gdk.InterpType.Hyper);
+
         trvAttributes.EnableGridLines = TreeViewGridLines.Horizontal;
 
         TreeViewColumn attributeColumn = new TreeViewColumn();
@@ -635,14 +637,14 @@ public partial class MainWindow: Gtk.Window
         frm.Shadow = ShadowType.EtchedOut;
         frm.BorderWidth = 3;
         
-        Image img = new Image(null, "ECMGTK.Resources.NoPortrait_64.png");
+        Image img = new Image();
         img.WidthRequest = 64;
         img.HeightRequest = 64;
 
         if(character.Portrait != null)
-        {
             img.Pixbuf = EveApi.ImageApi.StreamToPixbuf(character.Portrait).ScaleSimple(64, 64, Gdk.InterpType.Bilinear);
-        }
+        else
+            img.Pixbuf = EveApi.ImageApi.StreamToPixbuf(ECM.Core.NoPortraitJPG).ScaleSimple(64, 64, Gdk.InterpType.Bilinear);
 
         frm.Add(img);
 
@@ -692,11 +694,17 @@ public partial class MainWindow: Gtk.Window
         charAttributeStore.Clear();
 
         lblCharName.Markup = string.Format("<b>{0}</b>", currentCharacter.Name);
-        imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(currentCharacter.Portrait);
+
+        if(currentCharacter.Portrait != null)
+            imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(currentCharacter.Portrait).ScaleSimple(160,160,Gdk.InterpType.Bilinear);
+        else
+            imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(ECM.Core.NoPortraitJPG).ScaleSimple(160,160,Gdk.InterpType.Bilinear);
+
+        lblCurrentLocation.Text = currentCharacter.LastKnownLocation;
         lblBackground.Text = currentCharacter.Background;
         lblSkillpoints.Text = currentCharacter.SkillPoints.ToString("#0,0");
         lblCone.Text = string.Format("{0} ({1:0,0})", currentCharacter.CloneName, currentCharacter.CloneSkillPoints);
-        lblDoB.Text = currentCharacter.Birthday.ToString();
+        lblDoB.Text = currentCharacter.Birthday.ToString("dd.MM.yyyy HH:mm:ss");
         lblSecStatus.Text = currentCharacter.SecurityStatus.ToString("#0.00");
 
         if(string.IsNullOrEmpty(currentCharacter.Corporation))
@@ -727,11 +735,11 @@ public partial class MainWindow: Gtk.Window
         int perception = currentCharacter.Attributes.Perception + currentCharacter.Implants.Perception.Amount;
         int willpower = currentCharacter.Attributes.Willpower + currentCharacter.Implants.Willpower.Amount;
 
-        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.CharismaBrain"), string.Format("CHARISMA\n{0} points", charisma));
         charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.IntelligenceBrain"), string.Format("INTELLIGENCE\n{0} points", intelligence));
-        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.MemoryBrain"), string.Format("MEMORY\n{0} points", memory));
         charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.PerceptionBrain"), string.Format("PERCEPTION\n{0} points", perception));
+        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.CharismaBrain"), string.Format("CHARISMA\n{0} points", charisma));
         charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.WillpowerBrain"), string.Format("WILLPOWER\n{0} points", willpower));
+        charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.MemoryBrain"), string.Format("MEMORY\n{0} points", memory));
 
         trvAttributes.Model = charAttributeStore;
     }
