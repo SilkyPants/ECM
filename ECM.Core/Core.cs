@@ -12,7 +12,6 @@ namespace ECM
         static Dictionary<long, Character> m_Characters = new Dictionary<long, Character>();
         static Character m_CurrentCharacter = null;
         static long m_FirstCharID = -1;
-        static bool m_Loaded = false;
 
         static ApiRequest<ServerStatus> m_TQServerStatus;
 
@@ -173,8 +172,6 @@ namespace ECM
             m_TQServerStatus.Enabled = true;
 
             LoadAccounts();
-
-            m_Loaded = true;
         }
 
         static void TQServerStatusUpdate (ApiResult<ServerStatus> result)
@@ -190,8 +187,6 @@ namespace ECM
 
         public static void UpdateOnHeartbeat()
         {
-            if (!m_Loaded) return;
-
             m_TQServerStatus.UpdateOnSecTick();
 
             foreach(Account account in m_Accounts.Values)

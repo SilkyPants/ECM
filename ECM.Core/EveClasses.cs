@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace ECM
 {
@@ -26,12 +25,6 @@ namespace ECM
     {
         public long MarketGroupID { get; set; }
         public string Description { get; set; }
-    }
-
-    public class EveSkill : EveItem
-    {
-        public int Rank { get; set; }
-        public List<long> RequiredSkills { get; set; }
     }
 }
 
