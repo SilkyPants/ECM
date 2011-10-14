@@ -52,6 +52,7 @@
     <Compile Include="Database\AccountDatabase.cs" />
     <Compile Include="Attributes\SQLiteDatabaseAttribute.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="Database\DatabaseBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

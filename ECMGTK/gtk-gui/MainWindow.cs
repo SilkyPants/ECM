@@ -319,7 +319,7 @@ public partial class MainWindow {
         this.ntbPages = new global::Gtk.Notebook();
         this.ntbPages.CanFocus = true;
         this.ntbPages.Name = "ntbPages";
-        this.ntbPages.CurrentPage = 1;
+        this.ntbPages.CurrentPage = 5;
         this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
         this.ntbPages.BorderWidth = ((uint)(3));
         // Container child ntbPages.Gtk.Notebook+NotebookChild
@@ -357,7 +357,6 @@ public partial class MainWindow {
         w6.Fill = false;
         // Container child vbxOverview.Gtk.Box+BoxChild
         this.hbuttonbox1 = new global::Gtk.HButtonBox();
-        this.hbuttonbox1.Name = "hbuttonbox1";
         this.hbuttonbox1.Homogeneous = true;
         this.hbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
         // Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
@@ -1154,6 +1153,7 @@ public partial class MainWindow {
         this.GtkAlignment1.Name = "GtkAlignment1";
         // Container child GtkAlignment1.Gtk.Container+ContainerChild
         this.btnShowRender = new global::Gtk.Button();
+        this.btnShowRender.Sensitive = false;
         this.btnShowRender.CanFocus = true;
         this.btnShowRender.Name = "btnShowRender";
         this.btnShowRender.Relief = ((global::Gtk.ReliefStyle)(2));

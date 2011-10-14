@@ -291,11 +291,8 @@ public partial class MainWindow: Gtk.Window
 
         CellRendererPixbuf attributeImg = new CellRendererPixbuf();
         attributeImg.Xalign = 0;
-        attributeImg.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
 
         Gtk.CellRendererText attributeName = new Gtk.CellRendererText();
-        attributeName.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
-        attributeName.ForegroundGdk = new Gdk.Color(255, 255, 255);
 
         attributeColumn.PackStart(attributeImg, false);
         attributeColumn.PackStart (attributeName, true);
@@ -315,21 +312,15 @@ public partial class MainWindow: Gtk.Window
 
         CellRendererPixbuf skillIcon = new CellRendererPixbuf();
         skillIcon.Xalign = 0;
-        skillIcon.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
 
         CellRendererText skillName = new CellRendererText();
-        skillName.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
-        skillName.ForegroundGdk = new Gdk.Color(255, 255, 255);
 
         CellRendererText skillLevel = new CellRendererText();
         skillLevel.Alignment = Pango.Alignment.Right;
-        skillLevel.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
-        skillLevel.ForegroundGdk = new Gdk.Color(255, 255, 255);
 
         SkillProgressCellRenderer skillLevelPgb = new SkillProgressCellRenderer();
         skillLevelPgb.Width = 48;
         skillLevelPgb.Height = 32;
-        skillLevelPgb.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
 
         skillColumn.PackStart(skillIcon, false);
         skillColumn.PackStart(skillName, true);
@@ -344,7 +335,6 @@ public partial class MainWindow: Gtk.Window
 
         trvSkills.AppendColumn(skillColumn);
         trvSkills.RowActivated += HandleTrvSkillsRowActivated;
-        trvSkills.ModifyBase(StateType.Selected, new Gdk.Color(75, 75, 75));
         #endregion
 
         #region Certificates Treeview
@@ -516,6 +506,7 @@ public partial class MainWindow: Gtk.Window
         };
 
         btnShowRender.Name = item.ID.ToString();
+        btnShowRender.Sensitive = true;
 
         fetchImage.RunWorkerAsync();
 

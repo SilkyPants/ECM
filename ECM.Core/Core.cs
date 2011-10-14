@@ -204,12 +204,7 @@ namespace ECM
         {
             foreach(Account acc in m_Accounts.Values)
             {
-                AccountDatabase.AddAccount(acc);
-
-                foreach (Character character in acc.Characters)
-                {
-                    AccountDatabase.AddCharacter(character);
-                }
+                acc.SaveToDatabase();
             }
         }
 
@@ -232,7 +227,7 @@ namespace ECM
                 AddCharacter(character);
             }
 
-            AccountDatabase.AddAccount(toAdd);
+            toAdd.SaveToDatabase();
 
             // HACK: to get first character - need to find better way (and store settings!)
             if(CurrentCharacter == null && m_Characters.Count > 0)
@@ -247,7 +242,6 @@ namespace ECM
                 m_FirstCharID = charToAdd.ID;
 
             m_Characters.Add(charToAdd.ID, charToAdd);
-            AccountDatabase.AddCharacter(charToAdd);
 
             charToAdd.CharacterUpdated += delegate
             {
