@@ -319,7 +319,7 @@ public partial class MainWindow {
         this.ntbPages = new global::Gtk.Notebook();
         this.ntbPages.CanFocus = true;
         this.ntbPages.Name = "ntbPages";
-        this.ntbPages.CurrentPage = 5;
+        this.ntbPages.CurrentPage = 1;
         this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
         this.ntbPages.BorderWidth = ((uint)(3));
         // Container child ntbPages.Gtk.Notebook+NotebookChild
@@ -357,6 +357,7 @@ public partial class MainWindow {
         w6.Fill = false;
         // Container child vbxOverview.Gtk.Box+BoxChild
         this.hbuttonbox1 = new global::Gtk.HButtonBox();
+        this.hbuttonbox1.Name = "hbuttonbox1";
         this.hbuttonbox1.Homogeneous = true;
         this.hbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
         // Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
@@ -794,13 +795,10 @@ public partial class MainWindow {
         this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow();
         this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
         this.GtkScrolledWindow1.ShadowType = ((global::Gtk.ShadowType)(1));
-        this.GtkScrolledWindow1.BorderWidth = ((uint)(3));
         // Container child GtkScrolledWindow1.Gtk.Container+ContainerChild
         this.trvSkills = new global::Gtk.TreeView();
         this.trvSkills.CanFocus = true;
         this.trvSkills.Name = "trvSkills";
-        this.trvSkills.EnableSearch = false;
-        this.trvSkills.HeadersVisible = false;
         this.GtkScrolledWindow1.Add(this.trvSkills);
         this.vbxSkills.Add(this.GtkScrolledWindow1);
         global::Gtk.Box.BoxChild w52 = ((global::Gtk.Box.BoxChild)(this.vbxSkills[this.GtkScrolledWindow1]));
@@ -840,7 +838,6 @@ public partial class MainWindow {
         this.GtkScrolledWindow2 = new global::Gtk.ScrolledWindow();
         this.GtkScrolledWindow2.Name = "GtkScrolledWindow2";
         this.GtkScrolledWindow2.ShadowType = ((global::Gtk.ShadowType)(1));
-        this.GtkScrolledWindow2.BorderWidth = ((uint)(3));
         // Container child GtkScrolledWindow2.Gtk.Container+ContainerChild
         this.trvCertificates = new global::Gtk.TreeView();
         this.trvCertificates.CanFocus = true;
@@ -863,7 +860,6 @@ public partial class MainWindow {
         this.scwMedals = new global::Gtk.ScrolledWindow();
         this.scwMedals.Name = "scwMedals";
         this.scwMedals.ShadowType = ((global::Gtk.ShadowType)(1));
-        this.scwMedals.BorderWidth = ((uint)(3));
         // Container child scwMedals.Gtk.Container+ContainerChild
         this.trvMedals = new global::Gtk.TreeView();
         this.trvMedals.CanFocus = true;
@@ -883,7 +879,6 @@ public partial class MainWindow {
         this.scwAttributes = new global::Gtk.ScrolledWindow();
         this.scwAttributes.Name = "scwAttributes";
         this.scwAttributes.ShadowType = ((global::Gtk.ShadowType)(1));
-        this.scwAttributes.BorderWidth = ((uint)(3));
         // Container child scwAttributes.Gtk.Container+ContainerChild
         this.trvAttributes = new global::Gtk.TreeView();
         this.trvAttributes.CanFocus = true;
@@ -905,7 +900,6 @@ public partial class MainWindow {
         this.scwImplants = new global::Gtk.ScrolledWindow();
         this.scwImplants.Name = "scwImplants";
         this.scwImplants.ShadowType = ((global::Gtk.ShadowType)(1));
-        this.scwImplants.BorderWidth = ((uint)(3));
         // Container child scwImplants.Gtk.Container+ContainerChild
         this.trvImplants = new global::Gtk.TreeView();
         this.trvImplants.CanFocus = true;
@@ -925,7 +919,6 @@ public partial class MainWindow {
         this.scwEmployment = new global::Gtk.ScrolledWindow();
         this.scwEmployment.Name = "scwEmployment";
         this.scwEmployment.ShadowType = ((global::Gtk.ShadowType)(1));
-        this.scwEmployment.BorderWidth = ((uint)(3));
         // Container child scwEmployment.Gtk.Container+ContainerChild
         this.trvEmployment = new global::Gtk.TreeView();
         this.trvEmployment.CanFocus = true;
@@ -945,7 +938,6 @@ public partial class MainWindow {
         this.scwStandings = new global::Gtk.ScrolledWindow();
         this.scwStandings.Name = "scwStandings";
         this.scwStandings.ShadowType = ((global::Gtk.ShadowType)(1));
-        this.scwStandings.BorderWidth = ((uint)(3));
         // Container child scwStandings.Gtk.Container+ContainerChild
         this.trvStandings = new global::Gtk.TreeView();
         this.trvStandings.CanFocus = true;
@@ -965,7 +957,6 @@ public partial class MainWindow {
         this.scwCombatLogs = new global::Gtk.ScrolledWindow();
         this.scwCombatLogs.Name = "scwCombatLogs";
         this.scwCombatLogs.ShadowType = ((global::Gtk.ShadowType)(1));
-        this.scwCombatLogs.BorderWidth = ((uint)(3));
         // Container child scwCombatLogs.Gtk.Container+ContainerChild
         this.trvKillLogs = new global::Gtk.TreeView();
         this.trvKillLogs.CanFocus = true;
@@ -1153,7 +1144,6 @@ public partial class MainWindow {
         this.GtkAlignment1.Name = "GtkAlignment1";
         // Container child GtkAlignment1.Gtk.Container+ContainerChild
         this.btnShowRender = new global::Gtk.Button();
-        this.btnShowRender.Sensitive = false;
         this.btnShowRender.CanFocus = true;
         this.btnShowRender.Name = "btnShowRender";
         this.btnShowRender.Relief = ((global::Gtk.ReliefStyle)(2));

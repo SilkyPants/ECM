@@ -6,8 +6,8 @@
   </configuration>
   <import>
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <widget-library name="../../bin/Debug/ECM.Core.dll" />
-    <widget-library name="../../bin/Debug/ECM.exe" internal="true" />
+    <widget-library name="../../ECM.Core/bin/Debug/ECM.Core.dll" />
+    <widget-library name="../bin/Debug/ECM.exe" internal="true" />
   </import>
   <icon-factory>
     <icon-set id="Home">
@@ -139,7 +139,7 @@
           <widget class="Gtk.Notebook" id="ntbPages">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">5</property>
+            <property name="CurrentPage">1</property>
             <property name="TabPos">Left</property>
             <property name="BorderWidth">3</property>
             <child>
@@ -857,14 +857,11 @@
                               <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
                                 <property name="MemberName" />
                                 <property name="ShadowType">In</property>
-                                <property name="BorderWidth">3</property>
                                 <child>
                                   <widget class="Gtk.TreeView" id="trvSkills">
                                     <property name="MemberName" />
                                     <property name="CanFocus">True</property>
                                     <property name="ShowScrollbars">True</property>
-                                    <property name="EnableSearch">False</property>
-                                    <property name="HeadersVisible">False</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -919,7 +916,6 @@
                               <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow2">
                                 <property name="MemberName" />
                                 <property name="ShadowType">In</property>
-                                <property name="BorderWidth">3</property>
                                 <child>
                                   <widget class="Gtk.TreeView" id="trvCertificates">
                                     <property name="MemberName" />
@@ -952,7 +948,6 @@
                           <widget class="Gtk.ScrolledWindow" id="scwMedals">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
-                            <property name="BorderWidth">3</property>
                             <child>
                               <widget class="Gtk.TreeView" id="trvMedals">
                                 <property name="MemberName" />
@@ -979,7 +974,6 @@
                           <widget class="Gtk.ScrolledWindow" id="scwAttributes">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
-                            <property name="BorderWidth">3</property>
                             <child>
                               <widget class="Gtk.TreeView" id="trvAttributes">
                                 <property name="MemberName" />
@@ -1009,7 +1003,6 @@
                           <widget class="Gtk.ScrolledWindow" id="scwImplants">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
-                            <property name="BorderWidth">3</property>
                             <child>
                               <widget class="Gtk.TreeView" id="trvImplants">
                                 <property name="MemberName" />
@@ -1036,7 +1029,6 @@
                           <widget class="Gtk.ScrolledWindow" id="scwEmployment">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
-                            <property name="BorderWidth">3</property>
                             <child>
                               <widget class="Gtk.TreeView" id="trvEmployment">
                                 <property name="MemberName" />
@@ -1063,7 +1055,6 @@
                           <widget class="Gtk.ScrolledWindow" id="scwStandings">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
-                            <property name="BorderWidth">3</property>
                             <child>
                               <widget class="Gtk.TreeView" id="trvStandings">
                                 <property name="MemberName" />
@@ -1090,7 +1081,6 @@
                           <widget class="Gtk.ScrolledWindow" id="scwCombatLogs">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
-                            <property name="BorderWidth">3</property>
                             <child>
                               <widget class="Gtk.TreeView" id="trvKillLogs">
                                 <property name="MemberName" />
@@ -1346,7 +1336,6 @@
                                     <child>
                                       <widget class="Gtk.Button" id="btnShowRender">
                                         <property name="MemberName" />
-                                        <property name="Sensitive">False</property>
                                         <property name="CanFocus">True</property>
                                         <property name="Type">Custom</property>
                                         <property name="Relief">None</property>

@@ -1,0 +1,11 @@
+2011-09-05  Dan Silk  <silkypantsdan@gmail.com>
+
+	* MainWindow.cs:
+	* ApiTestBed.csproj:
+	* gui.stetic:
+	* MainWindow.cs: Updated to new Api Key structure
+	Added Database project to solution
+	Started messing with the ECM form - shows market with item
+	attributes/effects/images
+
+

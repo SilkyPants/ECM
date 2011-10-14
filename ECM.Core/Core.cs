@@ -12,7 +12,6 @@ namespace ECM
         static Dictionary<long, Character> m_Characters = new Dictionary<long, Character>();
         static Character m_CurrentCharacter = null;
         static long m_FirstCharID = -1;
-        static bool m_Loaded = false;
 
         static ApiRequest<ServerStatus> m_TQServerStatus;
 
@@ -173,8 +172,6 @@ namespace ECM
             m_TQServerStatus.Enabled = true;
 
             LoadAccounts();
-
-            m_Loaded = true;
         }
 
         static void TQServerStatusUpdate (ApiResult<ServerStatus> result)
@@ -190,8 +187,6 @@ namespace ECM
 
         public static void UpdateOnHeartbeat()
         {
-            if (!m_Loaded) return;
-
             m_TQServerStatus.UpdateOnSecTick();
 
             foreach(Account account in m_Accounts.Values)
@@ -204,7 +199,12 @@ namespace ECM
         {
             foreach(Account acc in m_Accounts.Values)
             {
-                acc.SaveToDatabase();
+                AccountDatabase.AddAccount(acc);
+
+                foreach (Character character in acc.Characters)
+                {
+                    AccountDatabase.AddCharacter(character);
+                }
             }
         }
 
@@ -227,7 +227,7 @@ namespace ECM
                 AddCharacter(character);
             }
 
-            toAdd.SaveToDatabase();
+            AccountDatabase.AddAccount(toAdd);
 
             // HACK: to get first character - need to find better way (and store settings!)
             if(CurrentCharacter == null && m_Characters.Count > 0)
@@ -242,6 +242,7 @@ namespace ECM
                 m_FirstCharID = charToAdd.ID;
 
             m_Characters.Add(charToAdd.ID, charToAdd);
+            AccountDatabase.AddCharacter(charToAdd);
 
             charToAdd.CharacterUpdated += delegate
             {
