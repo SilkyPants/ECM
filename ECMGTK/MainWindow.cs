@@ -54,17 +54,21 @@ public partial class MainWindow: Gtk.Window
         
         ntbPages.CurrentPage = 0;
         hpnMarket.Position = 250;
-		
+        Sensitive = false;
+
 		FillTabsWithImages();
         
 		BackgroundWorker worker = new BackgroundWorker();
-		worker.DoWork += delegate { LoadMarket(); };
+		worker.DoWork += delegate 
+        { 
+            LoadMarket();
+            ECM.Core.Init();
+        };
 		
 		worker.RunWorkerCompleted += HandleWorkerRunWorkerCompleted;
 		hpnMarket.Sensitive = false;
 		worker.RunWorkerAsync();
-		
-		Visible = true;
+
         imgNetworkIndicator.PixbufAnimation = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF16);
         imgNetworkIndicator.Visible = false;
 
@@ -73,9 +77,6 @@ public partial class MainWindow: Gtk.Window
         ECM.Core.OnUpdateGui += new EventHandler(UpdateGui);
         ECM.Core.OnCharacterChanged += CharacterChanged;
         ECM.Core.OnTQServerUpdate += TQServerUpdate;
-
-        ECM.Core.Init();
-        FillAccounts();
 
         ntbPages.CurrentPage = 0;
 
@@ -91,7 +92,7 @@ public partial class MainWindow: Gtk.Window
 
         if(status.ServerOnline)
         {
-            serverStatus = string.Format("Tranquility is online with {0} pilots", status.NumberOfPlayers);
+            serverStatus = string.Format("Tranquility is online with {0:0,0} pilots", status.NumberOfPlayers);
         }
         else
         {
@@ -128,7 +129,12 @@ public partial class MainWindow: Gtk.Window
 
     void HandleWorkerRunWorkerCompleted (object sender, RunWorkerCompletedEventArgs e)
     {
-        hpnMarket.Sensitive = true;
+        Gtk.Application.Invoke(delegate
+        {
+            hpnMarket.Sensitive = true;
+            Sensitive = true;
+            FillAccounts();
+        });
     }
     
     protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -235,6 +241,7 @@ public partial class MainWindow: Gtk.Window
         imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(ECM.Core.NoPortraitJPG).ScaleSimple(198,198,Gdk.InterpType.Hyper);
         evtCharPortrait.ButtonPressEvent += UpdateCharacterPortrait;
 
+        #region Attributes Treeview
         trvAttributes.EnableGridLines = TreeViewGridLines.Horizontal;
 
         TreeViewColumn attributeColumn = new TreeViewColumn();
@@ -250,13 +257,52 @@ public partial class MainWindow: Gtk.Window
         attributeColumn.PackStart (attributeName, true);
 
         attributeColumn.AddAttribute(attributeImg, "pixbuf", 0);
-        attributeColumn.AddAttribute(attributeName, "text", 1);
 
         trvAttributes.AppendColumn(attributeColumn);
 
         attributeColumn.SetCellDataFunc (attributeName, new Gtk.TreeCellDataFunc (RenderAttribute));
 
         trvAttributes.Selection.Changed += ClearSelection;
+        #endregion
+
+        #region Skills Treeview
+        TreeViewColumn skillColumn = new TreeViewColumn();
+        skillColumn.Title = "Skill";
+
+        CellRendererPixbuf skillIcon = new CellRendererPixbuf();
+        skillIcon.Xalign = 0;
+
+        CellRendererText skillName = new CellRendererText();
+
+        CellRendererText skillLevel = new CellRendererText();
+
+        SkillProgressCellRenderer skillLevelPgb = new SkillProgressCellRenderer();
+        skillLevelPgb.Width = 48;
+        skillLevelPgb.Height = 32;
+
+        CellRendererPixbuf skillInfoIcon = new CellRendererPixbuf();
+        skillInfoIcon.Yalign = 0;
+        skillInfoIcon.Ypad = 3;
+
+        skillColumn.PackStart(skillIcon, false);
+        skillColumn.PackStart(skillName, true);
+
+        skillColumn.PackEnd(skillInfoIcon, false);
+        skillColumn.PackEnd(skillLevelPgb, false);
+        skillColumn.PackEnd(skillLevel, false);
+
+        skillColumn.AddAttribute(skillIcon, "pixbuf", 0);
+        skillColumn.AddAttribute(skillName, "text", 1);
+        skillColumn.AddAttribute(skillLevel, "text", 2);
+        skillColumn.AddAttribute(skillLevelPgb, "SkillLevel", 3);
+        skillColumn.AddAttribute(skillInfoIcon, "pixbuf", 4);
+
+        trvSkills.AppendColumn(skillColumn);
+        #endregion
+
+        #region Certificates Treeview
+
+        #endregion
     }
 
     void UpdateCharacterPortrait (object o, ButtonPressEventArgs args)
@@ -721,10 +767,16 @@ public partial class MainWindow: Gtk.Window
     #region Character Sheet
 
     ListStore charAttributeStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string));
+    ListStore charSkillStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string), typeof(string), typeof(int), typeof(Gdk.Pixbuf));
 
     void ShowCharacterSheet (ECM.Character currentCharacter)
     {
+        // unhook models
+        trvAttributes.Model = null;
+        trvSkills.Model = null;
+
         charAttributeStore.Clear();
+        charSkillStore.Clear();
 
         lblCharName.Markup = string.Format("<b>{0}</b>", currentCharacter.Name);
 
@@ -775,6 +827,18 @@ public partial class MainWindow: Gtk.Window
         charAttributeStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.MemoryBrain"), string.Format("MEMORY\n{0} points", memory));
 
         trvAttributes.Model = charAttributeStore;
+
+        // Load Skills
+        foreach(EveApi.CharacterSkills charSkill in currentCharacter.Skills)
+        {
+            ECM.EveSkill skill = ECM.ItemDatabase.Items[charSkill.ID] as ECM.EveSkill;
+            string skillName = string.Format("{0} ({1}x)\nSP {2}/[Level SP]", skill.Name, skill.Rank, charSkill.Skillpoints);
+            string skillLevel = string.Format("Level {0}", charSkill.Level);
+
+            charSkillStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.Skills.png"), skillName, skillLevel, charSkill.Level, new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.Info16.png"));
+        }
+
+        trvSkills.Model = charSkillStore;
     }
     #endregion
 
