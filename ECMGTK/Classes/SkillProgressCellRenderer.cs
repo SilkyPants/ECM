@@ -32,7 +32,7 @@ namespace ECMGTK
 
             Gdk.GC gc = new Gdk.GC(window);
 
-            gc.RgbFgColor = new Gdk.Color(145,145,145);
+            gc.RgbFgColor = new Gdk.Color(75, 75, 75);
             Gdk.Rectangle levelRect = new Gdk.Rectangle(pix_rect.X, pix_rect.Y + 6, 47, 9);
 
             window.DrawRectangle(gc, false, levelRect);

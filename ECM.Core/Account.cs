@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 
 namespace ECM
 {
-    public class Account : IAccountStatus
+    public class Account : DatabaseBase, IAccountStatus
     {
         AuthorisedApiRequest<ApiKeyInfo> m_accountKeyInfo;
         AuthorisedApiRequest<AccountStatus> m_accountStatus;
@@ -17,34 +17,42 @@ namespace ECM
             get { return m_KeyAccess; }
             private set
             {
-                m_KeyAccess = value;
+                SetProperty<ApiKeyMask>("KeyAccess", ref m_KeyAccess, value);
                 m_accountStatus.Enabled = m_KeyAccess.HasFlag(ApiKeyMask.AccountStatus);
             }
         }
 
+        DateTime m_Expires;
         public DateTime Expires
         {
-         get;
-         set;
+            get { return m_Expires; }
+            private set
+            {
+                SetProperty<DateTime>("Expires", ref m_Expires, value);
+            }
         }
 
         #region IAccountStatus implementation
-        public int LogonCount {
+        public int LogonCount
+        {
             get;
             set;
         }
 
-        public int LogonMinutes {
+        public int LogonMinutes
+        {
             get;
             set;
         }
 
-        public DateTime PaidUntil {
+        public DateTime PaidUntil
+        {
             get;
             set;
         }
 
-        public DateTime CreateDate {
+        public DateTime CreateDate
+        {
             get;
             set;
         }
@@ -142,6 +150,16 @@ namespace ECM
             if (m_Characters.ContainsKey(newChar.ID) == false)
                 m_Characters.Add(newChar.ID, newChar);
         }
+
+        #region implemented abstract members of ECM.DatabaseBase
+        protected override void WriteToDatabase ()
+        {
+            AccountDatabase.AddAccount(this);
+
+            foreach(Character c in Characters)
+                c.SaveToDatabase();
+        }
+        #endregion
     }
 }
 

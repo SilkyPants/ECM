@@ -6,7 +6,7 @@ using System.IO;
 
 namespace ECM
 {
-    public class Character : ICharacterInfo, ICharacterSheet
+    public class Character : DatabaseBase, ICharacterInfo, ICharacterSheet
     {
         CharacterApiRequest<CharacterSheet> m_charSheetRequest;
         CharacterApiRequest<CharacterInfo> m_charInfoRequest;
@@ -313,6 +313,13 @@ namespace ECM
             m_charSheetRequest.UpdateOnSecTick();
             m_charInfoRequest.UpdateOnSecTick();
         }
+
+        #region implemented abstract members of ECM.DatabaseBase
+        protected override void WriteToDatabase ()
+        {
+            AccountDatabase.AddCharacter(this);
+        }
+        #endregion
     }
 }
 

@@ -139,7 +139,7 @@
           <widget class="Gtk.Notebook" id="ntbPages">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">1</property>
+            <property name="CurrentPage">5</property>
             <property name="TabPos">Left</property>
             <property name="BorderWidth">3</property>
             <child>
@@ -1346,6 +1346,7 @@
                                     <child>
                                       <widget class="Gtk.Button" id="btnShowRender">
                                         <property name="MemberName" />
+                                        <property name="Sensitive">False</property>
                                         <property name="CanFocus">True</property>
                                         <property name="Type">Custom</property>
                                         <property name="Relief">None</property>
