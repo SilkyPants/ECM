@@ -32,7 +32,7 @@ namespace ECM
 	    
 	    private static bool OpenDatabase()
 	    {
-	        sqlConnection = new SqlConn(string.Format("Data Source={0}", itemDatabasePath));
+	        sqlConnection = new SqlConn(string.Format("Data Source={0};version=3;", itemDatabasePath));
 	        sqlConnection.Open();
 	    
 	        SqlCmd cmd = sqlConnection.CreateCommand();
@@ -52,10 +52,10 @@ namespace ECM
 	                                     System.IO.Path.GetFileNameWithoutExtension(skillsDatabasePath));
 	        cmd.ExecuteNonQuery();
      
-            cmd = sqlConnection.CreateCommand();
-            cmd.CommandText = string.Format("ATTACH DATABASE \'{0}\' AS {1}", certsDatabasePath,
-                                      System.IO.Path.GetFileNameWithoutExtension(certsDatabasePath));
-            cmd.ExecuteNonQuery();
+//            cmd = sqlConnection.CreateCommand();
+//            cmd.CommandText = string.Format("ATTACH DATABASE \'{0}\' AS {1}", certsDatabasePath,
+//                                      System.IO.Path.GetFileNameWithoutExtension(certsDatabasePath));
+//            cmd.ExecuteNonQuery();
 	    
 	        cmd.Dispose();
 	     
@@ -137,6 +137,8 @@ namespace ECM
 
         static void LoadSkills ()
         {
+            List<EveSkill> skills = new List<EveSkill>();
+
             SqlCmd cmd = sqlConnection.CreateCommand();
             cmd.CommandText = string.Format("SELECT typeID, typeName, marketGroupID, description FROM invSkills");
             SqlReader row = cmd.ExecuteReader();
@@ -155,36 +157,41 @@ namespace ECM
                 newSkill.MarketGroupID = mgID;
                 newSkill.IconString = "TYPEID";
 
+                skills.Add(newSkill);
+            }
+            
+            row.Close();
+
+            foreach(EveSkill skill in skills)
+            {
                 // Get Skill Attributes
                 // Should maybe think of a better way to do this
                 // Maybe some type of attribute?
                 try
                 {
                     cmd = sqlConnection.CreateCommand();
-                    cmd.CommandText = string.Format("SELECT * FROM dgmTypeAttributes WHERE typeID = {0}", typeID);
-                    SQLiteDataAdapter apt = new SQLiteDataAdapter(cmd);
-                    DataSet res = new DataSet();
-                    apt.Fill(res);
+                    cmd.CommandText = string.Format("SELECT * FROM dgmTypeAttributes WHERE typeID = {0}", skill.ID);
+                    row = cmd.ExecuteReader();
 
-                    foreach(DataRow resRow in res.Tables[0].Rows)
+                    while(row.Read())
                     {
-                        int attID = Convert.ToInt32(resRow[1]);
+                        int attID = Convert.ToInt32(row[1]);
 
                         if(attID == 275)
                         {
-                            newSkill.Rank = Convert.ToInt32(resRow[3]);
+                            skill.Rank = Convert.ToInt32(row[3]);
                         }
                     }
 
-                    m_Items.Add(typeID, newSkill);
+                    row.Close();
+    
+                    m_Items.Add(skill.ID, skill);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
             }
-            
-            row.Close();
         }
 
 		public static void LoadMarket (Gtk.TreeStore marketStore, Gtk.ListStore itemStore)
