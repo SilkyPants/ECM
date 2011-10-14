@@ -438,8 +438,10 @@ namespace ECM
                     GetCharacterImplants(newChar);
 
                     // Get Skills
+                    GetCharacterSkills(newChar);
 
                     // Get Certificates
+                    GetCharacterCertificates(newChar);
 
                 }
             }
@@ -450,12 +452,66 @@ namespace ECM
             }
         }
 
-        private static void GetCharacterImplants (Character newChar)
+        private static void GetCharacterCertificates(Character character)
+        {
+            SQLiteConnection skillConn = sqlConnection.Clone() as SQLiteConnection;
+
+            SQLiteCommand cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = string.Format("SELECT * FROM ecmCharacterCertificates WHERE CharacterID = {0}", character.ID);
+
+            SQLiteDataReader reader = cmd.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                character.Certificates.Clear();
+
+                while (reader.Read())
+                {
+                    CharacterCertificates newCert = new CharacterCertificates();
+
+                    newCert.ID = Convert.ToInt64(reader["CertificateID"].ToString());
+
+                    character.Certificates.Add(newCert);
+                }
+            }
+
+            skillConn.Close();
+        }
+
+        private static void GetCharacterSkills(Character character)
+        {
+            SQLiteConnection skillConn = sqlConnection.Clone() as SQLiteConnection;
+
+            SQLiteCommand cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = string.Format("SELECT * FROM ecmCharacterSkills WHERE CharacterID = {0}", character.ID);
+
+            SQLiteDataReader reader = cmd.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                character.Skills.Clear();
+
+                while (reader.Read())
+                {
+                    CharacterSkills newSkill = new CharacterSkills();
+
+                    newSkill.ID = Convert.ToInt64(reader["SkillTypeID"].ToString());
+                    newSkill.Level = Convert.ToInt32(reader["SkillLevel"].ToString());
+                    newSkill.Skillpoints = Convert.ToInt32(reader["Skillpoints"].ToString());
+
+                    character.Skills.Add(newSkill);
+                }
+            }
+
+            skillConn.Close();
+        }
+
+        private static void GetCharacterImplants (Character character)
         {
             SQLiteConnection implantConn = sqlConnection.Clone() as SQLiteConnection;
 
             SQLiteCommand cmd = sqlConnection.CreateCommand();
-            cmd.CommandText = string.Format("SELECT * FROM ecmCharacterImplants WHERE CharacterID = {0}", newChar.ID);
+            cmd.CommandText = string.Format("SELECT * FROM ecmCharacterImplants WHERE CharacterID = {0}", character.ID);
 
             SQLiteDataReader reader = cmd.ExecuteReader();
 
@@ -463,20 +519,20 @@ namespace ECM
             {
                 while(reader.Read())
                 {
-                    newChar.Implants.Intelligence.Name = reader["IntImplantName"].ToString();
-                    newChar.Implants.Intelligence.Amount = Convert.ToInt32(reader["IntImplantValue"].ToString());
+                    character.Implants.Intelligence.Name = reader["IntImplantName"].ToString();
+                    character.Implants.Intelligence.Amount = Convert.ToInt32(reader["IntImplantValue"].ToString());
 
-                    newChar.Implants.Charisma.Name = reader["ChaImplantName"].ToString();
-                    newChar.Implants.Charisma.Amount = Convert.ToInt32(reader["ChaImplantValue"].ToString());
+                    character.Implants.Charisma.Name = reader["ChaImplantName"].ToString();
+                    character.Implants.Charisma.Amount = Convert.ToInt32(reader["ChaImplantValue"].ToString());
 
-                    newChar.Implants.Memory.Name = reader["MemImplantName"].ToString();
-                    newChar.Implants.Memory.Amount = Convert.ToInt32(reader["MemImplantValue"].ToString());
+                    character.Implants.Memory.Name = reader["MemImplantName"].ToString();
+                    character.Implants.Memory.Amount = Convert.ToInt32(reader["MemImplantValue"].ToString());
 
-                    newChar.Implants.Willpower.Name = reader["WilImplantName"].ToString();
-                    newChar.Implants.Willpower.Amount = Convert.ToInt32(reader["WilImplantValue"].ToString());
+                    character.Implants.Willpower.Name = reader["WilImplantName"].ToString();
+                    character.Implants.Willpower.Amount = Convert.ToInt32(reader["WilImplantValue"].ToString());
 
-                    newChar.Implants.Perception.Name = reader["PerImplantName"].ToString();
-                    newChar.Implants.Perception.Amount = Convert.ToInt32(reader["PerImplantValue"].ToString());
+                    character.Implants.Perception.Name = reader["PerImplantName"].ToString();
+                    character.Implants.Perception.Amount = Convert.ToInt32(reader["PerImplantValue"].ToString());
                 }
             }
 

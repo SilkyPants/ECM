@@ -6,8 +6,8 @@
   </configuration>
   <import>
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <widget-library name="../../ECM.Core/bin/Debug/ECM.Core.dll" />
-    <widget-library name="../bin/Debug/ECM.exe" internal="true" />
+    <widget-library name="../../bin/Debug/ECM.Core.dll" />
+    <widget-library name="../../bin/Debug/ECM.exe" internal="true" />
   </import>
   <icon-factory>
     <icon-set id="Home">
@@ -820,7 +820,7 @@
                       <widget class="Gtk.Notebook" id="ntbCharSheetPages">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="CurrentPage">7</property>
+                        <property name="CurrentPage">0</property>
                         <property name="TabPos">Left</property>
                         <property name="ShowBorder">False</property>
                         <child>
@@ -862,6 +862,8 @@
                                     <property name="MemberName" />
                                     <property name="CanFocus">True</property>
                                     <property name="ShowScrollbars">True</property>
+                                    <property name="EnableSearch">False</property>
+                                    <property name="HeadersVisible">False</property>
                                   </widget>
                                 </child>
                               </widget>

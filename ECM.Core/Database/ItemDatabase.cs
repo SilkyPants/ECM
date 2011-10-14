@@ -15,7 +15,8 @@ namespace ECM
 		static SqlConn sqlConnection = null;
     
 	    static string itemDatabasePath = "Resources/Database/eveItems.db";
-	    static string skillsDatabasePath = "Resources/Database/eveSkills.db";
+        static string skillsDatabasePath = "Resources/Database/eveSkills.db";
+        static string certsDatabasePath = "Resources/Database/eveCertificates.db";
 		
 		static Dictionary<long, EveMarketGroup> m_MarketGroups = new Dictionary<long, EveMarketGroup>();
         static Dictionary<long, EveItem> m_Items = new Dictionary<long, EveItem>();
@@ -49,6 +50,11 @@ namespace ECM
 	        cmd.CommandText = string.Format("ATTACH DATABASE \'{0}\' AS {1}", skillsDatabasePath, 
 	                                     System.IO.Path.GetFileNameWithoutExtension(skillsDatabasePath));
 	        cmd.ExecuteNonQuery();
+     
+            cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = string.Format("ATTACH DATABASE \'{0}\' AS {1}", certsDatabasePath,
+                                      System.IO.Path.GetFileNameWithoutExtension(certsDatabasePath));
+            cmd.ExecuteNonQuery();
 	    
 	        cmd.Dispose();
 	     
@@ -102,7 +108,7 @@ namespace ECM
 	    private static void LoadItems()
 	    {
 	        SqlCmd cmd = sqlConnection.CreateCommand();
-            cmd.CommandText = string.Format("SELECT typeID, typeName, marketGroupID, description FROM invTypes UNION SELECT typeID, typeName, marketGroupID, description FROM invSkills");
+            cmd.CommandText = string.Format("SELECT typeID, typeName, marketGroupID, description FROM invTypes");
 	        SqlReader row = cmd.ExecuteReader();
 	        
 	        while(row.Read())
@@ -121,7 +127,59 @@ namespace ECM
 				
 				m_Items.Add(typeID, newItem);
 	        }
+
+            row.Close();
+
+            // Load skills seperately so we can give them all their data
+            LoadSkills();
 	    }
+
+        static void LoadSkills ()
+        {
+            SqlCmd cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = string.Format("SELECT typeID, typeName, marketGroupID, description FROM invSkills");
+            SqlReader row = cmd.ExecuteReader();
+
+            while(row.Read())
+            {
+                string itemName = row[1].ToString();
+                long typeID = Convert.ToInt64(row[0]);
+                long mgID = row[2] is DBNull ? -1 : Convert.ToInt64(row[2]);
+                string itemDesc = row[3].ToString();
+            
+                EveSkill newSkill = new EveSkill();
+                newSkill.Name = itemName;
+                newSkill.Description = itemDesc;
+                newSkill.ID = typeID;
+                newSkill.MarketGroupID = mgID;
+                newSkill.IconString = "TYPEID";
+
+                // Get Skill Attributes
+                // Should maybe think of a better way to do this
+                // Maybe some type of attribute?
+                SQLiteConnection skillAtt = sqlConnection.Clone() as SQLiteConnection;
+
+                cmd = skillAtt.CreateCommand();
+                cmd.CommandText = string.Format("SELECT * FROM dgmtypeattributes WHERE typeID = {0}", typeID);
+                SqlReader att = cmd.ExecuteReader();
+    
+                while(att.Read())
+                {
+                    int attID = Convert.ToInt32(att["attributeID"]);
+
+                    if(attID == 275)
+                    {
+                        newSkill.Rank = Convert.ToInt32(att["valueFloat"]);
+                    }
+                }
+
+                skillAtt.Close();
+             
+                m_Items.Add(typeID, newSkill);
+            }
+            
+            row.Close();
+        }
 
 		public static void LoadMarket (Gtk.TreeStore marketStore, Gtk.ListStore itemStore)
 		{
