@@ -271,18 +271,26 @@ public partial class MainWindow: Gtk.Window
 
         CellRendererPixbuf skillIcon = new CellRendererPixbuf();
         skillIcon.Xalign = 0;
+        skillIcon.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
 
         CellRendererText skillName = new CellRendererText();
+        skillName.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
+        skillName.ForegroundGdk = new Gdk.Color(255, 255, 255);
 
         CellRendererText skillLevel = new CellRendererText();
+        skillLevel.Alignment = Pango.Alignment.Right;
+        skillLevel.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
+        skillLevel.ForegroundGdk = new Gdk.Color(255, 255, 255);
 
         SkillProgressCellRenderer skillLevelPgb = new SkillProgressCellRenderer();
         skillLevelPgb.Width = 48;
         skillLevelPgb.Height = 32;
+        skillLevelPgb.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
 
         CellRendererPixbuf skillInfoIcon = new CellRendererPixbuf();
         skillInfoIcon.Yalign = 0;
         skillInfoIcon.Ypad = 3;
+        skillInfoIcon.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
 
         skillColumn.PackStart(skillIcon, false);
         skillColumn.PackStart(skillName, true);
@@ -292,8 +300,8 @@ public partial class MainWindow: Gtk.Window
         skillColumn.PackEnd(skillLevel, false);
 
         skillColumn.AddAttribute(skillIcon, "pixbuf", 0);
-        skillColumn.AddAttribute(skillName, "text", 1);
-        skillColumn.AddAttribute(skillLevel, "text", 2);
+        skillColumn.AddAttribute(skillName, "markup", 1);
+        skillColumn.AddAttribute(skillLevel, "markup", 2);
         skillColumn.AddAttribute(skillLevelPgb, "SkillLevel", 3);
         skillColumn.AddAttribute(skillInfoIcon, "pixbuf", 4);
 
@@ -832,8 +840,8 @@ public partial class MainWindow: Gtk.Window
         foreach(EveApi.CharacterSkills charSkill in currentCharacter.Skills)
         {
             ECM.EveSkill skill = ECM.ItemDatabase.Items[charSkill.ID] as ECM.EveSkill;
-            string skillName = string.Format("{0} ({1}x)\nSP {2}/[Level SP]", skill.Name, skill.Rank, charSkill.Skillpoints);
-            string skillLevel = string.Format("Level {0}", charSkill.Level);
+            string skillName = string.Format("<span size=\"small\">{0} ({1}x)\nSP {2}/[Level SP]</span>", skill.Name, skill.Rank, charSkill.Skillpoints);
+            string skillLevel = string.Format("<span size=\"small\">Level {0}\n[Time to next level]</span>", charSkill.Level);
 
             charSkillStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.Skills.png"), skillName, skillLevel, charSkill.Level, new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.Info16.png"));
         }

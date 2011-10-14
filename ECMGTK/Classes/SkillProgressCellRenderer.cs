@@ -7,12 +7,14 @@ namespace ECMGTK
     {
         [GLib.Property("SkillLevel")]
         public int SkillLevel { get; set; }
+
+        [GLib.Property("PercentToNextLevel")]
         public float PercentToNextLevel { get; set; }
 
         public SkillProgressCellRenderer ()
         {
-            SkillLevel = 5;
-            PercentToNextLevel = .75f;
+            SkillLevel = 0;
+            PercentToNextLevel = 0;
         }
 
         protected override void Render (Gdk.Drawable window, Widget widget, Gdk.Rectangle background_area, Gdk.Rectangle cell_area, Gdk.Rectangle expose_area, CellRendererState flags)
@@ -30,6 +32,7 @@ namespace ECMGTK
 
             Gdk.GC gc = new Gdk.GC(window);
 
+            gc.RgbFgColor = new Gdk.Color(145,145,145);
             Gdk.Rectangle levelRect = new Gdk.Rectangle(pix_rect.X, pix_rect.Y + 6, 47, 9);
 
             window.DrawRectangle(gc, false, levelRect);
