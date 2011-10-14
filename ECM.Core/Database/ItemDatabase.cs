@@ -7,6 +7,7 @@ using System.IO;
 using SqlConn = System.Data.SQLite.SQLiteConnection;
 using SqlCmd = System.Data.SQLite.SQLiteCommand;
 using SqlReader = System.Data.SQLite.SQLiteDataReader;
+using System.Data;
 
 namespace ECM
 {
@@ -31,7 +32,7 @@ namespace ECM
 	    
 	    private static bool OpenDatabase()
 	    {
-	        sqlConnection = new SqlConn(string.Format("Data Source={0};version=3", itemDatabasePath));
+	        sqlConnection = new SqlConn(string.Format("Data Source={0}", itemDatabasePath));
 	        sqlConnection.Open();
 	    
 	        SqlCmd cmd = sqlConnection.CreateCommand();
@@ -157,25 +158,30 @@ namespace ECM
                 // Get Skill Attributes
                 // Should maybe think of a better way to do this
                 // Maybe some type of attribute?
-                SQLiteConnection skillAtt = sqlConnection.Clone() as SQLiteConnection;
-
-                cmd = skillAtt.CreateCommand();
-                cmd.CommandText = string.Format("SELECT * FROM dgmtypeattributes WHERE typeID = {0}", typeID);
-                SqlReader att = cmd.ExecuteReader();
-    
-                while(att.Read())
+                try
                 {
-                    int attID = Convert.ToInt32(att["attributeID"]);
+                    cmd = sqlConnection.CreateCommand();
+                    cmd.CommandText = string.Format("SELECT * FROM dgmTypeAttributes WHERE typeID = {0}", typeID);
+                    SQLiteDataAdapter apt = new SQLiteDataAdapter(cmd);
+                    DataSet res = new DataSet();
+                    apt.Fill(res);
 
-                    if(attID == 275)
+                    foreach(DataRow resRow in res.Tables[0].Rows)
                     {
-                        newSkill.Rank = Convert.ToInt32(att["valueFloat"]);
-                    }
-                }
+                        int attID = Convert.ToInt32(resRow[1]);
 
-                skillAtt.Close();
-             
-                m_Items.Add(typeID, newSkill);
+                        if(attID == 275)
+                        {
+                            newSkill.Rank = Convert.ToInt32(resRow[3]);
+                        }
+                    }
+
+                    m_Items.Add(typeID, newSkill);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
             
             row.Close();
