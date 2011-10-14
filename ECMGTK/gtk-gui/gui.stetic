@@ -820,7 +820,7 @@
                       <widget class="Gtk.Notebook" id="ntbCharSheetPages">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="CurrentPage">0</property>
+                        <property name="CurrentPage">7</property>
                         <property name="TabPos">Left</property>
                         <property name="ShowBorder">False</property>
                         <child>
@@ -857,6 +857,7 @@
                               <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
                                 <property name="MemberName" />
                                 <property name="ShadowType">In</property>
+                                <property name="BorderWidth">3</property>
                                 <child>
                                   <widget class="Gtk.TreeView" id="trvSkills">
                                     <property name="MemberName" />
@@ -918,6 +919,7 @@
                               <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow2">
                                 <property name="MemberName" />
                                 <property name="ShadowType">In</property>
+                                <property name="BorderWidth">3</property>
                                 <child>
                                   <widget class="Gtk.TreeView" id="trvCertificates">
                                     <property name="MemberName" />
@@ -950,6 +952,7 @@
                           <widget class="Gtk.ScrolledWindow" id="scwMedals">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
+                            <property name="BorderWidth">3</property>
                             <child>
                               <widget class="Gtk.TreeView" id="trvMedals">
                                 <property name="MemberName" />
@@ -976,6 +979,7 @@
                           <widget class="Gtk.ScrolledWindow" id="scwAttributes">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
+                            <property name="BorderWidth">3</property>
                             <child>
                               <widget class="Gtk.TreeView" id="trvAttributes">
                                 <property name="MemberName" />
@@ -1005,6 +1009,7 @@
                           <widget class="Gtk.ScrolledWindow" id="scwImplants">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
+                            <property name="BorderWidth">3</property>
                             <child>
                               <widget class="Gtk.TreeView" id="trvImplants">
                                 <property name="MemberName" />
@@ -1031,6 +1036,7 @@
                           <widget class="Gtk.ScrolledWindow" id="scwEmployment">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
+                            <property name="BorderWidth">3</property>
                             <child>
                               <widget class="Gtk.TreeView" id="trvEmployment">
                                 <property name="MemberName" />
@@ -1057,6 +1063,7 @@
                           <widget class="Gtk.ScrolledWindow" id="scwStandings">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
+                            <property name="BorderWidth">3</property>
                             <child>
                               <widget class="Gtk.TreeView" id="trvStandings">
                                 <property name="MemberName" />
@@ -1083,6 +1090,7 @@
                           <widget class="Gtk.ScrolledWindow" id="scwCombatLogs">
                             <property name="MemberName" />
                             <property name="ShadowType">In</property>
+                            <property name="BorderWidth">3</property>
                             <child>
                               <widget class="Gtk.TreeView" id="trvKillLogs">
                                 <property name="MemberName" />

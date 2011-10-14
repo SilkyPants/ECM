@@ -765,7 +765,7 @@ public partial class MainWindow {
         this.ntbCharSheetPages = new global::Gtk.Notebook();
         this.ntbCharSheetPages.CanFocus = true;
         this.ntbCharSheetPages.Name = "ntbCharSheetPages";
-        this.ntbCharSheetPages.CurrentPage = 0;
+        this.ntbCharSheetPages.CurrentPage = 7;
         this.ntbCharSheetPages.TabPos = ((global::Gtk.PositionType)(0));
         this.ntbCharSheetPages.ShowBorder = false;
         // Container child ntbCharSheetPages.Gtk.Notebook+NotebookChild
@@ -795,6 +795,7 @@ public partial class MainWindow {
         this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow();
         this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
         this.GtkScrolledWindow1.ShadowType = ((global::Gtk.ShadowType)(1));
+        this.GtkScrolledWindow1.BorderWidth = ((uint)(3));
         // Container child GtkScrolledWindow1.Gtk.Container+ContainerChild
         this.trvSkills = new global::Gtk.TreeView();
         this.trvSkills.CanFocus = true;
@@ -840,6 +841,7 @@ public partial class MainWindow {
         this.GtkScrolledWindow2 = new global::Gtk.ScrolledWindow();
         this.GtkScrolledWindow2.Name = "GtkScrolledWindow2";
         this.GtkScrolledWindow2.ShadowType = ((global::Gtk.ShadowType)(1));
+        this.GtkScrolledWindow2.BorderWidth = ((uint)(3));
         // Container child GtkScrolledWindow2.Gtk.Container+ContainerChild
         this.trvCertificates = new global::Gtk.TreeView();
         this.trvCertificates.CanFocus = true;
@@ -862,6 +864,7 @@ public partial class MainWindow {
         this.scwMedals = new global::Gtk.ScrolledWindow();
         this.scwMedals.Name = "scwMedals";
         this.scwMedals.ShadowType = ((global::Gtk.ShadowType)(1));
+        this.scwMedals.BorderWidth = ((uint)(3));
         // Container child scwMedals.Gtk.Container+ContainerChild
         this.trvMedals = new global::Gtk.TreeView();
         this.trvMedals.CanFocus = true;
@@ -881,6 +884,7 @@ public partial class MainWindow {
         this.scwAttributes = new global::Gtk.ScrolledWindow();
         this.scwAttributes.Name = "scwAttributes";
         this.scwAttributes.ShadowType = ((global::Gtk.ShadowType)(1));
+        this.scwAttributes.BorderWidth = ((uint)(3));
         // Container child scwAttributes.Gtk.Container+ContainerChild
         this.trvAttributes = new global::Gtk.TreeView();
         this.trvAttributes.CanFocus = true;
@@ -902,6 +906,7 @@ public partial class MainWindow {
         this.scwImplants = new global::Gtk.ScrolledWindow();
         this.scwImplants.Name = "scwImplants";
         this.scwImplants.ShadowType = ((global::Gtk.ShadowType)(1));
+        this.scwImplants.BorderWidth = ((uint)(3));
         // Container child scwImplants.Gtk.Container+ContainerChild
         this.trvImplants = new global::Gtk.TreeView();
         this.trvImplants.CanFocus = true;
@@ -921,6 +926,7 @@ public partial class MainWindow {
         this.scwEmployment = new global::Gtk.ScrolledWindow();
         this.scwEmployment.Name = "scwEmployment";
         this.scwEmployment.ShadowType = ((global::Gtk.ShadowType)(1));
+        this.scwEmployment.BorderWidth = ((uint)(3));
         // Container child scwEmployment.Gtk.Container+ContainerChild
         this.trvEmployment = new global::Gtk.TreeView();
         this.trvEmployment.CanFocus = true;
@@ -940,6 +946,7 @@ public partial class MainWindow {
         this.scwStandings = new global::Gtk.ScrolledWindow();
         this.scwStandings.Name = "scwStandings";
         this.scwStandings.ShadowType = ((global::Gtk.ShadowType)(1));
+        this.scwStandings.BorderWidth = ((uint)(3));
         // Container child scwStandings.Gtk.Container+ContainerChild
         this.trvStandings = new global::Gtk.TreeView();
         this.trvStandings.CanFocus = true;
@@ -959,6 +966,7 @@ public partial class MainWindow {
         this.scwCombatLogs = new global::Gtk.ScrolledWindow();
         this.scwCombatLogs.Name = "scwCombatLogs";
         this.scwCombatLogs.ShadowType = ((global::Gtk.ShadowType)(1));
+        this.scwCombatLogs.BorderWidth = ((uint)(3));
         // Container child scwCombatLogs.Gtk.Container+ContainerChild
         this.trvKillLogs = new global::Gtk.TreeView();
         this.trvKillLogs.CanFocus = true;

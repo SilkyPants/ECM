@@ -72,7 +72,7 @@ public partial class MainWindow: Gtk.Window
         imgNetworkIndicator.PixbufAnimation = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF16);
         imgNetworkIndicator.Visible = false;
 
-        SetupCharacterSheet();
+        SetupGui();
 
         ECM.Core.OnUpdateGui += new EventHandler(UpdateGui);
         ECM.Core.OnCharacterChanged += CharacterChanged;
@@ -147,6 +147,13 @@ public partial class MainWindow: Gtk.Window
     #endregion
 
     #region Gui Setup
+
+    public void SetupGui ()
+    {
+        SetupMarket();
+        SetupCharacterSheet();
+    }
+
 	public void FillTabsWithImages ()
 	{
 		ntbPages.SetTabLabelPacking(vbxOverview, false, false, PackType.Start);
@@ -236,6 +243,41 @@ public partial class MainWindow: Gtk.Window
 		return box;
 	}
 
+    public void SetupMarket ()
+    {
+        TreeViewColumn mainColumn = new TreeViewColumn();
+        mainColumn.Title = "Groups";
+        
+        CellRendererPixbuf pixBuf = new CellRendererPixbuf();
+        pixBuf.Xalign = 0;
+        mainColumn.PackStart(pixBuf, false);
+        mainColumn.AddAttribute(pixBuf, "pixbuf", 0);
+        
+        CellRendererText label = new CellRendererText();
+        label.Xalign = 0;
+        mainColumn.PackStart(label, false);
+        mainColumn.AddAttribute(label, "text", 1);
+        
+        trvMarket.AppendColumn(mainColumn);
+        
+        trvMarket.ColumnsAutosize();
+
+        trvMarket.Selection.Changed += trvSelectionChanged;
+
+        // Search Item Tree
+        mainColumn = new TreeViewColumn();
+        mainColumn.Title = "Groups";
+        
+        label = new CellRendererText();
+        label.Xalign = 0;
+        mainColumn.PackStart(label, false);
+        mainColumn.AddAttribute(label, "text", 0);
+
+        trvSearchItems.AppendColumn(mainColumn);
+
+        trvSearchItems.ColumnsAutosize();
+    }
+
     private void SetupCharacterSheet()
     {
         imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(ECM.Core.NoPortraitJPG).ScaleSimple(198,198,Gdk.InterpType.Hyper);
@@ -246,12 +288,14 @@ public partial class MainWindow: Gtk.Window
 
         TreeViewColumn attributeColumn = new TreeViewColumn();
         attributeColumn.Title = "Attribute";
-        attributeColumn.Spacing = 6;
 
         CellRendererPixbuf attributeImg = new CellRendererPixbuf();
         attributeImg.Xalign = 0;
+        attributeImg.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
 
-        Gtk.CellRendererText attributeName = new Gtk.CellRendererText ();
+        Gtk.CellRendererText attributeName = new Gtk.CellRendererText();
+        attributeName.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
+        attributeName.ForegroundGdk = new Gdk.Color(255, 255, 255);
 
         attributeColumn.PackStart(attributeImg, false);
         attributeColumn.PackStart (attributeName, true);
@@ -287,15 +331,9 @@ public partial class MainWindow: Gtk.Window
         skillLevelPgb.Height = 32;
         skillLevelPgb.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
 
-        CellRendererPixbuf skillInfoIcon = new CellRendererPixbuf();
-        skillInfoIcon.Yalign = 0;
-        skillInfoIcon.Ypad = 3;
-        skillInfoIcon.CellBackgroundGdk = new Gdk.Color(38, 38, 38);
-
         skillColumn.PackStart(skillIcon, false);
         skillColumn.PackStart(skillName, true);
 
-        skillColumn.PackEnd(skillInfoIcon, false);
         skillColumn.PackEnd(skillLevelPgb, false);
         skillColumn.PackEnd(skillLevel, false);
 
@@ -303,14 +341,20 @@ public partial class MainWindow: Gtk.Window
         skillColumn.AddAttribute(skillName, "markup", 1);
         skillColumn.AddAttribute(skillLevel, "markup", 2);
         skillColumn.AddAttribute(skillLevelPgb, "SkillLevel", 3);
-        skillColumn.AddAttribute(skillInfoIcon, "pixbuf", 4);
 
         trvSkills.AppendColumn(skillColumn);
+        trvSkills.RowActivated += HandleTrvSkillsRowActivated;
+        trvSkills.ModifyBase(StateType.Selected, new Gdk.Color(75, 75, 75));
         #endregion
 
         #region Certificates Treeview
 
         #endregion
+    }
+
+    void HandleTrvSkillsRowActivated (object o, RowActivatedArgs args)
+    {
+        Console.WriteLine("Click");
     }
 
     void UpdateCharacterPortrait (object o, ButtonPressEventArgs args)
@@ -396,55 +440,23 @@ public partial class MainWindow: Gtk.Window
     {
         marketStore.Clear();
         itemStore.Clear();
-        
-        TreeViewColumn mainColumn = new TreeViewColumn();
-        mainColumn.Title = "Groups";
-        
-        CellRendererPixbuf pixBuf = new CellRendererPixbuf();
-        pixBuf.Xalign = 0;
-        mainColumn.PackStart(pixBuf, false);
-        mainColumn.AddAttribute(pixBuf, "pixbuf", 0);
-        
-        CellRendererText label = new CellRendererText();
-        label.Xalign = 0;
-        mainColumn.PackStart(label, false);
-        mainColumn.AddAttribute(label, "text", 1);
-        
-        trvMarket.AppendColumn(mainColumn);
-		
-		ECM.ItemDatabase.LoadMarket(marketStore, itemStore);
-        
-        trvMarket.ColumnsAutosize();
-        
-        TreeModelSort sorted = new TreeModelSort(marketStore);
-        
-        sorted.SetSortColumnId(1, SortType.Ascending);
-        
-        trvMarket.Model = sorted;
 
-        trvMarket.Selection.Changed += trvSelectionChanged;
+        ECM.ItemDatabase.LoadMarket(marketStore, itemStore);
+        
+        TreeModelSort sortedMarket = new TreeModelSort(marketStore);
+        
+        sortedMarket.SetSortColumnId(1, SortType.Ascending);
 
-        // Search Item Tree
+        trvMarket.Model = sortedMarket;
+
         marketFilter = new TreeModelFilter(itemStore, null);
         marketFilter.VisibleFunc = new TreeModelFilterVisibleFunc(HandleMarketFilter);
 
-        mainColumn = new TreeViewColumn();
-        mainColumn.Title = "Groups";
+        TreeModelSort sortedFilter = new TreeModelSort(marketFilter);
         
-        label = new CellRendererText();
-        label.Xalign = 0;
-        mainColumn.PackStart(label, false);
-        mainColumn.AddAttribute(label, "text", 0);
-
-        trvSearchItems.AppendColumn(mainColumn);
-
-        trvSearchItems.ColumnsAutosize();
+        sortedFilter.SetSortColumnId(0, SortType.Ascending);
         
-        sorted = new TreeModelSort(marketFilter);
-        
-        sorted.SetSortColumnId(0, SortType.Ascending);
-        
-        trvSearchItems.Model = sorted;
+        trvSearchItems.Model = sortedFilter;
     }
 
     void trvSelectionChanged (object sender, EventArgs e)
@@ -516,10 +528,14 @@ public partial class MainWindow: Gtk.Window
 
     protected void ShowItemRender (object sender, System.EventArgs e)
     {
-        long itemID = Convert.ToInt64(btnShowRender.Name);
-        ViewItemRender viewRender = new ViewItemRender(ECM.ItemDatabase.Items[itemID]);
+        long itemID;
 
-        viewRender.ShowAll();
+        if (long.TryParse(btnShowRender.Name, out itemID))
+        {
+            ViewItemRender viewRender = new ViewItemRender(ECM.ItemDatabase.Items[itemID]);
+
+            viewRender.ShowAll();
+        }
     }
 
     void ShowMarketGroupItems (TreeModel model, TreeIter iter)
@@ -775,7 +791,7 @@ public partial class MainWindow: Gtk.Window
     #region Character Sheet
 
     ListStore charAttributeStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string));
-    ListStore charSkillStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string), typeof(string), typeof(int), typeof(Gdk.Pixbuf));
+    ListStore charSkillStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string), typeof(string), typeof(int));
 
     void ShowCharacterSheet (ECM.Character currentCharacter)
     {
@@ -840,10 +856,10 @@ public partial class MainWindow: Gtk.Window
         foreach(EveApi.CharacterSkills charSkill in currentCharacter.Skills)
         {
             ECM.EveSkill skill = ECM.ItemDatabase.Items[charSkill.ID] as ECM.EveSkill;
-            string skillName = string.Format("<span size=\"small\">{0} ({1}x)\nSP {2}/[Level SP]</span>", skill.Name, skill.Rank, charSkill.Skillpoints);
+            string skillName = string.Format("<span size=\"small\">{0} ({1}x)</span>\n<span size=\"small\" weight=\"bold\">SP {2}/[Level SP]</span>", skill.Name, skill.Rank, charSkill.Skillpoints);
             string skillLevel = string.Format("<span size=\"small\">Level {0}\n[Time to next level]</span>", charSkill.Level);
 
-            charSkillStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.Skills.png"), skillName, skillLevel, charSkill.Level, new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.Info16.png"));
+            charSkillStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.Skills.png"), skillName, skillLevel, charSkill.Level);
         }
 
         trvSkills.Model = charSkillStore;
