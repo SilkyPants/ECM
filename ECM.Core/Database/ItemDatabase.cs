@@ -157,6 +157,8 @@ namespace ECM
                 // Get Skill Attributes
                 // Should maybe think of a better way to do this
                 // Maybe some type of attribute?
+                try
+                {
                 SQLiteConnection skillAtt = sqlConnection.Clone() as SQLiteConnection;
 
                 cmd = skillAtt.CreateCommand();
@@ -176,6 +178,11 @@ namespace ECM
                 skillAtt.Close();
              
                 m_Items.Add(typeID, newSkill);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
             
             row.Close();
