@@ -10,6 +10,8 @@ namespace ECM
     {
         CharacterApiRequest<CharacterSheet> m_charSheetRequest;
         CharacterApiRequest<CharacterInfo> m_charInfoRequest;
+        CharacterApiRequest<SkillQueue> m_skillQueueRequest;
+
         bool m_AutoUpdate = false;
 
         public event EventHandler CharacterUpdated;
@@ -26,9 +28,13 @@ namespace ECM
             get { return m_AutoUpdate && Account != null; }
             set
             {
-                m_AutoUpdate = value;
-                m_charInfoRequest.Enabled = value && Account.KeyAccess.HasFlag(ApiKeyMask.CharacterSheet);
-                m_charSheetRequest.Enabled = value && (Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPublic) || Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPrivate));
+                if(SetProperty<bool>("AutoUpdate", ref m_AutoUpdate, value))
+                {
+                    m_charInfoRequest.Enabled = value && Account.KeyAccess.HasFlag(ApiKeyMask.CharacterSheet);
+                    m_charSheetRequest.Enabled = value && (Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPublic) || Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPrivate));
+    
+                    m_skillQueueRequest.Enabled = value && Account.KeyAccess.HasFlag(ApiKeyMask.SkillQueue);
+                }
             }
         }
 
@@ -37,159 +43,193 @@ namespace ECM
             get { return string.Format("{0} - {1} - {2}", Race, Bloodline, Ancestry); }
         }
 
+        long m_ID = 0;
         public long ID
         {
-            get;
-            set;
+            get { return m_ID; }
+            set { SetProperty<long>("ID", ref m_ID, value); }
         }
 
+        string m_Name = string.Empty;
         public string Name
         {
-            get;
-            set;
+            get { return m_Name; }
+            set { SetProperty<string>("Name", ref m_Name, value); }
         }
+
+        string m_Race = string.Empty;
         public string Race
         {
-            get;
-            set;
+            get { return m_Race; }
+            set { SetProperty<string>("Race", ref m_Race, value); }
         }
 
+        string m_Bloodline = string.Empty;
         public string Bloodline
         {
-            get;
-            set;
+            get { return m_Race; }
+            set { SetProperty<string>("Bloodline", ref m_Bloodline, value); }
         }
 
+        double m_AccountBalanace = 0;
         public double AccountBalance
         {
-            get;
-            set;
+            get { return m_AccountBalanace; }
+            set { SetProperty<double>("AccountBalance", ref m_AccountBalanace, value); }
         }
 
+        int m_SkillPoints = 0;
         public int SkillPoints
         {
-            get;
-            set;
+            get { return m_SkillPoints; }
+            set { SetProperty<int>("SkillPoints", ref m_SkillPoints, value); }
         }
 
+        string m_ShipName = string.Empty;
         public string ShipName
         {
-            get;
-            set;
+            get { return m_ShipName; }
+            set { SetProperty<string>("ShipName", ref m_ShipName, value); }
         }
 
+        long m_ShipTypeID = 0;
         public long ShipTypeID
         {
-            get;
-            set;
+            get { return m_ShipTypeID; }
+            set { SetProperty<long>("ShipTypeID", ref m_ShipTypeID, value); }
         }
 
+        string m_ShipTypeName = string.Empty;
         public string ShipTypeName
         {
-            get;
-            set;
+            get { return m_ShipTypeName; }
+            set { SetProperty<string>("ShipTypeName", ref m_ShipTypeName, value); }
         }
 
+        long m_CorporationID = 0;
         public long CorporationID
         {
-            get;
-            set;
+            get { return m_CorporationID; }
+            set { SetProperty<long>("CorporationID", ref m_CorporationID, value); }
         }
 
+        string m_Corporation = string.Empty;
         public string Corporation
         {
-            get;
-            set;
+            get { return m_Corporation; }
+            set { SetProperty<string>("Corporation", ref m_Corporation, value); }
         }
 
+        DateTime m_CorporationDate = DateTime.MinValue;
         public DateTime CorporationDate
         {
-            get;
-            set;
+            get { return m_CorporationDate; }
+            set { SetProperty<DateTime>("CorporationDate", ref m_CorporationDate, value); }
         }
 
+        long m_AllianceID = 0;
         public long AllianceID
         {
-            get;
-            set;
+            get { return m_AllianceID; }
+            set { SetProperty<long>("AllianceID", ref m_AllianceID, value); }
         }
 
+        string m_Alliance = string.Empty;
         public string Alliance
         {
-            get;
-            set;
+            get { return m_Alliance; }
+            set { SetProperty<string>("Alliance", ref m_Alliance, value); }
         }
 
+        DateTime m_AllianceDate = DateTime.MinValue;
         public DateTime AllianceDate
         {
-            get;
-            set;
+            get { return m_AllianceDate; }
+            set { SetProperty<DateTime>("AllianceDate", ref m_AllianceDate, value); }
         }
 
+        string m_LastKnownLocation = string.Empty;
         public string LastKnownLocation
         {
-            get;
-            set;
+            get { return m_LastKnownLocation; }
+            set { SetProperty<string>("LastKnownLocation", ref m_LastKnownLocation, value); }
         }
 
+        double m_SecurityStatus = 0;
         public double SecurityStatus
         {
-            get;
-            set;
+            get { return m_SecurityStatus; }
+            set { SetProperty<double>("SecurityStatus", ref m_SecurityStatus, value); }
         }
 
+        DateTime m_Birthday = DateTime.MinValue;
         public DateTime Birthday
         {
-            get;
-            set;
+            get { return m_Birthday; }
+            set { SetProperty<DateTime>("Birthday", ref m_Birthday, value); }
         }
 
+        string m_Ancestry = string.Empty;
         public string Ancestry
         {
-            get;
-            set;
+            get { return m_Ancestry; }
+            set { SetProperty<string>("Ancestry", ref m_Ancestry, value); }
         }
 
+        string m_Gender = string.Empty;
         public string Gender
         {
-            get;
-            set;
+            get { return m_Gender; }
+            set { SetProperty<string>("Gender", ref m_Gender, value); }
         }
 
+        string m_CloneName = string.Empty;
         public string CloneName
         {
-            get;
-            set;
+            get { return m_CloneName; }
+            set { SetProperty<string>("CloneName", ref m_CloneName, value); }
         }
 
+        long m_CloneSkillPoints = 0;
         public long CloneSkillPoints
         {
-            get;
-            set;
+            get { return m_CloneSkillPoints; }
+            set { SetProperty<long>("CloneSkillPoints", ref m_CloneSkillPoints, value); }
         }
 
+        ImplantSet m_Implants = new ImplantSet();
         public ImplantSet Implants
         {
-            get;
-            set;
+            get { return m_Implants; }
+            set { SetProperty<ImplantSet>("Implants", ref m_Implants, value); }
         }
 
+        CharacterAttributes m_Attributes = new CharacterAttributes();
         public CharacterAttributes Attributes
         {
-            get;
-            set;
+            get { return m_Attributes; }
+            set { SetProperty<CharacterAttributes>("Attributes", ref m_Attributes, value); }
         }
 
+        List<CharacterSkills> m_Skills = new List<CharacterSkills>();
         public List<CharacterSkills> Skills
         {
-            get;
-            set;
+            get { return m_Skills; }
+            set { SetProperty<List<CharacterSkills>>("Skills", ref m_Skills, value); }
         }
 
+        SkillQueue m_SkillQueue = new SkillQueue();
+        public SkillQueue SkillQueue
+        {
+            get { return m_SkillQueue; }
+            set { SetProperty<SkillQueue>("SkillQueue", ref m_SkillQueue, value); }
+        }
+
+        List<CharacterCertificates> m_Certificates = new List<CharacterCertificates>();
         public List<CharacterCertificates> Certificates
         {
-            get;
-            set;
+            get { return m_Certificates; }
+            set { SetProperty<List<CharacterCertificates>>("Certificates", ref m_Certificates, value); }
         }
 
         public bool IsUpdating
@@ -200,10 +240,11 @@ namespace ECM
             }
         }
 
+        MemoryStream m_Portrait = null;
         public MemoryStream Portrait
         {
-            get;
-            set;
+            get { return m_Portrait; }
+            set { SetProperty<MemoryStream>("Portrait", ref m_Portrait, value); }
         }
         #endregion
 
@@ -224,7 +265,9 @@ namespace ECM
 
             m_charInfoRequest = new CharacterApiRequest<CharacterInfo>(characterID, Account.KeyID, Account.VCode);
             m_charInfoRequest.OnRequestUpdate += ApiRequestUpdate;
-            //m_charInfoRequest.Enabled = Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPublic) || Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPrivate);
+
+            m_skillQueueRequest = new CharacterApiRequest<SkillQueue>(characterID, Account.KeyID, Account.VCode);
+            m_skillQueueRequest.OnRequestUpdate += ApiRequestUpdate;
         }
 
         void ApiRequestUpdate(IApiResult result)
@@ -240,6 +283,11 @@ namespace ECM
                 {
                     ApiResult<CharacterInfo> charInfo = result as ApiResult<CharacterInfo>;
                     UpdateCharacter(charInfo.Result);
+                }
+                else if(result is ApiResult<SkillQueue>)
+                {
+                    ApiResult<SkillQueue> queue = result as ApiResult<SkillQueue>;
+                    SkillQueue = queue.Result;
                 }
 
                 if (!IsUpdating && CharacterUpdated != null)
@@ -312,11 +360,13 @@ namespace ECM
         {
             m_charSheetRequest.UpdateOnSecTick();
             m_charInfoRequest.UpdateOnSecTick();
+            m_skillQueueRequest.UpdateOnSecTick();
         }
 
         #region implemented abstract members of ECM.DatabaseBase
         protected override void WriteToDatabase ()
         {
+            Console.WriteLine(string.Format("Saving {0} to the database.", Name));
             AccountDatabase.AddCharacter(this);
         }
         #endregion

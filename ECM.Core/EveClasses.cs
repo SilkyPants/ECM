@@ -33,5 +33,10 @@ namespace ECM
         public int Rank { get; set; }
         public List<long> RequiredSkills { get; set; }
     }
+
+    public class EveShip : EveItem
+    {
+
+    }
 }
 

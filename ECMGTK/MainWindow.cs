@@ -24,6 +24,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Timers;
 using ECMGTK;
+using GLib;
 
 public partial class MainWindow: Gtk.Window
 {
@@ -54,7 +55,12 @@ public partial class MainWindow: Gtk.Window
         
         ntbPages.CurrentPage = 0;
         hpnMarket.Position = 250;
-        Sensitive = false;
+        Visible = false;
+
+        while (Gtk.Application.EventsPending ())
+            Gtk.Application.RunIteration ();
+
+        GLib.Idle.Add(new IdleHandler (OnApplicationIdle));
 
 		FillTabsWithImages();
         
@@ -104,6 +110,13 @@ public partial class MainWindow: Gtk.Window
     }
 
     #region Event Handlers
+
+    bool OnApplicationIdle ()
+    {
+
+        return true;
+    }
+
     void CharacterChanged (object sender, EventArgs e)
     {
         Gtk.Application.Invoke(delegate

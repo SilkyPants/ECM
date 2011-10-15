@@ -114,7 +114,7 @@ namespace ECM
 
                 foreach (CharacterListItem character in result.Result.Key.Characters)
                 {
-                    AddCharacter(new Character(this, character.CharacterID, character.Name));
+                    AddCharacter(character.CharacterID, character.Name);
                 }
 
                 OnAccountUpdated(result);
@@ -145,19 +145,30 @@ namespace ECM
             }
         }
 
-        internal void AddCharacter(Character newChar)
+        internal void AddCharacter(long charID, string charName)
         {
-            if (m_Characters.ContainsKey(newChar.ID) == false)
-                m_Characters.Add(newChar.ID, newChar);
+            if (m_Characters.ContainsKey(charID) == false)
+                m_Characters.Add(charID, new Character(this, charID, charName));
+        }
+
+        public Character GetCharacter (long charID)
+        {
+            return m_Characters[charID];
         }
 
         #region implemented abstract members of ECM.DatabaseBase
+
+        public override void SaveToDatabase ()
+        {
+            foreach(Character c in Characters)
+                c.SaveToDatabase();
+
+            base.SaveToDatabase ();
+        }
+
         protected override void WriteToDatabase ()
         {
             AccountDatabase.AddAccount(this);
-
-            foreach(Character c in Characters)
-                c.SaveToDatabase();
         }
         #endregion
     }

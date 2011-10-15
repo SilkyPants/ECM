@@ -402,7 +402,9 @@ namespace ECM
                 {
                     string name = reader["Name"].ToString();
                     long charID = Convert.ToInt64(reader["ID"].ToString());
-                    Character newChar = new Character(account, charID, name);
+
+                    account.AddCharacter(charID, name);
+                    Character newChar = account.GetCharacter(charID);
 
                     newChar.AutoUpdate = Convert.ToBoolean(reader["AutoUpdate"].ToString());
                     newChar.Race = reader["Race"].ToString();
@@ -431,8 +433,6 @@ namespace ECM
                     newChar.Attributes.Willpower = Convert.ToInt32(reader["Willpower"].ToString());
                     newChar.Attributes.Charisma = Convert.ToInt32(reader["Charisma"].ToString());
                     newChar.Portrait = new System.IO.MemoryStream((byte[])reader["Portrait"]);
-
-                    account.AddCharacter(newChar);
 
                     // Get Implants
                     GetCharacterImplants(newChar);

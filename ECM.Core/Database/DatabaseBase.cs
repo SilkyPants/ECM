@@ -4,12 +4,12 @@ namespace ECM
 {
     public abstract class DatabaseBase
     {
-        public bool IsDirty { get; private set; }
+        public bool IsDirty { get; protected set; }
 
         protected bool SetProperty<T>(string propertyName, ref T currentValue, T newValue)
         {
             bool propertyChanged = false;
-            T savedVal = currentValue;
+
             if (currentValue == null || !currentValue.Equals(newValue))
             {
                 currentValue = newValue;
@@ -23,7 +23,7 @@ namespace ECM
 
         protected abstract void WriteToDatabase();
 
-        public void SaveToDatabase()
+        public virtual void SaveToDatabase()
         {
             if(IsDirty)
                 WriteToDatabase();
