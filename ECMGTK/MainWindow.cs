@@ -55,12 +55,14 @@ public partial class MainWindow: Gtk.Window
         
         ntbPages.CurrentPage = 0;
         hpnMarket.Position = 250;
-        Visible = false;
+        Hide();
 
         while (Gtk.Application.EventsPending ())
             Gtk.Application.RunIteration ();
 
-        GLib.Idle.Add(new IdleHandler (OnApplicationIdle));
+        GLib.Timeout.Add(1000, new TimeoutHandler(OnHeartbeat));
+
+        GLib.ExceptionManager.UnhandledException += OnUnhandledException;
 
 		FillTabsWithImages();
         
@@ -85,11 +87,13 @@ public partial class MainWindow: Gtk.Window
         ECM.Core.OnTQServerUpdate += TQServerUpdate;
 
         ntbPages.CurrentPage = 0;
+    }
 
-        Timer heartbeat = new Timer(1000);
-        heartbeat.AutoReset = true;
-        heartbeat.Elapsed += delegate { ECM.Core.UpdateOnHeartbeat(); };
-        heartbeat.Start();
+    #region Event Handlers
+
+    void OnUnhandledException (UnhandledExceptionArgs args)
+    {
+        Console.WriteLine(args.ExceptionObject);
     }
 
     void TQServerUpdate (EveApi.ServerStatus status)
@@ -109,10 +113,10 @@ public partial class MainWindow: Gtk.Window
         stbStatus.Push(0, serverStatus);
     }
 
-    #region Event Handlers
-
-    bool OnApplicationIdle ()
+    bool OnHeartbeat()
     {
+        ECM.Core.UpdateOnHeartbeat();
+        ECM.Core.SaveAccounts();
 
         return true;
     }
@@ -145,7 +149,7 @@ public partial class MainWindow: Gtk.Window
         Gtk.Application.Invoke(delegate
         {
             hpnMarket.Sensitive = true;
-            Sensitive = true;
+            Show();
             FillAccounts();
         });
     }
