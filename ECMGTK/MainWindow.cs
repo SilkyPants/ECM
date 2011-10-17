@@ -355,7 +355,14 @@ public partial class MainWindow: Gtk.Window
         CellRendererCharSkill skillCell = new CellRendererCharSkill();
 
         skillColumn.PackStart(skillCell, true);
-        skillColumn.SetCellDataFunc(skillCell, new Gtk.TreeCellDataFunc(RenderSkillCell));
+        skillColumn.AddAttribute(skillCell, "SkillName", SkillNameColumn);
+        skillColumn.AddAttribute(skillCell, "SkillRank", SkillRankColumn);
+        skillColumn.AddAttribute(skillCell, "SkillCurrSP", SkillCurrSPColumn);
+        skillColumn.AddAttribute(skillCell, "SkillNextSP", SkillNextSPColumn);
+        skillColumn.AddAttribute(skillCell, "SkillLevel", SkillLevelColumn);
+        skillColumn.AddAttribute(skillCell, "SkillMinsToNext", SkillTimeToNextColumn);
+
+        //skillColumn.SetCellDataFunc(skillCell, new Gtk.TreeCellDataFunc(RenderSkillCell));
 
         trvSkills.AppendColumn(skillColumn);
         trvSkills.RowActivated += HandleTrvSkillsRowActivated;
@@ -898,14 +905,16 @@ public partial class MainWindow: Gtk.Window
 
     #region Character Sheet
 
-    static int SkillPicColumn = 0;
-    static int SkillIdColumn = 1;
-    static int SkillLevelColumn = 2;
-    static int SkillPointsColumn = 3;
-    static int SkillLearntColumn = 4;
+    static int SkillNameColumn = 0;
+    static int SkillRankColumn = 1;
+    static int SkillCurrSPColumn = 2;
+    static int SkillNextSPColumn = 3;
+    static int SkillLevelColumn = 4;
+    static int SkillTimeToNextColumn = 5;
+    static int SkillLearntColumn = 6;
 
     ListStore charAttributeStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string));
-    TreeStore charSkillStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(long), typeof(int), typeof(int), typeof(bool));
+    TreeStore charSkillStore = new TreeStore(typeof(string), typeof(int), typeof(long), typeof(long), typeof(int), typeof(double), typeof(bool));
     TreeModelFilter skillsFilter = null;
 
     void ShowCharacterSheet (ECM.Character currentCharacter)
@@ -988,9 +997,12 @@ public partial class MainWindow: Gtk.Window
                 while (cont)
                 {
                     long id = (long)charSkillStore.GetValue(child, SkillIdColumn);
+                    ECM.EveSkill skill = ECM.ItemDatabase.Items[id] as ECM.EveSkill;
                     bool learnt = currentCharacter.Skills.ContainsKey(id);
                     int level = 0;
-                    int points = 0;
+                    long points = 0;
+                    long pointsAtNext = skill.PointsAtLevel(level + 1);
+                    double minsToNext = 0;
 
                     if (learnt)
                     {
@@ -1000,10 +1012,20 @@ public partial class MainWindow: Gtk.Window
                         charSkillStore.SetValue(iter, SkillLearntColumn, learnt);
                     }
 
+                    if (level < 5)
+                    {
+                        long diff = pointsAtNext - points;
+                        double spPerMin = ECM.Core.CurrentCharacter.SkillpointsPerMinute(skill.PrimaryAttribute, skill.SecondaryAttribute);
+    
+                        minsToNext = diff / spPerMin;
+                    }
+
                     charSkillStore.SetValue(child, SkillLearntColumn, learnt);
 
                     charSkillStore.SetValue(child, SkillLevelColumn, level);
-                    charSkillStore.SetValue(child, SkillPointsColumn, points);
+                    charSkillStore.SetValue(child, SkillCurrSPColumn, points);
+                    charSkillStore.SetValue(child, SkillNextSPColumn, pointsAtNext);
+                    charSkillStore.SetValue(child, SkillTimeToNextColumn, minsToNext);
 
                     cont = charSkillStore.IterNext(ref child);
                 }
