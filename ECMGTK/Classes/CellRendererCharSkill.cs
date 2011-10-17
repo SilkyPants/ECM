@@ -9,12 +9,26 @@ namespace ECMGTK
 {
     public class CellRendererCharSkill : CellRenderer
     {
-        public TimeSpan TimeToNextLevel { get; set; }
+        [GLib.Property("SkillMinsToNext")]
+        public double SkillMinsToNext { get; set; }
+
+        [GLib.Property("SkillName")]
         public string SkillName { get; set; }
+
+        [GLib.Property("SkillRank")]
         public int SkillRank { get; set; }
+
+        [GLib.Property("SkillLevel")]
         public int SkillLevel { get; set; }
-        public long SkillPoints { get; set; }
-        public long PointsAtNext { get; set; }
+
+        [GLib.Property("SkillCurrSP")]
+        public long SkillCurrSP { get; set; }
+
+        [GLib.Property("SkillNextSP")]
+        public long SkillNextSP { get; set; }
+
+        [GLib.Property("SkillLevlSP")]
+        public long SkillLevlSP { get; set; }
 
         public CellRendererCharSkill()
         {
@@ -35,37 +49,106 @@ namespace ECMGTK
 
             Cairo.Context context = Gdk.CairoHelper.Create(window);
 
-            int offset = 0;
 
-            if (SkillLevel != -1)
+            if (SkillLevel == -1)
+                RenderGroupCell(context, pix_rect, flags, widget);
+            else
+                RenderSkillCell(context, pix_rect, flags, widget);
+
+            (context.Target as System.IDisposable).Dispose();
+            (context as System.IDisposable).Dispose();
+        }
+
+        private void RenderSkillCell(Context context, Gdk.Rectangle pix_rect, CellRendererState flags, Widget widget)
+        {
+            // Render Progress bars
+            context.Color = new Color(0.3, 0.3, 0.3);
+
+            context.Save();
+            int startX = pix_rect.Right - 48;
+            context.Antialias = Antialias.None;
+            context.LineWidth = 1;
+
+            context.Rectangle(startX, pix_rect.Y + 2, 47, 9);
+
+            context.Rectangle(startX, pix_rect.Y + 16, 47, 5);
+
+            context.Stroke();
+            context.Restore();
+
+            context.Save();
+            for (int i = 0; i < SkillLevel; i++)
             {
-                Gdk.CairoHelper.SetSourcePixbuf(context, new Gdk.Pixbuf(ECM.Core.SkillbookPNG), pix_rect.X, pix_rect.Y);
-
-                context.Rectangle(pix_rect.X, pix_rect.Y, 32, 32);
-
-                context.Paint();
-
-                offset += 32;
+                context.Rectangle(startX + 2 + i * 9, pix_rect.Y + 4, 8, 6);
             }
+
+            // Time Bar
+            double fullWidth = 44;
+            double dist = SkillNextSP - SkillLevlSP;
+            double trav = SkillCurrSP - SkillLevlSP;
+            double perc = trav / dist;
+
+            context.Rectangle(startX + 2, pix_rect.Y + 18, fullWidth * perc, 2);
+
+            context.Fill();
+            context.Restore();
+
+            // Render Skillbook Icon
+            context.Save();
+            Gdk.CairoHelper.SetSourcePixbuf(context, new Gdk.Pixbuf(ECM.Core.SkillbookPNG), pix_rect.X, pix_rect.Y);
+
+            context.Rectangle(pix_rect.X, pix_rect.Y, 32, 32);
+
+            context.Paint();
+            context.Restore();
+
+            // Render Text
+            if (flags.HasFlag(CellRendererState.Selected))
+                context.Color = new Color(1, 1, 1);
+            else
+                context.Color = new Color(0, 0, 0);
 
             Pango.Layout layout = Pango.CairoHelper.CreateLayout(context);
 
-            context.Rectangle(pix_rect.X + offset, pix_rect.Y, 500, 32);
+            context.Rectangle(pix_rect.X + 32, pix_rect.Y, 500, 32);
 
-            if(flags.HasFlag(CellRendererState.Selected))
+            layout.FontDescription = widget.PangoContext.FontDescription;
+            layout.SetMarkup(string.Format("<span size=\"smaller\">{0} ({1}x)</span>\n<span size=\"smaller\" weight=\"bold\">SP {2}/{3}</span>", SkillName, SkillRank, SkillCurrSP, SkillNextSP));
+
+            Pango.CairoHelper.UpdateLayout(context, layout);
+            Pango.CairoHelper.ShowLayout(context, layout);
+
+            layout = Pango.CairoHelper.CreateLayout(context);
+
+            layout.FontDescription = widget.PangoContext.FontDescription;
+            layout.Alignment = Pango.Alignment.Right;
+            layout.SetMarkup(string.Format("<span size=\"small\">Level {0}\n{1}</span>", SkillLevel, ECM.Helper.GetDurationInWordsShort(TimeSpan.FromMinutes(SkillMinsToNext))));
+
+            int w, h;
+            layout.GetPixelSize(out w, out h);
+
+            context.Rectangle(startX - (w + 6), pix_rect.Y, 500, 32);
+
+            Pango.CairoHelper.UpdateLayout(context, layout);
+            Pango.CairoHelper.ShowLayout(context, layout);
+        }
+
+        private void RenderGroupCell(Context context, Gdk.Rectangle pix_rect, CellRendererState flags, Widget widget)
+        {
+            Pango.Layout layout = Pango.CairoHelper.CreateLayout(context);
+
+            context.Rectangle(pix_rect.X, pix_rect.Y + 4, 500, 32);
+
+            if (flags.HasFlag(CellRendererState.Selected))
                 context.Color = new Color(1, 1, 1);
             else
                 context.Color = new Color(0, 0, 0);
 
             layout.FontDescription = widget.PangoContext.FontDescription;
-            layout.SetMarkup(string.Format("<b>{0}</b>", SkillName));
+            layout.SetMarkup(string.Format("<span size=\"smaller\">{0}</span>", SkillName));
 
             Pango.CairoHelper.UpdateLayout(context, layout);
             Pango.CairoHelper.ShowLayout(context, layout);
-
-
-            (context.Target as System.IDisposable).Dispose();
-            (context as System.IDisposable).Dispose();
         }
 
         public override void GetSize(Widget widget, ref Gdk.Rectangle cell_area, out int x_offset, out int y_offset, out int width, out int height)

@@ -45,12 +45,12 @@ namespace ECM
         public SkillAttributes PrimaryAttribute { get; set; }
         public SkillAttributes SecondaryAttribute { get; set; }
 
-        public long PointsAtLevel(int level)
+        public int PointsAtLevel(int level)
         {
             if (level > 5)
                 level = 5;
 
-            return (long)Math.Round(Math.Pow(2, (2.5f * level) - 2.5f) * 250 * Rank, MidpointRounding.AwayFromZero);
+            return (int)Math.Round(Math.Pow(2, (2.5f * level) - 2.5f) * 250 * Rank, MidpointRounding.AwayFromZero);
         }
     }
 
