@@ -329,28 +329,33 @@ public partial class MainWindow: Gtk.Window
         TreeViewColumn skillColumn = new TreeViewColumn();
         skillColumn.Title = "Skill";
 
-        CellRendererPixbuf skillIcon = new CellRendererPixbuf();
-        skillIcon.Xalign = 0;
+        //CellRendererPixbuf skillIcon = new CellRendererPixbuf();
+        //skillIcon.Xalign = 0;
 
-        CellRendererText skillName = new CellRendererText();
+        //CellRendererText skillName = new CellRendererText();
 
-        CellRendererText skillLevel = new CellRendererText();
-        skillLevel.Alignment = Pango.Alignment.Right;
-        skillLevel.Xalign = 1;
+        //CellRendererText skillLevel = new CellRendererText();
+        //skillLevel.Alignment = Pango.Alignment.Right;
+        //skillLevel.Xalign = 1;
 
-        SkillProgressCellRenderer skillLevelPgb = new SkillProgressCellRenderer();
+        //SkillProgressCellRenderer skillLevelPgb = new SkillProgressCellRenderer();
 
-        skillColumn.PackStart(skillIcon, false);
-        skillColumn.PackStart(skillName, true);
+        //skillColumn.PackStart(skillIcon, false);
+        //skillColumn.PackStart(skillName, true);
 
-        skillColumn.PackEnd(skillLevelPgb, false);
-        skillColumn.PackEnd(skillLevel, false);
+        //skillColumn.PackEnd(skillLevelPgb, false);
+        //skillColumn.PackEnd(skillLevel, false);
 
-        skillColumn.AddAttribute(skillIcon, "pixbuf", SkillPicColumn);
-        skillColumn.AddAttribute(skillLevelPgb, "SkillLevel", SkillLevelColumn);
+        //skillColumn.AddAttribute(skillIcon, "pixbuf", SkillPicColumn);
+        //skillColumn.AddAttribute(skillLevelPgb, "SkillLevel", SkillLevelColumn);
 
-        skillColumn.SetCellDataFunc(skillName, new Gtk.TreeCellDataFunc(RenderSkillName));
-        skillColumn.SetCellDataFunc(skillLevel, new Gtk.TreeCellDataFunc(RenderSkillLevel));
+        //skillColumn.SetCellDataFunc(skillName, new Gtk.TreeCellDataFunc(RenderSkillName));
+        //skillColumn.SetCellDataFunc(skillLevel, new Gtk.TreeCellDataFunc(RenderSkillLevel));
+
+        CellRendererCharSkill skillCell = new CellRendererCharSkill();
+
+        skillColumn.PackStart(skillCell, true);
+        skillColumn.SetCellDataFunc(skillCell, new Gtk.TreeCellDataFunc(RenderSkillCell));
 
         trvSkills.AppendColumn(skillColumn);
         trvSkills.RowActivated += HandleTrvSkillsRowActivated;
@@ -398,6 +403,27 @@ public partial class MainWindow: Gtk.Window
 
             m.ShowAll();
             m.Popup();
+        }
+    }
+
+    private void RenderSkillCell(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+    {
+        if (cell is CellRendererCharSkill)
+        {
+            CellRendererCharSkill realCell = cell as CellRendererCharSkill;
+            long id = (long)model.GetValue(iter, SkillIdColumn);
+            int points = (int)model.GetValue(iter, SkillPointsColumn);
+            int level = (int)model.GetValue(iter, SkillLevelColumn);
+
+            realCell.SkillLevel = level;
+
+            if (level < 0)
+                realCell.SkillName = ECM.ItemDatabase.MarketGroups[id].Name;
+            else
+            {
+                ECM.EveSkill skill = ECM.ItemDatabase.Items[id] as ECM.EveSkill;
+                realCell.SkillName = skill.Name;
+            }
         }
     }
 

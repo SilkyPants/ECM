@@ -33,7 +33,7 @@ namespace ECMGTK
             pix_rect.Height -= (int) this.Ypad * 2;
 
             Gdk.GC gc = new Gdk.GC(window);
-
+            
             gc.RgbFgColor = new Gdk.Color(75, 75, 75);
             Gdk.Rectangle levelRect = new Gdk.Rectangle(pix_rect.X, pix_rect.Y + 6, 47, 9);
 
@@ -60,6 +60,12 @@ namespace ECMGTK
             trainProgressRect.Height = 2;
 
             window.DrawRectangle(gc, true, trainProgressRect);
+
+            //Pango.Layout l = new Pango.Layout(widget.PangoContext);
+
+            //l.SetText("THIS IS SOME TEXT");
+
+            //window.DrawLayout(gc, pix_rect.X, pix_rect.Y, l);
 
             gc.Dispose();
         }
