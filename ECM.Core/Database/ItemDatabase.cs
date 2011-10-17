@@ -29,6 +29,14 @@ namespace ECM
                 return m_Items;
             }
         }
+
+        public static Dictionary<long, EveMarketGroup> MarketGroups
+        {
+            get
+            {
+                return m_MarketGroups;
+            }
+        }
 	    
 	    private static bool OpenDatabase()
 	    {
@@ -226,6 +234,31 @@ namespace ECM
                 }
             }
 		}
+
+        public static void LoadSkills(Gtk.TreeStore skillsStore)
+        {
+            Dictionary<long, Gtk.TreeIter> skillGroups = new Dictionary<long, Gtk.TreeIter>();
+            foreach (EveMarketGroup group in m_MarketGroups.Values)
+            {
+                if (group.ParentID == 150)
+                {
+                    Gtk.TreeIter groupIter = skillsStore.AppendNode();
+                    skillsStore.SetValues(groupIter, null, group.ID, -1, 0, false);
+                    skillGroups.Add(group.ID, groupIter);
+                }
+            }
+
+            foreach (EveItem item in m_Items.Values)
+            {
+                if (skillGroups.ContainsKey(item.MarketGroupID))
+                {
+                    EveSkill skill = item as EveSkill;
+                    Gtk.TreeIter parentIter = skillGroups[item.MarketGroupID];
+
+                    skillsStore.AppendValues(parentIter, new Gdk.Pixbuf(Core.SkillbookPNG), item.ID, 0, 0, false);
+                }
+            }
+        }
 
         private static Stream GetMarketIconStream(string iconFile)
         {

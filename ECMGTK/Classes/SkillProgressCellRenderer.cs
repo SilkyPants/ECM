@@ -19,6 +19,8 @@ namespace ECMGTK
 
         protected override void Render (Gdk.Drawable window, Widget widget, Gdk.Rectangle background_area, Gdk.Rectangle cell_area, Gdk.Rectangle expose_area, CellRendererState flags)
         {
+            if (SkillLevel == -1) return;
+
             Gdk.Rectangle pix_rect = Gdk.Rectangle.Zero;
 
             this.GetSize (widget, ref cell_area, out pix_rect.X, out pix_rect.Y, out pix_rect.Width, out pix_rect.Height);
@@ -64,8 +66,12 @@ namespace ECMGTK
 
         public override void GetSize (Widget widget, ref Gdk.Rectangle cell_area, out int x_offset, out int y_offset, out int width, out int height)
         {
-            width = cell_area.Width;
-            height = cell_area.Height;
+            x_offset = y_offset = width = height = 0;
+
+            if (SkillLevel == -1) return;
+
+            width = 48;// cell_area.Width;
+            height = 32;// cell_area.Height;
             
             if (cell_area != Gdk.Rectangle.Zero)
             {

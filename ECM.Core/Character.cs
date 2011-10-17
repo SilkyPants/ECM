@@ -3,6 +3,7 @@ using EveApi;
 using EveApi.Api.Interfaces;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ECM
 {
@@ -211,11 +212,11 @@ namespace ECM
             set { SetProperty<CharacterAttributes>("Attributes", ref m_Attributes, value); }
         }
 
-        List<CharacterSkills> m_Skills = new List<CharacterSkills>();
-        public List<CharacterSkills> Skills
+        Dictionary<long, CharacterSkills> m_Skills = new Dictionary<long, CharacterSkills>();
+        public Dictionary<long, CharacterSkills> Skills
         {
             get { return m_Skills; }
-            set { SetProperty<List<CharacterSkills>>("Skills", ref m_Skills, value); }
+            set { SetProperty<Dictionary<long, CharacterSkills>>("Skills", ref m_Skills, value); }
         }
 
         SkillQueue m_SkillQueue = new SkillQueue();
@@ -253,11 +254,6 @@ namespace ECM
             Account = account;
             ID = characterID;
             Name = name;
-
-            Attributes = new CharacterAttributes();
-            Implants = new ImplantSet();
-            Skills = new List<CharacterSkills>();
-            Certificates = new List<CharacterCertificates>();
 
             m_charSheetRequest = new CharacterApiRequest<CharacterSheet>(characterID, Account.KeyID, Account.VCode);
             m_charSheetRequest.OnRequestUpdate += ApiRequestUpdate;
@@ -350,7 +346,7 @@ namespace ECM
             ID = characterSheet.ID;
             Name = characterSheet.Name;
             Race = characterSheet.Race;
-            Skills = characterSheet.Skills;
+            Skills = characterSheet.Skills.ToDictionary(p => p.ID);
 
             // we want to store implants with their TypeIDs
             Implants = characterSheet.Implants;

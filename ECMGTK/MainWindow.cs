@@ -18,6 +18,7 @@
 // 
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 using System;
 using Gtk;
 using System.ComponentModel;
@@ -68,8 +69,9 @@ public partial class MainWindow: Gtk.Window
         
 		BackgroundWorker worker = new BackgroundWorker();
 		worker.DoWork += delegate 
-        { 
+        {
             LoadMarket();
+            LoadSkills();
             ECM.Core.Init();
         };
 		
@@ -336,8 +338,6 @@ public partial class MainWindow: Gtk.Window
         skillLevel.Alignment = Pango.Alignment.Right;
 
         SkillProgressCellRenderer skillLevelPgb = new SkillProgressCellRenderer();
-        skillLevelPgb.Width = 48;
-        skillLevelPgb.Height = 32;
 
         skillColumn.PackStart(skillIcon, false);
         skillColumn.PackStart(skillName, true);
@@ -346,12 +346,14 @@ public partial class MainWindow: Gtk.Window
         skillColumn.PackEnd(skillLevel, false);
 
         skillColumn.AddAttribute(skillIcon, "pixbuf", 0);
-        skillColumn.AddAttribute(skillName, "markup", 1);
-        skillColumn.AddAttribute(skillLevel, "markup", 2);
-        skillColumn.AddAttribute(skillLevelPgb, "SkillLevel", 3);
+        skillColumn.AddAttribute(skillLevelPgb, "SkillLevel", SkillLevelColumn);
+
+        skillColumn.SetCellDataFunc(skillName, new Gtk.TreeCellDataFunc(RenderSkillName));
+        skillColumn.SetCellDataFunc(skillLevel, new Gtk.TreeCellDataFunc(RenderSkillLevel));
 
         trvSkills.AppendColumn(skillColumn);
         trvSkills.RowActivated += HandleTrvSkillsRowActivated;
+
         #endregion
 
         #region Certificates Treeview
@@ -393,6 +395,39 @@ public partial class MainWindow: Gtk.Window
 
             m.ShowAll();
             m.Popup();
+        }
+    }
+
+    private void RenderSkillName(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+    {
+        if (cell is Gtk.CellRendererText)
+        {
+            CellRendererText realCell = cell as Gtk.CellRendererText;
+            long id = (long)model.GetValue(iter, SkillIdColumn);
+            int points = (int)model.GetValue(iter, SkillPointsColumn);
+            int level = (int)model.GetValue(iter, SkillLevelColumn);
+
+            if (level < 0)
+                realCell.Text = ECM.ItemDatabase.MarketGroups[id].Name;
+            else
+            {
+                ECM.EveSkill skill = ECM.ItemDatabase.Items[id] as ECM.EveSkill;
+                realCell.Markup = string.Format("<span size=\"small\">{0} ({1}x)</span>\n<span size=\"small\" weight=\"bold\">SP {2}/{3}</span>", skill.Name, skill.Rank, points, skill.PointsAtLevel(level + 1));
+            }
+        }
+    }
+
+    private void RenderSkillLevel(Gtk.TreeViewColumn column, Gtk.CellRenderer cell, Gtk.TreeModel model, Gtk.TreeIter iter)
+    {
+        if (cell is Gtk.CellRendererText)
+        {
+            CellRendererText realCell = cell as Gtk.CellRendererText;
+            int level = (int)model.GetValue(iter, SkillLevelColumn);
+
+            if (level >= 0)
+                realCell.Markup = string.Format("<span size=\"small\">Level {0}\n[Time to next level]</span>", level);
+            else
+                realCell.Text = string.Empty;
         }
     }
 
@@ -464,6 +499,25 @@ public partial class MainWindow: Gtk.Window
         sortedFilter.SetSortColumnId(0, SortType.Ascending);
         
         trvSearchItems.Model = sortedFilter;
+
+        Console.WriteLine("Market Loaded");
+    }
+
+    public void LoadSkills()
+    {
+        charSkillStore.Clear();
+
+        ECM.ItemDatabase.LoadSkills(charSkillStore);
+
+        skillsFilter = new TreeModelFilter(charSkillStore, null);
+        skillsFilter.VisibleFunc = new TreeModelFilterVisibleFunc(HandleCharSkillsFilter);
+
+        TreeModelSort skillsSorted = new TreeModelSort(skillsFilter);
+        skillsSorted.SetSortColumnId(1, SortType.Ascending);
+
+        trvSkills.Model = skillsSorted;
+
+        Console.WriteLine("Skills Loaded");
     }
 
     void trvSelectionChanged (object sender, EventArgs e)
@@ -664,18 +718,18 @@ public partial class MainWindow: Gtk.Window
         vbbMarketGroups.PackStart(itemBlock, false, false, 3);
         vbbMarketGroups.PackStart(sep, false, false, 3);
     }
-    
-    private bool HandleMarketFilter (TreeModel model, TreeIter iter)
-    {
-     string itemName = model.GetValue (iter, 0).ToString ();
 
-     if (txtMarketFilter.Text == "")
-         return false;
-    
-     if (itemName.Contains(txtMarketFilter.Text))
-         return true;
-     else
-         return false;
+    private bool HandleMarketFilter(TreeModel model, TreeIter iter)
+    {
+        string itemName = model.GetValue(iter, 0).ToString();
+
+        if (txtMarketFilter.Text == "")
+            return false;
+
+        if (itemName.Contains(txtMarketFilter.Text))
+            return true;
+        else
+            return false;
     }
     #endregion
 	
@@ -798,17 +852,23 @@ public partial class MainWindow: Gtk.Window
 
     #region Character Sheet
 
+    static int SkillPicColumn = 0;
+    static int SkillIdColumn = 1;
+    static int SkillLevelColumn = 2;
+    static int SkillPointsColumn = 3;
+    static int SkillLearntColumn = 4;
+
     ListStore charAttributeStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string));
-    ListStore charSkillStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string), typeof(string), typeof(int));
+    TreeStore charSkillStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(long), typeof(int), typeof(int), typeof(bool));
+    TreeModelFilter skillsFilter = null;
 
     void ShowCharacterSheet (ECM.Character currentCharacter)
     {
+        Console.WriteLine("****** Changing Character");
         // unhook models
         trvAttributes.Model = null;
-        trvSkills.Model = null;
 
         charAttributeStore.Clear();
-        charSkillStore.Clear();
 
         lblCharName.Markup = string.Format("<b>{0}</b>", currentCharacter.Name);
 
@@ -817,12 +877,12 @@ public partial class MainWindow: Gtk.Window
         else
             imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(ECM.Core.NoPortraitJPG).ScaleSimple(160,160,Gdk.InterpType.Bilinear);
 
-        lblCurrentLocation.Text = currentCharacter.LastKnownLocation;
-        lblBackground.Text = currentCharacter.Background;
-        lblSkillpoints.Text = currentCharacter.SkillPoints.ToString("#0,0");
-        lblCone.Text = string.Format("{0} ({1:0,0})", currentCharacter.CloneName, currentCharacter.CloneSkillPoints);
-        lblDoB.Text = currentCharacter.Birthday.ToString("dd.MM.yyyy HH:mm:ss");
-        lblSecStatus.Text = currentCharacter.SecurityStatus.ToString("#0.00");
+        lblCurrentLocation.Markup = string.Format("<b>{0}</b>", currentCharacter.LastKnownLocation);
+        lblBackground.Markup = string.Format("<b>{0}</b>", currentCharacter.Background);
+        lblSkillpoints.Markup = string.Format("<b>{0}</b>", currentCharacter.SkillPoints.ToString("#0,0"));
+        lblCone.Markup = string.Format("<b>{0} ({1:0,0})</b>", currentCharacter.CloneName, currentCharacter.CloneSkillPoints);
+        lblDoB.Markup = string.Format("<b>{0}</b>", currentCharacter.Birthday.ToString("dd.MM.yyyy HH:mm:ss"));
+        lblSecStatus.Markup = string.Format("<b>{0}</b>", currentCharacter.SecurityStatus.ToString("#0.00"));
 
         if(string.IsNullOrEmpty(currentCharacter.Corporation))
         {
@@ -831,11 +891,15 @@ public partial class MainWindow: Gtk.Window
         }
         else
         {
-            lblCorporation.Text = currentCharacter.Corporation;
+            lblCorporation.Markup = string.Format("<b>{0}</b>", currentCharacter.Corporation);
 
-            if(string.IsNullOrEmpty(currentCharacter.Alliance))
+            if (string.IsNullOrEmpty(currentCharacter.Alliance))
             {
                 lblAlliance.Text = string.Empty;
+            }
+            else
+            {
+                lblAlliance.Markup = string.Format("<b>{0}</b>", currentCharacter.Alliance);
             }
         }
 
@@ -860,17 +924,56 @@ public partial class MainWindow: Gtk.Window
 
         trvAttributes.Model = charAttributeStore;
 
-        // Load Skills
-        foreach(EveApi.CharacterSkills charSkill in currentCharacter.Skills)
-        {
-            ECM.EveSkill skill = ECM.ItemDatabase.Items[charSkill.ID] as ECM.EveSkill;
-            string skillName = string.Format("<span size=\"small\">{0} ({1}x)</span>\n<span size=\"small\" weight=\"bold\">SP {2}/[Level SP]</span>", skill.Name, skill.Rank, charSkill.Skillpoints);
-            string skillLevel = string.Format("<span size=\"small\">Level {0}\n[Time to next level]</span>", charSkill.Level);
+        // Traverse character skills tree and update the values
+        TreeIter iter;
+        charSkillStore.GetIterFirst(out iter);
+        bool cont = true;
 
-            charSkillStore.AppendValues(new Gdk.Pixbuf(null, "ECMGTK.Resources.Icons.Skills.png"), skillName, skillLevel, charSkill.Level);
+        while(cont)
+        {
+            // These are all the main categories
+            if (charSkillStore.IterHasChild(iter))
+            {
+                charSkillStore.SetValue(iter, SkillLearntColumn, false);
+
+                TreeIter child;
+                charSkillStore.IterChildren(out child, iter);
+
+                while (cont)
+                {
+                    long id = (long)charSkillStore.GetValue(child, SkillIdColumn);
+                    bool learnt = currentCharacter.Skills.ContainsKey(id);
+                    int level = 0;
+                    int points = 0;
+
+                    if (learnt)
+                    {
+                        level = currentCharacter.Skills[id].Level;
+                        points = currentCharacter.Skills[id].Skillpoints;
+
+                        charSkillStore.SetValue(iter, SkillLearntColumn, learnt);
+                    }
+
+                    charSkillStore.SetValue(child, SkillLearntColumn, learnt);
+
+                    charSkillStore.SetValue(child, SkillLevelColumn, level);
+                    charSkillStore.SetValue(child, SkillPointsColumn, points);
+
+                    cont = charSkillStore.IterNext(ref child);
+                }
+            }
+
+            cont = charSkillStore.IterNext(ref iter);
         }
 
-        trvSkills.Model = charSkillStore;
+        skillsFilter.Refilter();
+    }
+
+    private bool HandleCharSkillsFilter(TreeModel model, TreeIter iter)
+    {
+        bool skillLearnt = (bool)charSkillStore.GetValue(iter, SkillLearntColumn);
+
+        return skillLearnt;
     }
     #endregion
 

@@ -32,6 +32,14 @@ namespace ECM
     {
         public int Rank { get; set; }
         public List<long> RequiredSkills { get; set; }
+
+        public long PointsAtLevel(int level)
+        {
+            if (level > 5)
+                level = 5;
+
+            return (long)Math.Round(Math.Pow(2, (2.5f * level) - 2.5f) * 250 * Rank, MidpointRounding.AwayFromZero);
+        }
     }
 
     public class EveShip : EveItem

@@ -103,11 +103,11 @@ namespace EveApi.Api.Interfaces
             set;
         }
 
-        List<CharacterSkills> Skills
-        {
-            get;
-            set;
-        }
+        //List<CharacterSkills> Skills
+        //{
+        //    get;
+        //    set;
+        //}
 
         List<CharacterCertificates> Certificates
         {

@@ -104,6 +104,21 @@ namespace ECM
             }
         }
 
+        public static Stream SkillbookPNG
+        {
+            get
+            {
+                Assembly ass = Assembly.GetExecutingAssembly();
+
+                if (ass != null)
+                {
+                    return ass.GetManifestResourceStream("ECM.Core.Icons.SkillbookPNG");
+                }
+
+                return null;
+            }
+        }
+
         public static Stream Info16PNG
         {
             get
@@ -226,8 +241,6 @@ namespace ECM
             {
                 AddCharacter(character);
             }
-
-            toAdd.SaveToDatabase();
 
             // HACK: to get first character - need to find better way (and store settings!)
             if(CurrentCharacter == null && m_Characters.Count > 0)

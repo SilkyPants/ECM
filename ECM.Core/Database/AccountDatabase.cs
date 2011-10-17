@@ -344,7 +344,7 @@ namespace ECM
             cmd.ExecuteNonQuery();
 
             // Add Skills
-            foreach(CharacterSkills skill in charToAdd.Skills)
+            foreach(CharacterSkills skill in charToAdd.Skills.Values)
             {
                 cmd = sqlConnection.CreateCommand();
                 cmd.CommandText = @"INSERT OR REPLACE INTO ecmCharacterSkills(CharacterID, SkillTypeID, SkillLevel, Skillpoints) VALUES (@CharacterID, @SkillTypeID, @SkillLevel, @Skillpoints)";
@@ -499,7 +499,7 @@ namespace ECM
                     newSkill.Level = Convert.ToInt32(reader["SkillLevel"].ToString());
                     newSkill.Skillpoints = Convert.ToInt32(reader["Skillpoints"].ToString());
 
-                    character.Skills.Add(newSkill);
+                    character.Skills.Add(newSkill.ID, newSkill);
                 }
             }
 
