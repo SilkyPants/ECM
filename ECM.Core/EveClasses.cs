@@ -3,6 +3,15 @@ using System.Collections.Generic;
 
 namespace ECM
 {
+    public enum SkillAttributes
+    {
+        Charisma = 164,
+        Intelligence = 165,
+        Memory = 166,
+        Perception = 167,
+        Willpower = 168
+    }
+
 	public class EveBase
 	{
 		public long ID { get; set; }
@@ -32,6 +41,9 @@ namespace ECM
     {
         public int Rank { get; set; }
         public List<long> RequiredSkills { get; set; }
+
+        public SkillAttributes PrimaryAttribute { get; set; }
+        public SkillAttributes SecondaryAttribute { get; set; }
 
         public long PointsAtLevel(int level)
         {

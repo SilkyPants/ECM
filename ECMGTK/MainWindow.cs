@@ -336,6 +336,7 @@ public partial class MainWindow: Gtk.Window
 
         CellRendererText skillLevel = new CellRendererText();
         skillLevel.Alignment = Pango.Alignment.Right;
+        skillLevel.Xalign = 1;
 
         SkillProgressCellRenderer skillLevelPgb = new SkillProgressCellRenderer();
 
@@ -345,7 +346,7 @@ public partial class MainWindow: Gtk.Window
         skillColumn.PackEnd(skillLevelPgb, false);
         skillColumn.PackEnd(skillLevel, false);
 
-        skillColumn.AddAttribute(skillIcon, "pixbuf", 0);
+        skillColumn.AddAttribute(skillIcon, "pixbuf", SkillPicColumn);
         skillColumn.AddAttribute(skillLevelPgb, "SkillLevel", SkillLevelColumn);
 
         skillColumn.SetCellDataFunc(skillName, new Gtk.TreeCellDataFunc(RenderSkillName));
@@ -353,6 +354,8 @@ public partial class MainWindow: Gtk.Window
 
         trvSkills.AppendColumn(skillColumn);
         trvSkills.RowActivated += HandleTrvSkillsRowActivated;
+
+        trvSkills.LevelIndentation = -32;
 
         #endregion
 
@@ -422,10 +425,27 @@ public partial class MainWindow: Gtk.Window
         if (cell is Gtk.CellRendererText)
         {
             CellRendererText realCell = cell as Gtk.CellRendererText;
+            long id = (long)model.GetValue(iter, SkillIdColumn);
+            int points = (int)model.GetValue(iter, SkillPointsColumn);
             int level = (int)model.GetValue(iter, SkillLevelColumn);
 
             if (level >= 0)
-                realCell.Markup = string.Format("<span size=\"small\">Level {0}\n[Time to next level]</span>", level);
+            {
+                ECM.EveSkill skill = ECM.ItemDatabase.Items[id] as ECM.EveSkill;
+                string timeToNext = string.Empty;
+
+                if (level < 5)
+                {
+                    long diff = skill.PointsAtLevel(level + 1) - points;
+                    double spPerMin = ECM.Core.CurrentCharacter.SkillpointsPerMinute(skill.PrimaryAttribute, skill.SecondaryAttribute);
+
+                    double mins = diff / spPerMin;
+                    timeToNext = ECM.Helper.GetDurationInWordsShort(TimeSpan.FromMinutes(mins));
+                }
+
+                realCell.Alignment = Pango.Alignment.Right;
+                realCell.Markup = string.Format("<span size=\"small\">Level {0}\n{1}</span>", level, timeToNext);
+            }
             else
                 realCell.Text = string.Empty;
         }

@@ -189,6 +189,14 @@ namespace ECM
                         {
                             skill.Rank = Convert.ToInt32(row[3]);
                         }
+                        else if (attID == 180)
+                        {
+                            skill.PrimaryAttribute = (SkillAttributes)(Convert.ToInt32(row[2]));
+                        }
+                        else if (attID == 181)
+                        {
+                            skill.SecondaryAttribute = (SkillAttributes)(Convert.ToInt32(row[2]));
+                        }
                     }
 
                     row.Close();

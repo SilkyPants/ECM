@@ -359,6 +359,51 @@ namespace ECM
             m_skillQueueRequest.UpdateOnSecTick();
         }
 
+        public double SkillpointsPerMinute(SkillAttributes primary, SkillAttributes secondary)
+        {
+            double pri = 0, sec = 0;
+
+            switch (primary)
+            {
+                case SkillAttributes.Charisma:
+                    pri = Attributes.Charisma + Implants.Charisma.Amount;
+                    break;
+                case SkillAttributes.Intelligence:
+                    pri = Attributes.Intelligence + Implants.Intelligence.Amount;
+                    break;
+                case SkillAttributes.Memory:
+                    pri = Attributes.Memory + Implants.Memory.Amount;
+                    break;
+                case SkillAttributes.Perception:
+                    pri = Attributes.Perception + Implants.Perception.Amount;
+                    break;
+                case SkillAttributes.Willpower:
+                    pri = Attributes.Willpower + Implants.Willpower.Amount;
+                    break;
+            }
+
+            switch (secondary)
+            {
+                case SkillAttributes.Charisma:
+                    sec = Attributes.Charisma + Implants.Charisma.Amount;
+                    break;
+                case SkillAttributes.Intelligence:
+                    sec = Attributes.Intelligence + Implants.Intelligence.Amount;
+                    break;
+                case SkillAttributes.Memory:
+                    sec = Attributes.Memory + Implants.Memory.Amount;
+                    break;
+                case SkillAttributes.Perception:
+                    sec = Attributes.Perception + Implants.Perception.Amount;
+                    break;
+                case SkillAttributes.Willpower:
+                    sec = Attributes.Willpower + Implants.Willpower.Amount;
+                    break;
+            }
+
+            return pri + (sec / 2);
+        }
+
         #region implemented abstract members of ECM.DatabaseBase
         protected override void WriteToDatabase ()
         {
