@@ -251,7 +251,7 @@ namespace ECM
                 if (group.ParentID == 150)
                 {
                     Gtk.TreeIter groupIter = skillsStore.AppendNode();
-                    skillsStore.SetValues(groupIter, group.Name, -1, 0, 0, -1, TimeSpan.MinValue, false);
+                    skillsStore.SetValues(groupIter, group.Name, -1, 0, 0, -1, 0, false);
                     skillGroups.Add(group.ID, groupIter);
                 }
             }
@@ -263,7 +263,7 @@ namespace ECM
                     EveSkill skill = item as EveSkill;
                     Gtk.TreeIter parentIter = skillGroups[item.MarketGroupID];
 
-                    skillsStore.AppendValues(parentIter, skill.Name, skill.Rank, 0, 0, 0, TimeSpan.MinValue, false);
+                    skillsStore.AppendValues(parentIter, skill.Name, skill.Rank, 0, 0, 0, 0, false);
                 }
             }
         }
