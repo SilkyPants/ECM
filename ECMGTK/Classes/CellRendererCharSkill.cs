@@ -113,7 +113,7 @@ namespace ECMGTK
             context.Rectangle(pix_rect.X + 32, pix_rect.Y, 500, 32);
 
             layout.FontDescription = widget.PangoContext.FontDescription;
-            layout.SetMarkup(string.Format("<span size=\"smaller\">{0} ({1}x)</span>\n<span size=\"smaller\" weight=\"bold\">SP {2}/{3}</span>", SkillName, SkillRank, SkillCurrSP, SkillNextSP));
+            layout.SetMarkup(string.Format("<span size=\"smaller\">{0} ({1}x)</span>\n<span size=\"smaller\" weight=\"bold\">SP {2:0,0}/{3:0,0}</span>", SkillName, SkillRank, SkillCurrSP, SkillNextSP));
 
             Pango.CairoHelper.UpdateLayout(context, layout);
             Pango.CairoHelper.ShowLayout(context, layout);
@@ -137,7 +137,7 @@ namespace ECMGTK
         {
             Pango.Layout layout = Pango.CairoHelper.CreateLayout(context);
 
-            context.Rectangle(pix_rect.X, pix_rect.Y + 4, 500, 32);
+            context.Rectangle(pix_rect.X, pix_rect.Y + 2, 500, 32);
 
             if (flags.HasFlag(CellRendererState.Selected))
                 context.Color = new Color(1, 1, 1);
@@ -145,7 +145,7 @@ namespace ECMGTK
                 context.Color = new Color(0, 0, 0);
 
             layout.FontDescription = widget.PangoContext.FontDescription;
-            layout.SetMarkup(string.Format("<span size=\"smaller\">{0}</span>", SkillName));
+            layout.SetMarkup(string.Format("<span size=\"smaller\" weight=\"bold\">{0}</span>", SkillName));
 
             Pango.CairoHelper.UpdateLayout(context, layout);
             Pango.CairoHelper.ShowLayout(context, layout);

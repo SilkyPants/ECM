@@ -61,8 +61,6 @@ public partial class MainWindow: Gtk.Window
         while (Gtk.Application.EventsPending ())
             Gtk.Application.RunIteration ();
 
-        GLib.Timeout.Add(1000, new TimeoutHandler(OnHeartbeat));
-
         GLib.ExceptionManager.UnhandledException += OnUnhandledException;
 
 		FillTabsWithImages();
@@ -88,7 +86,18 @@ public partial class MainWindow: Gtk.Window
         ECM.Core.OnCharacterChanged += CharacterChanged;
         ECM.Core.OnTQServerUpdate += TQServerUpdate;
 
+        Timer heartbeat = new Timer(1000);
+        heartbeat.AutoReset = true;
+        heartbeat.Elapsed += new ElapsedEventHandler(heartbeat_Elapsed);
+        heartbeat.Start();
+
         ntbPages.CurrentPage = 0;
+    }
+
+    void heartbeat_Elapsed(object sender, ElapsedEventArgs e)
+    {
+        ECM.Core.UpdateOnHeartbeat();
+        ECM.Core.SaveAccounts();
     }
 
     #region Event Handlers
@@ -472,7 +481,7 @@ public partial class MainWindow: Gtk.Window
         skillsFilter.VisibleFunc = new TreeModelFilterVisibleFunc(HandleCharSkillsFilter);
 
         TreeModelSort skillsSorted = new TreeModelSort(skillsFilter);
-        skillsSorted.SetSortColumnId(1, SortType.Ascending);
+        skillsSorted.SetSortColumnId(SkillNameColumn, SortType.Ascending);
 
         trvSkills.Model = skillsSorted;
 

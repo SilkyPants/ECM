@@ -23,12 +23,17 @@ namespace ECM
 
         protected abstract void WriteToDatabase();
 
+        static bool writingToDB = false;
         public virtual void SaveToDatabase()
         {
-            if(IsDirty)
+            if (IsDirty && !writingToDB)
+            {
+                writingToDB = true;
                 WriteToDatabase();
+                writingToDB = false;
 
-            IsDirty = false;
+                IsDirty = false;
+            }
         }
 
         public DatabaseBase ()
