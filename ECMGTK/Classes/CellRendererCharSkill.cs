@@ -49,11 +49,21 @@ namespace ECMGTK
 
             Cairo.Context context = Gdk.CairoHelper.Create(window);
 
-
             if (SkillLevel == -1)
-                RenderGroupCell(context, pix_rect, flags, widget);
+            {
+                RenderGroupCell(context, background_area, flags, widget);
+            }
             else
+            {
+                context.Save();
+                context.Antialias = Antialias.None;
+                context.LineWidth = 1;
+                context.MoveTo(expose_area.Left, expose_area.Bottom);
+                context.LineTo(expose_area.Right, expose_area.Bottom);
+                context.Restore();
+
                 RenderSkillCell(context, pix_rect, flags, widget);
+            }
 
             (context.Target as System.IDisposable).Dispose();
             (context as System.IDisposable).Dispose();
@@ -135,14 +145,39 @@ namespace ECMGTK
 
         private void RenderGroupCell(Context context, Gdk.Rectangle pix_rect, CellRendererState flags, Widget widget)
         {
+            // Draw backdrop
+            context.Save();
+
+            Gradient pat = new LinearGradient(pix_rect.Left, pix_rect.Top, pix_rect.Left, pix_rect.Bottom);
+            pat.AddColorStop(0, new Color(0.4, 0.4, 0.4, 1));
+            pat.AddColorStop(1, new Color(0.15, 0.15, 0.15, 1));
+            context.Pattern = pat;
+
+            context.Rectangle(pix_rect.X, pix_rect.Y, pix_rect.Width, pix_rect.Height);
+
+            // Fill the path with pattern
+            context.Fill();
+
+            // We "undo" the pattern setting here
+            context.Restore();
+
+            context.Save();
+            context.Antialias = Antialias.None;
+            context.LineWidth = 1;
+            context.Color = new Color(0.5, 0.5, 0.5);
+            context.MoveTo(pix_rect.Left, pix_rect.Top);
+            context.LineTo(pix_rect.Right, pix_rect.Top); 
+            context.Stroke();
+            context.Restore();
+
             Pango.Layout layout = Pango.CairoHelper.CreateLayout(context);
 
-            context.Rectangle(pix_rect.X, pix_rect.Y + 2, 500, 32);
+            context.Rectangle(pix_rect.X + 3, pix_rect.Y + 2, 500, 32);
 
-            if (flags.HasFlag(CellRendererState.Selected))
+            //if (flags.HasFlag(CellRendererState.Selected))
                 context.Color = new Color(1, 1, 1);
-            else
-                context.Color = new Color(0, 0, 0);
+            //else
+            //    context.Color = new Color(0, 0, 0);
 
             layout.FontDescription = widget.PangoContext.FontDescription;
             layout.SetMarkup(string.Format("<span size=\"smaller\" weight=\"bold\">{0}</span>", SkillName));

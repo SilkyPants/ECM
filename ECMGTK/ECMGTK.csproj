@@ -126,7 +126,6 @@
     <Compile Include="Classes\WrapLabel.cs" />
     <Compile Include="ViewItemRender.cs" />
     <Compile Include="gtk-gui\ECMGTK.ViewItemRender.cs" />
-    <Compile Include="Classes\SkillProgressCellRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

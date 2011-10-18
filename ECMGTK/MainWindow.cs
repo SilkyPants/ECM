@@ -353,7 +353,10 @@ public partial class MainWindow: Gtk.Window
         trvSkills.AppendColumn(skillColumn);
         trvSkills.RowActivated += HandleTrvSkillsRowActivated;
 
-        trvSkills.LevelIndentation = -32;
+        trvSkills.EnableTreeLines = false;
+        trvSkills.ShowExpanders = false;
+        trvSkills.Selection.Changed += ExpandSkillGroup;
+        //trvSkills.LevelIndentation = -32;
 
         #endregion
 
@@ -486,6 +489,20 @@ public partial class MainWindow: Gtk.Window
         trvSkills.Model = skillsSorted;
 
         Console.WriteLine("Skills Loaded");
+    }
+
+    void ExpandSkillGroup(object sender, EventArgs e)
+    {
+        TreePath[] paths = trvSkills.Selection.GetSelectedRows();
+        if(paths.Length > 0)
+        {
+            if(trvSkills.GetRowExpanded(paths[0]))
+                trvSkills.CollapseRow(paths[0]);
+            else
+                trvSkills.ExpandRow(paths[0], false);
+        }
+
+        trvSkills.Selection.UnselectAll();
     }
 
     void trvSelectionChanged (object sender, EventArgs e)
