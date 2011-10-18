@@ -174,13 +174,17 @@ namespace ECMGTK
 
             context.Rectangle(pix_rect.X + 3, pix_rect.Y + 2, 500, 32);
 
-            //if (flags.HasFlag(CellRendererState.Selected))
-                context.Color = new Color(1, 1, 1);
-            //else
-            //    context.Color = new Color(0, 0, 0);
+            context.Color = new Color(1, 1, 1);
+
+            string queueString = string.Empty;
+            if(SkillRank != 0)
+            {
+                string colour = SkillRank < 0 ? "foreground=\"yellow\"" : string.Empty;
+                queueString = string.Format("<span size=\"small\" {0}>    ({1} in queue)</span>", colour, Math.Abs(SkillRank));
+            }
 
             layout.FontDescription = widget.PangoContext.FontDescription;
-            layout.SetMarkup(string.Format("<span size=\"smaller\" weight=\"bold\">{0}</span>", SkillName));
+            layout.SetMarkup(string.Format("<span size=\"small\">{0} - Skills: {1:0,0}, Points: {2:0,0}</span>{3}", SkillName, SkillCurrSP, SkillNextSP, queueString));
 
             Pango.CairoHelper.UpdateLayout(context, layout);
             Pango.CairoHelper.ShowLayout(context, layout);

@@ -54,6 +54,18 @@ namespace ECM
         }
     }
 
+    public class EveCertGroup : EveBase
+    {
+        public long ParentID { get; set; }
+        public string Description { get; set; }
+    }
+
+    public class EveCertificate : EveBase
+    {
+        public long GroupID { get; set; }
+        public int Grade { get; set; }
+    }
+
     public class EveShip : EveItem
     {
 

@@ -60,10 +60,10 @@ namespace ECM
 	                                     System.IO.Path.GetFileNameWithoutExtension(skillsDatabasePath));
 	        cmd.ExecuteNonQuery();
      
-//            cmd = sqlConnection.CreateCommand();
-//            cmd.CommandText = string.Format("ATTACH DATABASE \'{0}\' AS {1}", certsDatabasePath,
-//                                      System.IO.Path.GetFileNameWithoutExtension(certsDatabasePath));
-//            cmd.ExecuteNonQuery();
+            cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = string.Format("ATTACH DATABASE \'{0}\' AS {1}", certsDatabasePath,
+                                      System.IO.Path.GetFileNameWithoutExtension(certsDatabasePath));
+            cmd.ExecuteNonQuery();
 	    
 	        cmd.Dispose();
 	     
@@ -251,7 +251,7 @@ namespace ECM
                 if (group.ParentID == 150)
                 {
                     Gtk.TreeIter groupIter = skillsStore.AppendNode();
-                    skillsStore.SetValues(groupIter, group.Name, -1, 0, 0, -1, 0, false, group.ID);
+                    skillsStore.SetValues(groupIter, group.Name, 0, 0, 0, -1, 0, false, group.ID);
                     skillGroups.Add(group.ID, groupIter);
                 }
             }

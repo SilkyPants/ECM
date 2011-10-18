@@ -25,7 +25,7 @@ namespace ECM
 
         public static void CharacterChanged()
         {
-            if(OnCharacterChanged != null)
+            if(OnCharacterChanged != null && m_Loaded)
                 OnCharacterChanged(null, null);
         }
 

@@ -351,12 +351,10 @@ public partial class MainWindow: Gtk.Window
         skillColumn.AddAttribute(skillCell, "SkillMinsToNext", SkillTimeToNextColumn);
 
         trvSkills.AppendColumn(skillColumn);
-        trvSkills.RowActivated += HandleTrvSkillsRowActivated;
 
         trvSkills.EnableTreeLines = false;
         trvSkills.ShowExpanders = false;
         trvSkills.Selection.Changed += ExpandSkillGroup;
-        //trvSkills.LevelIndentation = -32;
 
         #endregion
 
@@ -365,9 +363,19 @@ public partial class MainWindow: Gtk.Window
         #endregion
     }
 
-    void HandleTrvSkillsRowActivated (object o, RowActivatedArgs args)
+    void ExpandSkillGroup(object sender, EventArgs e)
     {
-        Console.WriteLine("Click");
+        TreePath[] paths = trvSkills.Selection.GetSelectedRows();
+        if(paths.Length > 0)
+        {
+            bool expanded = trvSkills.GetRowExpanded(paths[0]);
+            if(trvSkills.GetRowExpanded(paths[0]))
+                trvSkills.CollapseRow(paths[0]);
+            else
+                trvSkills.ExpandRow(paths[0], false);
+        }
+
+        trvSkills.Selection.UnselectAll();
     }
 
     void UpdateCharacterPortrait (object o, ButtonPressEventArgs args)
@@ -489,20 +497,6 @@ public partial class MainWindow: Gtk.Window
         trvSkills.Model = skillsSorted;
 
         Console.WriteLine("Skills Loaded");
-    }
-
-    void ExpandSkillGroup(object sender, EventArgs e)
-    {
-        TreePath[] paths = trvSkills.Selection.GetSelectedRows();
-        if(paths.Length > 0)
-        {
-            if(trvSkills.GetRowExpanded(paths[0]))
-                trvSkills.CollapseRow(paths[0]);
-            else
-                trvSkills.ExpandRow(paths[0], false);
-        }
-
-        trvSkills.Selection.UnselectAll();
     }
 
     void trvSelectionChanged (object sender, EventArgs e)
@@ -928,6 +922,10 @@ public partial class MainWindow: Gtk.Window
                 TreeIter child;
                 charSkillStore.IterChildren(out child, iter);
 
+                int numSkills = 0;
+                int totalPoints = 0;
+                bool showGroup = false;
+
                 while (cont)
                 {
                     long id = (long)charSkillStore.GetValue(child, SkillIdColumn);
@@ -942,7 +940,7 @@ public partial class MainWindow: Gtk.Window
                         level = currentCharacter.Skills[id].Level;
                         points = currentCharacter.Skills[id].Skillpoints;
 
-                        charSkillStore.SetValue(iter, SkillLearntColumn, learnt);
+                        showGroup = true;
                     }
 
                     int pointsAtNext = skill.PointsAtLevel(level + 1);
@@ -965,8 +963,15 @@ public partial class MainWindow: Gtk.Window
                     charSkillStore.SetValue(child, SkillNextSPColumn, pointsAtNext);
                     charSkillStore.SetValue(child, SkillLevlSPColumn, pointsAtCurr);
 
+                    totalPoints += points;
+                    numSkills++;
+
                     cont = charSkillStore.IterNext(ref child);
                 }
+
+                charSkillStore.SetValue(iter, SkillLearntColumn, showGroup);
+                charSkillStore.SetValue(iter, SkillCurrSPColumn, numSkills);
+                charSkillStore.SetValue(iter, SkillNextSPColumn, totalPoints);
             }
 
             cont = charSkillStore.IterNext(ref iter);
