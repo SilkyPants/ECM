@@ -71,6 +71,11 @@ namespace ECMGTK
 
         private void RenderSkillCell(Context context, Gdk.Rectangle pix_rect, CellRendererState flags, Widget widget)
         {
+            int osOffset = 0;
+
+            if(Environment.OSVersion.Platform == PlatformID.Win32NT)
+                osOffset = 1;
+
             // Render Progress bars
             context.Color = new Color(0.3, 0.3, 0.3);
 
@@ -89,7 +94,8 @@ namespace ECMGTK
             context.Save();
             for (int i = 0; i < SkillLevel; i++)
             {
-                context.Rectangle(startX + 2 + i * 9, pix_rect.Y + 4, 8, 6);
+                // y + 4 win
+                context.Rectangle(startX + 2 + i * 9, pix_rect.Y + 3 + osOffset, 8, 6);
             }
 
             // Time Bar
@@ -98,7 +104,7 @@ namespace ECMGTK
             double trav = SkillCurrSP - SkillLevlSP;
             double perc = trav / dist;
 
-            context.Rectangle(startX + 2, pix_rect.Y + 18, fullWidth * perc, 2);
+            context.Rectangle(startX + 2, pix_rect.Y + 17 + osOffset, fullWidth * perc, 2);
 
             context.Fill();
             context.Restore();

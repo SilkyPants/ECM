@@ -5,7 +5,7 @@ namespace ECMGTK
 	public partial class ViewItemRender
 	{
 		private global::Gtk.Image imgItemRender;
-        
+		
 		protected virtual void Build ()
 		{
 			global::Stetic.Gui.Initialize (this);
