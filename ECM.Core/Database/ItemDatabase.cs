@@ -175,37 +175,49 @@ namespace ECM
                 // Get Skill Attributes
                 // Should maybe think of a better way to do this
                 // Maybe some type of attribute?
+                int attID = 0;
                 try
                 {
+                    if(skill.ID == 3313)
+                        Console.WriteLine("stop");
+
                     cmd = sqlConnection.CreateCommand();
                     cmd.CommandText = string.Format("SELECT * FROM dgmTypeAttributes WHERE typeID = {0}", skill.ID);
                     row = cmd.ExecuteReader();
+                    object val = row[2] is DBNull ? row[3] : row[2];
 
-                    while(row.Read())
+                    if(row.HasRows)
                     {
-                        int attID = Convert.ToInt32(row[1]);
-
-                        if(attID == 275)
+                        while(row.Read())
                         {
-                            skill.Rank = Convert.ToInt32(row[3]);
+                            attID = Convert.ToInt32(row[1]);
+    
+                            if(attID == 275)
+                            {
+                                skill.Rank = Convert.ToInt32(val);
+                            }
+                            else if (attID == 180)
+                            {
+                                skill.PrimaryAttribute = (SkillAttributes)(Convert.ToInt32(val));
+                            }
+                            else if (attID == 181)
+                            {
+                                skill.SecondaryAttribute = (SkillAttributes)(Convert.ToInt32(val));
+                            }
                         }
-                        else if (attID == 180)
-                        {
-                            skill.PrimaryAttribute = (SkillAttributes)(Convert.ToInt32(row[2]));
-                        }
-                        else if (attID == 181)
-                        {
-                            skill.SecondaryAttribute = (SkillAttributes)(Convert.ToInt32(row[2]));
-                        }
+        
+                        m_Items.Add(skill.ID, skill);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Skill {0} ({1}) has no attributes!", skill.Name, skill.ID);
                     }
 
                     row.Close();
-    
-                    m_Items.Add(skill.ID, skill);
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    Console.WriteLine("{0} ({1} ID:{2})", e.Message, attID, skill.ID);
                 }
             }
         }

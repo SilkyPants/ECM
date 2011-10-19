@@ -88,8 +88,8 @@ public partial class MainWindow: Gtk.Window
             dbConn.Open();
 
             // Do some work
-            CreateAgentsDb();
-            CreateCharacterDb();
+//            CreateAgentsDb();
+//            CreateCharacterDb();
             CreateCertificateDb();
             CreateSkillDb();
             CreateItemDb();
