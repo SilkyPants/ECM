@@ -50,7 +50,7 @@ namespace ECM
             if (level > 5)
                 level = 5;
 
-            return (int)Math.Round(Math.Pow(2, (2.5f * level) - 2.5f) * 250 * Rank, MidpointRounding.AwayFromZero);
+            return (int)Math.Ceiling(Math.Pow(2, (2.5f * level) - 2.5f) * 250 * Rank);
         }
     }
 

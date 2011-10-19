@@ -851,6 +851,8 @@ public partial class MainWindow: Gtk.Window
         // unhook models
         trvAttributes.Model = null;
 
+        trvSkills.FreezeChildNotify();
+
         charAttributeStore.Clear();
 
         lblCharName.Markup = string.Format("<b>{0}</b>", currentCharacter.Name);
@@ -978,6 +980,8 @@ public partial class MainWindow: Gtk.Window
         }
 
         skillsFilter.Refilter();
+
+        trvSkills.ThawChildNotify();
     }
 
     private bool HandleCharSkillsFilter(TreeModel model, TreeIter iter)

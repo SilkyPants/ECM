@@ -291,6 +291,8 @@ namespace EveApi
             WebProxy myProxy = new WebProxy();
             MemoryStream imgStream = null;
 
+            
+
             // TODO: Download Form Interface
             //NeoComm.Forms.DownloadDialog downloadInfoForm = new NeoComm.Forms.DownloadDialog();
 
