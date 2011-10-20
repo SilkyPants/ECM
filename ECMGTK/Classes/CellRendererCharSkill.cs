@@ -73,7 +73,7 @@ namespace ECMGTK
         {
             int osOffset = 0;
 
-            if(Environment.OSVersion.Platform == PlatformID.Win32NT)
+            if(ECM.Helper.CurrentPlatform == ECM.Helper.Platform.Windows)
                 osOffset = 1;
 
             // Render Progress bars
@@ -94,7 +94,6 @@ namespace ECMGTK
             context.Save();
             for (int i = 0; i < SkillLevel; i++)
             {
-                // y + 4 win
                 context.Rectangle(startX + 2 + i * 9, pix_rect.Y + 3 + osOffset, 8, 6);
             }
 
@@ -104,7 +103,7 @@ namespace ECMGTK
             double trav = SkillCurrSP - SkillLevlSP;
             double perc = Math.Max(0, trav / dist);
 
-            context.Rectangle(startX + 2, pix_rect.Y + 18, fullWidth * perc, 2);
+            context.Rectangle(startX + 2, pix_rect.Y + 17 + osOffset, fullWidth * perc, 2);
 
             context.Fill();
             context.Restore();

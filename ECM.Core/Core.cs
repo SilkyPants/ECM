@@ -59,124 +59,106 @@ namespace ECM
         }
 
         #region Resources
+        private static Stream GetResource(string resourceName)
+        {
+            Assembly ass = Assembly.GetExecutingAssembly();
+
+            if (ass != null)
+            {
+                return ass.GetManifestResourceStream(resourceName);
+            }
+
+            return null;
+        }
+
         public static Stream MarketGroupPNG
         {
-            get
-            {
-                Assembly ass = Assembly.GetExecutingAssembly();
-
-                if (ass != null)
-                {
-                    return ass.GetManifestResourceStream("ECM.Core.Icons.MarketGroupPNG");
-                }
-
-                return null;
-            }
+            get { return GetResource("ECM.Core.Icons.MarketGroupPNG"); }
         }
 
         public static Stream ItemUnknownPNG
         {
-            get
-            {
-                Assembly ass = Assembly.GetExecutingAssembly();
-
-                if (ass != null)
-                {
-                    return ass.GetManifestResourceStream("ECM.Core.Icons.ItemUnknownPNG");
-                }
-
-                return null;
-            }
+            get { return GetResource("ECM.Core.Icons.ItemUnknownPNG"); }
         }
 
         public static Stream Skillbook22PNG
         {
-            get
-            {
-                Assembly ass = Assembly.GetExecutingAssembly();
-
-                if (ass != null)
-                {
-                    return ass.GetManifestResourceStream("ECM.Core.Icons.Skillbook22PNG");
-                }
-
-                return null;
-            }
+            get { return GetResource("ECM.Core.Icons.Skillbook22PNG"); }
         }
 
         public static Stream SkillbookPNG
         {
-            get
-            {
-                Assembly ass = Assembly.GetExecutingAssembly();
-
-                if (ass != null)
-                {
-                    return ass.GetManifestResourceStream("ECM.Core.Icons.SkillbookPNG");
-                }
-
-                return null;
-            }
+            get { return GetResource("ECM.Core.Icons.SkillbookPNG"); }
         }
 
         public static Stream Info16PNG
         {
-            get
-            {
-                Assembly ass = Assembly.GetExecutingAssembly();
-
-                if (ass != null)
-                {
-                    return ass.GetManifestResourceStream("ECM.Core.Icons.Info16PNG");
-                }
-
-                return null;
-            }
+            get { return GetResource("ECM.Core.Icons.Info16PNG"); }
         }
 
         public static Stream LoadingSpinnerGIF
         {
-            get
-            {
-                Assembly ass = Assembly.GetExecutingAssembly();
-
-                if (ass != null)
-                {
-                    return ass.GetManifestResourceStream("ECM.Core.Icons.LoadingSpinnerGIF");
-                }
-
-                return null;
-            }
+            get { return GetResource("ECM.Core.Icons.LoadingSpinnerGIF"); }
         }
 
         public static Stream LoadingSpinnerGIF16
         {
-            get
-            {
-                Assembly ass = Assembly.GetExecutingAssembly();
-
-                if (ass != null)
-                {
-                    return ass.GetManifestResourceStream("ECM.Core.Icons.Loading16GIF");
-                }
-
-                return null;
-            }
+            get { return GetResource("ECM.Core.Icons.Loading16GIF"); }
         }
 
         public static Stream NoPortraitJPG
         {
-            get
-            {
-                Assembly ass = Assembly.GetExecutingAssembly();
+            get { return GetResource("ECM.Core.NoPortraitJPG"); }
+        }
 
-                if (ass != null)
-                {
-                    return ass.GetManifestResourceStream("ECM.Core.NoPortraitJPG");
-                }
+        public static Stream CertGrade0PNG
+        {
+            get { return GetResource("ECM.Core.Icons.CertGrade0PNG"); }
+        }
 
-                return null;
-            }
+        public static Stream CertGrade1PNG
+        {
+            get { return GetResource("ECM.Core.Icons.CertGrade1PNG"); }
+        }
+
+        public static Stream CertGrade2PNG
+        {
+            get { return GetResource("ECM.Core.Icons.CertGrade2PNG"); }
+        }
+
+        public static Stream CertGrade3PNG
+        {
+            get { return GetResource("ECM.Core.Icons.CertGrade3PNG"); }
+        }
+
+        public static Stream CertGrade4PNG
+        {
+            get { return GetResource("ECM.Core.Icons.CertGrade4PNG"); }
+        }
+
+        public static Stream CertGrade5PNG
+        {
+            get { return GetResource("ECM.Core.Icons.CertGrade5PNG"); }
+        }
+
+        public static Stream ClaimablePNG
+        {
+            get { return GetResource("ECM.Core.Icons.ClaimablePNG"); }
+        }
+
+        public static Stream TrainedPNG
+        {
+            get { return GetResource("ECM.Core.Icons.TrainedPNG"); }
+        }
+
+        public static Stream TrainablePNG
+        {
+            get { return GetResource("ECM.Core.Icons.TrainablePNG"); }
+        }
+
+        public static Stream UntrainablePNG
+        {
+            get { return GetResource("ECM.Core.Icons.UntrainablePNG"); }
         }
 
         #endregion
@@ -225,6 +207,7 @@ namespace ECM
 
         private static void LoadAccounts()
         {
+            Console.WriteLine("Loading Accounts");
             List<Account> accounts = AccountDatabase.GetAllAccounts();
 
             foreach(Account acc in accounts)

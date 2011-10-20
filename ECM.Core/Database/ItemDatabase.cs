@@ -145,6 +145,8 @@ namespace ECM
 
         static void LoadSkills ()
         {
+            Console.WriteLine("Loading skills");
+            System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
             List<EveSkill> skills = new List<EveSkill>();
 
             SqlCmd cmd = sqlConnection.CreateCommand();
@@ -169,7 +171,11 @@ namespace ECM
             }
             
             row.Close();
+            sw.Stop ();
+            Console.WriteLine("Skills loaded in {0}", sw.Elapsed);
 
+            Console.WriteLine("Filling skill attributes");
+            sw = System.Diagnostics.Stopwatch.StartNew();
             foreach(EveSkill skill in skills)
             {
                 // Get Skill Attributes
@@ -220,6 +226,9 @@ namespace ECM
                     Console.WriteLine("{0} ({1} ID:{2})", e.Message, attID, skill.ID);
                 }
             }
+
+            sw.Stop ();
+            Console.WriteLine("Skill attributes loaded in {0}", sw.Elapsed);
         }
 
 		public static void LoadMarket (Gtk.TreeStore marketStore, Gtk.ListStore itemStore)
@@ -257,6 +266,9 @@ namespace ECM
 
         public static void LoadSkills(Gtk.TreeStore skillsStore)
         {
+            Console.WriteLine("Creating Skill TreeStore");
+            System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
+
             Dictionary<long, Gtk.TreeIter> skillGroups = new Dictionary<long, Gtk.TreeIter>();
             foreach (EveMarketGroup group in m_MarketGroups.Values)
             {
@@ -278,6 +290,9 @@ namespace ECM
                     skillsStore.AppendValues(parentIter, skill.Name, skill.Rank, -1, -1, 0, 0, false, skill.ID);
                 }
             }
+
+            sw.Stop ();
+            Console.WriteLine("Skill TreeStore created in {0}", sw.Elapsed);
         }
 
         private static Stream GetMarketIconStream(string iconFile)

@@ -4,6 +4,38 @@ namespace ECM
 {
     public static class Helper
     {
+        #region Platform
+        public enum Platform
+        {
+            MacOS,
+            Unix,
+            Windows
+        }
+
+        public static Platform CurrentPlatform {
+            get {
+                PlatformID currentPlatform = Environment.OSVersion.Platform;
+                if (currentPlatform == PlatformID.MacOSX || (int)currentPlatform == 4) {
+                    return Platform.MacOS;
+                } else if (currentPlatform == PlatformID.Unix) {
+                    return Platform.Unix;
+                } else if (currentPlatform == PlatformID.Win32NT) {
+                    //if (Environment.OSVersion.Version.Major <= 5)
+                    //{
+                    //    return Platform.WindowsPreVista;
+                    //}
+                    //else
+                    {
+                        // Vista and above
+                        return Platform.Windows;
+                    }
+                } else {
+                    throw new PlatformNotSupportedException ();
+                }
+            }
+        }
+        #endregion
+
         public static string GetDurationInWords( TimeSpan aTimeSpan )
         {
             string timeTaken = string.Empty;

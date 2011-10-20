@@ -181,6 +181,36 @@
       <LogicalName>ECM.Core.Icons.SkillbookPNG</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Icons\MarketIcons\icon65_03.png" />
+    <EmbeddedResource Include="Resources\Icons\CertGrade0.png">
+      <LogicalName>ECM.Core.Icons.CertGrade0PNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\CertGrade1.png">
+      <LogicalName>ECM.Core.Icons.CertGrade1PNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\CertGrade2.png">
+      <LogicalName>ECM.Core.Icons.CertGrade2PNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\CertGrade3.png">
+      <LogicalName>ECM.Core.Icons.CertGrade3PNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\CertGrade4.png">
+      <LogicalName>ECM.Core.Icons.CertGrade4PNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\CertGrade5.png">
+      <LogicalName>ECM.Core.Icons.CertGrade5PNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\Claimable.png">
+      <LogicalName>ECM.Core.Icons.ClaimablePNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\Trainable.png">
+      <LogicalName>ECM.Core.Icons.TrainablePNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\Trained.png">
+      <LogicalName>ECM.Core.Icons.TrainedPNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\Untrainable.png">
+      <LogicalName>ECM.Core.Icons.UntrainablePNG</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="sqlite3.dll">
