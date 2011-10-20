@@ -139,7 +139,7 @@
           <widget class="Gtk.Notebook" id="ntbPages">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">5</property>
+            <property name="CurrentPage">1</property>
             <property name="TabPos">Left</property>
             <property name="BorderWidth">3</property>
             <child>
@@ -1203,7 +1203,7 @@
               <widget class="Gtk.HPaned" id="hpnMarket">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">241</property>
+                <property name="Position">1</property>
                 <property name="BorderWidth">3</property>
                 <child>
                   <widget class="Gtk.Notebook" id="ntbMarketGroups">

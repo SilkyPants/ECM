@@ -174,7 +174,7 @@ public partial class MainWindow
 		this.ntbPages = new global::Gtk.Notebook ();
 		this.ntbPages.CanFocus = true;
 		this.ntbPages.Name = "ntbPages";
-		this.ntbPages.CurrentPage = 5;
+		this.ntbPages.CurrentPage = 1;
 		this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
 		this.ntbPages.BorderWidth = ((uint)(3));
 		// Container child ntbPages.Gtk.Notebook+NotebookChild
@@ -900,7 +900,7 @@ public partial class MainWindow
 		this.hpnMarket = new global::Gtk.HPaned ();
 		this.hpnMarket.CanFocus = true;
 		this.hpnMarket.Name = "hpnMarket";
-		this.hpnMarket.Position = 241;
+		this.hpnMarket.Position = 1;
 		this.hpnMarket.BorderWidth = ((uint)(3));
 		// Container child hpnMarket.Gtk.Paned+PanedChild
 		this.ntbMarketGroups = new global::Gtk.Notebook ();

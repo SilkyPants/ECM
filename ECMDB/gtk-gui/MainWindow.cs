@@ -247,13 +247,13 @@ public partial class MainWindow
 		w15.XOptions = ((global::Gtk.AttachOptions)(4));
 		w15.YOptions = ((global::Gtk.AttachOptions)(4));
 		// Container child table2.Gtk.Table+TableChild
-		this.spbPort = new global::Gtk.SpinButton (1, 65535, 1);
+		this.spbPort = new global::Gtk.SpinButton (1D, 65535D, 1D);
 		this.spbPort.CanFocus = true;
 		this.spbPort.Name = "spbPort";
-		this.spbPort.Adjustment.PageIncrement = 10;
-		this.spbPort.ClimbRate = 1;
+		this.spbPort.Adjustment.PageIncrement = 10D;
+		this.spbPort.ClimbRate = 1D;
 		this.spbPort.Numeric = true;
-		this.spbPort.Value = 3306;
+		this.spbPort.Value = 3306D;
 		this.table2.Add (this.spbPort);
 		global::Gtk.Table.TableChild w16 = ((global::Gtk.Table.TableChild)(this.table2 [this.spbPort]));
 		w16.TopAttach = ((uint)(2));
@@ -371,7 +371,7 @@ public partial class MainWindow
 		this.btnStartProcess.CanFocus = true;
 		this.btnStartProcess.Name = "btnStartProcess";
 		this.btnStartProcess.UseUnderline = true;
-		this.btnStartProcess.Label = global::Mono.Unix.Catalog.GetString ("Compact\nDatabase");
+		this.btnStartProcess.Label = global::Mono.Unix.Catalog.GetString ("Compact\r\nDatabase");
 		this.vbuttonbox1.Add (this.btnStartProcess);
 		global::Gtk.ButtonBox.ButtonBoxChild w26 = ((global::Gtk.ButtonBox.ButtonBoxChild)(this.vbuttonbox1 [this.btnStartProcess]));
 		w26.Expand = false;

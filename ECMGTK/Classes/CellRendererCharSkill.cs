@@ -102,9 +102,9 @@ namespace ECMGTK
             double fullWidth = 44;
             double dist = SkillNextSP - SkillLevlSP;
             double trav = SkillCurrSP - SkillLevlSP;
-            double perc = trav / dist;
+            double perc = Math.Max(0, trav / dist);
 
-            context.Rectangle(startX + 2, pix_rect.Y + 17 + osOffset, fullWidth * perc, 2);
+            context.Rectangle(startX + 2, pix_rect.Y + 18, fullWidth * perc, 2);
 
             context.Fill();
             context.Restore();

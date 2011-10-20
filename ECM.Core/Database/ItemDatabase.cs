@@ -184,12 +184,12 @@ namespace ECM
                     cmd = sqlConnection.CreateCommand();
                     cmd.CommandText = string.Format("SELECT * FROM dgmTypeAttributes WHERE typeID = {0}", skill.ID);
                     row = cmd.ExecuteReader();
-                    object val = row[2] is DBNull ? row[3] : row[2];
 
                     if(row.HasRows)
                     {
                         while(row.Read())
                         {
+                            object val = row[2] is DBNull ? row[3] : row[2];
                             attID = Convert.ToInt32(row[1]);
     
                             if(attID == 275)
