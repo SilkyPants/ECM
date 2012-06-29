@@ -122,7 +122,7 @@ public partial class MainWindow
 	private global::Gtk.Button btnItemInfo;
 	private global::Gtk.Image imgItemInfoDetails;
 	private global::Gtk.VBox vbox9;
-	private global::Gtk.Label lblItemTreeDetails;
+	private global::Gtk.HBox hbxItemPath;
 	private global::Gtk.Label lblItemNameDetails;
 	private global::Gtk.VBox vbxBuySell;
 	private global::Gtk.Label label38;
@@ -181,7 +181,7 @@ public partial class MainWindow
 		this.ntbPages = new global::Gtk.Notebook ();
 		this.ntbPages.CanFocus = true;
 		this.ntbPages.Name = "ntbPages";
-		this.ntbPages.CurrentPage = 1;
+		this.ntbPages.CurrentPage = 5;
 		this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
 		this.ntbPages.BorderWidth = ((uint)(3));
 		// Container child ntbPages.Gtk.Notebook+NotebookChild
@@ -1136,15 +1136,13 @@ public partial class MainWindow
 		this.vbox9.Name = "vbox9";
 		this.vbox9.Spacing = 6;
 		// Container child vbox9.Gtk.Box+BoxChild
-		this.lblItemTreeDetails = new global::Gtk.Label ();
-		this.lblItemTreeDetails.Name = "lblItemTreeDetails";
-		this.lblItemTreeDetails.Xalign = 0F;
-		this.lblItemTreeDetails.LabelProp = global::Mono.Unix.Catalog.GetString ("label2");
-		this.vbox9.Add (this.lblItemTreeDetails);
-		global::Gtk.Box.BoxChild w100 = ((global::Gtk.Box.BoxChild)(this.vbox9 [this.lblItemTreeDetails]));
+		this.hbxItemPath = new global::Gtk.HBox ();
+		this.hbxItemPath.Name = "hbxItemPath";
+		this.hbxItemPath.Spacing = 6;
+		this.vbox9.Add (this.hbxItemPath);
+		global::Gtk.Box.BoxChild w100 = ((global::Gtk.Box.BoxChild)(this.vbox9 [this.hbxItemPath]));
 		w100.Position = 0;
 		w100.Expand = false;
-		w100.Fill = false;
 		// Container child vbox9.Gtk.Box+BoxChild
 		this.lblItemNameDetails = new global::Gtk.Label ();
 		this.lblItemNameDetails.Name = "lblItemNameDetails";
@@ -1433,7 +1431,6 @@ public partial class MainWindow
 		}
 		this.imgItemIconDetails.Hide ();
 		this.btnItemInfo.Hide ();
-		this.lblItemTreeDetails.Hide ();
 		this.vbxBuySell.Hide ();
 		this.Hide ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);

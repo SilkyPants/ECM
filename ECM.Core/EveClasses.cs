@@ -26,7 +26,12 @@ namespace ECM
         }
 	}
 
-    public class EveMarketGroup : EveBase
+    public class EveMarketBase : EveBase
+    {
+        public TreeRowReference MarketReference { get; set; }
+    }
+
+    public class EveMarketGroup : EveMarketBase
     {
         public long ParentID { get; set; }
         public bool HasItems { get; set; }
@@ -39,12 +44,10 @@ namespace ECM
         Useable
     }
 
-    public class EveItem : EveBase
+    public class EveItem : EveMarketBase
     {
         public long MarketGroupID { get; set; }
         public string Description { get; set; }
-
-        public TreeRowReference MarketReference { get; set; }
 
         RequiredSkill[] m_RequiredSkills = new RequiredSkill[6];
         public RequiredSkill[] RequiredSkills 

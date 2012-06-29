@@ -120,12 +120,11 @@ public partial class MainWindow : Gtk.Window
             {
                 long ID = Convert.ToInt64(model.GetValue(iter, 2));
                 ECM.EveItem item = ECM.ItemDatabase.Items[ID];
-                // Item selected -
-                // TODO: need to do this better ^^
 
                 // Add item's market group to the list
                 TreeIter parentIter;
-                // get children iterator
+
+                // get Parent iterator
                 if (model.IterParent(out parentIter, iter))
                 {
                     ShowMarketGroupItems(model, parentIter);
@@ -141,7 +140,7 @@ public partial class MainWindow : Gtk.Window
         }
     }
 
-    void SelectItemInMarket (ECM.EveItem item)
+    void SelectItemInMarket (ECM.EveMarketBase item)
     {
         Gtk.TreeIter iter;
 
@@ -154,23 +153,47 @@ public partial class MainWindow : Gtk.Window
             trvMarket.CollapseAll();
             trvMarket.ExpandToPath(sortedMarket.ConvertChildPathToPath(item.MarketReference.Path));
             trvMarket.Selection.SelectIter(sortedMarket.ConvertChildIterToIter(iter));
+            trvSelectionChanged(null, null);
         }
     }
 
-    void ShowItemMarketDetails(ECM.EveItem item, TreeModel model, TreeIter iter)
+    void ShowItemMarketDetails (ECM.EveItem item, TreeModel model, TreeIter iter)
     {
         ntbMarketDetails.CurrentPage = 0;
+
+        foreach (Widget w in hbxItemPath.Children) 
+        {
+            hbxItemPath.Remove(w);
+            w.Destroy();
+        }
 
         // First work out the tree path
         TreeIter parentIter;
         string path = "";
+        long ID = 0;
         while (model.IterParent(out parentIter, iter))
         {
             iter = parentIter;
-            path = model.GetValue(parentIter, 1).ToString() + " \\ " + path;
-        }
+            path = model.GetValue(parentIter, 1).ToString();
+            ID = Convert.ToInt64(model.GetValue(iter, 2));
 
-        lblItemTreeDetails.Text = path + "      "; // Some padding to fix annoying issue with overruns
+            ECM.EveMarketGroup g = ECM.ItemDatabase.MarketGroups[ID];
+
+            Button btn = new Button(new Label(path));
+            btn.Relief = ReliefStyle.None;
+
+            btn.Clicked += delegate(object sender, EventArgs e) {
+                SelectItemInMarket(g);
+            };
+
+            hbxItemPath.PackStart(btn);
+            hbxItemPath.PackStart(new Label("\\"));
+        }
+            
+        hbxItemPath.PackStart(new Label("     "));
+
+        hbxItemPath.ShowAll();
+
         lblItemNameDetails.Markup = string.Format("<b>{0}</b>", item.Name);
         imgItemIconDetails.PixbufAnimation = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF);
 
@@ -185,7 +208,7 @@ public partial class MainWindow : Gtk.Window
 
         fetchImage.RunWorkerAsync();
 
-        lblItemTreeDetails.Visible = true;
+        //lblItemTreeDetails.Visible = true;
         imgItemIconDetails.Visible = true;
         btnItemInfo.Visible = true;
         vbxBuySell.Visible = true;
