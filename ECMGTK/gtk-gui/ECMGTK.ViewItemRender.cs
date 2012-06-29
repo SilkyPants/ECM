@@ -27,7 +27,8 @@ namespace ECMGTK
 			}
 			this.DefaultWidth = 512;
 			this.DefaultHeight = 512;
-			this.Show ();
+			this.Hide ();
+			this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDelete);
 		}
 	}
 }

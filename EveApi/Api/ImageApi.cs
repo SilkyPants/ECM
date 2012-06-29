@@ -9,6 +9,13 @@ namespace EveApi
     public static class ImageApi
     {
         static string m_ImageApiUrl = "http://image.eveonline.com/";
+        static bool m_IsRetrieving = false;
+
+        public static bool IsRetrieving
+        {
+            get { return m_IsRetrieving; }
+        }
+
         public enum ImageRequestSize
         {
             Size30x30,
@@ -90,8 +97,6 @@ namespace EveApi
 			return ImageToPixbuf(GetItemRenderNET(typeID, size));
 		}
 		#endregion
-			
-			
 
         /// <summary>
         /// Returns the character portrait for the given ID, at the requested size
@@ -288,8 +293,6 @@ namespace EveApi
             WebProxy myProxy = new WebProxy();
             MemoryStream imgStream = null;
 
-            
-
             // TODO: Download Form Interface
             //NeoComm.Forms.DownloadDialog downloadInfoForm = new NeoComm.Forms.DownloadDialog();
 
@@ -311,6 +314,8 @@ namespace EveApi
             //    webClient.Proxy = myProxy;
             //}
 
+            m_IsRetrieving = true;
+            
             try
             {
                 imgStream = new MemoryStream(webClient.DownloadData(url));
@@ -321,6 +326,7 @@ namespace EveApi
                 Console.WriteLine("Error retrieving icon " + url);
             }
 
+            m_IsRetrieving = false;
             //downloadInfoForm.Close();
             return imgStream;
         }

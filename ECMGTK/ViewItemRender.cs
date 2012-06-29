@@ -5,24 +5,38 @@ namespace ECMGTK
 {
     public partial class ViewItemRender : Gtk.Window
     {
-        public ViewItemRender (ECM.EveItem item) :
+        public ViewItemRender () :
                 base(Gtk.WindowType.Toplevel)
         {
             this.Build ();
+        }
+
+        public void ShowItemRender(ECM.EveItem item)
+        {
+            BackgroundWorker fetchRender = new BackgroundWorker();
 
             this.Title = item.Name;
-
             imgItemRender.PixbufAnimation = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF);
-
-            BackgroundWorker fetchRender = new BackgroundWorker();
 
             fetchRender.DoWork += delegate(object sender, DoWorkEventArgs e)
             {
                 imgItemRender.Pixbuf = EveApi.ImageApi.GetItemRenderGTK(item.ID, EveApi.ImageApi.ImageRequestSize.Size512x512);
+
+                Show();
             };
 
             fetchRender.RunWorkerAsync();
         }
+
+        protected void OnDelete (object o, Gtk.DeleteEventArgs args)
+        {
+            // Stop the window actually closing
+            args.RetVal = true;
+
+            // Hide the window
+            Hide();
+        }
+
     }
 }
 

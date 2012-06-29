@@ -28,6 +28,7 @@ public partial class MainWindow : Gtk.Window
     TreeStore marketStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(string), typeof(long), typeof(bool));
     ListStore itemStore = new ListStore(typeof(string), typeof(long));
     TreeModelFilter marketFilter;
+    ViewItemRender m_ViewRender = new ViewItemRender();
 
     protected void RowCollapsed(object sender, Gtk.RowCollapsedArgs args)
     {
@@ -176,9 +177,9 @@ public partial class MainWindow : Gtk.Window
 
         if (long.TryParse(btnShowRender.Name, out itemID))
         {
-            ViewItemRender viewRender = new ViewItemRender(ECM.ItemDatabase.Items[itemID]);
+            m_ViewRender.ShowItemRender(ECM.ItemDatabase.Items[itemID]);
 
-            viewRender.ShowAll();
+            m_ViewRender.ShowAll();
         }
     }
 

@@ -69,7 +69,7 @@ namespace ECM
                         return true;
                 }
 
-                return false;
+                return ImageApi.IsRetrieving;
             }
         }
 

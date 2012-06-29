@@ -28,6 +28,13 @@ using Gtk;
 
 public partial class MainWindow: Gtk.Window
 {
+
+    #region Constants
+    const int HEARTBEAT_RATE = 100;
+    const int MARKET_PANE_DEFAULT = 250;
+    const int STARTING_PAGE = 0;
+    #endregion
+
     #region Structures
     struct Colour
     {
@@ -54,9 +61,9 @@ public partial class MainWindow: Gtk.Window
     public MainWindow (): base (Gtk.WindowType.Toplevel)
     {
         Build ();
-        
-        ntbPages.CurrentPage = 0;
-        hpnMarket.Position = 250;
+
+        ntbPages.CurrentPage = STARTING_PAGE;
+        hpnMarket.Position = MARKET_PANE_DEFAULT;
 
         while (Gtk.Application.EventsPending ())
             Gtk.Application.RunIteration ();
@@ -91,12 +98,10 @@ public partial class MainWindow: Gtk.Window
         ECM.Core.OnCharacterChanged += CharacterChanged;
         ECM.Core.OnTQServerUpdate += TQServerUpdate;
 
-        Timer heartbeat = new Timer(1000);
+        Timer heartbeat = new Timer(HEARTBEAT_RATE);
         heartbeat.AutoReset = true;
         heartbeat.Elapsed += new ElapsedEventHandler(heartbeat_Elapsed);
         heartbeat.Start();
-
-        ntbPages.CurrentPage = 0;
     }
 
     #region Event Handlers
