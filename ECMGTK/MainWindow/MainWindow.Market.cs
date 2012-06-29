@@ -22,6 +22,7 @@ using System;
 using System.ComponentModel;
 using ECMGTK;
 using Gtk;
+using ECM;
 
 public partial class MainWindow : Gtk.Window
 {
@@ -29,9 +30,10 @@ public partial class MainWindow : Gtk.Window
     ListStore itemStore = new ListStore(typeof(string), typeof(long));
     TreeModelFilter marketFilter;
     ViewItemRender m_ViewRender = new ViewItemRender();
-    
+
     readonly Colour m_Untrainable = new Colour(128, 0, 0, 128);
-    readonly Colour m_Trainable = new Colour(0, 128, 0, 128);
+    readonly Colour m_Trainable = new Colour(255, 128, 0, 128);
+    readonly Colour m_Useable = new Colour(0, 128, 0, 128);
 
     protected void RowCollapsed(object sender, Gtk.RowCollapsedArgs args)
     {
@@ -233,8 +235,15 @@ public partial class MainWindow : Gtk.Window
         Gdk.Pixbuf buf = new Gdk.Pixbuf(Gdk.Colorspace.Rgb, true, 8, 22, 22);
         Gdk.Pixbuf book = new Gdk.Pixbuf(ECM.Core.Skillbook22PNG);
 
-        Colour col = ECM.Core.CurrentCharacter.CanTrainItem(item) ? m_Trainable : m_Untrainable;
-        buf.Fill(col.ToUint());
+        EveItemUseability useability = Core.CurrentCharacter.GetItemUseability(item);
+
+        if (useability == EveItemUseability.Untrainable)
+            buf.Fill(m_Untrainable.ToUint());
+        else if (useability == EveItemUseability.Trainable)
+            buf.Fill(m_Trainable.ToUint());
+        else
+            buf.Fill(m_Useable.ToUint());
+        
         book.Composite(buf, 0, 0, buf.Width, buf.Height, 0, 0, 1, 1, Gdk.InterpType.Hyper, 255);
 
         Image skillsMet = new Image(buf);

@@ -427,8 +427,9 @@ namespace ECM
         }
         #endregion
 
-        public bool CanTrainItem (ECM.EveItem item)
+        public EveItemUseability GetItemUseability(ECM.EveItem item)
         {
+            EveItemUseability useability = EveItemUseability.Useable;
             //TODO: Make it so it indicates trainability
             /// Maybe use a combination of a recursive function
             /// and the Items DB to retrieve the required info
@@ -437,11 +438,20 @@ namespace ECM
             {
                 RequiredSkill req = item.RequiredSkills[i];
 
-                if (req.IsValid && (!Skills.ContainsKey(req.SkillID) || Skills[req.SkillID].Level < req.SkillLevel))
-                    return false;
+                if (req.IsValid)
+                {
+                    if (!Skills.ContainsKey(req.SkillID))
+                    {
+                        return EveItemUseability.Untrainable;
+                    }
+                    else if(Skills[req.SkillID].Level < req.SkillLevel)
+                    {
+                        useability = EveItemUseability.Trainable;
+                    }
+                }
             }
 
-            return true;
+            return useability;
         }
     }
 }

@@ -31,6 +31,13 @@ namespace ECM
         public bool HasItems { get; set; }
     }
 
+    public enum EveItemUseability
+    {
+        Untrainable,
+        Trainable,
+        Useable
+    }
+
     public class EveItem : EveBase
     {
         public long MarketGroupID { get; set; }
