@@ -12,6 +12,16 @@ namespace ECM
         ApiKeyMask m_KeyAccess;
         Dictionary<long, Character> m_Characters = new Dictionary<long, Character>();
 
+        internal AuthorisedApiRequest<ApiKeyInfo> AccountKeyInfo
+        {
+            get { return m_accountKeyInfo; }
+        }
+
+        internal AuthorisedApiRequest<AccountStatus> AccountStatus
+        {
+            get { return m_accountStatus; }
+        }
+
         public ApiKeyMask KeyAccess
         {
             get { return m_KeyAccess; }

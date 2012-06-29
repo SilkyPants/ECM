@@ -10,6 +10,7 @@ namespace ECM
     {
         static Dictionary<string, Account> m_Accounts = new Dictionary<string, Account>();
         static Dictionary<long, Character> m_Characters = new Dictionary<long, Character>();
+        static List<IApiRequest> m_ApiRequests = new List<IApiRequest>();
         static Character m_CurrentCharacter = null;
         static long m_FirstCharID = -1;
         static bool m_Loaded = false;
@@ -56,6 +57,20 @@ namespace ECM
         public static Dictionary<string, Account> Accounts
         {
             get { return m_Accounts; }
+        }
+
+        public static bool IsNetworkActivity
+        {
+            get
+            {
+                foreach (IApiRequest request in m_ApiRequests)
+                {
+                    if (request.IsUpdating)
+                        return true;
+                }
+
+                return false;
+            }
         }
 
         #region Resources
@@ -169,6 +184,8 @@ namespace ECM
             m_TQServerStatus.OnRequestUpdate += TQServerStatusUpdate;
             m_TQServerStatus.Enabled = true;
 
+            m_ApiRequests.Add(m_TQServerStatus);
+
             LoadAccounts();
 
             m_Loaded = true;
@@ -189,11 +206,16 @@ namespace ECM
         {
             if (!m_Loaded) return;
 
-            m_TQServerStatus.UpdateOnSecTick();
+            //m_TQServerStatus.UpdateOnSecTick();
 
-            foreach(Account account in m_Accounts.Values)
+            //foreach(Account account in m_Accounts.Values)
+            //{
+            //    account.UpdateOnHeartbeat();
+            //}
+
+            foreach (IApiRequest request in m_ApiRequests)
             {
-                account.UpdateOnHeartbeat();
+                request.UpdateOnSecTick();
             }
         }
 
@@ -220,6 +242,9 @@ namespace ECM
         {
             m_Accounts.Add(toAdd.KeyID, toAdd);
 
+            m_ApiRequests.Add(toAdd.AccountKeyInfo);
+            m_ApiRequests.Add(toAdd.AccountStatus);
+
             foreach (Character character in toAdd.Characters)
             {
                 AddCharacter(character);
@@ -238,6 +263,10 @@ namespace ECM
                 m_FirstCharID = charToAdd.ID;
 
             m_Characters.Add(charToAdd.ID, charToAdd);
+
+            m_ApiRequests.Add(charToAdd.CharInfoRequest);
+            m_ApiRequests.Add(charToAdd.CharSheetRequest);
+            m_ApiRequests.Add(charToAdd.SkillQueueRequest);
 
             charToAdd.CharacterUpdated += delegate
             {

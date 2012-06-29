@@ -18,6 +18,21 @@ namespace ECM
         public event EventHandler CharacterUpdated;
 
         #region Properties
+        internal CharacterApiRequest<CharacterSheet> CharSheetRequest
+        {
+            get { return m_charSheetRequest; }
+        }
+
+        internal CharacterApiRequest<CharacterInfo> CharInfoRequest
+        {
+            get { return m_charInfoRequest; }
+        }
+
+        internal CharacterApiRequest<SkillQueue> SkillQueueRequest
+        {
+            get { return m_skillQueueRequest; }
+        }
+
         public Account Account
         {
             get;

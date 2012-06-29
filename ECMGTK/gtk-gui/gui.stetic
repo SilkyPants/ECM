@@ -5,7 +5,6 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../../bin/Debug/ECM.Core.dll" />
     <widget-library name="../../bin/Debug/ECM.exe" internal="true" />
   </import>

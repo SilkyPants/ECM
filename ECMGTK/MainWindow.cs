@@ -83,7 +83,7 @@ public partial class MainWindow: Gtk.Window
 		worker.RunWorkerAsync();
 
         imgNetworkIndicator.PixbufAnimation = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF16);
-        imgNetworkIndicator.Visible = false;
+        //imgNetworkIndicator.Visible = false;
 
         SetupGui();
 
@@ -105,6 +105,7 @@ public partial class MainWindow: Gtk.Window
     {
         ECM.Core.UpdateOnHeartbeat();
         ECM.Core.SaveAccounts();
+        imgNetworkIndicator.Visible = ECM.Core.IsNetworkActivity;
     }
 
     void OnUnhandledException (UnhandledExceptionArgs args)
@@ -127,14 +128,6 @@ public partial class MainWindow: Gtk.Window
 
         stbStatus.Pop(0);
         stbStatus.Push(0, serverStatus);
-    }
-
-    bool OnHeartbeat()
-    {
-        ECM.Core.UpdateOnHeartbeat();
-        ECM.Core.SaveAccounts();
-
-        return true;
     }
 
     void CharacterChanged (object sender, EventArgs e)
