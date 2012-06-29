@@ -183,7 +183,7 @@ namespace ECM
                 try
                 {
                     cmd = sqlConnection.CreateCommand();
-                    cmd.CommandText = string.Format("SELECT * FROM dgmTypeAttributes WHERE typeID = {0}", skill.ID);
+                    cmd.CommandText = string.Format("SELECT * FROM dgmTypeAttributes WHERE typeID = {0} AND (attributeId = 275 OR attributeId = 180 OR attributeId = 181)", skill.ID);
                     row = cmd.ExecuteReader();
 
                     if(row.HasRows)
