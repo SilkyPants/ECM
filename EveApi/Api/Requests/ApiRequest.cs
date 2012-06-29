@@ -99,14 +99,12 @@ namespace EveApi
         {
             if (Enabled && NextUpdate.CompareTo(DateTime.UtcNow) <= 0 && !IsUpdating)
             {
-                //if (m_UpdatingThread == null || !m_UpdatingThread.IsAlive)
+                if (m_UpdatingThread == null || !m_UpdatingThread.IsAlive)
                 {
                     m_UpdatingThread = new Thread(new ThreadStart(QueryApi));
                     m_UpdatingThread.IsBackground = true;
-                }
-
-                if(m_UpdatingThread.IsAlive == false)
                     m_UpdatingThread.Start();
+                }
             }
         }
 

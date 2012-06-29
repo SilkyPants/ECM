@@ -133,6 +133,8 @@ namespace ECM
 				newItem.ID = typeID;
                 newItem.MarketGroupID = mgID;
 				newItem.IconString = "TYPEID";
+
+                GetRequiredSkills(newItem);
 				
 				m_Items.Add(typeID, newItem);
 	        }
@@ -164,6 +166,8 @@ namespace ECM
                 newSkill.ID = typeID;
                 newSkill.MarketGroupID = mgID;
                 newSkill.IconString = "TYPEID";
+
+                GetRequiredSkills(newSkill);
 
                 skills.Add(newSkill);
             }
@@ -284,6 +288,35 @@ namespace ECM
 
             sw.Stop ();
             Console.WriteLine("Skill TreeStore created in {0}", sw.Elapsed);
+        }
+
+        static void GetRequiredSkills (EveItem item)
+        {            
+            SqlCmd cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = string.Format(@"SELECT * FROM dgmTypeAttributes INNER JOIN dgmAttributeTypes ON dgmTypeAttributes.attributeID = dgmAttributeTypes.attributeID 
+                                                WHERE typeId = {0} AND categoryId = 8", item.ID);
+            SqlReader row = cmd.ExecuteReader();
+
+            while(row.Read())
+            {
+                string attributeName = row["attributeName"].ToString();
+                int reqSkillIdx = attributeName.Replace("requiredSkill", "")[0] - 49;
+
+                string value = row["valueInt"] is DBNull ? row["valueFloat"].ToString() : row["valueInt"].ToString();
+
+                if(attributeName.Contains("Level"))
+                {
+                    // Required Skill Level
+                    item.RequiredSkills[reqSkillIdx].SkillLevel = int.Parse(value);
+                }
+                else
+                {
+                    // Required Skill ID
+                    item.RequiredSkills[reqSkillIdx].SkillID = long.Parse(value);
+                }
+            }
+
+            row.Close();
         }
 
         private static Stream GetMarketIconStream(string iconFile)

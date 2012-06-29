@@ -29,6 +29,9 @@ public partial class MainWindow : Gtk.Window
     ListStore itemStore = new ListStore(typeof(string), typeof(long));
     TreeModelFilter marketFilter;
     ViewItemRender m_ViewRender = new ViewItemRender();
+    
+    readonly Colour m_Untrainable = new Colour(128, 0, 0, 128);
+    readonly Colour m_Trainable = new Colour(0, 128, 0, 128);
 
     protected void RowCollapsed(object sender, Gtk.RowCollapsedArgs args)
     {
@@ -230,7 +233,7 @@ public partial class MainWindow : Gtk.Window
         Gdk.Pixbuf buf = new Gdk.Pixbuf(Gdk.Colorspace.Rgb, true, 8, 22, 22);
         Gdk.Pixbuf book = new Gdk.Pixbuf(ECM.Core.Skillbook22PNG);
 
-        Colour col = new Colour(128, 0, 0, 128);
+        Colour col = ECM.Core.CurrentCharacter.CanTrainItem(item) ? m_Trainable : m_Untrainable;
         buf.Fill(col.ToUint());
         book.Composite(buf, 0, 0, buf.Width, buf.Height, 0, 0, 1, 1, Gdk.InterpType.Hyper, 255);
 

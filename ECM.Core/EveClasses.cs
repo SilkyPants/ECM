@@ -35,12 +35,20 @@ namespace ECM
     {
         public long MarketGroupID { get; set; }
         public string Description { get; set; }
+
+        RequiredSkill[] m_RequiredSkills = new RequiredSkill[6];
+        public RequiredSkill[] RequiredSkills 
+        { 
+            get
+            {
+                return m_RequiredSkills;
+            }
+        }
     }
 
     public class EveSkill : EveItem
     {
         public int Rank { get; set; }
-        public List<long> RequiredSkills { get; set; }
 
         public SkillAttributes PrimaryAttribute { get; set; }
         public SkillAttributes SecondaryAttribute { get; set; }
@@ -70,6 +78,13 @@ namespace ECM
     public class EveShip : EveItem
     {
 
+    }
+
+    public struct RequiredSkill
+    {
+        public long SkillID { get; set; }
+        public int SkillLevel { get; set; }
+        public bool IsValid { get { return SkillID != 0 && SkillLevel != 0; } }
     }
 }
 

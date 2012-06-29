@@ -426,6 +426,23 @@ namespace ECM
             AccountDatabase.AddCharacter(this);
         }
         #endregion
+
+        public bool CanTrainItem (ECM.EveItem item)
+        {
+            //TODO: Make it so it indicates trainability
+            /// Maybe use a combination of a recursive function
+            /// and the Items DB to retrieve the required info
+
+            for (int i = 0; i < 6; i++)
+            {
+                RequiredSkill req = item.RequiredSkills[i];
+
+                if (req.IsValid && (!Skills.ContainsKey(req.SkillID) || Skills[req.SkillID].Level < req.SkillLevel))
+                    return false;
+            }
+
+            return true;
+        }
     }
 }
 
