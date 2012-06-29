@@ -28,7 +28,7 @@ public partial class MainWindow : Gtk.Window
 {
     TreeStore marketStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(string), typeof(long), typeof(bool));
     ListStore itemStore = new ListStore(typeof(string), typeof(long));
-    TreeModelFilter marketFilter;
+    TreeModelFilter marketSearchFilter;
     ViewItemRender m_ViewRender = new ViewItemRender();
 
     readonly Colour m_Untrainable = new Colour(128, 0, 0, 128);
@@ -47,7 +47,7 @@ public partial class MainWindow : Gtk.Window
 
     protected void SearchTextChanged(object sender, System.EventArgs e)
     {
-        marketFilter.Refilter();
+        marketSearchFilter.Refilter();
     }
 
     protected void RowActivated(object o, Gtk.RowActivatedArgs args)
@@ -79,10 +79,10 @@ public partial class MainWindow : Gtk.Window
 
         trvMarket.Model = sortedMarket;
 
-        marketFilter = new TreeModelFilter(itemStore, null);
-        marketFilter.VisibleFunc = new TreeModelFilterVisibleFunc(HandleMarketFilter);
+        marketSearchFilter = new TreeModelFilter(itemStore, null);
+        marketSearchFilter.VisibleFunc = new TreeModelFilterVisibleFunc(HandleMarketSearchFilter);
 
-        TreeModelSort sortedFilter = new TreeModelSort(marketFilter);
+        TreeModelSort sortedFilter = new TreeModelSort(marketSearchFilter);
 
         sortedFilter.SetSortColumnId(0, SortType.Ascending);
 
@@ -151,6 +151,7 @@ public partial class MainWindow : Gtk.Window
 
             TreeModelSort sortedMarket = trvMarket.Model as TreeModelSort;
 
+            trvMarket.CollapseAll();
             trvMarket.ExpandToPath(sortedMarket.ConvertChildPathToPath(item.MarketReference.Path));
             trvMarket.Selection.SelectIter(sortedMarket.ConvertChildIterToIter(iter));
         }
@@ -217,7 +218,6 @@ public partial class MainWindow : Gtk.Window
         {
             do
             {
-                // TODO: Need check to make sure it's an item
                 long ID = Convert.ToInt64(model.GetValue(childIter, 2));
                 ECM.EveItem item = ECM.ItemDatabase.Items[ID];
 
@@ -329,7 +329,7 @@ public partial class MainWindow : Gtk.Window
         vbbMarketGroups.PackStart(sep, false, false, 3);
     }
 
-    private bool HandleMarketFilter(TreeModel model, TreeIter iter)
+    private bool HandleMarketSearchFilter(TreeModel model, TreeIter iter)
     {
         string itemName = model.GetValue(iter, 0).ToString();
 

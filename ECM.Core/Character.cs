@@ -430,9 +430,6 @@ namespace ECM
         public EveItemUseability GetItemUseability(ECM.EveItem item)
         {
             EveItemUseability useability = EveItemUseability.Useable;
-            //TODO: Make it so it indicates trainability
-            /// Maybe use a combination of a recursive function
-            /// and the Items DB to retrieve the required info
 
             for (int i = 0; i < 6; i++)
             {
