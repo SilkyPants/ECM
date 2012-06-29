@@ -138,7 +138,7 @@
           <widget class="Gtk.Notebook" id="ntbPages">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">0</property>
+            <property name="CurrentPage">5</property>
             <property name="TabPos">Left</property>
             <property name="BorderWidth">3</property>
             <child>
@@ -1202,7 +1202,7 @@
               <widget class="Gtk.HPaned" id="hpnMarket">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">1</property>
+                <property name="Position">219</property>
                 <property name="BorderWidth">3</property>
                 <child>
                   <widget class="Gtk.Notebook" id="ntbMarketGroups">
@@ -1212,18 +1212,45 @@
                     <property name="ShowBorder">False</property>
                     <property name="BorderWidth">1</property>
                     <child>
-                      <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow10">
+                      <widget class="Gtk.VBox" id="vbox1">
                         <property name="MemberName" />
-                        <property name="BorderWidth">3</property>
+                        <property name="Spacing">6</property>
                         <child>
-                          <widget class="Gtk.TreeView" id="trvMarket">
+                          <widget class="Gtk.ComboBox" id="cmbFilter">
                             <property name="MemberName" />
-                            <property name="CanFocus">True</property>
-                            <property name="ShowScrollbars">True</property>
-                            <property name="HeadersVisible">False</property>
-                            <signal name="RowCollapsed" handler="RowCollapsed" />
-                            <signal name="RowActivated" handler="RowActivated" />
+                            <property name="IsTextCombo">True</property>
+                            <property name="Items" translatable="yes">All Items
+Useable Items
+Trainable Items
+Untrainable Items</property>
+                            <property name="Active">0</property>
                           </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow3">
+                            <property name="MemberName" />
+                            <property name="ShadowType">In</property>
+                            <child>
+                              <widget class="Gtk.TreeView" id="trvMarket">
+                                <property name="MemberName" />
+                                <property name="CanFocus">True</property>
+                                <property name="ShowScrollbars">True</property>
+                                <property name="HeadersVisible">False</property>
+                                <signal name="RowCollapsed" handler="RowCollapsed" />
+                                <signal name="RowActivated" handler="RowActivated" />
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                          </packing>
                         </child>
                       </widget>
                     </child>
