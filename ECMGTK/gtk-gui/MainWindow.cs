@@ -369,7 +369,7 @@ public partial class MainWindow
 		this.eventbox1 = new global::Gtk.EventBox ();
 		this.eventbox1.Events = ((global::Gdk.EventMask)(256));
 		this.eventbox1.Name = "eventbox1";
-		this.eventbox1.AboveChild = true;
+		this.eventbox1.VisibleWindow = false;
 		// Container child eventbox1.Gtk.Container+ContainerChild
 		this.lblActiveShip = new global::Gtk.Label ();
 		this.lblActiveShip.Name = "lblActiveShip";

@@ -387,7 +387,7 @@
                               <widget class="Gtk.EventBox" id="eventbox1">
                                 <property name="MemberName" />
                                 <property name="Events">ButtonPressMask</property>
-                                <property name="AboveChild">True</property>
+                                <property name="VisibleWindow">False</property>
                                 <signal name="ButtonPressEvent" handler="ShipClicked" />
                                 <child>
                                   <widget class="Gtk.Label" id="lblActiveShip">

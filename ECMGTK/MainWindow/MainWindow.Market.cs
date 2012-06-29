@@ -169,7 +169,7 @@ public partial class MainWindow : Gtk.Window
             path = model.GetValue(parentIter, 1).ToString() + " \\ " + path;
         }
 
-        lblItemTreeDetails.Text = path;
+        lblItemTreeDetails.Text = path + "      "; // Some padding to fix annoying issue with overruns
         lblItemNameDetails.Markup = string.Format("<b>{0}</b>", item.Name);
         imgItemIconDetails.PixbufAnimation = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF);
 
