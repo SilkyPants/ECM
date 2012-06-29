@@ -130,7 +130,7 @@ public partial class MainWindow : Gtk.Window
                 {
                     ShowMarketGroupItems(model, parentIter);
 
-                    // TODO: Open Item Market Details
+                    // Open Item Market Details
                     ShowItemMarketDetails(item, model, iter);
                 }
             }
@@ -138,6 +138,21 @@ public partial class MainWindow : Gtk.Window
             {
                 ShowMarketGroupItems(model, iter);
             }
+        }
+    }
+
+    void SelectItemInMarket (ECM.EveItem item)
+    {
+        Gtk.TreeIter iter;
+
+        if(marketStore.GetIter(out iter, item.MarketReference.Path))
+        {
+            ntbPages.CurrentPage = 5;
+
+            TreeModelSort sortedMarket = trvMarket.Model as TreeModelSort;
+
+            trvMarket.ExpandToPath(sortedMarket.ConvertChildPathToPath(item.MarketReference.Path));
+            trvMarket.Selection.SelectIter(sortedMarket.ConvertChildIterToIter(iter));
         }
     }
 

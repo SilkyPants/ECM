@@ -436,6 +436,5 @@ public partial class MainWindow: Gtk.Window
             ts.UnselectAll();
         }
     }
-
     #endregion
 }

@@ -250,8 +250,10 @@ namespace ECM
                 if (item.MarketGroupID > -1)
                 {
                     Gtk.TreeIter parentIter = (Gtk.TreeIter)m_MarketGroups[item.MarketGroupID].Tag;
-                    marketStore.AppendValues(parentIter, null, item.Name, item.ID);
+                    Gtk.TreeIter childIter = marketStore.AppendValues(parentIter, null, item.Name, item.ID);
                     itemStore.AppendValues(item.Name, item.ID);
+
+                    item.MarketReference = new Gtk.TreeRowReference(marketStore, marketStore.GetPath(childIter));
                 }
             }
 		}

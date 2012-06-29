@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Gtk;
 
 namespace ECM
 {
@@ -42,6 +43,8 @@ namespace ECM
     {
         public long MarketGroupID { get; set; }
         public string Description { get; set; }
+
+        public TreeRowReference MarketReference { get; set; }
 
         RequiredSkill[] m_RequiredSkills = new RequiredSkill[6];
         public RequiredSkill[] RequiredSkills 

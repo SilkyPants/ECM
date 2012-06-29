@@ -60,6 +60,7 @@ public partial class MainWindow : Gtk.Window
         lblCone.Markup = string.Format("<b>{0} ({1:0,0})</b>", currentCharacter.CloneName, currentCharacter.CloneSkillPoints);
         lblDoB.Markup = string.Format("<b>{0}</b>", currentCharacter.Birthday.ToString("dd.MM.yyyy HH:mm:ss"));
         lblSecStatus.Markup = string.Format("<b>{0}</b>", currentCharacter.SecurityStatus.ToString("#0.00"));
+        lblActiveShip.Markup = string.Format("<b>{0}\n({1})</b>", currentCharacter.ShipName, currentCharacter.ShipTypeName);
 
         if (string.IsNullOrEmpty(currentCharacter.Corporation))
         {
@@ -181,5 +182,13 @@ public partial class MainWindow : Gtk.Window
         bool skillLearnt = (bool)charSkillStore.GetValue(iter, SkillLearntColumn);
 
         return skillLearnt;
+    }
+
+    protected void ShipClicked (object o, ButtonPressEventArgs args)
+    {
+        if(ECM.Core.CurrentCharacter != null)
+        {
+            SelectItemInMarket(ECM.ItemDatabase.Items[ECM.Core.CurrentCharacter.ShipTypeID]);
+        }
     }
 }
