@@ -101,7 +101,10 @@ namespace ECMGTK
             double fullWidth = 44;
             double dist = SkillNextSP - SkillLevlSP;
             double trav = SkillCurrSP - SkillLevlSP;
-            double perc = Math.Max(0, trav / dist);
+            double perc = 1;
+
+            if(dist > 0)
+                perc = Math.Max(0, trav / dist);
 
             context.Rectangle(startX + 2, pix_rect.Y + 17 + osOffset, fullWidth * perc, 2);
 
@@ -185,11 +188,11 @@ namespace ECMGTK
             if(SkillRank != 0)
             {
                 string colour = SkillRank < 0 ? "foreground=\"yellow\"" : string.Empty;
-                queueString = string.Format("<span size=\"small\" {0}>    ({1} in queue)</span>", colour, Math.Abs(SkillRank));
+                queueString = string.Format("<span size=\"smaller\" {0}>    ({1} in queue)</span>", colour, Math.Abs(SkillRank));
             }
 
             layout.FontDescription = widget.PangoContext.FontDescription;
-            layout.SetMarkup(string.Format("<span size=\"small\">{0} - Skills: {1:0,0}, Points: {2:0,0}</span>{3}", SkillName, SkillCurrSP, SkillNextSP, queueString));
+            layout.SetMarkup(string.Format("<span size=\"smaller\">{0} - {1} skills, {2:0,0} points</span>{3}", SkillName, SkillCurrSP, SkillNextSP, queueString));
 
             Pango.CairoHelper.UpdateLayout(context, layout);
             Pango.CairoHelper.ShowLayout(context, layout);

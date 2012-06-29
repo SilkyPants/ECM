@@ -105,7 +105,8 @@ namespace EveApi
                     m_UpdatingThread.IsBackground = true;
                 }
 
-                m_UpdatingThread.Start();
+                if(m_UpdatingThread.IsAlive == false)
+                    m_UpdatingThread.Start();
             }
         }
 

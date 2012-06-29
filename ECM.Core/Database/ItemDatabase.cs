@@ -272,7 +272,7 @@ namespace ECM
 
             foreach (EveItem item in m_Items.Values)
             {
-                Console.WriteLine("Checking item {0}", item.Name);
+                //Console.WriteLine("Checking item {0}", item.Name);
                 if (skillGroups.ContainsKey(item.MarketGroupID))
                 {
                     EveSkill skill = item as EveSkill;

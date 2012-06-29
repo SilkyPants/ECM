@@ -58,6 +58,11 @@ namespace ECM
         }
         #endregion
 
+        public bool PaidUntilExpired
+        {
+            get { return PaidUntil.CompareTo(DateTime.UtcNow) <= 0; }
+        }
+
         public string KeyID
         {
             get;

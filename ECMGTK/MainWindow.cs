@@ -56,7 +56,6 @@ public partial class MainWindow: Gtk.Window
         
         ntbPages.CurrentPage = 0;
         hpnMarket.Position = 250;
-        Hide();
 
         while (Gtk.Application.EventsPending ())
             Gtk.Application.RunIteration ();
@@ -71,6 +70,11 @@ public partial class MainWindow: Gtk.Window
             LoadMarket();
             LoadSkills();
             ECM.Core.Init();
+
+            Gtk.Application.Invoke(delegate
+            {
+                Show();
+            });
         };
 		
 		worker.RunWorkerCompleted += HandleWorkerRunWorkerCompleted;
@@ -753,14 +757,30 @@ public partial class MainWindow: Gtk.Window
         TextView accStats = new TextView();
         accWidget.PackStart(accStats, true, false, 0);
 
+        TextTag expired = new TextTag("expired");
+        expired.Weight = Pango.Weight.Bold;
+        expired.Foreground = "red";
+
         accStats.Editable = false;
         accStats.Sensitive = false;
 
-        DateTime paidUntilLocal = account.PaidUntil.ToLocalTime();
         TimeSpan playTime = new TimeSpan(0, account.LogonMinutes, 0);
+        string paidUntilString = account.PaidUntil.ToLocalTime().ToString();
+        string accStatus = "Paid Until:";
 
-        accStats.Buffer.Text = string.Format("Paid Until: {0}\nTime spent playing: {1}",
-            paidUntilLocal.ToString(), ECM.Helper.GetDurationInWords(playTime));
+        if(account.PaidUntilExpired)
+        {
+            accKey.UseMarkup = true;
+            accKey.Markup = string.Format("<span foreground=\"red\" font_weight=\"bold\">{0}</span>", accKey.Text);
+
+            accStatus = "Expired:";
+            accStats.Buffer.TagTable.Add(expired);
+        }
+
+        accStats.Buffer.Text = string.Format("Time spent playing: {0}", ECM.Helper.GetDurationInWords(playTime));
+
+        TextIter itr = accStats.Buffer.GetIterAtLine(0);
+        accStats.Buffer.InsertWithTags(ref itr, string.Format("{0} {1}\n", accStatus, paidUntilString), expired);
 
         foreach(ECM.Character ecmChar in account.Characters)
         {
@@ -943,6 +963,7 @@ public partial class MainWindow: Gtk.Window
                         points = currentCharacter.Skills[id].Skillpoints;
 
                         showGroup = true;
+                        numSkills++;
                     }
 
                     int pointsAtNext = skill.PointsAtLevel(level + 1);
@@ -966,7 +987,6 @@ public partial class MainWindow: Gtk.Window
                     charSkillStore.SetValue(child, SkillLevlSPColumn, pointsAtCurr);
 
                     totalPoints += points;
-                    numSkills++;
 
                     cont = charSkillStore.IterNext(ref child);
                 }
