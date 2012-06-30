@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Gtk;
 using Cairo;
@@ -72,15 +71,50 @@ namespace ECMGTK
         private void RenderSkillCell(Context context, Gdk.Rectangle pix_rect, CellRendererState flags, Widget widget)
         {
             int osOffset = 0;
+            int startX = pix_rect.Right - 48;
 
             if(ECM.Helper.CurrentPlatform == ECM.Helper.Platform.Windows)
                 osOffset = 1;
+
+            // Render Text
+            context.Save();
+
+            if (flags.HasFlag(CellRendererState.Selected))
+                context.Color = new Color(1, 1, 1);
+            else
+                context.Color = new Color(0, 0, 0);
+
+            string s = string.Format("{0} ({1}x)", SkillName, SkillRank);
+            context.Color = new Color(0, 0, 0);
+            context.SelectFontFace(widget.PangoContext.FontDescription.Family, FontSlant.Normal, FontWeight.Normal);
+            TextExtents te = context.TextExtents(s);
+            context.MoveTo(pix_rect.X + 32, pix_rect.Y + te.Height + 2);
+            context.ShowText(s);
+
+            s = string.Format("SP {0:0,0}/{1:0,0}", SkillCurrSP, SkillNextSP);
+            context.SelectFontFace(widget.PangoContext.FontDescription.Family, FontSlant.Normal, FontWeight.Bold);
+            te = context.TextExtents(s);
+            context.MoveTo(pix_rect.X + 32, pix_rect.Y + te.Height * 2 + 6);
+            context.ShowText(s);
+
+            s = string.Format("Level {0}", SkillLevel);
+            context.SelectFontFace(widget.PangoContext.FontDescription.Family, FontSlant.Normal, FontWeight.Normal);
+            te = context.TextExtents(s);
+            context.MoveTo(startX - (te.Width + 6), pix_rect.Y + te.Height + 2);
+            context.ShowText(s);
+
+            s = ECM.Helper.GetDurationInWordsShort(TimeSpan.FromMinutes(SkillMinsToNext));
+            context.SelectFontFace(widget.PangoContext.FontDescription.Family, FontSlant.Normal, FontWeight.Normal);
+            te = context.TextExtents(s);
+            context.MoveTo(startX - (te.Width + 6), pix_rect.Y + te.Height * 2 + 6);
+            context.ShowText(s);
+
+            context.Restore();
 
             // Render Progress bars
             context.Color = new Color(0.3, 0.3, 0.3);
 
             context.Save();
-            int startX = pix_rect.Right - 48;
             context.Antialias = Antialias.None;
             context.LineWidth = 1;
 
@@ -119,36 +153,6 @@ namespace ECMGTK
 
             context.Paint();
             context.Restore();
-
-            // Render Text
-            if (flags.HasFlag(CellRendererState.Selected))
-                context.Color = new Color(1, 1, 1);
-            else
-                context.Color = new Color(0, 0, 0);
-
-            Pango.Layout layout = Pango.CairoHelper.CreateLayout(context);
-
-            context.Rectangle(pix_rect.X + 32, pix_rect.Y, 500, 32);
-
-            layout.FontDescription = widget.PangoContext.FontDescription;
-            layout.SetMarkup(string.Format("<span size=\"smaller\">{0} ({1}x)</span>\n<span size=\"smaller\" weight=\"bold\">SP {2:0,0}/{3:0,0}</span>", SkillName, SkillRank, SkillCurrSP, SkillNextSP));
-
-            Pango.CairoHelper.UpdateLayout(context, layout);
-            Pango.CairoHelper.ShowLayout(context, layout);
-
-            layout = Pango.CairoHelper.CreateLayout(context);
-
-            layout.FontDescription = widget.PangoContext.FontDescription;
-            layout.Alignment = Pango.Alignment.Right;
-            layout.SetMarkup(string.Format("<span size=\"small\">Level {0}\n{1}</span>", SkillLevel, ECM.Helper.GetDurationInWordsShort(TimeSpan.FromMinutes(SkillMinsToNext))));
-
-            int w, h;
-            layout.GetPixelSize(out w, out h);
-
-            context.Rectangle(startX - (w + 6), pix_rect.Y, 500, 32);
-
-            Pango.CairoHelper.UpdateLayout(context, layout);
-            Pango.CairoHelper.ShowLayout(context, layout);
         }
 
         private void RenderGroupCell(Context context, Gdk.Rectangle pix_rect, CellRendererState flags, Widget widget)
@@ -170,7 +174,7 @@ namespace ECMGTK
             context.Restore();
 
             context.Save();
-            context.Antialias = Antialias.None;
+            context.Antialias = Antialias.Subpixel;
             context.LineWidth = 1;
             context.Color = new Color(0.5, 0.5, 0.5);
             context.MoveTo(pix_rect.Left, pix_rect.Top);
@@ -181,7 +185,6 @@ namespace ECMGTK
             Pango.Layout layout = Pango.CairoHelper.CreateLayout(context);
 
             context.Rectangle(pix_rect.X + 3, pix_rect.Y + 2, 500, 32);
-
             context.Color = new Color(1, 1, 1);
 
             string queueString = string.Empty;
@@ -192,6 +195,7 @@ namespace ECMGTK
             }
 
             layout.FontDescription = widget.PangoContext.FontDescription;
+
             layout.SetMarkup(string.Format("<span size=\"smaller\">{0} - {1} skills, {2:0,0} points</span>{3}", SkillName, SkillCurrSP, SkillNextSP, queueString));
 
             Pango.CairoHelper.UpdateLayout(context, layout);
