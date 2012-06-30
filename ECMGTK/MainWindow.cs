@@ -25,6 +25,7 @@ using System.Timers;
 using ECMGTK;
 using GLib;
 using Gtk;
+using EveApi;
 
 public partial class MainWindow: Gtk.Window
 {
@@ -388,7 +389,10 @@ public partial class MainWindow: Gtk.Window
             Menu m = new Menu();
 
             MenuItem update = new MenuItem("Update Character Portrait");
+            MenuItem render = new MenuItem("View Larger Render");
+
             m.Add(update);
+            m.Add(render);
 
             update.ButtonPressEvent += delegate(object sender, ButtonPressEventArgs e)
             {
@@ -405,6 +409,14 @@ public partial class MainWindow: Gtk.Window
                     };
 
                     tmp.RunWorkerAsync();
+                }
+            };
+
+            render.ButtonPressEvent += delegate(object sender, ButtonPressEventArgs e)
+            {
+                if(e.Event.Button == 1)
+                {
+                    m_ViewRender.ShowCharacterRender(ECM.Core.CurrentCharacter, ImageApi.ImageRequestSize.Size512x512);
                 }
             };
 

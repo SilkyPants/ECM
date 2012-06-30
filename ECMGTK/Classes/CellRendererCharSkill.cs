@@ -91,22 +91,20 @@ namespace ECMGTK
             context.MoveTo(pix_rect.X + 32, pix_rect.Y + te.Height + 2);
             context.ShowText(s);
 
-            s = string.Format("SP {0:0,0}/{1:0,0}", SkillCurrSP, SkillNextSP);
-            context.SelectFontFace(widget.PangoContext.FontDescription.Family, FontSlant.Normal, FontWeight.Bold);
-            te = context.TextExtents(s);
-            context.MoveTo(pix_rect.X + 32, pix_rect.Y + te.Height * 2 + 6);
-            context.ShowText(s);
-
             s = string.Format("Level {0}", SkillLevel);
-            context.SelectFontFace(widget.PangoContext.FontDescription.Family, FontSlant.Normal, FontWeight.Normal);
             te = context.TextExtents(s);
             context.MoveTo(startX - (te.Width + 6), pix_rect.Y + te.Height + 2);
             context.ShowText(s);
 
             s = ECM.Helper.GetDurationInWordsShort(TimeSpan.FromMinutes(SkillMinsToNext));
-            context.SelectFontFace(widget.PangoContext.FontDescription.Family, FontSlant.Normal, FontWeight.Normal);
             te = context.TextExtents(s);
             context.MoveTo(startX - (te.Width + 6), pix_rect.Y + te.Height * 2 + 6);
+            context.ShowText(s);
+
+            s = string.Format("SP {0:0,0}/{1:0,0}", SkillCurrSP, SkillNextSP);
+            context.SelectFontFace(widget.PangoContext.FontDescription.Family, FontSlant.Normal, FontWeight.Bold);
+            te = context.TextExtents(s);
+            context.MoveTo(pix_rect.X + 32, pix_rect.Y + te.Height * 2 + 6);
             context.ShowText(s);
 
             context.Restore();

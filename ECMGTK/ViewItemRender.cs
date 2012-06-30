@@ -28,6 +28,23 @@ namespace ECMGTK
             fetchRender.RunWorkerAsync();
         }
 
+        public void ShowCharacterRender (ECM.Character character, EveApi.ImageApi.ImageRequestSize size512x512)
+        {
+            BackgroundWorker fetchRender = new BackgroundWorker();
+
+            this.Title = character.Name;
+            imgItemRender.PixbufAnimation = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF);
+
+            fetchRender.DoWork += delegate(object sender, DoWorkEventArgs e)
+            {
+                imgItemRender.Pixbuf = EveApi.ImageApi.GetCharacterPortraitGTK(character.ID, EveApi.ImageApi.ImageRequestSize.Size512x512);
+
+                Show();
+            };
+
+            fetchRender.RunWorkerAsync();
+        }
+
         protected void OnDelete (object o, Gtk.DeleteEventArgs args)
         {
             // Stop the window actually closing
