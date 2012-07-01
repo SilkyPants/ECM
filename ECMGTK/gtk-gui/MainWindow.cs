@@ -219,7 +219,6 @@ public partial class MainWindow
 		w6.Fill = false;
 		// Container child vbxOverview.Gtk.Box+BoxChild
 		this.hbuttonbox1 = new global::Gtk.HButtonBox ();
-		this.hbuttonbox1.Name = "hbuttonbox1";
 		this.hbuttonbox1.Homogeneous = true;
 		this.hbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
 		// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
@@ -969,9 +968,9 @@ public partial class MainWindow
 		this.vbox1.Spacing = 6;
 		// Container child vbox1.Gtk.Box+BoxChild
 		this.cmbFilter = global::Gtk.ComboBox.NewText ();
-		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("All Items"));
-		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Useable Items"));
-		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Trainable Items"));
+		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("All Items\r"));
+		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Useable Items\r"));
+		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Trainable Items\r"));
 		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Untrainable Items"));
 		this.cmbFilter.Name = "cmbFilter";
 		this.cmbFilter.Active = 0;

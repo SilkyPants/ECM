@@ -35,3 +35,5 @@ PocketMine.userprefs
 *.userprefs
 
 ECM.userprefs
+opentk
+inc110-sqlite3-v1.db
