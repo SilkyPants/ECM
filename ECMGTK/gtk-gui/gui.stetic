@@ -120,7 +120,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="MainWindow" design-size="830 774">
+  <widget class="Gtk.Window" id="MainWindow" design-size="830 657">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -1293,6 +1293,7 @@
                         <child>
                           <widget class="Gtk.ComboBox" id="cmbFilter">
                             <property name="MemberName" />
+                            <property name="HeightRequest">20</property>
                             <property name="IsTextCombo">True</property>
                             <property name="Items" translatable="yes">All Items
 Useable Items
@@ -1302,7 +1303,7 @@ Untrainable Items</property>
                           </widget>
                           <packing>
                             <property name="Position">0</property>
-                            <property name="AutoSize">True</property>
+                            <property name="AutoSize">False</property>
                             <property name="Expand">False</property>
                             <property name="Fill">False</property>
                           </packing>
@@ -1316,6 +1317,7 @@ Untrainable Items</property>
                                 <property name="MemberName" />
                                 <property name="CanFocus">True</property>
                                 <property name="ShowScrollbars">True</property>
+                                <property name="EnableSearch">False</property>
                                 <property name="HeadersVisible">False</property>
                                 <signal name="RowCollapsed" handler="RowCollapsed" />
                                 <signal name="RowActivated" handler="RowActivated" />

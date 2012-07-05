@@ -26,7 +26,7 @@ using ECM;
 
 public partial class MainWindow : Gtk.Window
 {
-    TreeStore marketStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(string), typeof(long), typeof(bool), typeof(Gdk.Pixbuf));
+    TreeStore marketStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(string), typeof(long), typeof(bool), typeof(bool));
     ListStore itemStore = new ListStore(typeof(string), typeof(long));
     TreeModelFilter marketSearchFilter;
     ViewItemRender m_ViewRender = new ViewItemRender();

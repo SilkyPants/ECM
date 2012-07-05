@@ -298,31 +298,27 @@ public partial class MainWindow: Gtk.Window
     {
         TreeViewColumn mainColumn = new TreeViewColumn();
         mainColumn.Title = "Groups";
-        
-        CellRendererPixbuf pixBuf = new CellRendererPixbuf();
-        pixBuf.Xalign = 0;
-        mainColumn.PackStart(pixBuf, false);
-        mainColumn.AddAttribute(pixBuf, "pixbuf", 0);
-        
-        CellRendererText label = new CellRendererText();
-        label.Xalign = 0;
-        label.Ellipsize = Pango.EllipsizeMode.End;
-        label.WrapMode = Pango.WrapMode.Char;
-        label.SingleParagraphMode = true;
-        mainColumn.PackStart(label, true);
-        mainColumn.AddAttribute(label, "text", 1);
 
-        pixBuf = new CellRendererPixbuf();
-        pixBuf.Xalign = 0;
-        mainColumn.PackStart(pixBuf, false);
-        mainColumn.AddAttribute(pixBuf, "pixbuf", 4);
+        CellRendererMarketItem itemCell = new CellRendererMarketItem();
+
+        mainColumn.PackStart(itemCell, true);
+
+        mainColumn.AddAttribute(itemCell, "Icon", 0);
+        mainColumn.AddAttribute(itemCell, "ItemName", 1);
+        mainColumn.AddAttribute(itemCell, "ID", 2);
+        mainColumn.AddAttribute(itemCell, "HasItems", 3);
+        mainColumn.AddAttribute(itemCell, "IsItem", 4);
         
         trvMarket.AppendColumn(mainColumn);
-        trvMarket.TooltipColumn = 1;
-        trvMarket.HasTooltip = true;
+
+//        trvMarket.TooltipColumn = 1;
+//        trvMarket.HasTooltip = true;
 
         trvMarket.ColumnsAutosize();
-
+        
+        trvMarket.EnableTreeLines = false;
+        trvMarket.ShowExpanders = false;
+        trvMarket.LevelIndentation = 16;
         trvMarket.Selection.Changed += trvSelectionChanged;
         trvMarket.ButtonPressEvent += onMarketClick;
 
@@ -330,7 +326,7 @@ public partial class MainWindow: Gtk.Window
         mainColumn = new TreeViewColumn();
         mainColumn.Title = "Groups";
         
-        label = new CellRendererText();
+        CellRendererText label = new CellRendererText();
         label.Xalign = 0;
         mainColumn.PackStart(label, false);
         mainColumn.AddAttribute(label, "text", 0);
@@ -359,24 +355,25 @@ public partial class MainWindow: Gtk.Window
         // Convert to iter
         if (model.GetIter(out iter, path)) 
         {
-            // HACK: Check it the node has an image (as items don't)
-            if (model.GetValue (iter, 0) == null) 
+            bool isItem = Convert.ToBoolean(model.GetValue(iter, 4));
+
+            if (isItem)
             {
-                long ID = Convert.ToInt64 (model.GetValue (iter, 2));
-                ECM.EveItem item = ECM.ItemDatabase.Items [ID];
+                long ID = Convert.ToInt64(model.GetValue(iter, 2));
+                ECM.EveItem item = ECM.ItemDatabase.Items[ID];
 
                 // Right mouse click
-                if (args.Event.Button == 3) 
+                if (args.Event.Button == 3)
                 {
-                    Menu m = new Menu ();
+                    Menu m = new Menu();
 
-                    MenuItem view = new MenuItem ("View Item Details");
+                    MenuItem view = new MenuItem("View Item Details");
 
-                    m.Add (view);
+                    m.Add(view);
 
-                    view.ButtonPressEvent += delegate(object sender, ButtonPressEventArgs e) 
+                    view.ButtonPressEvent += delegate(object sender, ButtonPressEventArgs e)
                     {
-                        if(e.Event.Button == 1)
+                        if (e.Event.Button == 1)
                         {
                             // Show selected item details
                             m_ViewDetails.ShowItemDetails(item);
@@ -392,6 +389,14 @@ public partial class MainWindow: Gtk.Window
 
                     args.RetVal = true;
                 }
+            }
+            else
+            {
+                bool expanded = trvMarket.GetRowExpanded(path);
+                if (expanded)
+                    trvMarket.CollapseRow(path);
+                else
+                    trvMarket.ExpandRow(path, false);
             }
         }
     }

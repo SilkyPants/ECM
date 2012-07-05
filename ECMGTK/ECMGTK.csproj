@@ -127,6 +127,7 @@
     <Compile Include="gtk-gui\ECMGTK.ViewItemRender.cs" />
     <Compile Include="ViewItemDetails.cs" />
     <Compile Include="gtk-gui\ECMGTK.ViewItemDetails.cs" />
+    <Compile Include="Classes\CellRendererMarketItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

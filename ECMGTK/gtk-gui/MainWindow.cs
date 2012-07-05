@@ -969,10 +969,11 @@ public partial class MainWindow
 		this.vbox1.Spacing = 6;
 		// Container child vbox1.Gtk.Box+BoxChild
 		this.cmbFilter = global::Gtk.ComboBox.NewText ();
-		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("All Items"));
-		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Useable Items"));
-		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Trainable Items"));
+		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("All Items\r"));
+		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Useable Items\r"));
+		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Trainable Items\r"));
 		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Untrainable Items"));
+		this.cmbFilter.HeightRequest = 20;
 		this.cmbFilter.Name = "cmbFilter";
 		this.cmbFilter.Active = 0;
 		this.vbox1.Add (this.cmbFilter);
@@ -988,6 +989,7 @@ public partial class MainWindow
 		this.trvMarket = new global::Gtk.TreeView ();
 		this.trvMarket.CanFocus = true;
 		this.trvMarket.Name = "trvMarket";
+		this.trvMarket.EnableSearch = false;
 		this.trvMarket.HeadersVisible = false;
 		this.GtkScrolledWindow3.Add (this.trvMarket);
 		this.vbox1.Add (this.GtkScrolledWindow3);
