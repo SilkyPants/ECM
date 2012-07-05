@@ -63,6 +63,19 @@ public partial class MainWindow: Gtk.Window
     {
         Build ();
 
+        // Creation of the Tray Icon
+        StatusIcon trayIcon = new StatusIcon(Gdk.Pixbuf.LoadFromResource ("ECMGTK.Resources.Icons.Corpse.png"));
+        trayIcon.Visible = false;
+
+        // Show/Hide the window (even from the Panel/Taskbar) when the TrayIcon has been clicked.
+        trayIcon.Activate += OnTrayIconPopup;;
+
+        // Show a pop up menu when the icon has been right clicked.
+        trayIcon.PopupMenu += OnTrayIconPopup;
+
+        // A Tooltip for the Icon
+        trayIcon.Tooltip = "Eve Character Monitor";
+
         ntbPages.CurrentPage = STARTING_PAGE;
         hpnMarket.Position = MARKET_PANE_DEFAULT;
 
@@ -83,6 +96,7 @@ public partial class MainWindow: Gtk.Window
             Gtk.Application.Invoke(delegate
             {
                 Show();
+                trayIcon.Visible = true;
             });
         };
 		
@@ -103,6 +117,11 @@ public partial class MainWindow: Gtk.Window
         heartbeat.AutoReset = true;
         heartbeat.Elapsed += new ElapsedEventHandler(heartbeat_Elapsed);
         heartbeat.Start();
+    }
+
+    void OnTrayIconPopup (object sender, EventArgs e)
+    {
+        this.Visible = !this.Visible;
     }
 
     #region Event Handlers

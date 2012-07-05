@@ -29,7 +29,9 @@ namespace ECMGTK
         public static void Main (string[] args)
         {
             Application.Init ();
+
             MainWindow win = new MainWindow ();
+
             Application.Run ();
     	}
 	}
