@@ -233,8 +233,6 @@ namespace ECM
 			{
                 Gtk.TreeIter groupIter;
 
-                // TODO: ADD MARKET REFERENCE TO EVE MARKET GROUP
-
                 if (group.ParentID > -1)
                 {
                     Gtk.TreeIter parentIter = (Gtk.TreeIter)m_MarketGroups[group.ParentID].Tag;

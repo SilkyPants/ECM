@@ -51,7 +51,23 @@
     <Compile Include="Database\DatabaseBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Icons\Close16.png">
+      <LogicalName>ECM.Core.Icons.Close16PNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\Down16.png">
+      <LogicalName>ECM.Core.Icons.Down16PNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\Left16.png">
+      <LogicalName>ECM.Core.Icons.Left16PNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\Right16.png">
+      <LogicalName>ECM.Core.Icons.Right16PNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\Up16.png">
+      <LogicalName>ECM.Core.Icons.Up16PNG</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Icons\MarketGroup.png">
       <LogicalName>ECM.Core.Icons.MarketGroupPNG</LogicalName>

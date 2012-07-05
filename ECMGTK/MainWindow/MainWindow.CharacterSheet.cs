@@ -186,9 +186,52 @@ public partial class MainWindow : Gtk.Window
 
     protected void ShipClicked (object o, ButtonPressEventArgs args)
     {
-        if(ECM.Core.CurrentCharacter != null)
+        if(args.Event.Button == 1)
         {
-            SelectItemInMarket(ECM.ItemDatabase.Items[ECM.Core.CurrentCharacter.ShipTypeID]);
+            if(ECM.Core.CurrentCharacter != null)
+            {
+                SelectItemInMarket(ECM.ItemDatabase.Items[ECM.Core.CurrentCharacter.ShipTypeID]);
+            }
+        }
+        else if(args.Event.Button == 3)
+        {
+            Menu m = new Menu();
+
+            MenuItem viewItem = new MenuItem("View Item Details");
+            MenuItem viewMarket = new MenuItem("View Market Details");
+            MenuItem viewRender = new MenuItem("View Render");
+
+            m.Add(viewItem);
+            m.Add(viewMarket);
+            m.Add(viewRender);
+
+            viewItem.ButtonPressEvent += delegate(object sender, ButtonPressEventArgs e)
+            {
+                if (e.Event.Button == 1 && ECM.Core.CurrentCharacter != null)
+                {
+                    m_ViewDetails.ShowItemDetails(ECM.ItemDatabase.Items[ECM.Core.CurrentCharacter.ShipTypeID]);
+                }
+            };
+
+            viewMarket.ButtonPressEvent += delegate(object sender, ButtonPressEventArgs e)
+            {
+                if (e.Event.Button == 1 && ECM.Core.CurrentCharacter != null)
+                {
+                    SelectItemInMarket(ECM.ItemDatabase.Items[ECM.Core.CurrentCharacter.ShipTypeID]);
+                }
+            };
+
+            viewRender.ButtonPressEvent += delegate(object sender, ButtonPressEventArgs e)
+            {
+                if(e.Event.Button == 1 && ECM.Core.CurrentCharacter != null)
+                {
+                    m_ViewRender.ShowItemRender(ECM.ItemDatabase.Items[ECM.Core.CurrentCharacter.ShipTypeID]);
+                }
+            };
+
+            m.ShowAll();
+            m.Popup();
         }
     }
+
 }

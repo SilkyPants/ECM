@@ -223,8 +223,16 @@ public partial class MainWindow : Gtk.Window
         if (long.TryParse(btnShowRender.Name, out itemID))
         {
             m_ViewRender.ShowItemRender(ECM.ItemDatabase.Items[itemID]);
+        }
+    }
 
-            m_ViewRender.ShowAll();
+    protected void ShowItemDetails (object sender, EventArgs e)
+    {
+        long itemID;
+
+        if (long.TryParse(btnShowRender.Name, out itemID))
+        {
+            m_ViewDetails.ShowItemDetails(ECM.ItemDatabase.Items[itemID]);
         }
     }
 
@@ -306,6 +314,10 @@ public partial class MainWindow : Gtk.Window
         Button btnInfo = new Button();
         btnInfo.Relief = ReliefStyle.None;
         btnInfo.Add(infoPic);
+        btnInfo.Clicked += delegate(object sender, EventArgs e) 
+        {
+            m_ViewDetails.ShowItemDetails(item);           
+        };
 
         HBox itemNameHeader = new HBox();
         itemNameHeader.PackStart(itemName, false, false, 0);

@@ -171,6 +171,18 @@ namespace ECMGTK
             // We "undo" the pattern setting here
             context.Restore();
 
+            // Draw expander
+            //TODO: Replace with Up/Down images
+            System.IO.Stream pixBuf = IsExpanded ? ECM.Core.Up16PNG : ECM.Core.Down16PNG;
+
+            context.Save();
+            Gdk.CairoHelper.SetSourcePixbuf(context, new Gdk.Pixbuf(pixBuf), pix_rect.Right - 16, pix_rect.Y);
+
+            //context.Rectangle(pix_rect.Right - 16, pix_rect.Y, 16, 16);
+
+            context.Paint();
+            context.Restore();
+
             context.Save();
             context.Antialias = Antialias.Subpixel;
             context.LineWidth = 1;

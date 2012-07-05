@@ -176,6 +176,31 @@ namespace ECM
             get { return GetResource("ECM.Core.Icons.UntrainablePNG"); }
         }
 
+        public static Stream Up16PNG
+        {
+            get { return GetResource("ECM.Core.Icons.Up16PNG"); }
+        }
+
+        public static Stream Down16PNG
+        {
+            get { return GetResource("ECM.Core.Icons.Down16PNG"); }
+        }
+
+        public static Stream Left16PNG
+        {
+            get { return GetResource("ECM.Core.Icons.Left16PNG"); }
+        }
+
+        public static Stream Right16PNG
+        {
+            get { return GetResource("ECM.Core.Icons.Right16PNG"); }
+        }
+
+        public static Stream Close16PNG
+        {
+            get { return GetResource("ECM.Core.Icons.Close16PNG"); }
+        }
+
         #endregion
 
         public static void Init()

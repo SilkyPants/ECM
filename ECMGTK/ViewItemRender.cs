@@ -22,10 +22,11 @@ namespace ECMGTK
             {
                 imgItemRender.Pixbuf = EveApi.ImageApi.GetItemRenderGTK(item.ID, EveApi.ImageApi.ImageRequestSize.Size512x512);
 
-                Show();
+                //Show();
             };
 
             fetchRender.RunWorkerAsync();
+            ShowAll();
         }
 
         public void ShowCharacterRender (ECM.Character character, EveApi.ImageApi.ImageRequestSize size512x512)
@@ -38,11 +39,10 @@ namespace ECMGTK
             fetchRender.DoWork += delegate(object sender, DoWorkEventArgs e)
             {
                 imgItemRender.Pixbuf = EveApi.ImageApi.GetCharacterPortraitGTK(character.ID, EveApi.ImageApi.ImageRequestSize.Size512x512);
-
-                Show();
             };
 
             fetchRender.RunWorkerAsync();
+            ShowAll();
         }
 
         protected void OnDelete (object o, Gtk.DeleteEventArgs args)
