@@ -26,10 +26,11 @@ using ECM;
 
 public partial class MainWindow : Gtk.Window
 {
-    TreeStore marketStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(string), typeof(long), typeof(bool));
+    TreeStore marketStore = new TreeStore(typeof(Gdk.Pixbuf), typeof(string), typeof(long), typeof(bool), typeof(Gdk.Pixbuf));
     ListStore itemStore = new ListStore(typeof(string), typeof(long));
     TreeModelFilter marketSearchFilter;
     ViewItemRender m_ViewRender = new ViewItemRender();
+    ViewItemDetails m_ViewDetails = new ViewItemDetails();
 
     readonly Colour m_Untrainable = new Colour(128, 0, 0, 128);
     readonly Colour m_Trainable = new Colour(255, 128, 0, 128);
@@ -325,7 +326,7 @@ public partial class MainWindow : Gtk.Window
         inner.PackStart(picFrame, false, false, 0);
         inner.PackStart(heading, true, true, 1);
 
-        Button viewDets = new Button(new Label("View Details"));
+        Button viewDets = new Button(new Label("View Market Details"));
         viewDets.Clicked += delegate(object sender, EventArgs e)
         {
             ShowItemMarketDetails(item, model, iter);

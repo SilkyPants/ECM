@@ -181,7 +181,7 @@ public partial class MainWindow
 		this.ntbPages = new global::Gtk.Notebook ();
 		this.ntbPages.CanFocus = true;
 		this.ntbPages.Name = "ntbPages";
-		this.ntbPages.CurrentPage = 5;
+		this.ntbPages.CurrentPage = 0;
 		this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
 		this.ntbPages.BorderWidth = ((uint)(3));
 		// Container child ntbPages.Gtk.Notebook+NotebookChild
@@ -219,6 +219,7 @@ public partial class MainWindow
 		w6.Fill = false;
 		// Container child vbxOverview.Gtk.Box+BoxChild
 		this.hbuttonbox1 = new global::Gtk.HButtonBox ();
+		this.hbuttonbox1.Name = "hbuttonbox1";
 		this.hbuttonbox1.Homogeneous = true;
 		this.hbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
 		// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
@@ -953,7 +954,7 @@ public partial class MainWindow
 		this.hpnMarket = new global::Gtk.HPaned ();
 		this.hpnMarket.CanFocus = true;
 		this.hpnMarket.Name = "hpnMarket";
-		this.hpnMarket.Position = 219;
+		this.hpnMarket.Position = 214;
 		this.hpnMarket.BorderWidth = ((uint)(3));
 		// Container child hpnMarket.Gtk.Paned+PanedChild
 		this.ntbMarketGroups = new global::Gtk.Notebook ();
@@ -968,9 +969,9 @@ public partial class MainWindow
 		this.vbox1.Spacing = 6;
 		// Container child vbox1.Gtk.Box+BoxChild
 		this.cmbFilter = global::Gtk.ComboBox.NewText ();
-		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("All Items\r"));
-		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Useable Items\r"));
-		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Trainable Items\r"));
+		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("All Items"));
+		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Useable Items"));
+		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Trainable Items"));
 		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Untrainable Items"));
 		this.cmbFilter.Name = "cmbFilter";
 		this.cmbFilter.Active = 0;
@@ -1056,6 +1057,7 @@ public partial class MainWindow
 		this.hpnMarket.Add (this.ntbMarketGroups);
 		global::Gtk.Paned.PanedChild w92 = ((global::Gtk.Paned.PanedChild)(this.hpnMarket [this.ntbMarketGroups]));
 		w92.Resize = false;
+		w92.Shrink = false;
 		// Container child hpnMarket.Gtk.Paned+PanedChild
 		this.ntbMarketDetails = new global::Gtk.Notebook ();
 		this.ntbMarketDetails.CanFocus = true;
@@ -1277,6 +1279,8 @@ public partial class MainWindow
 		this.ntbMarketDetails.SetTabLabel (this.GtkScrolledWindow12, this.label28);
 		this.label28.ShowAll ();
 		this.hpnMarket.Add (this.ntbMarketDetails);
+		global::Gtk.Paned.PanedChild w121 = ((global::Gtk.Paned.PanedChild)(this.hpnMarket [this.ntbMarketDetails]));
+		w121.Shrink = false;
 		this.ntbPages.Add (this.hpnMarket);
 		global::Gtk.Notebook.NotebookChild w122 = ((global::Gtk.Notebook.NotebookChild)(this.ntbPages [this.hpnMarket]));
 		w122.Position = 5;
@@ -1434,6 +1438,7 @@ public partial class MainWindow
 		this.Hide ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.btnAddNewApiKey.Clicked += new global::System.EventHandler (this.AddNewKey);
+		this.btnCreateNewCharacter.Clicked += new global::System.EventHandler (this.CreateNewCharacter);
 		this.eventbox1.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler (this.ShipClicked);
 		this.lblActiveShip.ButtonPressEvent += new global::Gtk.ButtonPressEventHandler (this.ShipClicked);
 		this.trvAttributes.RowActivated += new global::Gtk.RowActivatedHandler (this.ClearSelection);

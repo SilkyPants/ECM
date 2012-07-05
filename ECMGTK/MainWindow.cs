@@ -32,7 +32,7 @@ public partial class MainWindow: Gtk.Window
 
     #region Constants
     const int HEARTBEAT_RATE = 100;
-    const int MARKET_PANE_DEFAULT = 250;
+    const int MARKET_PANE_DEFAULT = 270;
     const int STARTING_PAGE = 0;
     #endregion
 
@@ -287,14 +287,25 @@ public partial class MainWindow: Gtk.Window
         
         CellRendererText label = new CellRendererText();
         label.Xalign = 0;
-        mainColumn.PackStart(label, false);
+        label.Ellipsize = Pango.EllipsizeMode.End;
+        label.WrapMode = Pango.WrapMode.Char;
+        label.SingleParagraphMode = true;
+        mainColumn.PackStart(label, true);
         mainColumn.AddAttribute(label, "text", 1);
+
+        pixBuf = new CellRendererPixbuf();
+        pixBuf.Xalign = 0;
+        mainColumn.PackStart(pixBuf, false);
+        mainColumn.AddAttribute(pixBuf, "pixbuf", 4);
         
         trvMarket.AppendColumn(mainColumn);
-        
+        trvMarket.TooltipColumn = 1;
+        trvMarket.HasTooltip = true;
+
         trvMarket.ColumnsAutosize();
 
         trvMarket.Selection.Changed += trvSelectionChanged;
+        trvMarket.ButtonPressEvent += onMarketClick;
 
         // Search Item Tree
         mainColumn = new TreeViewColumn();
@@ -308,6 +319,62 @@ public partial class MainWindow: Gtk.Window
         trvSearchItems.AppendColumn(mainColumn);
 
         trvSearchItems.ColumnsAutosize();
+    }
+
+    [GLib.ConnectBefore]
+    void onMarketClick (object o, ButtonPressEventArgs args)
+    {
+        args.RetVal = false;
+
+        // Check we have an item selected
+        TreePath path;
+        TreeIter iter;
+        TreeViewColumn col;
+        int cellX, cellY;
+        TreeModel model = trvMarket.Model;
+
+        // Get path to node under mouse
+        trvMarket.GetPathAtPos((int)args.Event.X, (int)args.Event.Y, out path, out col, out cellX, out cellY);
+        Gdk.Rectangle cellArea = trvMarket.GetCellArea(path, col);
+
+        // Convert to iter
+        if (model.GetIter(out iter, path)) 
+        {
+            // HACK: Check it the node has an image (as items don't)
+            if (model.GetValue (iter, 0) == null) 
+            {
+                long ID = Convert.ToInt64 (model.GetValue (iter, 2));
+                ECM.EveItem item = ECM.ItemDatabase.Items [ID];
+
+                // Right mouse click
+                if (args.Event.Button == 3) 
+                {
+                    Menu m = new Menu ();
+
+                    MenuItem view = new MenuItem ("View Item Details");
+
+                    m.Add (view);
+
+                    view.ButtonPressEvent += delegate(object sender, ButtonPressEventArgs e) 
+                    {
+                        if(e.Event.Button == 1)
+                        {
+                            // Show selected item details
+                            m_ViewDetails.ShowItemDetails(item);
+                        }
+                    };
+
+                    m.ShowAll();
+                    m.Popup();
+                }
+                else if (args.Event.Button == 1 && cellX >= (cellArea.Width + cellArea.X) - 16)
+                {
+                    m_ViewDetails.ShowItemDetails(item);
+
+                    args.RetVal = true;
+                }
+            }
+        }
     }
 
     private void SetupCharacterSheet()

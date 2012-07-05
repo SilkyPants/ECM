@@ -227,6 +227,8 @@ namespace ECM
 		{
 			LoadMarket();
 
+            Gdk.Pixbuf infoIcon = new Gdk.Pixbuf(ECM.Core.Info16PNG);
+
 			foreach(EveMarketGroup group in m_MarketGroups.Values)
 			{
                 Gtk.TreeIter groupIter;
@@ -244,7 +246,7 @@ namespace ECM
                 }
 
                 group.MarketReference = new Gtk.TreeRowReference(marketStore, marketStore.GetPath(groupIter));
-				marketStore.SetValues(groupIter, new Gdk.Pixbuf(ItemDatabase.GetMarketIconStream(group.IconString)), group.Name, group.ID, group.HasItems);
+				marketStore.SetValues(groupIter, new Gdk.Pixbuf(ItemDatabase.GetMarketIconStream(group.IconString)), group.Name, group.ID, group.HasItems, null);
 				group.Tag = groupIter;
 			}
 
@@ -253,7 +255,7 @@ namespace ECM
                 if (item.MarketGroupID > -1)
                 {
                     Gtk.TreeIter parentIter = (Gtk.TreeIter)m_MarketGroups[item.MarketGroupID].Tag;
-                    Gtk.TreeIter childIter = marketStore.AppendValues(parentIter, null, item.Name, item.ID);
+                    Gtk.TreeIter childIter = marketStore.AppendValues(parentIter, null, item.Name, item.ID, false, infoIcon);
                     itemStore.AppendValues(item.Name, item.ID);
 
                     item.MarketReference = new Gtk.TreeRowReference(marketStore, marketStore.GetPath(childIter));

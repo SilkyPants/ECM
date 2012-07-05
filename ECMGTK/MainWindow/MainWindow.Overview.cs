@@ -31,6 +31,13 @@ public partial class MainWindow : Gtk.Window
         addKey.Run();
     }
 
+    protected void CreateNewCharacter (object sender, EventArgs e)
+    {
+        ECMGTK.ViewItemDetails frm = new ECMGTK.ViewItemDetails();
+
+        frm.ShowAll();
+    }
+
     protected Widget CreateAccountWidget(ECM.Account account)
     {
         VBox accWidget = new VBox();
