@@ -93,6 +93,7 @@ public partial class MainWindow: Gtk.Window
         {
             LoadMarket();
             LoadSkills();
+            LoadCertificates();
             ECM.Core.Init();
 
             Gtk.Application.Invoke(delegate
@@ -309,7 +310,6 @@ public partial class MainWindow: Gtk.Window
         mainColumn.AddAttribute(itemCell, "Icon", 0);
         mainColumn.AddAttribute(itemCell, "ItemName", 1);
         mainColumn.AddAttribute(itemCell, "ID", 2);
-        mainColumn.AddAttribute(itemCell, "HasItems", 3);
         mainColumn.AddAttribute(itemCell, "IsItem", 4);
         
         trvMarket.AppendColumn(mainColumn);
@@ -323,6 +323,7 @@ public partial class MainWindow: Gtk.Window
         trvMarket.ShowExpanders = false;
         trvMarket.LevelIndentation = 16;
         trvMarket.Selection.Changed += trvSelectionChanged;
+        trvMarket.Selection.Changed += ExpandGroup;
         trvMarket.ButtonPressEvent += onMarketClick;
 
         // Search Item Tree
@@ -393,14 +394,14 @@ public partial class MainWindow: Gtk.Window
                     args.RetVal = true;
                 }
             }
-            else
-            {
-                bool expanded = trvMarket.GetRowExpanded(path);
-                if (expanded)
-                    trvMarket.CollapseRow(path);
-                else
-                    trvMarket.ExpandRow(path, false);
-            }
+            //else
+            //{
+            //    bool expanded = trvMarket.GetRowExpanded(path);
+            //    if (expanded)
+            //        trvMarket.CollapseRow(path);
+            //    else
+            //        trvMarket.ExpandRow(path, false);
+            //}
         }
     }
 
@@ -452,28 +453,49 @@ public partial class MainWindow: Gtk.Window
 
         trvSkills.EnableTreeLines = false;
         trvSkills.ShowExpanders = false;
-        trvSkills.Selection.Changed += ExpandSkillGroup;
+        trvSkills.Selection.Changed += ExpandGroup;
 
         #endregion
 
         #region Certificates Treeview
+        TreeViewColumn column = new TreeViewColumn();
+        skillColumn.Title = "Cert";
 
+        CellRendererMarketItem cell = new CellRendererMarketItem();
+
+        column.PackStart(cell, true);
+
+        column.AddAttribute(cell, "ItemName", 0);
+        column.AddAttribute(cell, "IsItem", 3);
+
+        trvCertificates.AppendColumn(column);
+
+        trvCertificates.EnableTreeLines = false;
+        trvCertificates.ShowExpanders = false;
+        trvCertificates.Selection.Changed += ExpandGroup;
         #endregion
     }
 
-    void ExpandSkillGroup(object sender, EventArgs e)
+    void ExpandGroup(object sender, EventArgs e)
     {
-        TreePath[] paths = trvSkills.Selection.GetSelectedRows();
-        if(paths.Length > 0)
-        {
-            bool expanded = trvSkills.GetRowExpanded(paths[0]);
-            if(trvSkills.GetRowExpanded(paths[0]))
-                trvSkills.CollapseRow(paths[0]);
-            else
-                trvSkills.ExpandRow(paths[0], false);
-        }
+        TreeSelection selection = sender as TreeSelection;
 
-        trvSkills.Selection.UnselectAll();
+        if (selection != null)
+        {
+            TreeView tree = selection.TreeView;
+            TreePath[] paths = selection.GetSelectedRows();
+            if (paths.Length > 0)
+            {
+                bool expanded = tree.GetRowExpanded(paths[0]);
+
+                if (expanded)
+                    tree.CollapseRow(paths[0]);
+                else
+                    tree.ExpandRow(paths[0], false);
+            }
+
+            selection.UnselectAll();
+        }
     }
 
     void UpdateCharacterPortrait (object o, ButtonPressEventArgs args)

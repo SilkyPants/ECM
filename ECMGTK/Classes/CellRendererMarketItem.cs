@@ -17,13 +17,11 @@ namespace ECMGTK
         [GLib.Property("ID")]
         public long ID { get; set; }
 
-        [GLib.Property("HasItems")]
-        public bool HasItems { get; set; }
-
         [GLib.Property("IsItem")]
         public bool IsItem { get; set; }
 
-        static readonly Color m_BackdropColour = new Color(.19, .18, .17);
+        static readonly Color m_BackdropGroupColour = new Color(.19, .18, .17);
+        static readonly Color m_BackdropItemColour = new Color(.29, .28, .27);
 
         public CellRendererMarketItem()
         {
@@ -54,8 +52,10 @@ namespace ECMGTK
                 //pat.AddColorStop(1, new Color(0.15, 0.15, 0.15, 1));
                 //context.Pattern = pat;
 
-                context.Color = m_BackdropColour;
-                context.SetSourceRGB(m_BackdropColour.R, m_BackdropColour.G, m_BackdropColour.B);
+                Color col = IsItem ? m_BackdropItemColour : m_BackdropGroupColour;
+
+                context.Color = col;
+                context.SetSourceRGB(col.R, col.G, col.B);
 
                 context.Rectangle(background_area.X, background_area.Y, background_area.Width, background_area.Height);
 
@@ -84,8 +84,8 @@ namespace ECMGTK
 
             context.Color = new Color(1, 1, 1);
 
-            if (!flags.HasFlag(CellRendererState.Selected) && IsItem)
-                context.Color = new Color(0, 0, 0);
+            //if (!flags.HasFlag(CellRendererState.Selected) && IsItem)
+            //    context.Color = new Color(0, 0, 0);
 
             context.SelectFontFace(widget.PangoContext.FontDescription.Family, FontSlant.Normal, FontWeight.Normal);
 

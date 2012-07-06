@@ -18,9 +18,27 @@ namespace ECM
 	    static string itemDatabasePath = "Resources/Database/eveItems.db";
         static string skillsDatabasePath = "Resources/Database/eveSkills.db";
         static string certsDatabasePath = "Resources/Database/eveCertificates.db";
-		
-		static Dictionary<long, EveMarketGroup> m_MarketGroups = new Dictionary<long, EveMarketGroup>();
+
+        static Dictionary<long, EveMarketGroup> m_MarketGroups = new Dictionary<long, EveMarketGroup>();
         static Dictionary<long, EveItem> m_Items = new Dictionary<long, EveItem>();
+        static Dictionary<long, EveCertificate> m_Certificates = new Dictionary<long, EveCertificate>();
+        static Dictionary<long, EveCertGroup> m_CertGroups = new Dictionary<long, EveCertGroup>();
+
+        public static Dictionary<long, EveCertGroup> CertificateGroups
+        {
+            get
+            {
+                return m_CertGroups;
+            }
+        }
+
+        public static Dictionary<long, EveCertificate> Certificates
+        {
+            get
+            {
+                return m_Certificates;
+            }
+        }
 
         public static Dictionary<long, EveItem> Items
         {
@@ -83,9 +101,67 @@ namespace ECM
 	        
 	        LoadMarketGroups();
             LoadItems();
+
+            LoadCertificates();
 	        
 	        CloseDatabase();
 	    }
+
+        private static void LoadCertificates()
+        {
+            string selectCmd = "SELECT * FROM crtCategories";
+
+            SqlCmd cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = selectCmd;
+            SqlReader row = cmd.ExecuteReader();
+
+            while (row.Read())
+            {
+                long groupID = Convert.ToInt64(row[0]);
+                string groupDesc = row[1].ToString();
+                string groupName = row[2].ToString();
+
+                EveCertGroup newGroup = new EveCertGroup();
+                newGroup.Name = groupName;
+                newGroup.ID = groupID;
+                newGroup.Description = groupDesc;
+
+                m_CertGroups.Add(newGroup.ID, newGroup);
+            }
+
+            row.Close();
+
+            selectCmd = @"SELECT crtCertificates.certificateID, crtCertificates.categoryID, crtClasses.className, crtCertificates.grade, crtCertificates.corpID, crtCertificates.description
+                            FROM crtCertificates 
+                            INNER JOIN crtClasses ON crtCertificates.classID = crtClasses.classID";
+
+            cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = selectCmd;
+            row = cmd.ExecuteReader();
+
+            while (row.Read())
+            {
+                long certID = Convert.ToInt64(row[0]);
+                long groupID = Convert.ToInt64(row[1]);
+                string certName = row[2].ToString();
+                int certGrade = Convert.ToInt32(row[3]);
+                long corpID = Convert.ToInt64(row[4]);
+                string certDesc = row[5].ToString();
+
+                EveCertificate newCert = new EveCertificate();
+                newCert.Name = certName;
+                newCert.ID = certID;
+                newCert.GroupID = groupID;
+                newCert.Grade = certGrade;
+                newCert.CorpID = corpID;
+                newCert.Description = certDesc;
+
+                m_Certificates.Add(newCert.ID, newCert);
+            }
+
+            row.Close();
+
+        }
 	    
 	    private static void LoadMarketGroups()
 	    {
@@ -112,6 +188,8 @@ namespace ECM
 				
 				m_MarketGroups.Add(groupID, newGroup);
 	        }
+
+            row.Close();
 	    }
 	    
 	    private static void LoadItems()
@@ -223,19 +301,38 @@ namespace ECM
             }
         }
 
+        public static void LoadCertificateTree(Gtk.TreeStore certStore)
+        {
+            foreach (EveCertGroup group in m_CertGroups.Values)
+            {
+                Gtk.TreeIter groupIter = certStore.AppendValues(group.Name, -1, group.ID, false);
+                group.TreeReference = new Gtk.TreeRowReference(certStore, certStore.GetPath(groupIter));
+            }
+
+            foreach (EveCertificate cert in m_Certificates.Values)
+            {
+                EveCertGroup group = m_CertGroups[cert.GroupID];
+                Gtk.TreeIter groupIter;
+                Gtk.TreeIter certIter;
+
+                if (certStore.GetIter(out groupIter, group.TreeReference.Path))
+                {
+                    certIter = certStore.AppendValues(groupIter, cert.Name, cert.Grade, cert.ID, true);
+                }
+            }
+        }
+
 		public static void LoadMarket (Gtk.TreeStore marketStore, Gtk.ListStore itemStore)
 		{
 			LoadMarket();
 
-            Gdk.Pixbuf infoIcon = new Gdk.Pixbuf(ECM.Core.Info16PNG);
-
 			foreach(EveMarketGroup group in m_MarketGroups.Values)
 			{
                 Gtk.TreeIter groupIter;
+                Gtk.TreeIter  parentIter;
 
-                if (group.ParentID > -1)
+                if (group.ParentID > -1 && marketStore.GetIter(out parentIter, m_MarketGroups[group.ParentID].MarketReference.Path))
                 {
-                    Gtk.TreeIter parentIter = (Gtk.TreeIter)m_MarketGroups[group.ParentID].Tag;
                     groupIter = marketStore.AppendNode(parentIter);
                 }
                 else
@@ -245,18 +342,20 @@ namespace ECM
 
                 group.MarketReference = new Gtk.TreeRowReference(marketStore, marketStore.GetPath(groupIter));
 				marketStore.SetValues(groupIter, new Gdk.Pixbuf(ItemDatabase.GetMarketIconStream(group.IconString)), group.Name, group.ID, group.HasItems, false);
-				group.Tag = groupIter;
 			}
 
             foreach (EveItem item in m_Items.Values)
             {
                 if (item.MarketGroupID > -1)
                 {
-                    Gtk.TreeIter parentIter = (Gtk.TreeIter)m_MarketGroups[item.MarketGroupID].Tag;
-                    Gtk.TreeIter childIter = marketStore.AppendValues(parentIter, null, item.Name, item.ID, false, true);
-                    itemStore.AppendValues(item.Name, item.ID);
+                    Gtk.TreeIter parentIter;
+                    if(marketStore.GetIter(out parentIter, m_MarketGroups[item.MarketGroupID].MarketReference.Path))
+                    {
+                        Gtk.TreeIter childIter = marketStore.AppendValues(parentIter, null, item.Name, item.ID, false, true);
+                        itemStore.AppendValues(item.Name, item.ID);
 
-                    item.MarketReference = new Gtk.TreeRowReference(marketStore, marketStore.GetPath(childIter));
+                        item.MarketReference = new Gtk.TreeRowReference(marketStore, marketStore.GetPath(childIter));
+                    }
                 }
             }
 		}

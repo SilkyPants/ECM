@@ -101,9 +101,9 @@ namespace EveApi
             {
                 if (m_UpdatingThread == null || !m_UpdatingThread.IsAlive)
                 {
-                    //m_UpdatingThread = new Thread(new ThreadStart(QueryApi));
-                    //m_UpdatingThread.IsBackground = true;
-                    //m_UpdatingThread.Start();
+                    m_UpdatingThread = new Thread(new ThreadStart(QueryApi));
+                    m_UpdatingThread.IsBackground = true;
+                    m_UpdatingThread.Start();
                 }
             }
         }
@@ -163,10 +163,12 @@ namespace EveApi
             catch (WebException we)
             {
                 Console.WriteLine(we.Message);
+                Enabled = false;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Enabled = false;
             }
 
             m_ActuallyUpdating = false;

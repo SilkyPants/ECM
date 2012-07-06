@@ -35,7 +35,44 @@ public partial class MainWindow : Gtk.Window
 
     ListStore charAttributeStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string));
     TreeStore charSkillStore = new TreeStore(typeof(string), typeof(int), typeof(int), typeof(int), typeof(int), typeof(double), typeof(bool), typeof(long), typeof(int));
+    TreeStore certStore = new TreeStore(typeof(string), typeof(int), typeof(long), typeof(bool), typeof(bool)); // Name, Grade, ID, IsCert, IsVisible
+
     TreeModelFilter skillsFilter = null;
+    TreeModelFilter certFilter = null;
+
+    public void LoadSkills()
+    {
+        charSkillStore.Clear();
+
+        ECM.ItemDatabase.LoadSkills(charSkillStore);
+
+        skillsFilter = new TreeModelFilter(charSkillStore, null);
+        skillsFilter.VisibleFunc = new TreeModelFilterVisibleFunc(HandleCharSkillsFilter);
+
+        TreeModelSort skillsSorted = new TreeModelSort(skillsFilter);
+        skillsSorted.SetSortColumnId(SkillNameColumn, SortType.Ascending);
+
+        trvSkills.Model = skillsSorted;
+
+        Console.WriteLine("Skills Loaded");
+    }
+
+    public void LoadCertificates()
+    {
+        certStore.Clear();
+
+        ECM.ItemDatabase.LoadCertificateTree(certStore);
+
+        certFilter = new TreeModelFilter(certStore, null);
+        certFilter.VisibleFunc = new TreeModelFilterVisibleFunc(HandleCharCertFilter);
+
+        TreeModelSort sorted = new TreeModelSort(certFilter);
+        sorted.SetSortColumnId(0, SortType.Ascending);
+
+        trvCertificates.Model = sorted;
+
+        Console.WriteLine("Certificates Loaded");
+    }
 
     void ShowCharacterSheet(ECM.Character currentCharacter)
     {
@@ -170,9 +207,48 @@ public partial class MainWindow : Gtk.Window
             }
 
             cont = charSkillStore.IterNext(ref iter);
+        } 
+        
+        certStore.GetIterFirst(out iter);
+        cont = true;
+
+        while (cont)
+        {
+            // These are all the main categories
+            if (certStore.IterHasChild(iter))
+            {
+                TreeIter child;
+                certStore.IterChildren(out child, iter);
+
+                bool showGroup = false;
+
+                while (cont)
+                {
+                    long id = (long)certStore.GetValue(child, 2);
+
+                    bool learnt = false;
+
+                    foreach (EveApi.CharacterCertificates cert in currentCharacter.Certificates)
+                    {
+                        if (cert.ID == id) learnt = true;
+                    }
+
+                    if(learnt)
+                        showGroup = true;
+
+                    certStore.SetValue(child, 4, learnt);
+
+                    cont = certStore.IterNext(ref child);
+                }
+
+                certStore.SetValue(iter, 4, showGroup);
+            }
+
+            cont = certStore.IterNext(ref iter);
         }
 
         skillsFilter.Refilter();
+        certFilter.Refilter();
 
         trvSkills.ThawChildNotify();
     }
@@ -182,6 +258,13 @@ public partial class MainWindow : Gtk.Window
         bool skillLearnt = (bool)charSkillStore.GetValue(iter, SkillLearntColumn);
 
         return skillLearnt;
+    }
+
+    private bool HandleCharCertFilter(TreeModel model, TreeIter iter)
+    {
+        bool certLearnt = (bool)model.GetValue(iter, 4);
+
+        return certLearnt;
     }
 
     protected void ShipClicked (object o, ButtonPressEventArgs args)

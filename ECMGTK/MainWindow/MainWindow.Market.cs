@@ -92,23 +92,6 @@ public partial class MainWindow : Gtk.Window
         Console.WriteLine("Market Loaded");
     }
 
-    public void LoadSkills()
-    {
-        charSkillStore.Clear();
-
-        ECM.ItemDatabase.LoadSkills(charSkillStore);
-
-        skillsFilter = new TreeModelFilter(charSkillStore, null);
-        skillsFilter.VisibleFunc = new TreeModelFilterVisibleFunc(HandleCharSkillsFilter);
-
-        TreeModelSort skillsSorted = new TreeModelSort(skillsFilter);
-        skillsSorted.SetSortColumnId(SkillNameColumn, SortType.Ascending);
-
-        trvSkills.Model = skillsSorted;
-
-        Console.WriteLine("Skills Loaded");
-    }
-
     void trvSelectionChanged(object sender, EventArgs e)
     {
         TreeIter iter;

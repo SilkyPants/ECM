@@ -18,7 +18,6 @@ namespace ECM
 		public long ID { get; set; }
 		public string Name { get; set; }
 		public string IconString { get; set; }
-		public object Tag { get; set; }
 
         public override string ToString()
         {
@@ -75,17 +74,28 @@ namespace ECM
         }
     }
 
-    public class EveCertGroup : EveBase
+    public class EveCertGroup
     {
-        public long ParentID { get; set; }
+        public long ID { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
+        public TreeRowReference TreeReference { get; set; }
+    }
+
+    public class EveCertificateRequirement
+    {
+        public long RequirementID { get; set; }
+        public int RequirementLevel { get; set; }
+        public bool RequirementIsSkill { get; set; }
     }
 
     public class EveCertificate : EveBase
     {
         public long GroupID { get; set; }
+        public long CorpID { get; set; }
         public int Grade { get; set; }
         public string Description { get; set; }
+        public List<EveCertificateRequirement> Requirements { get; set; }
     }
 
     public class EveShip : EveItem
