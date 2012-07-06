@@ -183,15 +183,14 @@ public partial class MainWindow : Gtk.Window
             Button btn = new Button(new Label(path));
             btn.Relief = ReliefStyle.None;
 
-            btn.Clicked += delegate(object sender, EventArgs e) {
+            btn.Clicked += delegate(object sender, EventArgs e) 
+            {
                 SelectItemInMarket(g);
             };
 
             hbxItemPath.PackEnd(new Label("\\"));
             hbxItemPath.PackEnd(btn);
         }
-            
-        //hbxItemPath.PackStart(new Label("     "));
 
         hbxItemPath.ShowAll();
 

@@ -101,9 +101,9 @@ namespace EveApi
             {
                 if (m_UpdatingThread == null || !m_UpdatingThread.IsAlive)
                 {
-                    m_UpdatingThread = new Thread(new ThreadStart(QueryApi));
-                    m_UpdatingThread.IsBackground = true;
-                    m_UpdatingThread.Start();
+                    //m_UpdatingThread = new Thread(new ThreadStart(QueryApi));
+                    //m_UpdatingThread.IsBackground = true;
+                    //m_UpdatingThread.Start();
                 }
             }
         }

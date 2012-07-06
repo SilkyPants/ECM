@@ -23,6 +23,8 @@ namespace ECMGTK
         [GLib.Property("IsItem")]
         public bool IsItem { get; set; }
 
+        static readonly Color m_BackdropColour = new Color(.19, .18, .17);
+
         public CellRendererMarketItem()
         {
         }
@@ -47,10 +49,13 @@ namespace ECMGTK
             {
                 context.Save();
 
-                Gradient pat = new LinearGradient(background_area.Left, background_area.Top, background_area.Left, background_area.Bottom);
-                pat.AddColorStop(0, new Color(0.4, 0.4, 0.4, 1));
-                pat.AddColorStop(1, new Color(0.15, 0.15, 0.15, 1));
-                context.Pattern = pat;
+                //Gradient pat = new LinearGradient(background_area.Left, background_area.Top, background_area.Left, background_area.Bottom);
+                //pat.AddColorStop(0, new Color(0.4, 0.4, 0.4, 1));
+                //pat.AddColorStop(1, new Color(0.15, 0.15, 0.15, 1));
+                //context.Pattern = pat;
+
+                context.Color = m_BackdropColour;
+                context.SetSourceRGB(m_BackdropColour.R, m_BackdropColour.G, m_BackdropColour.B);
 
                 context.Rectangle(background_area.X, background_area.Y, background_area.Width, background_area.Height);
 
@@ -128,91 +133,6 @@ namespace ECMGTK
             (context.Target as System.IDisposable).Dispose();
             (context as System.IDisposable).Dispose();
         }
-
-        /*private void RenderSkillCell(Context context, Gdk.Rectangle pix_rect, CellRendererState flags, Widget widget)
-        {
-            int osOffset = 0;
-            int startX = pix_rect.Right - 48;
-
-            if(ECM.Helper.CurrentPlatform == ECM.Helper.Platform.Windows)
-                osOffset = 1;
-
-            // Render Text
-            context.Save();
-
-            if (flags.HasFlag(CellRendererState.Selected))
-                context.Color = new Color(1, 1, 1);
-            else
-                context.Color = new Color(0, 0, 0);
-
-            string s = string.Format("{0} ({1}x)", SkillName, SkillRank);
-            context.Color = new Color(0, 0, 0);
-            context.SelectFontFace(widget.PangoContext.FontDescription.Family, FontSlant.Normal, FontWeight.Normal);
-            TextExtents te = context.TextExtents(s);
-            context.MoveTo(pix_rect.X + 32, pix_rect.Y + te.Height + 2);
-            context.ShowText(s);
-
-            s = string.Format("Level {0}", SkillLevel);
-            te = context.TextExtents(s);
-            context.MoveTo(startX - (te.Width + 6), pix_rect.Y + te.Height + 2);
-            context.ShowText(s);
-
-            s = ECM.Helper.GetDurationInWordsShort(TimeSpan.FromMinutes(SkillMinsToNext));
-            te = context.TextExtents(s);
-            context.MoveTo(startX - (te.Width + 6), pix_rect.Y + te.Height * 2 + 6);
-            context.ShowText(s);
-
-            s = string.Format("SP {0:0,0}/{1:0,0}", SkillCurrSP, SkillNextSP);
-            context.SelectFontFace(widget.PangoContext.FontDescription.Family, FontSlant.Normal, FontWeight.Bold);
-            te = context.TextExtents(s);
-            context.MoveTo(pix_rect.X + 32, pix_rect.Y + te.Height * 2 + 6);
-            context.ShowText(s);
-
-            context.Restore();
-
-            // Render Progress bars
-            context.Color = new Color(0.3, 0.3, 0.3);
-
-            context.Save();
-            context.Antialias = Antialias.None;
-            context.LineWidth = 1;
-
-            context.Rectangle(startX, pix_rect.Y + 2, 47, 9);
-
-            context.Rectangle(startX, pix_rect.Y + 16, 47, 5);
-
-            context.Stroke();
-            context.Restore();
-
-            context.Save();
-            for (int i = 0; i < SkillLevel; i++)
-            {
-                context.Rectangle(startX + 2 + i * 9, pix_rect.Y + 3 + osOffset, 8, 6);
-            }
-
-            // Time Bar
-            double fullWidth = 44;
-            double dist = SkillNextSP - SkillLevlSP;
-            double trav = SkillCurrSP - SkillLevlSP;
-            double perc = 1;
-
-            if(dist > 0)
-                perc = Math.Max(0, trav / dist);
-
-            context.Rectangle(startX + 2, pix_rect.Y + 17 + osOffset, fullWidth * perc, 2);
-
-            context.Fill();
-            context.Restore();
-
-            // Render Skillbook Icon
-            context.Save();
-            Gdk.CairoHelper.SetSourcePixbuf(context, new Gdk.Pixbuf(ECM.Core.SkillbookPNG), pix_rect.X, pix_rect.Y);
-
-            context.Rectangle(pix_rect.X, pix_rect.Y, 32, 32);
-
-            context.Paint();
-            context.Restore();
-        }*/
 
         public override void GetSize(Widget widget, ref Gdk.Rectangle cell_area, out int x_offset, out int y_offset, out int width, out int height)
         {
