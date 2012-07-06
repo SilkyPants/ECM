@@ -95,7 +95,14 @@ namespace ECM
         public long CorpID { get; set; }
         public int Grade { get; set; }
         public string Description { get; set; }
-        public List<EveCertificateRequirement> Requirements { get; set; }
+        public long ClassID { get; set; }
+
+        List<EveCertificateRequirement> m_Requirements = new List<EveCertificateRequirement>();
+        public List<EveCertificateRequirement> Requirements
+        {
+            get { return m_Requirements; }
+        }
+
     }
 
     public class EveShip : EveItem

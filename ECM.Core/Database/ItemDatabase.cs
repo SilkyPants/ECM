@@ -109,6 +109,7 @@ namespace ECM
 
         private static void LoadCertificates()
         {
+            // Get Categories
             string selectCmd = "SELECT * FROM crtCategories";
 
             SqlCmd cmd = sqlConnection.CreateCommand();
@@ -131,7 +132,8 @@ namespace ECM
 
             row.Close();
 
-            selectCmd = @"SELECT crtCertificates.certificateID, crtCertificates.categoryID, crtClasses.className, crtCertificates.grade, crtCertificates.corpID, crtCertificates.description
+            // Get Certificates
+            selectCmd = @"SELECT crtCertificates.certificateID, crtCertificates.categoryID, crtClasses.className, crtCertificates.grade, crtCertificates.corpID, crtCertificates.description, crtCertificates.classID
                             FROM crtCertificates 
                             INNER JOIN crtClasses ON crtCertificates.classID = crtClasses.classID";
 
@@ -147,6 +149,7 @@ namespace ECM
                 int certGrade = Convert.ToInt32(row[3]);
                 long corpID = Convert.ToInt64(row[4]);
                 string certDesc = row[5].ToString();
+                long classID = Convert.ToInt64(row[6]);
 
                 EveCertificate newCert = new EveCertificate();
                 newCert.Name = certName;
@@ -155,8 +158,46 @@ namespace ECM
                 newCert.Grade = certGrade;
                 newCert.CorpID = corpID;
                 newCert.Description = certDesc;
+                newCert.ClassID = classID;
 
                 m_Certificates.Add(newCert.ID, newCert);
+            }
+
+            row.Close();
+
+            // Link Certificate Requirements
+            selectCmd = "SELECT parentID, parentTypeID, parentLevel, childID FROM crtRelationships";
+
+            cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = selectCmd;
+            row = cmd.ExecuteReader();
+
+            while (row.Read())
+            {
+                long parentID = -1, childID = -1;
+                int parentLevel = -1;
+
+                bool isSkill = row[0] is DBNull;
+                childID = Convert.ToInt64(row[3]);
+
+                if (isSkill)
+                {
+                    parentID = Convert.ToInt64(row[1]);
+                    parentLevel = Convert.ToInt32(row[2]);
+                }
+                else
+                {
+                    parentID = Convert.ToInt64(row[0]);
+                }
+
+                EveCertificateRequirement newReq = new EveCertificateRequirement();
+                EveCertificate cert = m_Certificates[childID];
+
+                newReq.RequirementID = parentID;
+                newReq.RequirementLevel = parentLevel;
+                newReq.RequirementIsSkill = isSkill;
+
+                cert.Requirements.Add(newReq);
             }
 
             row.Close();

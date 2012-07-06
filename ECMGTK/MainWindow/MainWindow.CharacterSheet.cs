@@ -81,6 +81,7 @@ public partial class MainWindow : Gtk.Window
         trvAttributes.Model = null;
 
         trvSkills.FreezeChildNotify();
+        trvCertificates.FreezeChildNotify();
 
         charAttributeStore.Clear();
 
@@ -251,6 +252,7 @@ public partial class MainWindow : Gtk.Window
         certFilter.Refilter();
 
         trvSkills.ThawChildNotify();
+        trvCertificates.ThawChildNotify();
     }
 
     private bool HandleCharSkillsFilter(TreeModel model, TreeIter iter)
