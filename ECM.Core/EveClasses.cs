@@ -17,7 +17,8 @@ namespace ECM
 	{
 		public long ID { get; set; }
 		public string Name { get; set; }
-		public string IconString { get; set; }
+        public string IconString { get; set; }
+        public TreeRowReference TreeReference { get; set; }
 
         public override string ToString()
         {
@@ -25,12 +26,7 @@ namespace ECM
         }
 	}
 
-    public class EveMarketBase : EveBase
-    {
-        public TreeRowReference MarketReference { get; set; }
-    }
-
-    public class EveMarketGroup : EveMarketBase
+    public class EveMarketGroup : EveBase
     {
         public long ParentID { get; set; }
         public bool HasItems { get; set; }
@@ -43,7 +39,7 @@ namespace ECM
         Useable
     }
 
-    public class EveItem : EveMarketBase
+    public class EveItem : EveBase
     {
         public long MarketGroupID { get; set; }
         public string Description { get; set; }
@@ -74,12 +70,9 @@ namespace ECM
         }
     }
 
-    public class EveCertGroup
+    public class EveCertGroup : EveBase
     {
-        public long ID { get; set; }
-        public string Name { get; set; }
         public string Description { get; set; }
-        public TreeRowReference TreeReference { get; set; }
     }
 
     public class EveCertificateRequirement

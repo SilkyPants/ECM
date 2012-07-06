@@ -359,6 +359,7 @@ namespace ECM
                 if (certStore.GetIter(out groupIter, group.TreeReference.Path))
                 {
                     certIter = certStore.AppendValues(groupIter, cert.Name, cert.Grade, cert.ID, true);
+                    cert.TreeReference = new Gtk.TreeRowReference(certStore, certStore.GetPath(certIter));
                 }
             }
         }
@@ -372,7 +373,7 @@ namespace ECM
                 Gtk.TreeIter groupIter;
                 Gtk.TreeIter  parentIter;
 
-                if (group.ParentID > -1 && marketStore.GetIter(out parentIter, m_MarketGroups[group.ParentID].MarketReference.Path))
+                if (group.ParentID > -1 && marketStore.GetIter(out parentIter, m_MarketGroups[group.ParentID].TreeReference.Path))
                 {
                     groupIter = marketStore.AppendNode(parentIter);
                 }
@@ -381,7 +382,7 @@ namespace ECM
                     groupIter = marketStore.AppendNode();
                 }
 
-                group.MarketReference = new Gtk.TreeRowReference(marketStore, marketStore.GetPath(groupIter));
+                group.TreeReference = new Gtk.TreeRowReference(marketStore, marketStore.GetPath(groupIter));
 				marketStore.SetValues(groupIter, new Gdk.Pixbuf(ItemDatabase.GetMarketIconStream(group.IconString)), group.Name, group.ID, group.HasItems, false);
 			}
 
@@ -390,12 +391,12 @@ namespace ECM
                 if (item.MarketGroupID > -1)
                 {
                     Gtk.TreeIter parentIter;
-                    if(marketStore.GetIter(out parentIter, m_MarketGroups[item.MarketGroupID].MarketReference.Path))
+                    if (marketStore.GetIter(out parentIter, m_MarketGroups[item.MarketGroupID].TreeReference.Path))
                     {
                         Gtk.TreeIter childIter = marketStore.AppendValues(parentIter, null, item.Name, item.ID, false, true);
                         itemStore.AppendValues(item.Name, item.ID);
 
-                        item.MarketReference = new Gtk.TreeRowReference(marketStore, marketStore.GetPath(childIter));
+                        item.TreeReference = new Gtk.TreeRowReference(marketStore, marketStore.GetPath(childIter));
                     }
                 }
             }

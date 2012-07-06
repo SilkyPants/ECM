@@ -84,8 +84,8 @@ namespace ECMGTK
 
             context.Color = new Color(1, 1, 1);
 
-            //if (!flags.HasFlag(CellRendererState.Selected) && IsItem)
-            //    context.Color = new Color(0, 0, 0);
+            if (!flags.HasFlag(CellRendererState.Selected) && IsItem)
+                context.Color = new Color(0, 0, 0);
 
             context.SelectFontFace(widget.PangoContext.FontDescription.Family, FontSlant.Normal, FontWeight.Normal);
 

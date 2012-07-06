@@ -234,8 +234,27 @@ public partial class MainWindow : Gtk.Window
                         if (cert.ID == id) learnt = true;
                     }
 
-                    if(learnt)
+                    if (learnt)
+                    {
                         showGroup = true;
+
+                        // Remove any prerequisite certificates
+                        ECM.EveCertificate cert = ECM.ItemDatabase.Certificates[id];
+
+                        foreach (ECM.EveCertificateRequirement req in cert.Requirements)
+                        {
+                            if(req.RequirementIsSkill == false)
+                            {
+                                ECM.EveCertificate reqCert = ECM.ItemDatabase.Certificates[req.RequirementID];
+                                TreeIter reqIter;
+
+                                if (certStore.GetIter(out reqIter, reqCert.TreeReference.Path))
+                                {
+                                    certStore.SetValue(reqIter, 4, false);
+                                }
+                            }
+                        }
+                    }
 
                     certStore.SetValue(child, 4, learnt);
 

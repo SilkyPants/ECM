@@ -124,18 +124,18 @@ public partial class MainWindow : Gtk.Window
         }
     }
 
-    void SelectItemInMarket (ECM.EveMarketBase item)
+    void SelectItemInMarket (ECM.EveBase item)
     {
         Gtk.TreeIter iter;
 
-        if(marketStore.GetIter(out iter, item.MarketReference.Path))
+        if (marketStore.GetIter(out iter, item.TreeReference.Path))
         {
             ntbPages.CurrentPage = 5;
 
             TreeModelSort sortedMarket = trvMarket.Model as TreeModelSort;
 
             trvMarket.CollapseAll();
-            trvMarket.ExpandToPath(sortedMarket.ConvertChildPathToPath(item.MarketReference.Path));
+            trvMarket.ExpandToPath(sortedMarket.ConvertChildPathToPath(item.TreeReference.Path));
             trvMarket.Selection.SelectIter(sortedMarket.ConvertChildIterToIter(iter));
             trvSelectionChanged(null, null);
         }
