@@ -71,7 +71,7 @@ namespace ECMGTK
         private void RenderSkillCell(Context context, Gdk.Rectangle pix_rect, CellRendererState flags, Widget widget)
         {
             int osOffset = 0;
-            int startX = pix_rect.Right - 48;
+            int startX = pix_rect.Right - 64;
 
             if(ECM.Helper.CurrentPlatform == ECM.Helper.Platform.Windows)
                 osOffset = 1;
@@ -148,6 +148,13 @@ namespace ECMGTK
             Gdk.CairoHelper.SetSourcePixbuf(context, new Gdk.Pixbuf(ECM.Core.SkillbookPNG), pix_rect.X, pix_rect.Y);
 
             context.Rectangle(pix_rect.X, pix_rect.Y, 32, 32);
+
+            context.Paint();
+            context.Restore();
+
+            // Info button
+            context.Save();
+            Gdk.CairoHelper.SetSourcePixbuf(context, new Gdk.Pixbuf(ECM.Core.Info16PNG), pix_rect.Right - 16, pix_rect.Y);
 
             context.Paint();
             context.Restore();
