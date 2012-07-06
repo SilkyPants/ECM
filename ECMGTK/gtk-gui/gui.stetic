@@ -1000,6 +1000,7 @@
                                     <property name="CanFocus">True</property>
                                     <property name="ShowScrollbars">True</property>
                                     <property name="EnableSearch">False</property>
+                                    <property name="HeadersVisible">False</property>
                                   </widget>
                                 </child>
                               </widget>
@@ -1278,7 +1279,7 @@
               <widget class="Gtk.HPaned" id="hpnMarket">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">214</property>
+                <property name="Position">222</property>
                 <property name="BorderWidth">3</property>
                 <child>
                   <widget class="Gtk.Notebook" id="ntbMarketGroups">

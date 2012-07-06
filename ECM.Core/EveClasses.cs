@@ -44,6 +44,21 @@ namespace ECM
         public long MarketGroupID { get; set; }
         public string Description { get; set; }
 
+        public bool HasRequirements 
+        { 
+            get 
+            { 
+                bool hasReqs = false;
+
+                for(int i = 0; i < 6; i++)
+                {
+                    hasReqs |= m_RequiredSkills[i].IsValid;
+                }
+
+                return hasReqs; 
+            }
+        }
+
         RequiredSkill[] m_RequiredSkills = new RequiredSkill[6];
         public RequiredSkill[] RequiredSkills 
         { 

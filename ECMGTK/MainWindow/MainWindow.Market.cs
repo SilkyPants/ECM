@@ -314,7 +314,9 @@ public partial class MainWindow : Gtk.Window
         VBox heading = new VBox();
         heading.Spacing = 6;
         heading.PackEnd(itemNameHeader, false, false, 0);
-        heading.PackEnd(skillsMet, false, false, 0);
+
+        if(item.HasRequirements)
+            heading.PackEnd(skillsMet, false, false, 0);
 
         HBox inner = new HBox();
         inner.PackStart(picFrame, false, false, 0);
