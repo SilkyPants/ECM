@@ -344,17 +344,20 @@ public partial class MainWindow: Gtk.Window
     void onMarketClick (object o, ButtonPressEventArgs args)
     {
         args.RetVal = false;
+        TreeView tree = o as TreeView;
+
+        if (tree == null) return;
 
         // Check we have an item selected
         TreePath path;
         TreeIter iter;
         TreeViewColumn col;
         int cellX, cellY;
-        TreeModel model = trvMarket.Model;
+        TreeModel model = tree.Model;
 
         // Get path to node under mouse
-        trvMarket.GetPathAtPos((int)args.Event.X, (int)args.Event.Y, out path, out col, out cellX, out cellY);
-        Gdk.Rectangle cellArea = trvMarket.GetCellArea(path, col);
+        tree.GetPathAtPos((int)args.Event.X, (int)args.Event.Y, out path, out col, out cellX, out cellY);
+        Gdk.Rectangle cellArea = tree.GetCellArea(path, col);
 
         // Convert to iter
         if (model.GetIter(out iter, path)) 
@@ -394,14 +397,6 @@ public partial class MainWindow: Gtk.Window
                     args.RetVal = true;
                 }
             }
-            //else
-            //{
-            //    bool expanded = trvMarket.GetRowExpanded(path);
-            //    if (expanded)
-            //        trvMarket.CollapseRow(path);
-            //    else
-            //        trvMarket.ExpandRow(path, false);
-            //}
         }
     }
 
