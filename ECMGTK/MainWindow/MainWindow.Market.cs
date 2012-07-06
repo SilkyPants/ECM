@@ -187,11 +187,11 @@ public partial class MainWindow : Gtk.Window
                 SelectItemInMarket(g);
             };
 
-            hbxItemPath.PackStart(btn);
-            hbxItemPath.PackStart(new Label("\\"));
+            hbxItemPath.PackEnd(new Label("\\"));
+            hbxItemPath.PackEnd(btn);
         }
             
-        hbxItemPath.PackStart(new Label("     "));
+        //hbxItemPath.PackStart(new Label("     "));
 
         hbxItemPath.ShowAll();
 

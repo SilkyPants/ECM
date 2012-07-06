@@ -88,7 +88,7 @@ namespace ECMGTK
             TextExtents te = context.TextExtents(text);
             int subIdx = ItemName.Length;
 
-            while (te.Width > cell_area.Width - 32)
+            while (te.Width > cell_area.Width - 16 - textXOffset)
             {
                 text = string.Format("{0}...", text.Substring(0, --subIdx).TrimEnd());
                 te = context.TextExtents(text);
