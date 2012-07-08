@@ -181,7 +181,7 @@ public partial class MainWindow
 		this.ntbPages = new global::Gtk.Notebook ();
 		this.ntbPages.CanFocus = true;
 		this.ntbPages.Name = "ntbPages";
-		this.ntbPages.CurrentPage = 1;
+		this.ntbPages.CurrentPage = 5;
 		this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
 		this.ntbPages.BorderWidth = ((uint)(3));
 		// Container child ntbPages.Gtk.Notebook+NotebookChild
@@ -755,6 +755,7 @@ public partial class MainWindow
 		this.trvCertificates.CanFocus = true;
 		this.trvCertificates.Name = "trvCertificates";
 		this.trvCertificates.EnableSearch = false;
+		this.trvCertificates.HeadersVisible = false;
 		this.GtkScrolledWindow2.Add (this.trvCertificates);
 		this.vbxCertificates.Add (this.GtkScrolledWindow2);
 		global::Gtk.Box.BoxChild w62 = ((global::Gtk.Box.BoxChild)(this.vbxCertificates [this.GtkScrolledWindow2]));
@@ -955,7 +956,7 @@ public partial class MainWindow
 		this.hpnMarket = new global::Gtk.HPaned ();
 		this.hpnMarket.CanFocus = true;
 		this.hpnMarket.Name = "hpnMarket";
-		this.hpnMarket.Position = 214;
+		this.hpnMarket.Position = 222;
 		this.hpnMarket.BorderWidth = ((uint)(3));
 		// Container child hpnMarket.Gtk.Paned+PanedChild
 		this.ntbMarketGroups = new global::Gtk.Notebook ();
@@ -974,7 +975,6 @@ public partial class MainWindow
 		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Useable Items"));
 		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Trainable Items"));
 		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("Untrainable Items"));
-		this.cmbFilter.HeightRequest = 20;
 		this.cmbFilter.Name = "cmbFilter";
 		this.cmbFilter.Active = 0;
 		this.vbox1.Add (this.cmbFilter);
