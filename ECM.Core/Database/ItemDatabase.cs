@@ -346,7 +346,7 @@ namespace ECM
         {
             foreach (EveCertGroup group in m_CertGroups.Values)
             {
-                Gtk.TreeIter groupIter = certStore.AppendValues(group.Name, -1, group.ID, false);
+                Gtk.TreeIter groupIter = certStore.AppendValues(group.Name, -1, group.ID, true);
                 group.TreeReference = new Gtk.TreeRowReference(certStore, certStore.GetPath(groupIter));
             }
 
@@ -358,7 +358,7 @@ namespace ECM
 
                 if (certStore.GetIter(out groupIter, group.TreeReference.Path))
                 {
-                    certIter = certStore.AppendValues(groupIter, cert.Name, cert.Grade, cert.ID, true);
+                    certIter = certStore.AppendValues(groupIter, cert.Name, cert.Grade, cert.ID, false);
                     cert.TreeReference = new Gtk.TreeRowReference(certStore, certStore.GetPath(certIter));
                 }
             }
@@ -383,7 +383,7 @@ namespace ECM
                 }
 
                 group.TreeReference = new Gtk.TreeRowReference(marketStore, marketStore.GetPath(groupIter));
-				marketStore.SetValues(groupIter, new Gdk.Pixbuf(ItemDatabase.GetMarketIconStream(group.IconString)), group.Name, group.ID, group.HasItems, false);
+				marketStore.SetValues(groupIter, new Gdk.Pixbuf(ItemDatabase.GetMarketIconStream(group.IconString)), group.Name, group.ID, group.HasItems, true);
 			}
 
             foreach (EveItem item in m_Items.Values)
@@ -393,7 +393,7 @@ namespace ECM
                     Gtk.TreeIter parentIter;
                     if (marketStore.GetIter(out parentIter, m_MarketGroups[item.MarketGroupID].TreeReference.Path))
                     {
-                        Gtk.TreeIter childIter = marketStore.AppendValues(parentIter, null, item.Name, item.ID, false, true);
+                        Gtk.TreeIter childIter = marketStore.AppendValues(parentIter, null, item.Name, item.ID, false, false);
                         itemStore.AppendValues(item.Name, item.ID);
 
                         item.TreeReference = new Gtk.TreeRowReference(marketStore, marketStore.GetPath(childIter));
@@ -413,7 +413,7 @@ namespace ECM
                 if (group.ParentID == 150)
                 {
                     Gtk.TreeIter groupIter = skillsStore.AppendNode();
-                    skillsStore.SetValues(groupIter, group.Name, 0, 0, 0, -1, 0, false, group.ID);
+                    skillsStore.SetValues(groupIter, group.Name, 0, 0, 0, -1, 0, false, group.ID, 0, true);
                     skillGroups.Add(group.ID, groupIter);
                 }
             }
@@ -428,7 +428,7 @@ namespace ECM
                     EveSkill skill = item as EveSkill;
                     Gtk.TreeIter parentIter = skillGroups[item.MarketGroupID];
 
-                    skillsStore.AppendValues(parentIter, skill.Name, skill.Rank, -1, -1, 0, 0, false, skill.ID);
+                    skillsStore.AppendValues(parentIter, skill.Name, skill.Rank, -1, -1, 0, 0, false, skill.ID, 0, false);
                 }
             }
 

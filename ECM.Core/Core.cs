@@ -292,6 +292,7 @@ namespace ECM
             m_ApiRequests.Add(charToAdd.CharInfoRequest);
             m_ApiRequests.Add(charToAdd.CharSheetRequest);
             m_ApiRequests.Add(charToAdd.SkillQueueRequest);
+            m_ApiRequests.Add(charToAdd.AssetListRequest);
 
             charToAdd.CharacterUpdated += delegate
             {

@@ -110,6 +110,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CellRendererCertificate.cs" />
     <Compile Include="Classes\CellRendererCharSkill.cs" />
     <Compile Include="gtk-gui\generated.cs" />
     <Compile Include="MainWindow\MainWindow.CharacterSheet.cs" />
@@ -127,7 +128,7 @@
     <Compile Include="gtk-gui\ECMGTK.ViewItemRender.cs" />
     <Compile Include="ViewItemDetails.cs" />
     <Compile Include="gtk-gui\ECMGTK.ViewItemDetails.cs" />
-    <Compile Include="Classes\CellRendererMarketItem.cs" />
+    <Compile Include="Classes\CellRendererEveTree.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

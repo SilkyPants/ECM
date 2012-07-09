@@ -32,9 +32,10 @@ public partial class MainWindow : Gtk.Window
     static int SkillLearntColumn = 6;
     static int SkillIdColumn = 7;
     static int SkillLevlSPColumn = 8;
+    static int SkillIsHeadingColumn = 9;
 
     ListStore charAttributeStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string));
-    TreeStore charSkillStore = new TreeStore(typeof(string), typeof(int), typeof(int), typeof(int), typeof(int), typeof(double), typeof(bool), typeof(long), typeof(int));
+    TreeStore charSkillStore = new TreeStore(typeof(string), typeof(int), typeof(int), typeof(int), typeof(int), typeof(double), typeof(bool), typeof(long), typeof(int), typeof(bool));
     TreeStore certStore = new TreeStore(typeof(string), typeof(int), typeof(long), typeof(bool), typeof(bool)); // Name, Grade, ID, IsCert, IsVisible
 
     TreeModelFilter skillsFilter = null;

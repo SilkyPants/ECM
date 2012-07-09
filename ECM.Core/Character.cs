@@ -4,6 +4,7 @@ using EveApi.Api.Interfaces;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
 
 namespace ECM
 {
@@ -12,12 +13,18 @@ namespace ECM
         CharacterApiRequest<CharacterSheet> m_charSheetRequest;
         CharacterApiRequest<CharacterInfo> m_charInfoRequest;
         CharacterApiRequest<SkillQueue> m_skillQueueRequest;
+        CharacterApiRequest<AssetList> m_AssetListRequest;
 
         bool m_AutoUpdate = false;
 
         public event EventHandler CharacterUpdated;
 
         #region Properties
+        internal CharacterApiRequest<AssetList> AssetListRequest
+        {
+            get { return m_AssetListRequest; }
+        }
+
         internal CharacterApiRequest<CharacterSheet> CharSheetRequest
         {
             get { return m_charSheetRequest; }
@@ -48,8 +55,10 @@ namespace ECM
                 {
                     m_charInfoRequest.Enabled = value && Account.KeyAccess.HasFlag(ApiKeyMask.CharacterSheet);
                     m_charSheetRequest.Enabled = value && (Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPublic) || Account.KeyAccess.HasFlag(ApiKeyMask.CharacterInfoPrivate));
-    
+
                     m_skillQueueRequest.Enabled = value && Account.KeyAccess.HasFlag(ApiKeyMask.SkillQueue);
+
+                    m_AssetListRequest.Enabled = value && Account.KeyAccess.HasFlag(ApiKeyMask.AssetList);
                 }
             }
         }
@@ -279,6 +288,9 @@ namespace ECM
 
             m_skillQueueRequest = new CharacterApiRequest<SkillQueue>(characterID, Account.KeyID, Account.VCode);
             m_skillQueueRequest.OnRequestUpdate += ApiRequestUpdate;
+
+            m_AssetListRequest = new CharacterApiRequest<AssetList>(characterID, Account.KeyID, Account.VCode);
+            m_AssetListRequest.OnRequestUpdate += ApiRequestUpdate;
         }
 
         void ApiRequestUpdate(IApiResult result)
@@ -295,10 +307,15 @@ namespace ECM
                     ApiResult<CharacterInfo> charInfo = result as ApiResult<CharacterInfo>;
                     UpdateCharacter(charInfo.Result);
                 }
-                else if(result is ApiResult<SkillQueue>)
+                else if (result is ApiResult<SkillQueue>)
                 {
                     ApiResult<SkillQueue> queue = result as ApiResult<SkillQueue>;
                     SkillQueue = queue.Result;
+                }
+                else
+                {
+                    Console.WriteLine("Saving Assets for " + Name);
+                    result.XmlDocument.Save(this.ID + "Assets.xml");
                 }
 
                 if (!IsUpdating && CharacterUpdated != null)

@@ -303,14 +303,13 @@ public partial class MainWindow: Gtk.Window
         TreeViewColumn mainColumn = new TreeViewColumn();
         mainColumn.Title = "Groups";
 
-        CellRendererMarketItem itemCell = new CellRendererMarketItem();
+        CellRendererEveTree itemCell = new CellRendererEveTree();
 
         mainColumn.PackStart(itemCell, true);
 
         mainColumn.AddAttribute(itemCell, "Icon", 0);
-        mainColumn.AddAttribute(itemCell, "ItemName", 1);
-        mainColumn.AddAttribute(itemCell, "ID", 2);
-        mainColumn.AddAttribute(itemCell, "IsItem", 4);
+        mainColumn.AddAttribute(itemCell, "Text", 1);
+        mainColumn.AddAttribute(itemCell, "IsHeading", 4);
         
         trvMarket.AppendColumn(mainColumn);
 
@@ -362,7 +361,7 @@ public partial class MainWindow: Gtk.Window
         // Convert to iter
         if (model.GetIter(out iter, path)) 
         {
-            bool isItem = Convert.ToBoolean(model.GetValue(iter, 4));
+            bool isItem = !Convert.ToBoolean(model.GetValue(iter, 4));
 
             if (isItem)
             {
@@ -436,7 +435,8 @@ public partial class MainWindow: Gtk.Window
 
         skillColumn.PackStart(skillCell, true);
 
-        skillColumn.AddAttribute(skillCell, "SkillName", SkillNameColumn);
+        skillColumn.AddAttribute(skillCell, "Text", SkillNameColumn);
+        skillColumn.AddAttribute(skillCell, "IsHeading", SkillIsHeadingColumn);
         skillColumn.AddAttribute(skillCell, "SkillRank", SkillRankColumn);
         skillColumn.AddAttribute(skillCell, "SkillCurrSP", SkillCurrSPColumn);
         skillColumn.AddAttribute(skillCell, "SkillNextSP", SkillNextSPColumn);
@@ -456,12 +456,13 @@ public partial class MainWindow: Gtk.Window
         TreeViewColumn column = new TreeViewColumn();
         skillColumn.Title = "Cert";
 
-        CellRendererMarketItem cell = new CellRendererMarketItem();
+        CellRendererCertificate cell = new CellRendererCertificate();
 
         column.PackStart(cell, true);
 
-        column.AddAttribute(cell, "ItemName", 0);
-        column.AddAttribute(cell, "IsItem", 3);
+        column.AddAttribute(cell, "Text", 0);
+        column.AddAttribute(cell, "CertGrade", 1);
+        column.AddAttribute(cell, "IsHeading", 3);
 
         trvCertificates.AppendColumn(column);
 
