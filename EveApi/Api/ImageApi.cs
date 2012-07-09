@@ -8,7 +8,8 @@ namespace EveApi
 {
     public static class ImageApi
     {
-        static string m_ImageApiUrl = "http://image.eveonline.com/";
+        const string IMAGE_API_URL = "http://image.eveonline.com/";
+        const string IMAGE_CACHE_DIR = "Resources/Images/";
         static bool m_IsRetrieving = false;
 
         public static bool IsRetrieving
@@ -72,30 +73,32 @@ namespace EveApi
             }
         }
 
-        public static Pixbuf GetCharacterPortraitGTK(long charID, ImageRequestSize size)
-		{
-			return ImageToPixbuf(GetCharacterPortraitNET(charID, size));
-		}
-		
-        public static Pixbuf GetCorporationLogoGTK(long corpID, ImageRequestSize size)
-		{
-			return ImageToPixbuf(GetCorporationLogoNET(corpID, size));
-		}
-			
-        public static Pixbuf GetAllianceLogoGTK(long allianceID, ImageRequestSize size)
-		{
-			return ImageToPixbuf(GetAllianceLogoNET(allianceID, size));
-		}
-		
-        public static Pixbuf GetItemImageGTK(long typeID, ImageRequestSize size)
-		{
-			return ImageToPixbuf(GetItemImageNET(typeID, size));
-		}
-		
-        public static Pixbuf GetItemRenderGTK(long typeID, ImageRequestSize size)
-		{
-			return ImageToPixbuf(GetItemRenderNET(typeID, size));
-		}
+        public static Gdk.Pixbuf GetCharacterPortraitGTK(long charID, ImageRequestSize size)
+        {
+            //TODO: Investigate more
+            // Have to use StreamToPixbuf due to an error in GTK
+            return StreamToPixbuf(GetCharacterPortrait(charID, size));
+        }
+
+        public static Gdk.Pixbuf GetCorporationLogoGTK(long corpID, ImageRequestSize size)
+        {
+            return StreamToPixbuf(GetCorporationLogo(corpID, size));
+        }
+
+        public static Gdk.Pixbuf GetAllianceLogoGTK(long allianceID, ImageRequestSize size)
+        {
+            return StreamToPixbuf(GetAllianceLogo(allianceID, size));
+        }
+
+        public static Gdk.Pixbuf GetItemImageGTK(long typeID, ImageRequestSize size)
+        {
+            return StreamToPixbuf(GetItemImage(typeID, size));
+        }
+
+        public static Gdk.Pixbuf GetItemRenderGTK(long typeID, ImageRequestSize size)
+        {
+            return StreamToPixbuf(GetItemRender(typeID, size));
+        }
 		#endregion
 
         /// <summary>
@@ -107,7 +110,7 @@ namespace EveApi
         public static MemoryStream GetCharacterPortrait(long charID, ImageRequestSize size)
         {
             string id = charID > 0 ? charID.ToString() : "1";
-            string url = m_ImageApiUrl + "Character/" + id;
+            string url = IMAGE_API_URL + "Character/" + id;
 
             switch (size)
             {
@@ -150,7 +153,7 @@ namespace EveApi
         /// <returns>null on error, or the requested Image MemoryStream</returns>
         public static MemoryStream GetCorporationLogo(long corpID, ImageRequestSize size)
         {
-            string url = m_ImageApiUrl + "/Corporation/" + corpID.ToString();
+            string url = IMAGE_API_URL + "Corporation/" + corpID.ToString();
 
             switch (size)
             {
@@ -187,7 +190,7 @@ namespace EveApi
         /// <returns>null on error, or the requested Image MemoryStream</returns>
         public static MemoryStream GetAllianceLogo(long allianceID, ImageRequestSize size)
         {
-            string url = m_ImageApiUrl + "/Alliance/" + allianceID.ToString();
+            string url = IMAGE_API_URL + "Alliance/" + allianceID.ToString();
 
             switch (size)
             {
@@ -222,7 +225,7 @@ namespace EveApi
         /// <returns>null on error, or the requested Image MemoryStream</returns>
         public static MemoryStream GetItemImage(long typeID, ImageRequestSize size)
         {
-            string url = m_ImageApiUrl + "/InventoryType/" + typeID.ToString();
+            string url = IMAGE_API_URL + "InventoryType/" + typeID.ToString();
 
             switch (size)
             {
@@ -253,7 +256,7 @@ namespace EveApi
         /// <returns>null on error, or the requested Image MemoryStream</returns>
         public static MemoryStream GetItemRender(long typeID, ImageRequestSize size)
         {
-            string url = m_ImageApiUrl + "/Render/" + typeID.ToString();
+            string url = IMAGE_API_URL + "Render/" + typeID.ToString();
 
             switch (size)
             {
@@ -292,43 +295,83 @@ namespace EveApi
             WebClient webClient = new WebClient();
             WebProxy myProxy = new WebProxy();
             MemoryStream imgStream = null;
+            string filePath = IMAGE_CACHE_DIR + url.Substring(IMAGE_API_URL.Length);
 
-            // TODO: Download Form Interface
-            //NeoComm.Forms.DownloadDialog downloadInfoForm = new NeoComm.Forms.DownloadDialog();
+            if(File.Exists(filePath))
+            {
+                imgStream = new MemoryStream(File.ReadAllBytes(filePath));
+            }
+            else
+            {
+                // TODO: Download Form Interface
+                //NeoComm.Forms.DownloadDialog downloadInfoForm = new NeoComm.Forms.DownloadDialog();
 
-            //downloadInfoForm.Show();
-            //downloadInfoForm.StatusText = "Downloading from " + url;
+                //downloadInfoForm.Show();
+                //downloadInfoForm.StatusText = "Downloading from " + url;
 
-            // TODO: Set up the proxy info
-            //if (proxyInfo.UseProxy)
-            //{
-            //    // Associate the newUri object to 'myProxy' object so that new myProxy settings can be set.
-            //    myProxy.Address = new Uri("http://" + proxyInfo.ProxyIP + ":" + proxyInfo.ProxyPort);
+                // TODO: Set up the proxy info
+                //if (proxyInfo.UseProxy)
+                //{
+                //    // Associate the newUri object to 'myProxy' object so that new myProxy settings can be set.
+                //    myProxy.Address = new Uri("http://" + proxyInfo.ProxyIP + ":" + proxyInfo.ProxyPort);
 
-            //    // Create a NetworkCredential object and associate it with the Proxy property of request object.
-            //    if (proxyInfo.ProxyDomain.Length > 0)
-            //        myProxy.Credentials = new NetworkCredential(proxyInfo.ProxyUser, proxyInfo.ProxyPass, proxyInfo.ProxyDomain);
-            //    else
-            //        myProxy.Credentials = new NetworkCredential(proxyInfo.ProxyUser, proxyInfo.ProxyPass);
+                //    // Create a NetworkCredential object and associate it with the Proxy property of request object.
+                //    if (proxyInfo.ProxyDomain.Length > 0)
+                //        myProxy.Credentials = new NetworkCredential(proxyInfo.ProxyUser, proxyInfo.ProxyPass, proxyInfo.ProxyDomain);
+                //    else
+                //        myProxy.Credentials = new NetworkCredential(proxyInfo.ProxyUser, proxyInfo.ProxyPass);
 
-            //    webClient.Proxy = myProxy;
-            //}
+                //    webClient.Proxy = myProxy;
+                //}
 
-            m_IsRetrieving = true;
+                m_IsRetrieving = true;
             
-            try
-            {
-                imgStream = new MemoryStream(webClient.DownloadData(url));
-            }
-            catch
-            {
-                //MessageBox.Show("Error retrieving icon " + url);
-                Console.WriteLine("Error retrieving icon " + url);
+                try
+                {
+                    // Download image
+                    imgStream = new MemoryStream(webClient.DownloadData(url));
+
+                    // Save to image cache
+                    string dirName = Path.GetDirectoryName(filePath);
+
+                    if (Directory.Exists(dirName) == false)
+                        Directory.CreateDirectory(dirName);
+
+                    SaveStreamToFile(filePath, imgStream);
+                }
+                catch
+                {
+                    //MessageBox.Show("Error retrieving icon " + url);
+                    Console.WriteLine("Error retrieving icon " + url);
+                }
+
+                m_IsRetrieving = false;
+                //downloadInfoForm.Close();
             }
 
-            m_IsRetrieving = false;
-            //downloadInfoForm.Close();
             return imgStream;
+        }
+
+        /// <summary>
+        /// Saves a stream to a file
+        /// </summary>
+        /// <param name="fileFullPath">File to save stream to</param>
+        /// <param name="stream">Stream of data to save</param>
+        private static void SaveStreamToFile(string fileFullPath, Stream stream)
+        {
+            if (stream == null || stream.Length == 0)
+                return;
+
+            // Create a FileStream object to write a stream to a file
+            using (FileStream fileStream = System.IO.File.Create(fileFullPath, (int)stream.Length))
+            {
+                // Fill the bytes[] array with the stream data
+                byte[] bytesInStream = new byte[stream.Length];
+                stream.Read(bytesInStream, 0, (int)bytesInStream.Length);
+
+                // Use FileStream object to write to the specified file
+                fileStream.Write(bytesInStream, 0, bytesInStream.Length);
+            }
         }
     }
 }

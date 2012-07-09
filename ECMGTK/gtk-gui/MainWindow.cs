@@ -221,7 +221,6 @@ public partial class MainWindow
 		w6.Fill = false;
 		// Container child vbxOverview.Gtk.Box+BoxChild
 		this.hbuttonbox1 = new global::Gtk.HButtonBox ();
-		this.hbuttonbox1.Name = "hbuttonbox1";
 		this.hbuttonbox1.Homogeneous = true;
 		this.hbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
 		// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
@@ -675,7 +674,7 @@ public partial class MainWindow
 		this.ntbCharSheetPages = new global::Gtk.Notebook ();
 		this.ntbCharSheetPages.CanFocus = true;
 		this.ntbCharSheetPages.Name = "ntbCharSheetPages";
-		this.ntbCharSheetPages.CurrentPage = 1;
+		this.ntbCharSheetPages.CurrentPage = 6;
 		this.ntbCharSheetPages.TabPos = ((global::Gtk.PositionType)(0));
 		this.ntbCharSheetPages.ShowBorder = false;
 		// Container child ntbCharSheetPages.Gtk.Notebook+NotebookChild

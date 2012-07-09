@@ -16,9 +16,9 @@ namespace EveApi
         public static string ApiUri { get { return "/char/Standings.xml.aspx"; } }
 
         [XmlElement("characterNPCStandings")]
-        public CharacterNPCStandings CharacterNPCStandings { get; set; }
+        public CharacterNPCStandings NPCStandings { get; set; }
     }
-    /*
+    
     public class CharacterNPCStandings
     {
         [XmlArray("agents")]
@@ -27,12 +27,12 @@ namespace EveApi
 
         [XmlArray("NPCCorporations")]
         [XmlArrayItem("NPCCorporation")]
-        public List<StandingInfo> Corporations { get; set; }
+        public List<StandingInfo> NPCCorporations { get; set; }
 
         [XmlArray("factions")]
         [XmlArrayItem("faction")]
         public List<StandingInfo> Factions { get; set; }
-    }*/
+    }
 
     public class StandingInfo
     {
@@ -53,62 +53,5 @@ namespace EveApi
         /// </summary>
         [XmlAttribute("standing")]
         public float Standing { get; set; }
-    }
-
-    public sealed class CharacterNPCStandings
-    {
-        private readonly List<StandingInfo> m_agentStandings;
-        private readonly List<StandingInfo> m_npcCorporationStandings;
-        private readonly List<StandingInfo> m_factionStandings;
-
-        public CharacterNPCStandings()
-        {
-            m_agentStandings = new List<StandingInfo>();
-            m_npcCorporationStandings = new List<StandingInfo>();
-            m_factionStandings = new List<StandingInfo>();
-        }
-
-        [XmlArray("agents")]
-        [XmlArrayItem("agent")]
-        public List<StandingInfo> AgentStandings
-        {
-            get
-            {
-                return m_agentStandings;
-            }
-        }
-
-        [XmlArray("NPCCorporations")]
-        [XmlArrayItem("NPCCorporation")]
-        public List<StandingInfo> NPCCorporationStandings
-        {
-            get
-            {
-                return m_npcCorporationStandings;
-            }
-        }
-
-        [XmlArray("factions")]
-        [XmlArrayItem("faction")]
-        public List<StandingInfo> FactionStandings
-        {
-            get
-            {
-                return m_factionStandings;
-            }
-        }
-
-//        [XmlIgnore]
-//        public IEnumerable<StandingInfo> All
-//        {
-//            get
-//            {
-//                List<StandingInfo> standings = new List<StandingInfo>();
-//                standings.AddRange(AgentStandings);
-//                standings.AddRange(NPCCorporationStandings);
-//                standings.AddRange(FactionStandings);
-//                return standings;
-//            }
-//        }
     }
 }

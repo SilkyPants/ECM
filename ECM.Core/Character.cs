@@ -345,11 +345,10 @@ namespace ECM
                 }
                 else if (result is ApiResult<CharacterStandings>)
                 {
-                    ApiResult<CharacterStandings> standings = result as ApiResult<CharacterStandings>;
+                    ApiResult<CharacterStandings> standingsResult = result as ApiResult<CharacterStandings>;
+                    CharacterNPCStandings standings = standingsResult.Result.NPCStandings;
 
-                    result.XmlDocument.Save(string.Format("{0}_{1}.xml", ID, "Standings"));
-
-                    Console.WriteLine("Hello");
+                    Console.WriteLine("Agents {0} | Corp {1} | Faction {2}", standings.Agents.Count, standings.NPCCorporations.Count, standings.Factions.Count);
                 }
 
                 if (!IsUpdating && CharacterUpdated != null)

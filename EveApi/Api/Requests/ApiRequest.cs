@@ -18,6 +18,7 @@ namespace EveApi
     public class ApiRequest<T> : IApiRequest
         where T : class
     {
+        const string EVE_API_URL = "http://api.eveonline.com";
         private static XslCompiledTransform m_RowsetTransform;
         private DateTime m_LastUpdate = DateTime.MinValue;
         private ApiResult<T> m_LastResult = null;
@@ -129,7 +130,7 @@ namespace EveApi
                 }
             }
 
-            string url = "http://api.eveonline.com" + apiUri;
+            string url = EVE_API_URL + apiUri;
             HttpWebRequest request = null;
 
             Uri uri = new Uri(url);
@@ -175,23 +176,6 @@ namespace EveApi
 
             if(OnRequestUpdate != null)
                 OnRequestUpdate(m_LastResult);
-        }
-
-        private static void SaveStreamToFile(string fileFullPath, Stream stream)
-        {
-            if (stream == null || stream.Length == 0)
-                return;
-
-            // Create a FileStream object to write a stream to a file
-            using (FileStream fileStream = System.IO.File.Create(fileFullPath, (int)stream.Length))
-            {
-                // Fill the bytes[] array with the stream data
-                byte[] bytesInStream = new byte[stream.Length];
-                stream.Read(bytesInStream, 0, (int)bytesInStream.Length);
-
-                // Use FileStream object to write to the specified file
-                fileStream.Write(bytesInStream, 0, bytesInStream.Length);
-            }
         }
 
         private ApiResult<U> DeserializeAPIResultCore<U>(XslCompiledTransform transform, XmlDocument doc)

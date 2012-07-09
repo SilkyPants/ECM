@@ -894,7 +894,7 @@
                       <widget class="Gtk.Notebook" id="ntbCharSheetPages">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="CurrentPage">1</property>
+                        <property name="CurrentPage">6</property>
                         <property name="TabPos">Left</property>
                         <property name="ShowBorder">False</property>
                         <child>
