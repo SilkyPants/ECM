@@ -16,7 +16,7 @@ namespace EveApi
         public static string ApiUri { get { return "/char/Standings.xml.aspx"; } }
 
         [XmlElement("characterNPCStandings")]
-        public SerializableStandings CharacterNPCStandings { get; set; }
+        public CharacterNPCStandings CharacterNPCStandings { get; set; }
     }
     /*
     public class CharacterNPCStandings
@@ -32,7 +32,7 @@ namespace EveApi
         [XmlArray("factions")]
         [XmlArrayItem("faction")]
         public List<StandingInfo> Factions { get; set; }
-    }
+    }*/
 
     public class StandingInfo
     {
@@ -53,87 +53,62 @@ namespace EveApi
         /// </summary>
         [XmlAttribute("standing")]
         public float Standing { get; set; }
-    }*/
+    }
 
-    public sealed class SerializableStandings
+    public sealed class CharacterNPCStandings
     {
-        private readonly Collection<SerializableStandingsListItem> m_agentStandings;
-        private readonly Collection<SerializableStandingsListItem> m_npcCorporationStandings;
-        private readonly Collection<SerializableStandingsListItem> m_factionStandings;
+        private readonly List<StandingInfo> m_agentStandings;
+        private readonly List<StandingInfo> m_npcCorporationStandings;
+        private readonly List<StandingInfo> m_factionStandings;
 
-        public SerializableStandings()
+        public CharacterNPCStandings()
         {
-            m_agentStandings = new Collection<SerializableStandingsListItem>();
-            m_npcCorporationStandings = new Collection<SerializableStandingsListItem>();
-            m_factionStandings = new Collection<SerializableStandingsListItem>();
+            m_agentStandings = new List<StandingInfo>();
+            m_npcCorporationStandings = new List<StandingInfo>();
+            m_factionStandings = new List<StandingInfo>();
         }
 
         [XmlArray("agents")]
         [XmlArrayItem("agent")]
-        public Collection<SerializableStandingsListItem> AgentStandings
+        public List<StandingInfo> AgentStandings
         {
             get
             {
-                //foreach (SerializableStandingsListItem agentStanding in m_agentStandings)
-                //{
-                //    agentStanding.Group = StandingGroup.Agents;
-                //}
                 return m_agentStandings;
             }
         }
 
         [XmlArray("NPCCorporations")]
         [XmlArrayItem("NPCCorporation")]
-        public Collection<SerializableStandingsListItem> NPCCorporationStandings
+        public List<StandingInfo> NPCCorporationStandings
         {
             get
             {
-                //foreach (SerializableStandingsListItem npcCorporationStanding in m_npcCorporationStandings)
-                //{
-                //    npcCorporationStanding.Group = StandingGroup.NPCCorporations;
-                //}
                 return m_npcCorporationStandings;
             }
         }
 
         [XmlArray("factions")]
         [XmlArrayItem("faction")]
-        public Collection<SerializableStandingsListItem> FactionStandings
+        public List<StandingInfo> FactionStandings
         {
             get
             {
-                //foreach (SerializableStandingsListItem factionStanding in m_factionStandings)
-                //{
-                //    factionStanding.Group = StandingGroup.Factions;
-                //}
                 return m_factionStandings;
             }
         }
 
-        [XmlIgnore]
-        public IEnumerable<SerializableStandingsListItem> All
-        {
-            get
-            {
-                List<SerializableStandingsListItem> standings = new List<SerializableStandingsListItem>();
-                standings.AddRange(AgentStandings);
-                standings.AddRange(NPCCorporationStandings);
-                standings.AddRange(FactionStandings);
-                return standings;
-            }
-        }
-    }
-
-    public sealed class SerializableStandingsListItem
-    {
-        [XmlAttribute("fromID")]
-        public int ID { get; set; }
-
-        [XmlAttribute("fromName")]
-        public string Name { get; set; }
-
-        [XmlAttribute("standing")]
-        public double StandingValue { get; set; }
-
+//        [XmlIgnore]
+//        public IEnumerable<StandingInfo> All
+//        {
+//            get
+//            {
+//                List<StandingInfo> standings = new List<StandingInfo>();
+//                standings.AddRange(AgentStandings);
+//                standings.AddRange(NPCCorporationStandings);
+//                standings.AddRange(FactionStandings);
+//                return standings;
+//            }
+//        }
     }
 }
