@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Database\ItemDatabase.cs" />
+    <Compile Include="Database\MapDatabase.cs" />
     <Compile Include="EveClasses.cs" />
     <Compile Include="Account.cs" />
     <Compile Include="Character.cs" />
@@ -230,6 +231,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Database\eveMap.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="sqlite3.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

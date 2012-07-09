@@ -88,13 +88,13 @@ public partial class MainWindow: Gtk.Window
             dbConn.Open();
 
             // Do some work
-//            CreateAgentsDb();
-//            CreateCharacterDb();
+            CreateAgentsDb();
+            CreateCharacterDb();
             CreateCertificateDb();
             CreateSkillDb();
             CreateItemDb();
-//            CreateMapDb();
-//            CreateMapObjectDb();
+            CreateMapDb();
+            CreateMapObjectDb();
 
             dbConn.Close();
         }
@@ -128,9 +128,9 @@ public partial class MainWindow: Gtk.Window
         columns.Add("operationsFlag", "int");
         columns.Add("officeRentalCost", "int");
         columns.Add("maxShipVolumeDockable", "float");
-        columns.Add("x", "float");
-        columns.Add("y", "float");
-        columns.Add("z", "float");
+        columns.Add("x", "double");
+        columns.Add("y", "double");
+        columns.Add("z", "double");
         columns.Add("reprocessingEfficiency", "float");
         columns.Add("reprocessingStationsTake", "float");
         //columns.Add("activityID", "int");
@@ -247,9 +247,9 @@ public partial class MainWindow: Gtk.Window
         columns.Add("itemName", "nvarchar(100)");
         columns.Add("solarSystemID", "int");
         columns.Add("groupID", "int");
-        columns.Add("x", "float");
-        columns.Add("y", "float");
-        columns.Add("z", "float");
+        columns.Add("x", "double");
+        columns.Add("y", "double");
+        columns.Add("z", "double");
 
         CreateTable("mapObjects", columns);
         worker.ReportProgress(-1, "mapObjects");

@@ -124,5 +124,21 @@ namespace ECM
         public int SkillLevel { get; set; }
         public bool IsValid { get { return SkillID != 0 && SkillLevel != 0; } }
     }
+
+    public class EveStation : EveBase
+    {
+        public long SolarSystemID { get; set; }
+        public long CorporationID { get; set; }
+        public long OperationID { get; set; }
+        public int OperationsFlag { get; set; }
+        public int OfficeRentCost { get; set; }
+        public float MaxShipVolume { get; set; }
+        public float ReprocessingEfficiency { get; set; }
+        public float ReprocessingStationTake { get; set; }
+
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Z { get; set; }
+    }
 }
 

@@ -138,7 +138,7 @@
           <widget class="Gtk.Notebook" id="ntbPages">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">5</property>
+            <property name="CurrentPage">10</property>
             <property name="TabPos">Left</property>
             <property name="BorderWidth">3</property>
             <child>
@@ -1279,7 +1279,7 @@
               <widget class="Gtk.HPaned" id="hpnMarket">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Position">222</property>
+                <property name="Position">214</property>
                 <property name="BorderWidth">3</property>
                 <child>
                   <widget class="Gtk.Notebook" id="ntbMarketGroups">
@@ -1852,9 +1852,30 @@ Untrainable Items</property>
               </packing>
             </child>
             <child>
-              <widget class="Gtk.Fixed" id="tmpAssets">
+              <widget class="Gtk.VBox" id="vbxAssets">
                 <property name="MemberName" />
-                <property name="HasWindow">False</property>
+                <property name="Spacing">6</property>
+                <child>
+                  <placeholder />
+                </child>
+                <child>
+                  <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow4">
+                    <property name="MemberName" />
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="Gtk.TreeView" id="trvAssets">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="ShowScrollbars">True</property>
+                        <property name="HeadersVisible">False</property>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                  </packing>
+                </child>
               </widget>
               <packing>
                 <property name="Position">10</property>

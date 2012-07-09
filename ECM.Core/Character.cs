@@ -250,6 +250,13 @@ namespace ECM
             set { SetProperty<SkillQueue>("SkillQueue", ref m_SkillQueue, value); }
         }
 
+        Dictionary<long, List<AssetListInfo>> m_Assets = new Dictionary<long, List<AssetListInfo>>();
+        public Dictionary<long, List<AssetListInfo>> Assets
+        {
+            get { return m_Assets; }
+            set { SetProperty<Dictionary<long, List<AssetListInfo>>>("Assets", ref m_Assets, value); }
+        }
+
         List<CharacterCertificates> m_Certificates = new List<CharacterCertificates>();
         public List<CharacterCertificates> Certificates
         {
@@ -314,8 +321,18 @@ namespace ECM
                 }
                 else
                 {
-                    Console.WriteLine("Saving Assets for " + Name);
-                    result.XmlDocument.Save(this.ID + "Assets.xml");
+                    ApiResult<AssetList> assets = result as ApiResult<AssetList>;
+
+                    // Create asset dictionary keyed on locationID
+                    Assets.Clear();
+
+                    foreach (EveApi.AssetListInfo info in assets.Result.Assets)
+                    {
+                        if (!Assets.ContainsKey(info.LocationID))
+                            Assets.Add(info.LocationID, new List<AssetListInfo>());
+
+                        Assets[info.LocationID].Add(info);
+                    }
                 }
 
                 if (!IsUpdating && CharacterUpdated != null)

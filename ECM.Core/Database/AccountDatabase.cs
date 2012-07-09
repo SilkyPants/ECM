@@ -86,7 +86,8 @@ namespace ECM
                                     Perception        INT,
                                     Willpower         INT,
                                     Charisma          INT,
-                                    Portrait          BLOB
+                                    Portrait          BLOB,
+                                    Assets            BLOB
                                 );";
             cmd.ExecuteNonQuery();
 

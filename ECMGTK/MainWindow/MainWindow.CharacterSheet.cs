@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using Gtk;
+using System.Collections.Generic;
 
 public partial class MainWindow : Gtk.Window
 {
@@ -37,11 +38,13 @@ public partial class MainWindow : Gtk.Window
     ListStore charAttributeStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string));
     TreeStore charSkillStore = new TreeStore(typeof(string), typeof(int), typeof(int), typeof(int), typeof(int), typeof(double), typeof(bool), typeof(long), typeof(int), typeof(bool));
     TreeStore certStore = new TreeStore(typeof(string), typeof(int), typeof(long), typeof(bool), typeof(bool)); // Name, Grade, ID, IsCert, IsVisible
+    TreeStore assetStore = new TreeStore(typeof(string), typeof(long), typeof(bool)); // Name, ID, IsHeading
 
     TreeModelFilter skillsFilter = null;
     TreeModelFilter certFilter = null;
+    TreeModelFilter assetFilter = null;
 
-    public void LoadSkills()
+    public void SetupCharacterTrees()
     {
         charSkillStore.Clear();
 
@@ -56,10 +59,7 @@ public partial class MainWindow : Gtk.Window
         trvSkills.Model = skillsSorted;
 
         Console.WriteLine("Skills Loaded");
-    }
 
-    public void LoadCertificates()
-    {
         certStore.Clear();
 
         ECM.ItemDatabase.LoadCertificateTree(certStore);
@@ -73,16 +73,27 @@ public partial class MainWindow : Gtk.Window
         trvCertificates.Model = sorted;
 
         Console.WriteLine("Certificates Loaded");
+
+
+        assetFilter = new TreeModelFilter(assetStore, null);
+        assetFilter.VisibleFunc = new TreeModelFilterVisibleFunc(HandleCharAssetFilter);
+
+        sorted = new TreeModelSort(assetFilter);
+        sorted.SetSortColumnId(0, SortType.Ascending);
+
+        trvAssets.Model = sorted;
     }
 
     void ShowCharacterSheet(ECM.Character currentCharacter)
     {
         Console.WriteLine("****** Changing Character");
-        // unhook models
+
+        // unhook models?
         trvAttributes.Model = null;
 
         trvSkills.FreezeChildNotify();
         trvCertificates.FreezeChildNotify();
+        trvAssets.FreezeChildNotify();
 
         charAttributeStore.Clear();
 
@@ -268,11 +279,46 @@ public partial class MainWindow : Gtk.Window
             cont = certStore.IterNext(ref iter);
         }
 
+        assetStore.Clear();
+
+        foreach (long locationID in currentCharacter.Assets.Keys)
+        {
+            ECM.EveStation station = ECM.MapDatabase.Stations[locationID];
+            List<EveApi.AssetListInfo> locAssets = currentCharacter.Assets[locationID];
+            string locHeader = string.Format("{0} - {1} items", station.Name, locAssets.Count);
+
+            TreeIter locationNode = assetStore.AppendValues(locHeader, locationID, true);
+
+            foreach (EveApi.AssetListInfo info in locAssets)
+            {
+                AppendAssetToNode(locationNode, info);
+            }
+        }
+
         skillsFilter.Refilter();
         certFilter.Refilter();
+        assetFilter.Refilter();
 
         trvSkills.ThawChildNotify();
         trvCertificates.ThawChildNotify();
+        trvAssets.ThawChildNotify();
+    }
+
+    private void AppendAssetToNode(TreeIter parentNode, EveApi.AssetListInfo info)
+    {
+        ECM.EveItem item = ECM.ItemDatabase.Items[info.TypeID];
+        TreeIter thisNode = assetStore.AppendValues(parentNode, item.Name, info.TypeID, info.Contents.Count > 0);
+
+        foreach (EveApi.ContentInfo contentInfo in info.Contents)
+        {
+            if (contentInfo is EveApi.AssetListInfo)
+                AppendAssetToNode(thisNode, contentInfo as EveApi.AssetListInfo);
+            else
+            {
+                item = ECM.ItemDatabase.Items[contentInfo.TypeID];
+                assetStore.AppendValues(thisNode, item.Name, contentInfo.TypeID, false);
+            }
+        }
     }
 
     private bool HandleCharSkillsFilter(TreeModel model, TreeIter iter)
@@ -287,6 +333,11 @@ public partial class MainWindow : Gtk.Window
         bool certLearnt = (bool)model.GetValue(iter, 4);
 
         return certLearnt;
+    }
+
+    private bool HandleCharAssetFilter(TreeModel model, TreeIter iter)
+    {
+        return true;
     }
 
     protected void ShipClicked (object o, ButtonPressEventArgs args)

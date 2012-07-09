@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using EveApi.Attributes;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace EveApi
 {
@@ -28,7 +29,6 @@ namespace EveApi
         [XmlArrayItem("content")]
         public List<ContentInfo> Contents { get; set; }
     }
-
 
     public class ContentInfo
     {

@@ -92,8 +92,8 @@ public partial class MainWindow: Gtk.Window
 		worker.DoWork += delegate 
         {
             LoadMarket();
-            LoadSkills();
-            LoadCertificates();
+            SetupCharacterTrees();
+            ECM.MapDatabase.LoadMap();
             ECM.Core.Init();
 
             Gtk.Application.Invoke(delegate
@@ -207,6 +207,7 @@ public partial class MainWindow: Gtk.Window
     {
         SetupMarket();
         SetupCharacterSheet();
+        SetupAssets();
     }
 
 	public void FillTabsWithImages ()
@@ -241,8 +242,8 @@ public partial class MainWindow: Gtk.Window
 		ntbPages.SetTabLabelPacking(tmpCorporations, false, false, PackType.Start);
 		ntbPages.SetTabLabel(tmpCorporations, CreateTabLabel("Corporations", "ECMGTK.Resources.Icons.Corporations.png", true));
 
-        ntbPages.SetTabLabelPacking(tmpAssets, false, false, PackType.Start);
-        ntbPages.SetTabLabel(tmpAssets, CreateTabLabel("Assets", "ECMGTK.Resources.Icons.Assets.png", true));
+        ntbPages.SetTabLabelPacking(vbxAssets, false, false, PackType.Start);
+        ntbPages.SetTabLabel(vbxAssets, CreateTabLabel("Assets", "ECMGTK.Resources.Icons.Assets.png", true));
         
         ntbPages.SetTabLabelPacking(tmpMoney, false, false, PackType.Start);
         ntbPages.SetTabLabel(tmpMoney, CreateTabLabel("Money", "ECMGTK.Resources.Icons.Money.png", true));
@@ -297,6 +298,27 @@ public partial class MainWindow: Gtk.Window
 		
 		return box;
 	}
+
+    void SetupAssets ()
+    {
+        TreeViewColumn mainColumn = new TreeViewColumn();
+        mainColumn.Title = "Assets";
+
+        CellRendererEveTree itemCell = new CellRendererEveTree();
+
+        mainColumn.PackStart(itemCell, true);
+
+        mainColumn.AddAttribute(itemCell, "Text", 0);
+        mainColumn.AddAttribute(itemCell, "IsHeading", 2);
+        
+        trvAssets.AppendColumn(mainColumn);
+        trvAssets.ColumnsAutosize();
+
+        trvAssets.EnableTreeLines = false;
+        trvAssets.ShowExpanders = false;
+        trvAssets.LevelIndentation = 16;
+        trvAssets.Selection.Changed += ExpandGroup;
+    }
 
     public void SetupMarket ()
     {
