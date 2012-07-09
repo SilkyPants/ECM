@@ -231,13 +231,6 @@ namespace ECM
         {
             if (!m_Loaded) return;
 
-            //m_TQServerStatus.UpdateOnSecTick();
-
-            //foreach(Account account in m_Accounts.Values)
-            //{
-            //    account.UpdateOnHeartbeat();
-            //}
-
             foreach (IApiRequest request in m_ApiRequests)
             {
                 request.UpdateOnSecTick();
@@ -293,6 +286,7 @@ namespace ECM
             m_ApiRequests.Add(charToAdd.CharSheetRequest);
             m_ApiRequests.Add(charToAdd.SkillQueueRequest);
             m_ApiRequests.Add(charToAdd.AssetListRequest);
+            m_ApiRequests.Add(charToAdd.StandingsRequest);
 
             charToAdd.CharacterUpdated += delegate
             {

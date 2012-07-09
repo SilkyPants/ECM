@@ -14,12 +14,17 @@ namespace ECM
         CharacterApiRequest<CharacterInfo> m_charInfoRequest;
         CharacterApiRequest<SkillQueue> m_skillQueueRequest;
         CharacterApiRequest<AssetList> m_AssetListRequest;
+        CharacterApiRequest<CharacterStandings> m_StandingsRequest;
 
         bool m_AutoUpdate = false;
 
         public event EventHandler CharacterUpdated;
 
         #region Properties
+        internal CharacterApiRequest<CharacterStandings> StandingsRequest
+        {
+            get { return m_StandingsRequest; }
+        }
         internal CharacterApiRequest<AssetList> AssetListRequest
         {
             get { return m_AssetListRequest; }
@@ -59,6 +64,8 @@ namespace ECM
                     m_skillQueueRequest.Enabled = value && Account.KeyAccess.HasFlag(ApiKeyMask.SkillQueue);
 
                     m_AssetListRequest.Enabled = value && Account.KeyAccess.HasFlag(ApiKeyMask.AssetList);
+
+                    m_StandingsRequest.Enabled = value && Account.KeyAccess.HasFlag(ApiKeyMask.Standings);
                 }
             }
         }
@@ -288,7 +295,6 @@ namespace ECM
 
             m_charSheetRequest = new CharacterApiRequest<CharacterSheet>(characterID, Account.KeyID, Account.VCode);
             m_charSheetRequest.OnRequestUpdate += ApiRequestUpdate;
-            //m_charSheetRequest.Enabled = Account.KeyAccess.HasFlag(ApiKeyMask.CharacterSheet);
 
             m_charInfoRequest = new CharacterApiRequest<CharacterInfo>(characterID, Account.KeyID, Account.VCode);
             m_charInfoRequest.OnRequestUpdate += ApiRequestUpdate;
@@ -298,6 +304,9 @@ namespace ECM
 
             m_AssetListRequest = new CharacterApiRequest<AssetList>(characterID, Account.KeyID, Account.VCode);
             m_AssetListRequest.OnRequestUpdate += ApiRequestUpdate;
+
+            m_StandingsRequest = new CharacterApiRequest<CharacterStandings>(characterID, Account.KeyID, Account.VCode);
+            m_StandingsRequest.OnRequestUpdate += ApiRequestUpdate;
         }
 
         void ApiRequestUpdate(IApiResult result)
@@ -319,7 +328,7 @@ namespace ECM
                     ApiResult<SkillQueue> queue = result as ApiResult<SkillQueue>;
                     SkillQueue = queue.Result;
                 }
-                else
+                else if (result is ApiResult<AssetList>)
                 {
                     ApiResult<AssetList> assets = result as ApiResult<AssetList>;
 
@@ -333,6 +342,10 @@ namespace ECM
 
                         Assets[info.LocationID].Add(info);
                     }
+                }
+                else if (result is ApiResult<CharacterStandings>)
+                {
+                    Console.WriteLine("Hello");
                 }
 
                 if (!IsUpdating && CharacterUpdated != null)

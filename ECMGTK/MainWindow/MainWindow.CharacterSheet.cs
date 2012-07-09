@@ -285,7 +285,7 @@ public partial class MainWindow : Gtk.Window
         {
             ECM.EveStation station = ECM.MapDatabase.Stations[locationID];
             List<EveApi.AssetListInfo> locAssets = currentCharacter.Assets[locationID];
-            string locHeader = string.Format("{0} - {1} items", station.Name, locAssets.Count);
+            string locHeader = string.Format("{0} - {1:#,0} items", station.Name, locAssets.Count);
 
             TreeIter locationNode = assetStore.AppendValues(locHeader, locationID, true);
 
@@ -307,7 +307,12 @@ public partial class MainWindow : Gtk.Window
     private void AppendAssetToNode(TreeIter parentNode, EveApi.AssetListInfo info)
     {
         ECM.EveItem item = ECM.ItemDatabase.Items[info.TypeID];
-        TreeIter thisNode = assetStore.AppendValues(parentNode, item.Name, info.TypeID, info.Contents.Count > 0);
+        string text = item.Name;
+
+        if (info.Quantity > 1)
+            text += string.Format(" (x {0:#,0})", info.Quantity);
+
+        TreeIter thisNode = assetStore.AppendValues(parentNode, text, info.TypeID, info.Contents.Count > 0);
 
         foreach (EveApi.ContentInfo contentInfo in info.Contents)
         {

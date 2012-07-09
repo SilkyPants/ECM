@@ -17,6 +17,9 @@ namespace ECMGTK
         [GLib.Property("IsHeading")]
         public bool IsHeading { get; set; }
 
+
+        public bool RenderInfo { get; set; }
+
         int m_TextXOffset = 0;
 
         protected Pango.FontDescription m_FontDesc = null;
@@ -37,6 +40,7 @@ namespace ECMGTK
 
         public CellRendererEveTree()
         {
+            RenderInfo = true;
         }
 
         protected override void Render (Gdk.Drawable window, Widget widget, Gdk.Rectangle background_area, Gdk.Rectangle cell_area, Gdk.Rectangle expose_area, CellRendererState flags)
@@ -82,7 +86,7 @@ namespace ECMGTK
             // Draw expander/Info
             System.IO.Stream pixBuf;
 
-            if (!IsHeading)
+            if (!IsHeading && RenderInfo)
                 pixBuf = ECM.Core.Info16PNG;
             else if (IsExpanded)
                 pixBuf = ECM.Core.Up16PNG;

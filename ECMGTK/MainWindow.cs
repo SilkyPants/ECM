@@ -305,6 +305,7 @@ public partial class MainWindow: Gtk.Window
         mainColumn.Title = "Assets";
 
         CellRendererEveTree itemCell = new CellRendererEveTree();
+        itemCell.RenderInfo = false;
 
         mainColumn.PackStart(itemCell, true);
 

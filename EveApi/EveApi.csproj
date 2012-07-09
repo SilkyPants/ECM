@@ -46,6 +46,7 @@
     <Compile Include="Api\Sheets\AccountStatus.cs" />
     <Compile Include="Api\Sheets\AssetList.cs" />
     <Compile Include="Api\Requests\AuthorisedApiRequest.cs" />
+    <Compile Include="Api\Sheets\CharacterStandings.cs" />
     <Compile Include="Attributes\SimpleAttributes.cs" />
     <Compile Include="Api\Requests\CCPError.cs" />
     <Compile Include="Api\Requests\CharacterApiRequest.cs" />
