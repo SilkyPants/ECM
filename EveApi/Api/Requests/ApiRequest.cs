@@ -217,6 +217,9 @@ namespace EveApi
                                 // Deserialize from the given stream
                                 stream.Seek(0, SeekOrigin.Begin);
 
+                                doc.Load(stream);
+                                stream.Seek(0, SeekOrigin.Begin);
+
                                 XmlSerializer xs = new XmlSerializer(typeof(ApiResult<U>));
                                 result = (ApiResult<U>)xs.Deserialize(stream);
 

@@ -345,6 +345,10 @@ namespace ECM
                 }
                 else if (result is ApiResult<CharacterStandings>)
                 {
+                    ApiResult<CharacterStandings> standings = result as ApiResult<CharacterStandings>;
+
+                    result.XmlDocument.Save(string.Format("{0}_{1}.xml", ID, "Standings"));
+
                     Console.WriteLine("Hello");
                 }
 
