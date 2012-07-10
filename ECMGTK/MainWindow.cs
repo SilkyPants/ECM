@@ -25,7 +25,7 @@ using System.Timers;
 using ECMGTK;
 using GLib;
 using Gtk;
-using EveApi;
+using ECM.API.EVE;
 
 public partial class MainWindow: Gtk.Window
 {
@@ -141,7 +141,7 @@ public partial class MainWindow: Gtk.Window
         Console.WriteLine(args.ExceptionObject);
     }
 
-    void TQServerUpdate (EveApi.ServerStatus status)
+    void TQServerUpdate (ECM.API.EVE.ServerStatus status)
     {
         string serverStatus = string.Empty;
 
@@ -424,7 +424,7 @@ public partial class MainWindow: Gtk.Window
 
     private void SetupCharacterSheet()
     {
-        imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(ECM.Core.NoPortraitJPG).ScaleSimple(198,198,Gdk.InterpType.Hyper);
+        imgCharPortrait.Pixbuf = ECM.API.ImageApi.StreamToPixbuf(ECM.Core.NoPortraitJPG).ScaleSimple(198,198,Gdk.InterpType.Hyper);
         evtCharPortrait.ButtonPressEvent += UpdateCharacterPortrait;
 
         #region Attributes Treeview
@@ -493,6 +493,24 @@ public partial class MainWindow: Gtk.Window
         trvCertificates.ShowExpanders = false;
         trvCertificates.Selection.Changed += ExpandGroup;
         #endregion
+
+        #region Standings Treeview
+        column = new TreeViewColumn();
+        skillColumn.Title = "Standings";
+
+        CellRendererEveTree standingsCell = new CellRendererEveTree();
+
+        column.PackStart(standingsCell, true);
+
+        column.AddAttribute(standingsCell, "Text", 0);
+        column.AddAttribute(standingsCell, "Icon", 1);
+        column.AddAttribute(standingsCell, "IsHeading", 2);
+
+        trvStandings.AppendColumn(column);
+
+        trvStandings.EnableTreeLines = false;
+        trvStandings.ShowExpanders = false;
+        #endregion
     }
 
     void ExpandGroup(object sender, EventArgs e)
@@ -551,7 +569,7 @@ public partial class MainWindow: Gtk.Window
             {
                 if(e.Event.Button == 1)
                 {
-                    m_ViewRender.ShowCharacterRender(ECM.Core.CurrentCharacter, ImageApi.ImageRequestSize.Size512x512);
+                    m_ViewRender.ShowCharacterRender(ECM.Core.CurrentCharacter, ECM.API.ImageApi.ImageRequestSize.Size512x512);
                 }
             };
 

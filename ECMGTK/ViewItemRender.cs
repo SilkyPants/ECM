@@ -20,7 +20,7 @@ namespace ECMGTK
 
             fetchRender.DoWork += delegate(object sender, DoWorkEventArgs e)
             {
-                imgItemRender.Pixbuf = EveApi.ImageApi.GetItemRenderGTK(item.ID, EveApi.ImageApi.ImageRequestSize.Size512x512);
+                imgItemRender.Pixbuf = ECM.API.ImageApi.GetItemRenderGTK(item.ID, ECM.API.ImageApi.ImageRequestSize.Size512x512);
 
                 //Show();
             };
@@ -29,7 +29,7 @@ namespace ECMGTK
             ShowAll();
         }
 
-        public void ShowCharacterRender (ECM.Character character, EveApi.ImageApi.ImageRequestSize size512x512)
+        public void ShowCharacterRender (ECM.Character character, ECM.API.ImageApi.ImageRequestSize size512x512)
         {
             BackgroundWorker fetchRender = new BackgroundWorker();
 
@@ -38,7 +38,7 @@ namespace ECMGTK
 
             fetchRender.DoWork += delegate(object sender, DoWorkEventArgs e)
             {
-                imgItemRender.Pixbuf = EveApi.ImageApi.GetCharacterPortraitGTK(character.ID, EveApi.ImageApi.ImageRequestSize.Size512x512);
+                imgItemRender.Pixbuf = ECM.API.ImageApi.GetCharacterPortraitGTK(character.ID, ECM.API.ImageApi.ImageRequestSize.Size512x512);
             };
 
             fetchRender.RunWorkerAsync();

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using EveApi;
+using ECM.API.EVE;
 
 namespace ECM
 {
@@ -69,7 +69,7 @@ namespace ECM
                         return true;
                 }
 
-                return ImageApi.IsRetrieving;
+                return API.ImageApi.IsRetrieving;
             }
         }
 
@@ -199,6 +199,19 @@ namespace ECM
         public static Stream Close16PNG
         {
             get { return GetResource("ECM.Core.Icons.Close16PNG"); }
+        }
+
+        public static string RowsetXSLT
+        {
+            get 
+            {
+                Stream s = GetResource("ECM.Core.RowsetXSLT");
+                byte[] buffer = new byte[s.Length];
+
+                s.Read(buffer, 0, buffer.Length);
+
+                return System.Text.Encoding.UTF8.GetString(buffer); 
+            }
         }
 
         #endregion

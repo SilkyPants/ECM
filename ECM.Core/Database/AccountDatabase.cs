@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using EveApi;
+using ECM.API.EVE;
 
 namespace ECM
 {
@@ -182,7 +182,7 @@ namespace ECM
                 {
                     string keyID = reader["KeyID"].ToString();
                     string vCode = reader["VCode"].ToString();
-                    EveApi.ApiKeyMask access = (EveApi.ApiKeyMask)Enum.Parse(typeof(EveApi.ApiKeyMask), reader["Access"].ToString());
+                    API.EVE.ApiKeyMask access = (API.EVE.ApiKeyMask)Enum.Parse(typeof(API.EVE.ApiKeyMask), reader["Access"].ToString());
                     DateTime expires = Convert.ToDateTime(reader["Expires"].ToString());
 
                     Account newAcc = new Account(keyID, vCode, access, expires);

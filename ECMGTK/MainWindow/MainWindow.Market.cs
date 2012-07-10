@@ -183,7 +183,7 @@ public partial class MainWindow : Gtk.Window
         BackgroundWorker fetchImage = new BackgroundWorker();
         fetchImage.DoWork += delegate(object sender, DoWorkEventArgs e)
         {
-            imgItemIconDetails.Pixbuf = EveApi.ImageApi.GetItemImageGTK(item.ID, EveApi.ImageApi.ImageRequestSize.Size64x64);
+            imgItemIconDetails.Pixbuf = ECM.API.ImageApi.GetItemImageGTK(item.ID, ECM.API.ImageApi.ImageRequestSize.Size64x64);
         };
 
         btnShowRender.Name = item.ID.ToString();
@@ -256,7 +256,7 @@ public partial class MainWindow : Gtk.Window
         BackgroundWorker fetchImage = new BackgroundWorker();
         fetchImage.DoWork += delegate(object sender, DoWorkEventArgs e)
         {
-            itemPic.Pixbuf = EveApi.ImageApi.GetItemImageGTK(item.ID, EveApi.ImageApi.ImageRequestSize.Size64x64);
+            itemPic.Pixbuf = ECM.API.ImageApi.GetItemImageGTK(item.ID, ECM.API.ImageApi.ImageRequestSize.Size64x64);
         };
 
         fetchImage.RunWorkerAsync();

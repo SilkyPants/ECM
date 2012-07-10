@@ -1,6 +1,5 @@
 using System;
-using EveApi;
-using EveApi.Api.Interfaces;
+using ECM.API.EVE;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -43,6 +42,12 @@ namespace ECM
         internal CharacterApiRequest<SkillQueue> SkillQueueRequest
         {
             get { return m_skillQueueRequest; }
+        }
+
+        public CharacterNPCStandings Standings
+        {
+            get;
+            private set;
         }
 
         public Account Account
@@ -335,7 +340,7 @@ namespace ECM
                     // Create asset dictionary keyed on locationID
                     Assets.Clear();
 
-                    foreach (EveApi.AssetListInfo info in assets.Result.Assets)
+                    foreach (API.EVE.AssetListInfo info in assets.Result.Assets)
                     {
                         if (!Assets.ContainsKey(info.LocationID))
                             Assets.Add(info.LocationID, new List<AssetListInfo>());
@@ -346,9 +351,7 @@ namespace ECM
                 else if (result is ApiResult<CharacterStandings>)
                 {
                     ApiResult<CharacterStandings> standingsResult = result as ApiResult<CharacterStandings>;
-                    CharacterNPCStandings standings = standingsResult.Result.NPCStandings;
-
-                    Console.WriteLine("Agents {0} | Corp {1} | Faction {2}", standings.Agents.Count, standings.NPCCorporations.Count, standings.Factions.Count);
+                    Standings = standingsResult.Result.NPCStandings;
                 }
 
                 if (!IsUpdating && CharacterUpdated != null)
@@ -369,7 +372,7 @@ namespace ECM
 
         public void UpdateCharacterPortrait ()
         {
-            Portrait = EveApi.ImageApi.GetCharacterPortrait(ID, ImageApi.ImageRequestSize.Size200x200);
+            Portrait = API.ImageApi.GetCharacterPortrait(ID, ECM.API.ImageApi.ImageRequestSize.Size200x200);
         }
 
         private void UpdateCharacter(CharacterInfo characterInfo)

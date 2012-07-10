@@ -129,9 +129,9 @@ public partial class MainWindow : Gtk.Window
         img.HeightRequest = 64;
 
         if (character.Portrait != null)
-            img.Pixbuf = EveApi.ImageApi.StreamToPixbuf(character.Portrait).ScaleSimple(64, 64, Gdk.InterpType.Bilinear);
+            img.Pixbuf = ECM.API.ImageApi.StreamToPixbuf(character.Portrait).ScaleSimple(64, 64, Gdk.InterpType.Bilinear);
         else
-            img.Pixbuf = EveApi.ImageApi.StreamToPixbuf(ECM.Core.NoPortraitJPG).ScaleSimple(64, 64, Gdk.InterpType.Bilinear);
+            img.Pixbuf = ECM.API.ImageApi.StreamToPixbuf(ECM.Core.NoPortraitJPG).ScaleSimple(64, 64, Gdk.InterpType.Bilinear);
 
         frm.Add(img);
 

@@ -4,7 +4,7 @@ using System.Drawing;
 using System.IO;
 using Gdk;
 
-namespace EveApi
+namespace ECM.API
 {
     public static class ImageApi
     {

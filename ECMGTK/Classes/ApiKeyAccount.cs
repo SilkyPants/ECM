@@ -1,5 +1,5 @@
 using System;
-using EveApi;
+using ECM.API.EVE;
 
 namespace ECMGTK
 {

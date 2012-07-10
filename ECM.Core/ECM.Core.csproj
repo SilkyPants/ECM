@@ -37,12 +37,37 @@
     <Reference Include="System.Data.SQLite">
       <HintPath>Externals\System.Data.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="System.XML" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\EveCentralApi.cs" />
+    <Compile Include="API\ImageApi.cs" />
+    <Compile Include="API\Interfaces\IAccountStatus.cs" />
+    <Compile Include="API\Interfaces\ICharacterInfo.cs" />
+    <Compile Include="API\Interfaces\ICharacterSheet.cs" />
+    <Compile Include="API\Requests\ApiRequest.cs" />
+    <Compile Include="API\Requests\ApiResult.cs" />
+    <Compile Include="API\Requests\AuthorisedApiRequest.cs" />
+    <Compile Include="API\Requests\CCPError.cs" />
+    <Compile Include="API\Requests\CharacterApiRequest.cs" />
+    <Compile Include="API\Requests\IApiRequest.cs" />
+    <Compile Include="API\Requests\IApiResult.cs" />
+    <Compile Include="API\Sheets\AccountStatus.cs" />
+    <Compile Include="API\Sheets\ApiKeyInfo.cs" />
+    <Compile Include="API\Sheets\AssetList.cs" />
+    <Compile Include="API\Sheets\CharacterInfo.cs" />
+    <Compile Include="API\Sheets\CharacterSheet.cs" />
+    <Compile Include="API\Sheets\CharacterStandings.cs" />
+    <Compile Include="API\Sheets\MapKills.cs" />
+    <Compile Include="API\Sheets\ServerStatus.cs" />
+    <Compile Include="API\Sheets\SkillsInTraining.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Attributes\SimpleAttributes.cs" />
     <Compile Include="Database\ItemDatabase.cs" />
     <Compile Include="Database\MapDatabase.cs" />
+    <Compile Include="Enumerations.cs" />
+    <Compile Include="Equations.cs" />
     <Compile Include="EveClasses.cs" />
     <Compile Include="Account.cs" />
     <Compile Include="Character.cs" />
@@ -51,6 +76,7 @@
     <Compile Include="Attributes\SQLiteDatabaseAttribute.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Database\DatabaseBase.cs" />
+    <Compile Include="TimeExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -248,10 +274,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EveApi\EveApi.csproj">
-      <Project>{DB5B3681-9F42-4C22-8562-2D39465D7A10}</Project>
-      <Name>EveApi</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Resources\Rowset-transform.xslt">
+      <LogicalName>ECM.Core.RowsetXSLT</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
 </Project>

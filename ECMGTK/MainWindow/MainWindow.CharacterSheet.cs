@@ -21,6 +21,7 @@
 using System;
 using Gtk;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 public partial class MainWindow : Gtk.Window
 {
@@ -39,6 +40,7 @@ public partial class MainWindow : Gtk.Window
     TreeStore charSkillStore = new TreeStore(typeof(string), typeof(int), typeof(int), typeof(int), typeof(int), typeof(double), typeof(bool), typeof(long), typeof(int), typeof(bool));
     TreeStore certStore = new TreeStore(typeof(string), typeof(int), typeof(long), typeof(bool), typeof(bool)); // Name, Grade, ID, IsCert, IsVisible
     TreeStore assetStore = new TreeStore(typeof(string), typeof(long), typeof(bool)); // Name, ID, IsHeading
+    TreeStore standingsStore = new TreeStore(typeof(string), typeof(Gdk.Pixbuf), typeof(bool));
 
     TreeModelFilter skillsFilter = null;
     TreeModelFilter certFilter = null;
@@ -46,6 +48,8 @@ public partial class MainWindow : Gtk.Window
 
     public void SetupCharacterTrees()
     {
+
+        #region Skills
         charSkillStore.Clear();
 
         ECM.ItemDatabase.LoadSkills(charSkillStore);
@@ -59,6 +63,9 @@ public partial class MainWindow : Gtk.Window
         trvSkills.Model = skillsSorted;
 
         Console.WriteLine("Skills Loaded");
+        #endregion
+
+        #region Certificates
 
         certStore.Clear();
 
@@ -73,8 +80,9 @@ public partial class MainWindow : Gtk.Window
         trvCertificates.Model = sorted;
 
         Console.WriteLine("Certificates Loaded");
+        #endregion
 
-
+        #region Assets
         assetFilter = new TreeModelFilter(assetStore, null);
         assetFilter.VisibleFunc = new TreeModelFilterVisibleFunc(HandleCharAssetFilter);
 
@@ -82,6 +90,11 @@ public partial class MainWindow : Gtk.Window
         sorted.SetSortColumnId(0, SortType.Ascending);
 
         trvAssets.Model = sorted;
+        #endregion
+
+        #region Standings
+        trvStandings.Model = standingsStore;
+        #endregion
     }
 
     void ShowCharacterSheet(ECM.Character currentCharacter)
@@ -100,9 +113,9 @@ public partial class MainWindow : Gtk.Window
         lblCharName.Markup = string.Format("<b>{0}</b>", currentCharacter.Name);
 
         if (currentCharacter.Portrait != null)
-            imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(currentCharacter.Portrait).ScaleSimple(160, 160, Gdk.InterpType.Bilinear);
+            imgCharPortrait.Pixbuf = ECM.API.ImageApi.StreamToPixbuf(currentCharacter.Portrait).ScaleSimple(160, 160, Gdk.InterpType.Bilinear);
         else
-            imgCharPortrait.Pixbuf = EveApi.ImageApi.StreamToPixbuf(ECM.Core.NoPortraitJPG).ScaleSimple(160, 160, Gdk.InterpType.Bilinear);
+            imgCharPortrait.Pixbuf = ECM.API.ImageApi.StreamToPixbuf(ECM.Core.NoPortraitJPG).ScaleSimple(160, 160, Gdk.InterpType.Bilinear);
 
         lblCurrentLocation.Markup = string.Format("<b>{0}</b>", currentCharacter.LastKnownLocation);
         lblBackground.Markup = string.Format("<b>{0}</b>", currentCharacter.Background);
@@ -241,7 +254,7 @@ public partial class MainWindow : Gtk.Window
 
                     bool learnt = false;
 
-                    foreach (EveApi.CharacterCertificates cert in currentCharacter.Certificates)
+                    foreach (ECM.API.EVE.CharacterCertificates cert in currentCharacter.Certificates)
                     {
                         if (cert.ID == id) learnt = true;
                     }
@@ -284,15 +297,43 @@ public partial class MainWindow : Gtk.Window
         foreach (long locationID in currentCharacter.Assets.Keys)
         {
             ECM.EveStation station = ECM.MapDatabase.Stations[locationID];
-            List<EveApi.AssetListInfo> locAssets = currentCharacter.Assets[locationID];
+            List<ECM.API.EVE.AssetListInfo> locAssets = currentCharacter.Assets[locationID];
             string locHeader = string.Format("{0} - {1:#,0} items", station.Name, locAssets.Count);
 
             TreeIter locationNode = assetStore.AppendValues(locHeader, locationID, true);
 
-            foreach (EveApi.AssetListInfo info in locAssets)
+            foreach (ECM.API.EVE.AssetListInfo info in locAssets)
             {
                 AppendAssetToNode(locationNode, info);
             }
+        }
+
+        standingsStore.Clear();
+
+        if (currentCharacter.Standings != null)
+        {
+            TreeIter standingParent = standingsStore.AppendValues("Corporations", null, true);
+
+            foreach (ECM.API.EVE.StandingInfo standings in currentCharacter.Standings.NPCCorporations)
+            {
+                string text = string.Format("{0} ({1:#.00}) ({2})", standings.FromName, standings.Standing, "Something");
+
+                Gdk.Pixbuf icon = null;
+
+                TreeIter standingIter = standingsStore.AppendValues(standingParent, text, icon, false);
+
+                BackgroundWorker tmp = new BackgroundWorker();
+                tmp.DoWork += delegate
+                {
+                    icon = ECM.API.ImageApi.GetCorporationLogoGTK(standings.FromID, ECM.API.ImageApi.ImageRequestSize.Size32x32);
+
+                    standingsStore.SetValue(standingIter, 1, icon);
+                };
+
+                tmp.RunWorkerAsync();
+            }
+
+            trvStandings.ExpandAll();
         }
 
         skillsFilter.Refilter();
@@ -304,7 +345,7 @@ public partial class MainWindow : Gtk.Window
         trvAssets.ThawChildNotify();
     }
 
-    private void AppendAssetToNode(TreeIter parentNode, EveApi.AssetListInfo info)
+    private void AppendAssetToNode(TreeIter parentNode, ECM.API.EVE.AssetListInfo info)
     {
         ECM.EveItem item = ECM.ItemDatabase.Items[info.TypeID];
         string text = item.Name;
@@ -314,10 +355,10 @@ public partial class MainWindow : Gtk.Window
 
         TreeIter thisNode = assetStore.AppendValues(parentNode, text, info.TypeID, info.Contents.Count > 0);
 
-        foreach (EveApi.ContentInfo contentInfo in info.Contents)
+        foreach (ECM.API.EVE.ContentInfo contentInfo in info.Contents)
         {
-            if (contentInfo is EveApi.AssetListInfo)
-                AppendAssetToNode(thisNode, contentInfo as EveApi.AssetListInfo);
+            if (contentInfo is ECM.API.EVE.AssetListInfo)
+                AppendAssetToNode(thisNode, contentInfo as ECM.API.EVE.AssetListInfo);
             else
             {
                 item = ECM.ItemDatabase.Items[contentInfo.TypeID];
