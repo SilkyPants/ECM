@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Threading;
 using System.Diagnostics;
 using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace ECM.API.EVE
 {
@@ -21,9 +22,8 @@ namespace ECM.API.EVE
         private static XslCompiledTransform m_RowsetTransform;
         private DateTime m_LastUpdate = DateTime.MinValue;
         private ApiResult<T> m_LastResult = null;
-        private Thread m_UpdatingThread = null;
+        private BackgroundWorker m_Worker = new BackgroundWorker();
         private bool m_Enabled = false;
-        private bool m_ActuallyUpdating = false;
 
         public event RequestUpdated OnRequestUpdate;
         public delegate void RequestUpdated(ApiResult<T> result);
@@ -56,7 +56,7 @@ namespace ECM.API.EVE
 
         public bool IsUpdating
         {
-            get { return m_UpdatingThread != null && m_UpdatingThread.IsAlive && m_ActuallyUpdating; }
+            get { return m_Worker.IsBusy; }
         }
 
         public IApiResult LastResult
@@ -93,24 +93,19 @@ namespace ECM.API.EVE
                     Debug.Assert(false, string.Format("The generic class '{0}' needs additional information, you need to use {1} for this type", typeof(T).Name, typeNeeded));
                 }
             }
+
+            m_Worker.DoWork += new DoWorkEventHandler(QueryAPI);
+            m_Worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(QueryAPIDone);
         }
 
-        public void UpdateOnSecTick()
+        void QueryAPIDone(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (Enabled && NextUpdate.CompareTo(DateTime.UtcNow) <= 0 && !IsUpdating)
-            {
-                if (m_UpdatingThread == null || !m_UpdatingThread.IsAlive)
-                {
-                    m_UpdatingThread = new Thread(new ThreadStart(QueryApi));
-                    m_UpdatingThread.IsBackground = true;
-                    m_UpdatingThread.Start();
-                }
-            }
+            if (OnRequestUpdate != null)
+                OnRequestUpdate(m_LastResult);
         }
 
-        private void QueryApi()
+        void QueryAPI(object sender, DoWorkEventArgs e)
         {
-            m_ActuallyUpdating = true;
             Console.WriteLine("Updating from API for {0}", typeof(T).Name);
 
             PropertyInfo pi = typeof(T).GetProperty("ApiUri", typeof(string));
@@ -150,13 +145,13 @@ namespace ECM.API.EVE
                         }
                     }
                 }
-    
+
                 XmlDocument doc = new XmlDocument();
-    			doc.PreserveWhitespace = true;
+                doc.PreserveWhitespace = true;
                 doc.InnerXml = xmlResult;
-    
+
                 m_LastResult = DeserializeAPIResultCore<T>(RowsetTransform, doc);
-    
+
                 m_LastUpdate = DateTime.UtcNow;
             }
             //TODO: Something here with the exceptions
@@ -165,16 +160,19 @@ namespace ECM.API.EVE
                 Console.WriteLine(we.Message);
                 Enabled = false;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(ex.Message);
                 Enabled = false;
             }
+        }
 
-            m_ActuallyUpdating = false;
-
-            if(OnRequestUpdate != null)
-                OnRequestUpdate(m_LastResult);
+        public void UpdateOnSecTick()
+        {
+            if (Enabled && NextUpdate.CompareTo(DateTime.UtcNow) <= 0 && !IsUpdating)
+            {
+                m_Worker.RunWorkerAsync();
+            }
         }
 
         private ApiResult<U> DeserializeAPIResultCore<U>(XslCompiledTransform transform, XmlDocument doc)
