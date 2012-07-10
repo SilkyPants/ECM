@@ -24,18 +24,24 @@ namespace ECMGTK
 
         protected Pango.FontDescription m_FontDesc = null;
 
-        static readonly Color m_BackdropHeadingColour = new Color(.19, .18, .17);
-        static readonly Color m_BackdropItemColour = new Color(.29, .28, .27);
+        static readonly Color m_BackdropHeadingColour = new Color(0.09, 0.09, 0.09);
+        static readonly Color m_BackdropItemColour = new Color(0.15, 0.15, 0.15);
 
         protected static readonly Color Black = new Color(0, 0, 0);
         protected static readonly Color White = new Color(1, 1, 1);
-        protected static readonly Color Gray = new Color(0.5, 0.5, 0.5);
-        protected static readonly Color DarkGray = new Color(0.3, 0.3, 0.3);
-        protected static readonly Color Yellow = new Color(.83, .70, .01);
+        protected static readonly Color Gray = new Color(0.57, 0.57, 0.57);
+        protected static readonly Color DarkGray = new Color(0.36, 0.36, 0.36);
+        protected static readonly Color Yellow = new Color(0.83, 0.70, 0.01);
 
         protected virtual int CellHeight
         {
-            get { return 16; }
+            get 
+            {
+                if (Icon != null)
+                    return Icon.Height;
+
+                return 16; 
+            }
         }
 
         public CellRendererEveTree()
@@ -45,6 +51,8 @@ namespace ECMGTK
 
         protected override void Render (Gdk.Drawable window, Widget widget, Gdk.Rectangle background_area, Gdk.Rectangle cell_area, Gdk.Rectangle expose_area, CellRendererState flags)
         {
+            m_TextXOffset = 0;
+
             Gdk.Rectangle pix_rect = Gdk.Rectangle.Zero;
             bool isSelected = flags.HasFlag(CellRendererState.Selected);
             m_FontDesc = widget.PangoContext.FontDescription;
@@ -63,7 +71,7 @@ namespace ECMGTK
             context.SelectFontFace(m_FontDesc.Family, FontSlant.Normal, FontWeight.Normal);
 
             // Draw backdrop
-            if (IsHeading) 
+            //if (IsHeading) 
             {
                 context.Save ();
 
@@ -110,7 +118,7 @@ namespace ECMGTK
             context.Save();
             context.Antialias = Antialias.None;
             context.LineWidth = 1;
-            context.Color = Gray;
+            context.Color = DarkGray;
             context.MoveTo(background_area.Left, bottom);
             context.LineTo(background_area.Right, bottom);
             context.Stroke();
@@ -137,20 +145,20 @@ namespace ECMGTK
             // Render Text
             Color colour = White;
 
-            if (!isSelected && !IsHeading)
-                colour = Black;
+            //if (!isSelected && !IsHeading)
+            //    colour = Black;
 
             string text = Text;
             TextExtents te = context.TextExtents(text);
             int subIdx = Text.Length;
 
-            while (te.Width > pix_rect.Width - 16 - m_TextXOffset)
+            while (te.Width > pix_rect.Width - 16 - m_TextXOffset + 2)
             {
                 text = string.Format("{0}...", text.Substring(0, --subIdx).TrimEnd());
                 te = context.TextExtents(text);
             }
 
-            RenderText(context, text, pix_rect.X + m_TextXOffset, pix_rect.Y + 2, colour);
+            RenderText(context, text, pix_rect.X + m_TextXOffset + 2, pix_rect.Y + 2, colour);
         }
 
         protected TextExtents RenderText(Context context, string text, double x, double y, Color colour)

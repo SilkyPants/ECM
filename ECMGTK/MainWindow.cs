@@ -510,6 +510,7 @@ public partial class MainWindow: Gtk.Window
 
         trvStandings.EnableTreeLines = false;
         trvStandings.ShowExpanders = false;
+        trvStandings.Selection.Changed += ExpandGroup;
         #endregion
     }
 

@@ -138,7 +138,7 @@
           <widget class="Gtk.Notebook" id="ntbPages">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">10</property>
+            <property name="CurrentPage">1</property>
             <property name="TabPos">Left</property>
             <property name="BorderWidth">3</property>
             <child>
@@ -894,7 +894,7 @@
                       <widget class="Gtk.Notebook" id="ntbCharSheetPages">
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
-                        <property name="CurrentPage">6</property>
+                        <property name="CurrentPage">2</property>
                         <property name="TabPos">Left</property>
                         <property name="ShowBorder">False</property>
                         <child>
@@ -1034,6 +1034,7 @@
                                 <property name="MemberName" />
                                 <property name="CanFocus">True</property>
                                 <property name="ShowScrollbars">True</property>
+                                <property name="HeadersVisible">False</property>
                               </widget>
                             </child>
                           </widget>
@@ -1091,6 +1092,7 @@
                                 <property name="MemberName" />
                                 <property name="CanFocus">True</property>
                                 <property name="ShowScrollbars">True</property>
+                                <property name="HeadersVisible">False</property>
                               </widget>
                             </child>
                           </widget>
@@ -1118,6 +1120,7 @@
                                 <property name="MemberName" />
                                 <property name="CanFocus">True</property>
                                 <property name="ShowScrollbars">True</property>
+                                <property name="HeadersVisible">False</property>
                               </widget>
                             </child>
                           </widget>
@@ -1145,6 +1148,7 @@
                                 <property name="MemberName" />
                                 <property name="CanFocus">True</property>
                                 <property name="ShowScrollbars">True</property>
+                                <property name="HeadersVisible">False</property>
                               </widget>
                             </child>
                           </widget>
@@ -1172,6 +1176,7 @@
                                 <property name="MemberName" />
                                 <property name="CanFocus">True</property>
                                 <property name="ShowScrollbars">True</property>
+                                <property name="HeadersVisible">False</property>
                               </widget>
                             </child>
                           </widget>

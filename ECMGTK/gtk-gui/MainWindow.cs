@@ -183,7 +183,7 @@ public partial class MainWindow
 		this.ntbPages = new global::Gtk.Notebook ();
 		this.ntbPages.CanFocus = true;
 		this.ntbPages.Name = "ntbPages";
-		this.ntbPages.CurrentPage = 10;
+		this.ntbPages.CurrentPage = 1;
 		this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
 		this.ntbPages.BorderWidth = ((uint)(3));
 		// Container child ntbPages.Gtk.Notebook+NotebookChild
@@ -221,7 +221,6 @@ public partial class MainWindow
 		w6.Fill = false;
 		// Container child vbxOverview.Gtk.Box+BoxChild
 		this.hbuttonbox1 = new global::Gtk.HButtonBox ();
-		this.hbuttonbox1.Name = "hbuttonbox1";
 		this.hbuttonbox1.Homogeneous = true;
 		this.hbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
 		// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
@@ -675,7 +674,7 @@ public partial class MainWindow
 		this.ntbCharSheetPages = new global::Gtk.Notebook ();
 		this.ntbCharSheetPages.CanFocus = true;
 		this.ntbCharSheetPages.Name = "ntbCharSheetPages";
-		this.ntbCharSheetPages.CurrentPage = 6;
+		this.ntbCharSheetPages.CurrentPage = 2;
 		this.ntbCharSheetPages.TabPos = ((global::Gtk.PositionType)(0));
 		this.ntbCharSheetPages.ShowBorder = false;
 		// Container child ntbCharSheetPages.Gtk.Notebook+NotebookChild
@@ -781,6 +780,7 @@ public partial class MainWindow
 		this.trvMedals = new global::Gtk.TreeView ();
 		this.trvMedals.CanFocus = true;
 		this.trvMedals.Name = "trvMedals";
+		this.trvMedals.HeadersVisible = false;
 		this.scwMedals.Add (this.trvMedals);
 		this.ntbCharSheetPages.Add (this.scwMedals);
 		global::Gtk.Notebook.NotebookChild w65 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages [this.scwMedals]));
@@ -823,6 +823,7 @@ public partial class MainWindow
 		this.trvImplants = new global::Gtk.TreeView ();
 		this.trvImplants.CanFocus = true;
 		this.trvImplants.Name = "trvImplants";
+		this.trvImplants.HeadersVisible = false;
 		this.scwImplants.Add (this.trvImplants);
 		this.ntbCharSheetPages.Add (this.scwImplants);
 		global::Gtk.Notebook.NotebookChild w69 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages [this.scwImplants]));
@@ -843,6 +844,7 @@ public partial class MainWindow
 		this.trvEmployment = new global::Gtk.TreeView ();
 		this.trvEmployment.CanFocus = true;
 		this.trvEmployment.Name = "trvEmployment";
+		this.trvEmployment.HeadersVisible = false;
 		this.scwEmployment.Add (this.trvEmployment);
 		this.ntbCharSheetPages.Add (this.scwEmployment);
 		global::Gtk.Notebook.NotebookChild w71 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages [this.scwEmployment]));
@@ -863,6 +865,7 @@ public partial class MainWindow
 		this.trvStandings = new global::Gtk.TreeView ();
 		this.trvStandings.CanFocus = true;
 		this.trvStandings.Name = "trvStandings";
+		this.trvStandings.HeadersVisible = false;
 		this.scwStandings.Add (this.trvStandings);
 		this.ntbCharSheetPages.Add (this.scwStandings);
 		global::Gtk.Notebook.NotebookChild w73 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages [this.scwStandings]));
@@ -883,6 +886,7 @@ public partial class MainWindow
 		this.trvKillLogs = new global::Gtk.TreeView ();
 		this.trvKillLogs.CanFocus = true;
 		this.trvKillLogs.Name = "trvKillLogs";
+		this.trvKillLogs.HeadersVisible = false;
 		this.scwCombatLogs.Add (this.trvKillLogs);
 		this.ntbCharSheetPages.Add (this.scwCombatLogs);
 		global::Gtk.Notebook.NotebookChild w75 = ((global::Gtk.Notebook.NotebookChild)(this.ntbCharSheetPages [this.scwCombatLogs]));

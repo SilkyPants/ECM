@@ -52,5 +52,23 @@ namespace ECM.API.EVE
         /// </summary>
         [XmlAttribute("standing")]
         public float Standing { get; set; }
+
+        [XmlIgnore]
+        public string Status 
+        {
+            get
+            {
+                if (Standing <= -5.5)
+                    return "Terrible";
+
+                if (Standing <= -0.5)
+                    return "Bad";
+
+                if (Standing < 0.5)
+                    return "Neutral";
+
+                return Standing < 5.5 ? "Good" : "Excellent";
+            }
+        }
     }
 }

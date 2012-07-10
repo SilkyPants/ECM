@@ -57,11 +57,11 @@ namespace ECMGTK
 
             // Render Text
             context.Save();
-            
-            Color col = Black;
 
-            if (isSelected)
-                col = White;
+            Color col = White;
+
+            //if (!isSelected)
+            //    col = Black;
 
             string s = string.Format("{0} ({1}x)", Text, SkillRank);
             TextExtents te = context.TextExtents(s);
@@ -86,7 +86,7 @@ namespace ECMGTK
             // Render Progress bars
             context.Save();
 
-            context.Color = DarkGray;
+            context.Color = Gray;
             context.Antialias = Antialias.None;
             context.LineWidth = 1;
 

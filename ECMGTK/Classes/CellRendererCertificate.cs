@@ -60,10 +60,10 @@ namespace ECMGTK
                 // Render Text
                 context.Save();
 
-                Color col = Black;
+                Color col = White;
 
-                if (isSelected)
-                    col = White;
+                //if (!isSelected)
+                //    col = Black;
 
                 TextExtents te = context.TextExtents(certGradeString);
                 RenderText(context, certGradeString, startX - te.Width - 5, pix_rect.Y + 2, col);
@@ -75,7 +75,7 @@ namespace ECMGTK
                 // Render Progress bars
                 context.Save();
 
-                context.Color = DarkGray;
+                context.Color = Gray;
                 context.Antialias = Antialias.None;
                 context.LineWidth = 1;
 

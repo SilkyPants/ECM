@@ -40,11 +40,12 @@ public partial class MainWindow : Gtk.Window
     TreeStore charSkillStore = new TreeStore(typeof(string), typeof(int), typeof(int), typeof(int), typeof(int), typeof(double), typeof(bool), typeof(long), typeof(int), typeof(bool));
     TreeStore certStore = new TreeStore(typeof(string), typeof(int), typeof(long), typeof(bool), typeof(bool)); // Name, Grade, ID, IsCert, IsVisible
     TreeStore assetStore = new TreeStore(typeof(string), typeof(long), typeof(bool)); // Name, ID, IsHeading
-    TreeStore standingsStore = new TreeStore(typeof(string), typeof(Gdk.Pixbuf), typeof(bool));
+    TreeStore standingsStore = new TreeStore(typeof(string), typeof(Gdk.Pixbuf), typeof(bool), typeof(float));
 
     TreeModelFilter skillsFilter = null;
     TreeModelFilter certFilter = null;
     TreeModelFilter assetFilter = null;
+    TreeModelFilter standingFilter = null;
 
     public void SetupCharacterTrees()
     {
@@ -93,7 +94,13 @@ public partial class MainWindow : Gtk.Window
         #endregion
 
         #region Standings
-        trvStandings.Model = standingsStore;
+        standingFilter = new TreeModelFilter(standingsStore, null);
+        standingFilter.VisibleFunc = new TreeModelFilterVisibleFunc(HandleCharStandingFilter);
+
+        sorted = new TreeModelSort(standingFilter);
+        sorted.SetSortColumnId(3, SortType.Descending);
+
+        trvStandings.Model = sorted;
         #endregion
     }
 
@@ -107,6 +114,7 @@ public partial class MainWindow : Gtk.Window
         trvSkills.FreezeChildNotify();
         trvCertificates.FreezeChildNotify();
         trvAssets.FreezeChildNotify();
+        //trvStandings.FreezeChildNotify();
 
         charAttributeStore.Clear();
 
@@ -165,6 +173,7 @@ public partial class MainWindow : Gtk.Window
 
         trvAttributes.Model = charAttributeStore;
 
+        #region Update Skill Store
         // Traverse character skills tree and update the values
         TreeIter iter;
         charSkillStore.GetIterFirst(out iter);
@@ -233,8 +242,10 @@ public partial class MainWindow : Gtk.Window
             }
 
             cont = charSkillStore.IterNext(ref iter);
-        } 
-        
+        }
+        #endregion
+
+        #region Update Certificate Store
         certStore.GetIterFirst(out iter);
         cont = true;
 
@@ -291,7 +302,9 @@ public partial class MainWindow : Gtk.Window
 
             cont = certStore.IterNext(ref iter);
         }
+        #endregion
 
+        #region Update Asset Store
         assetStore.Clear();
 
         foreach (long locationID in currentCharacter.Assets.Keys)
@@ -307,42 +320,61 @@ public partial class MainWindow : Gtk.Window
                 AppendAssetToNode(locationNode, info);
             }
         }
+        #endregion
 
+        #region Update Standings Store
         standingsStore.Clear();
 
         if (currentCharacter.Standings != null)
         {
-            TreeIter standingParent = standingsStore.AppendValues("Corporations", null, true);
+            TreeIter standingParent;
+
+            standingParent = standingsStore.AppendValues("Factions", null, true, 3);
+
+            foreach (ECM.API.EVE.StandingInfo standings in currentCharacter.Standings.Factions)
+            {
+                string text = string.Format("{0} ({1:0.00}) ({2})", standings.FromName, standings.Standing, standings.Status);
+
+                Gdk.Pixbuf icon = ECM.API.ImageApi.GetAllianceLogoGTK(standings.FromID, ECM.API.ImageApi.ImageRequestSize.Size32x32);
+
+                TreeIter standingIter = standingsStore.AppendValues(standingParent, text, icon, false, standings.Standing);
+            } 
+            
+            standingParent = standingsStore.AppendValues("Corporations", null, true, 2);
 
             foreach (ECM.API.EVE.StandingInfo standings in currentCharacter.Standings.NPCCorporations)
             {
-                string text = string.Format("{0} ({1:#.00}) ({2})", standings.FromName, standings.Standing, "Something");
+                string text = string.Format("{0} ({1:0.00}) ({2})", standings.FromName, standings.Standing, standings.Status);
 
-                Gdk.Pixbuf icon = null;
+                Gdk.Pixbuf icon = ECM.API.ImageApi.GetCorporationLogoGTK(standings.FromID, ECM.API.ImageApi.ImageRequestSize.Size32x32);
 
-                TreeIter standingIter = standingsStore.AppendValues(standingParent, text, icon, false);
-
-                BackgroundWorker tmp = new BackgroundWorker();
-                tmp.DoWork += delegate
-                {
-                    icon = ECM.API.ImageApi.GetCorporationLogoGTK(standings.FromID, ECM.API.ImageApi.ImageRequestSize.Size32x32);
-
-                    standingsStore.SetValue(standingIter, 1, icon);
-                };
-
-                tmp.RunWorkerAsync();
+                TreeIter standingIter = standingsStore.AppendValues(standingParent, text, icon, false, standings.Standing);
             }
 
-            trvStandings.ExpandAll();
+            standingParent = standingsStore.AppendValues("Agents", null, true, 1);
+
+            foreach (ECM.API.EVE.StandingInfo standings in currentCharacter.Standings.Agents)
+            {
+                string text = string.Format("{0} ({1:0.00}) ({2})", standings.FromName, standings.Standing, standings.Status);
+
+                Gdk.Pixbuf icon = ECM.API.ImageApi.GetCharacterPortraitGTK(standings.FromID, ECM.API.ImageApi.ImageRequestSize.Size32x32);
+
+                TreeIter standingIter = standingsStore.AppendValues(standingParent, text, icon, false, standings.Standing);
+            }
         }
+        #endregion
 
         skillsFilter.Refilter();
         certFilter.Refilter();
         assetFilter.Refilter();
+        standingFilter.Refilter();
 
         trvSkills.ThawChildNotify();
         trvCertificates.ThawChildNotify();
         trvAssets.ThawChildNotify();
+        //trvStandings.ThawChildNotify();
+
+        trvStandings.ExpandAll();
     }
 
     private void AppendAssetToNode(TreeIter parentNode, ECM.API.EVE.AssetListInfo info)
@@ -382,6 +414,11 @@ public partial class MainWindow : Gtk.Window
     }
 
     private bool HandleCharAssetFilter(TreeModel model, TreeIter iter)
+    {
+        return true;
+    }
+
+    private bool HandleCharStandingFilter(TreeModel model, TreeIter iter)
     {
         return true;
     }
