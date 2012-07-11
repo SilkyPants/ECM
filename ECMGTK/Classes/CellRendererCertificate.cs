@@ -13,13 +13,30 @@ namespace ECMGTK
         [GLib.Property("CertGrade")]
         public int CertGrade { get; set; }
 
+        Gdk.PixbufAnimation anim;
+        Gdk.PixbufAnimationIter animIter;
+
+        public CellRendererCertificate()
+        {
+            anim = new Gdk.PixbufAnimation(ECM.Core.LoadingSpinnerGIF);
+            animIter = anim.GetIter(IntPtr.Zero);
+        }
+
         protected override int CellHeight
         {
             get { return IsHeading ? 16 : 32; }
         }
 
+        public void SomeFunc(TreeModel model, TreePath path, TreeIter iter)
+        {
+
+        }
+
         protected override void RenderCell(Context context, Gdk.Rectangle pix_rect, bool isSelected)
         {
+            m_Tree.QueueDraw ();
+
+
             if (!IsHeading)
             {
                 Stream certIconStream = ECM.Core.CertGrade0PNG;
@@ -95,7 +112,9 @@ namespace ECMGTK
                 // Render Certificate Icon
                 context.Save();
 
-                Gdk.CairoHelper.SetSourcePixbuf(context, new Gdk.Pixbuf(certIconStream), pix_rect.X, pix_rect.Y);
+                animIter.Advance(IntPtr.Zero);
+                Gdk.CairoHelper.SetSourcePixbuf(context, /*new Gdk.Pixbuf(certIconStream)*/animIter.Pixbuf, pix_rect.X, pix_rect.Y);
+
 
                 context.Paint();
                 context.Restore();

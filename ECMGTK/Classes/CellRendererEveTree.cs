@@ -21,6 +21,7 @@ namespace ECMGTK
         public bool RenderInfo { get; set; }
 
         int m_TextXOffset = 0;
+        protected TreeView m_Tree = null;
 
         protected Pango.FontDescription m_FontDesc = null;
 
@@ -51,6 +52,8 @@ namespace ECMGTK
 
         protected override void Render (Gdk.Drawable window, Widget widget, Gdk.Rectangle background_area, Gdk.Rectangle cell_area, Gdk.Rectangle expose_area, CellRendererState flags)
         {
+            this.
+            m_Tree = widget as TreeView;
             m_TextXOffset = 0;
 
             Gdk.Rectangle pix_rect = Gdk.Rectangle.Zero;
