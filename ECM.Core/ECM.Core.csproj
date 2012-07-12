@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="API\EveCentralApi.cs" />
     <Compile Include="API\ImageApi.cs" />
+    <Compile Include="API\ImageLoader.cs" />
     <Compile Include="API\Interfaces\IAccountStatus.cs" />
     <Compile Include="API\Interfaces\ICharacterInfo.cs" />
     <Compile Include="API\Interfaces\ICharacterSheet.cs" />

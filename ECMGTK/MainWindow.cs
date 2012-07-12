@@ -503,7 +503,7 @@ public partial class MainWindow: Gtk.Window
         column.PackStart(standingsCell, true);
 
         column.AddAttribute(standingsCell, "Text", 0);
-        column.AddAttribute(standingsCell, "Icon", 1);
+        column.AddAttribute(standingsCell, "AnimatedIcon", 1);
         column.AddAttribute(standingsCell, "IsHeading", 2);
 
         trvStandings.AppendColumn(column);

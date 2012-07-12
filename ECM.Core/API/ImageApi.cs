@@ -17,6 +17,14 @@ namespace ECM.API
             get { return m_IsRetrieving; }
         }
 
+        public enum ImageRequestType
+        {
+            Alliance,
+            Character,
+            Corporation,
+            Item
+        }
+
         public enum ImageRequestSize
         {
             Size30x30,
@@ -69,6 +77,17 @@ namespace ECM.API
                 image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                 stream.Position = 0;
                 Gdk.Pixbuf pixbuf = new Gdk.Pixbuf(stream);
+                return pixbuf;
+            }
+        }
+
+        public static Gdk.PixbufAnimation StreamToPixbufAnim(Bitmap image)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                stream.Position = 0;
+                Gdk.PixbufAnimation pixbuf = new Gdk.PixbufAnimation(stream);
                 return pixbuf;
             }
         }

@@ -40,7 +40,7 @@ public partial class MainWindow : Gtk.Window
     TreeStore charSkillStore = new TreeStore(typeof(string), typeof(int), typeof(int), typeof(int), typeof(int), typeof(double), typeof(bool), typeof(long), typeof(int), typeof(bool));
     TreeStore certStore = new TreeStore(typeof(string), typeof(int), typeof(long), typeof(bool), typeof(bool)); // Name, Grade, ID, IsCert, IsVisible
     TreeStore assetStore = new TreeStore(typeof(string), typeof(long), typeof(bool)); // Name, ID, IsHeading
-    TreeStore standingsStore = new TreeStore(typeof(string), typeof(Gdk.Pixbuf), typeof(bool), typeof(float));
+    TreeStore standingsStore = new TreeStore(typeof(string), typeof(ECM.API.ImageLoader), typeof(bool), typeof(float));
 
     TreeModelFilter skillsFilter = null;
     TreeModelFilter certFilter = null;
@@ -335,20 +335,36 @@ public partial class MainWindow : Gtk.Window
             {
                 string text = string.Format("{0} ({1:0.00}) ({2})", standings.FromName, standings.Standing, standings.Status);
 
-                Gdk.Pixbuf icon = ECM.API.ImageApi.GetAllianceLogoGTK(standings.FromID, ECM.API.ImageApi.ImageRequestSize.Size32x32);
+                ECM.API.ImageLoader icon = new ECM.API.ImageLoader(standings.FromID, ECM.API.ImageApi.ImageRequestSize.Size32x32, ECM.API.ImageApi.ImageRequestType.Alliance);
 
                 TreeIter standingIter = standingsStore.AppendValues(standingParent, text, icon, false, standings.Standing);
-            } 
-            
+                TreeRowReference iterRef = new Gtk.TreeRowReference(standingsStore, standingsStore.GetPath(standingIter));
+
+                icon.OnImageUpdated += delegate 
+                {
+                    //Gdk.Rectangle rect = trvStandings.GetCellArea(iterRef.Path, trvStandings.GetColumn(0));
+                    //trvStandings.QueueDrawArea(rect.X, rect.Y, rect.Width, rect.Height); 
+                    trvStandings.QueueDraw();
+                };
+            }
+
             standingParent = standingsStore.AppendValues("Corporations", null, true, 2);
 
             foreach (ECM.API.EVE.StandingInfo standings in currentCharacter.Standings.NPCCorporations)
             {
                 string text = string.Format("{0} ({1:0.00}) ({2})", standings.FromName, standings.Standing, standings.Status);
 
-                Gdk.Pixbuf icon = ECM.API.ImageApi.GetCorporationLogoGTK(standings.FromID, ECM.API.ImageApi.ImageRequestSize.Size32x32);
+                ECM.API.ImageLoader icon = new ECM.API.ImageLoader(standings.FromID, ECM.API.ImageApi.ImageRequestSize.Size32x32, ECM.API.ImageApi.ImageRequestType.Corporation);
 
                 TreeIter standingIter = standingsStore.AppendValues(standingParent, text, icon, false, standings.Standing);
+                TreeRowReference iterRef = new Gtk.TreeRowReference(standingsStore, standingsStore.GetPath(standingIter));
+
+                icon.OnImageUpdated += delegate
+                {
+                    //Gdk.Rectangle rect = trvStandings.GetCellArea(iterRef.Path, trvStandings.GetColumn(0));
+                    //trvStandings.QueueDrawArea(rect.X, rect.Y, rect.Width, rect.Height); 
+                    trvStandings.QueueDraw();
+                };
             }
 
             standingParent = standingsStore.AppendValues("Agents", null, true, 1);
@@ -357,9 +373,17 @@ public partial class MainWindow : Gtk.Window
             {
                 string text = string.Format("{0} ({1:0.00}) ({2})", standings.FromName, standings.Standing, standings.Status);
 
-                Gdk.Pixbuf icon = ECM.API.ImageApi.GetCharacterPortraitGTK(standings.FromID, ECM.API.ImageApi.ImageRequestSize.Size32x32);
+                ECM.API.ImageLoader icon = new ECM.API.ImageLoader(standings.FromID, ECM.API.ImageApi.ImageRequestSize.Size32x32, ECM.API.ImageApi.ImageRequestType.Character);
 
                 TreeIter standingIter = standingsStore.AppendValues(standingParent, text, icon, false, standings.Standing);
+                TreeRowReference iterRef = new Gtk.TreeRowReference(standingsStore, standingsStore.GetPath(standingIter));
+
+                icon.OnImageUpdated += delegate
+                {
+                    //Gdk.Rectangle rect = trvStandings.GetCellArea(iterRef.Path, trvStandings.GetColumn(0));
+                    //trvStandings.QueueDrawArea(rect.X, rect.Y, rect.Width, rect.Height); 
+                    trvStandings.QueueDraw();
+                };
             }
         }
         #endregion

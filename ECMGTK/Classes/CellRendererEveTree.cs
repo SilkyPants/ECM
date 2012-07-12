@@ -11,12 +11,16 @@ namespace ECMGTK
         [GLib.Property("Icon")]
         public Gdk.Pixbuf Icon { get; set; }
 
+        Gdk.PixbufAnimation m_AnimatedIcon;
+
+        [GLib.Property("AnimatedIcon")]
+        public ECM.API.ImageLoader AnimatedIcon { get; set; }
+
         [GLib.Property("Text")]
         public string Text { get; set; }
 
         [GLib.Property("IsHeading")]
         public bool IsHeading { get; set; }
-
 
         public bool RenderInfo { get; set; }
 
@@ -40,6 +44,8 @@ namespace ECMGTK
             {
                 if (Icon != null)
                     return Icon.Height;
+                else if (AnimatedIcon != null)
+                    return AnimatedIcon.Image.Height;
 
                 return 16; 
             }
@@ -52,7 +58,6 @@ namespace ECMGTK
 
         protected override void Render (Gdk.Drawable window, Widget widget, Gdk.Rectangle background_area, Gdk.Rectangle cell_area, Gdk.Rectangle expose_area, CellRendererState flags)
         {
-            this.
             m_Tree = widget as TreeView;
             m_TextXOffset = 0;
 
@@ -95,20 +100,26 @@ namespace ECMGTK
             RenderCell(context, pix_rect, isSelected);
 
             // Draw expander/Info
-            System.IO.Stream pixBuf;
+            System.IO.Stream pixBuf = null;
 
             if (!IsHeading && RenderInfo)
                 pixBuf = ECM.Core.Info16PNG;
-            else if (IsExpanded)
-                pixBuf = ECM.Core.Up16PNG;
-            else
-                pixBuf = ECM.Core.Down16PNG;
+            else if (IsExpander)
+            {
+                if (IsExpanded)
+                    pixBuf = ECM.Core.Up16PNG;
+                else
+                    pixBuf = ECM.Core.Down16PNG;
+            }
 
-            context.Save();
-            Gdk.CairoHelper.SetSourcePixbuf(context, new Gdk.Pixbuf(pixBuf), pix_rect.Right - 16, pix_rect.Y);
+            if (pixBuf != null)
+            {
+                context.Save();
+                Gdk.CairoHelper.SetSourcePixbuf(context, new Gdk.Pixbuf(pixBuf), pix_rect.Right - 16, pix_rect.Y);
 
-            context.Paint();
-            context.Restore();
+                context.Paint();
+                context.Restore();
+            }
 
             // Draw line under cell
             int bottom = background_area.Bottom;
@@ -143,6 +154,17 @@ namespace ECMGTK
                 context.Restore();
 
                 m_TextXOffset = Icon.Width;
+            }
+            else if (AnimatedIcon != null)
+            {
+                context.Save();
+
+                Gdk.CairoHelper.SetSourcePixbuf(context, AnimatedIcon.Image, pix_rect.Left, pix_rect.Y);
+
+                context.Paint();
+                context.Restore();
+
+                m_TextXOffset = AnimatedIcon.Image.Width;
             }
 
             // Render Text
