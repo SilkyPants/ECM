@@ -41,6 +41,9 @@ namespace ECM.API
 
             AnimatedIcon = ImageApi.StreamToPixbufAnim(new System.Drawing.Bitmap(ms));
 
+            ms.Close();
+            ms.Dispose();
+
             if (OnImageUpdated != null)
                 OnImageUpdated(this, null);
         }

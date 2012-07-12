@@ -5,6 +5,12 @@ namespace ECMGTK
 {
     public partial class ViewItemRender : Gtk.Window
     {
+        public ViewItemRender(IntPtr raw)
+            : base(raw)
+        {
+            this.Build();
+        }
+
         public ViewItemRender () :
                 base(Gtk.WindowType.Toplevel)
         {

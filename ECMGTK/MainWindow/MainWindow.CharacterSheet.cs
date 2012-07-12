@@ -342,9 +342,9 @@ public partial class MainWindow : Gtk.Window
 
                 icon.OnImageUpdated += delegate 
                 {
-                    //Gdk.Rectangle rect = trvStandings.GetCellArea(iterRef.Path, trvStandings.GetColumn(0));
-                    //trvStandings.QueueDrawArea(rect.X, rect.Y, rect.Width, rect.Height); 
-                    trvStandings.QueueDraw();
+                    Gdk.Rectangle rect = trvStandings.GetCellArea(iterRef.Path, trvStandings.GetColumn(0));
+                    trvStandings.QueueDrawArea(rect.X, rect.Y, rect.Width, rect.Height); 
+                    //trvStandings.QueueDraw();
                 };
             }
 
@@ -380,9 +380,9 @@ public partial class MainWindow : Gtk.Window
 
                 icon.OnImageUpdated += delegate
                 {
-                    //Gdk.Rectangle rect = trvStandings.GetCellArea(iterRef.Path, trvStandings.GetColumn(0));
-                    //trvStandings.QueueDrawArea(rect.X, rect.Y, rect.Width, rect.Height); 
-                    trvStandings.QueueDraw();
+                    Gdk.Rectangle rect = trvStandings.GetCellArea(iterRef.Path, trvStandings.GetColumn(0));
+                    trvStandings.QueueDrawArea(rect.X, rect.Y, rect.Width, rect.Height); 
+                    //trvStandings.QueueDraw();
                 };
             }
         }

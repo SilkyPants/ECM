@@ -7,6 +7,13 @@ using System.Collections.ObjectModel;
 
 namespace ECM.API.EVE
 {
+    public enum CharacterStandingType
+    {
+        Faction,
+        Corporation,
+        Agent
+    }
+
     [NeedsCharacterID]
     [KeyNeedsMask(ApiKeyMask.Standings)]
     public class CharacterStandings
@@ -20,17 +27,65 @@ namespace ECM.API.EVE
     
     public class CharacterNPCStandings
     {
+        private Collection<StandingInfo> m_Agents = new Collection<StandingInfo>();
+        private Collection<StandingInfo> m_NPCCorporations = new Collection<StandingInfo>();
+        private Collection<StandingInfo> m_Factions = new Collection<StandingInfo>();
+
         [XmlArray("agents")]
         [XmlArrayItem("agent")]
-        public List<StandingInfo> Agents { get; set; }
+        public Collection<StandingInfo> Agents 
+        {
+            get
+            {
+                foreach (StandingInfo agentStanding in m_Agents)
+                {
+                    agentStanding.Type = CharacterStandingType.Agent;
+                }
+                return m_Agents;
+            }
+        }
 
         [XmlArray("NPCCorporations")]
         [XmlArrayItem("NPCCorporation")]
-        public List<StandingInfo> NPCCorporations { get; set; }
+        public Collection<StandingInfo> NPCCorporations
+        {
+            get
+            {
+                foreach (StandingInfo corpStanding in m_NPCCorporations)
+                {
+                    corpStanding.Type = CharacterStandingType.Corporation;
+                }
+                return m_NPCCorporations;
+            }
+        }
 
         [XmlArray("factions")]
         [XmlArrayItem("faction")]
-        public List<StandingInfo> Factions { get; set; }
+        public Collection<StandingInfo> Factions
+        {
+            get
+            {
+                foreach (StandingInfo factionStanding in m_Factions)
+                {
+                    factionStanding.Type = CharacterStandingType.Faction;
+                }
+                return m_Factions;
+            }
+        }
+
+        [XmlIgnore]
+        public ReadOnlyCollection<StandingInfo> All
+        {
+            get
+            {
+                List<StandingInfo> allStandings = new List<StandingInfo>();
+                allStandings.AddRange(m_Agents);
+                allStandings.AddRange(m_NPCCorporations);
+                allStandings.AddRange(m_Factions);
+
+                return allStandings.AsReadOnly();
+            }
+        }
     }
 
     public class StandingInfo
@@ -69,6 +124,13 @@ namespace ECM.API.EVE
 
                 return Standing < 5.5 ? "Good" : "Excellent";
             }
+        }
+
+        [XmlIgnore]
+        public CharacterStandingType Type 
+        { 
+            get; 
+            set; 
         }
     }
 }

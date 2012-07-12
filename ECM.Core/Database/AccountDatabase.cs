@@ -124,6 +124,17 @@ namespace ECM
                                     PRIMARY KEY(CharacterID, SkillTypeID)
                                 );";
             cmd.ExecuteNonQuery();
+
+            cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = @"CREATE TABLE IF NOT EXISTS ecmCharacterStandings (
+                                    CharacterID INTEGER REFERENCES ecmCharacters ( ID ) MATCH FULL,
+                                    StandingType INT,
+                                    FromID INT,
+                                    FromName TEXT,
+                                    Standing FLOAT,
+                                    PRIMARY KEY(CharacterID, FromID)
+                                );";
+            cmd.ExecuteNonQuery();
         }
         #endregion
 
@@ -370,6 +381,21 @@ namespace ECM
                 cmd.ExecuteNonQuery();
             }
 
+            // Add Standings
+            foreach (StandingInfo standing in charToAdd.Standings.All)
+            {
+                cmd = sqlConnection.CreateCommand();
+                cmd.CommandText = @"INSERT OR REPLACE INTO ecmCharacterStandings(CharacterID, StandingType, FromID, FromName, Standing) VALUES (@CharacterID, @StandingType, @FromID, @FromName, @Standing)";
+
+                cmd.Parameters.AddWithValue("@CharacterID", charToAdd.ID);
+                cmd.Parameters.AddWithValue("@StandingType", (int)standing.Type);
+                cmd.Parameters.AddWithValue("@FromID", standing.FromID);
+                cmd.Parameters.AddWithValue("@FromName", standing.FromName);
+                cmd.Parameters.AddWithValue("@Standing", standing.Standing);
+
+                cmd.ExecuteNonQuery();
+            }
+
             if(mustClose)
             {
                 CloseDatabase();
@@ -444,6 +470,9 @@ namespace ECM
                     // Get Certificates
                     GetCharacterCertificates(newChar);
 
+                    // Get Standings
+                    GetCharacterStandings(newChar);
+
                 }
             }
 
@@ -453,10 +482,36 @@ namespace ECM
             }
         }
 
+        private static void GetCharacterStandings(Character character)
+        {
+            SQLiteCommand cmd = sqlConnection.CreateCommand();
+            cmd.CommandText = string.Format("SELECT * FROM ecmCharacterStandings WHERE CharacterID = {0}", character.ID);
+
+            SQLiteDataReader reader = cmd.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    StandingInfo newStanding = new StandingInfo();
+
+                    newStanding.Type = (CharacterStandingType)reader["StandingType"];
+                    newStanding.FromID = Convert.ToInt64(reader["FromID"].ToString());
+                    newStanding.FromName = reader["FromName"].ToString();
+                    newStanding.Standing = Convert.ToSingle(reader["Standing"].ToString());
+
+                    if (newStanding.Type == CharacterStandingType.Agent)
+                        character.Standings.Agents.Add(newStanding);
+                    else if (newStanding.Type == CharacterStandingType.Corporation)
+                        character.Standings.NPCCorporations.Add(newStanding);
+                    else if (newStanding.Type == CharacterStandingType.Faction)
+                        character.Standings.Factions.Add(newStanding);                                        
+                }
+            }
+        }
+
         private static void GetCharacterCertificates(Character character)
         {
-            SQLiteConnection skillConn = sqlConnection.Clone() as SQLiteConnection;
-
             SQLiteCommand cmd = sqlConnection.CreateCommand();
             cmd.CommandText = string.Format("SELECT * FROM ecmCharacterCertificates WHERE CharacterID = {0}", character.ID);
 
@@ -475,14 +530,10 @@ namespace ECM
                     character.Certificates.Add(newCert);
                 }
             }
-
-            skillConn.Close();
         }
 
         private static void GetCharacterSkills(Character character)
         {
-            SQLiteConnection skillConn = sqlConnection.Clone() as SQLiteConnection;
-
             SQLiteCommand cmd = sqlConnection.CreateCommand();
             cmd.CommandText = string.Format("SELECT * FROM ecmCharacterSkills WHERE CharacterID = {0}", character.ID);
 
@@ -503,14 +554,10 @@ namespace ECM
                     character.Skills.Add(newSkill.ID, newSkill);
                 }
             }
-
-            skillConn.Close();
         }
 
         private static void GetCharacterImplants (Character character)
         {
-            SQLiteConnection implantConn = sqlConnection.Clone() as SQLiteConnection;
-
             SQLiteCommand cmd = sqlConnection.CreateCommand();
             cmd.CommandText = string.Format("SELECT * FROM ecmCharacterImplants WHERE CharacterID = {0}", character.ID);
 
@@ -536,8 +583,6 @@ namespace ECM
                     character.Implants.Perception.Amount = Convert.ToInt32(reader["PerImplantValue"].ToString());
                 }
             }
-
-            implantConn.Close();
         }
     }
 

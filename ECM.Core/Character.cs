@@ -298,6 +298,8 @@ namespace ECM
             ID = characterID;
             Name = name;
 
+            Standings = new CharacterNPCStandings();
+
             m_charSheetRequest = new CharacterApiRequest<CharacterSheet>(characterID, Account.KeyID, Account.VCode);
             m_charSheetRequest.OnRequestUpdate += ApiRequestUpdate;
 
