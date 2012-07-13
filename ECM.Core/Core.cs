@@ -201,6 +201,26 @@ namespace ECM
             get { return GetResource("ECM.Core.Icons.Close16PNG"); }
         }
 
+        public static Stream SolidLeftPNG
+        {
+            get { return GetResource("ECM.Core.Icons.SolidLeftPNG"); }
+        }
+
+        public static Stream SolidRightPNG
+        {
+            get { return GetResource("ECM.Core.Icons.SolidRightPNG"); }
+        }
+
+        public static Stream SolidUpPNG
+        {
+            get { return GetResource("ECM.Core.Icons.SolidUpPNG"); }
+        }
+
+        public static Stream SolidDownPNG
+        {
+            get { return GetResource("ECM.Core.Icons.SolidDownPNG"); }
+        }
+
         public static string RowsetXSLT
         {
             get 

@@ -39,7 +39,7 @@ public partial class MainWindow : Gtk.Window
     ListStore charAttributeStore = new ListStore(typeof(Gdk.Pixbuf), typeof(string));
     TreeStore charSkillStore = new TreeStore(typeof(string), typeof(int), typeof(int), typeof(int), typeof(int), typeof(double), typeof(bool), typeof(long), typeof(int), typeof(bool));
     TreeStore certStore = new TreeStore(typeof(string), typeof(int), typeof(long), typeof(bool), typeof(bool)); // Name, Grade, ID, IsCert, IsVisible
-    TreeStore assetStore = new TreeStore(typeof(string), typeof(long), typeof(bool)); // Name, ID, IsHeading
+    TreeStore assetStore = new TreeStore(typeof(string), typeof(long), typeof(bool), typeof(string)); // Name, ID, IsHeading, Qty
     TreeStore standingsStore = new TreeStore(typeof(string), typeof(ECM.API.ImageLoader), typeof(bool), typeof(float));
 
     TreeModelFilter skillsFilter = null;
@@ -313,7 +313,7 @@ public partial class MainWindow : Gtk.Window
             List<ECM.API.EVE.AssetListInfo> locAssets = currentCharacter.Assets[locationID];
             string locHeader = string.Format("{0} - {1:#,0} items", station.Name, locAssets.Count);
 
-            TreeIter locationNode = assetStore.AppendValues(locHeader, locationID, true);
+            TreeIter locationNode = assetStore.AppendValues(locHeader, locationID, true, "");
 
             foreach (ECM.API.EVE.AssetListInfo info in locAssets)
             {
@@ -405,11 +405,12 @@ public partial class MainWindow : Gtk.Window
     {
         ECM.EveItem item = ECM.ItemDatabase.Items[info.TypeID];
         string text = item.Name;
+        string qty = string.Empty;
 
         if (info.Quantity > 1)
-            text += string.Format(" (x {0:#,0})", info.Quantity);
+            qty = string.Format("{0:#,0}", info.Quantity);
 
-        TreeIter thisNode = assetStore.AppendValues(parentNode, text, info.TypeID, info.Contents.Count > 0);
+        TreeIter thisNode = assetStore.AppendValues(parentNode, text, info.TypeID, false, qty);
 
         foreach (ECM.API.EVE.ContentInfo contentInfo in info.Contents)
         {
@@ -418,7 +419,7 @@ public partial class MainWindow : Gtk.Window
             else
             {
                 item = ECM.ItemDatabase.Items[contentInfo.TypeID];
-                assetStore.AppendValues(thisNode, item.Name, contentInfo.TypeID, false);
+                assetStore.AppendValues(thisNode, item.Name, contentInfo.TypeID, false, qty);
             }
         }
     }

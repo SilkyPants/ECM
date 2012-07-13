@@ -301,18 +301,32 @@ public partial class MainWindow: Gtk.Window
 
     void SetupAssets ()
     {
-        TreeViewColumn mainColumn = new TreeViewColumn();
-        mainColumn.Title = "Assets";
+        TreeViewColumn nameColumn = new TreeViewColumn();
+        nameColumn.Title = "Name";
+        nameColumn.Resizable = true;
 
-        CellRendererEveTree itemCell = new CellRendererEveTree();
-        itemCell.RenderInfo = false;
+        CellRenderer itemCell = new CellRendererAsset();
 
-        mainColumn.PackStart(itemCell, true);
+        nameColumn.PackStart(itemCell, true);
 
-        mainColumn.AddAttribute(itemCell, "Text", 0);
-        mainColumn.AddAttribute(itemCell, "IsHeading", 2);
+        nameColumn.AddAttribute(itemCell, "Text", 0);
+        nameColumn.AddAttribute(itemCell, "IsHeading", 2);
+
+        trvAssets.AppendColumn(nameColumn); 
         
-        trvAssets.AppendColumn(mainColumn);
+        //nameColumn = new TreeViewColumn();
+        //nameColumn.Title = "Quantity";
+        //nameColumn.Resizable = true;
+
+        //itemCell = new CellRendererText();
+
+        //nameColumn.PackStart(itemCell, true);
+
+        //nameColumn.AddAttribute(itemCell, "text", 3);
+        ////nameColumn.AddAttribute(itemCell, "IsHeading", 2);
+
+        trvAssets.AppendColumn(nameColumn);
+
         trvAssets.ColumnsAutosize();
 
         trvAssets.EnableTreeLines = false;

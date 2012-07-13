@@ -183,7 +183,7 @@ public partial class MainWindow
 		this.ntbPages = new global::Gtk.Notebook ();
 		this.ntbPages.CanFocus = true;
 		this.ntbPages.Name = "ntbPages";
-		this.ntbPages.CurrentPage = 1;
+		this.ntbPages.CurrentPage = 10;
 		this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
 		this.ntbPages.BorderWidth = ((uint)(3));
 		// Container child ntbPages.Gtk.Notebook+NotebookChild
@@ -1368,7 +1368,6 @@ public partial class MainWindow
 		this.trvAssets = new global::Gtk.TreeView ();
 		this.trvAssets.CanFocus = true;
 		this.trvAssets.Name = "trvAssets";
-		this.trvAssets.HeadersVisible = false;
 		this.GtkScrolledWindow4.Add (this.trvAssets);
 		this.vbxAssets.Add (this.GtkScrolledWindow4);
 		global::Gtk.Box.BoxChild w128 = ((global::Gtk.Box.BoxChild)(this.vbxAssets [this.GtkScrolledWindow4]));

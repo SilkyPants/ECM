@@ -110,6 +110,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CellRendererAsset.cs" />
     <Compile Include="Classes\CellRendererCertificate.cs" />
     <Compile Include="Classes\CellRendererCharSkill.cs" />
     <Compile Include="gtk-gui\generated.cs" />

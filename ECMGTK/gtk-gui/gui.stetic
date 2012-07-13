@@ -138,7 +138,7 @@
           <widget class="Gtk.Notebook" id="ntbPages">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">1</property>
+            <property name="CurrentPage">10</property>
             <property name="TabPos">Left</property>
             <property name="BorderWidth">3</property>
             <child>
@@ -1872,7 +1872,7 @@ Untrainable Items</property>
                         <property name="MemberName" />
                         <property name="CanFocus">True</property>
                         <property name="ShowScrollbars">True</property>
-                        <property name="HeadersVisible">False</property>
+                        <property name="Reorderable">True</property>
                       </widget>
                     </child>
                   </widget>

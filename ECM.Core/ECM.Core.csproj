@@ -96,6 +96,18 @@
     <EmbeddedResource Include="Resources\Icons\Up16.png">
       <LogicalName>ECM.Core.Icons.Up16PNG</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\SolidDown.png">
+      <LogicalName>ECM.Core.Icons.SolidDownPNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\SolidLeft.png">
+      <LogicalName>ECM.Core.Icons.SolidLeftPNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\SolidRight.png">
+      <LogicalName>ECM.Core.Icons.SolidRightPNG</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Icons\SolidUp.png">
+      <LogicalName>ECM.Core.Icons.SolidUpPNG</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Icons\MarketGroup.png">

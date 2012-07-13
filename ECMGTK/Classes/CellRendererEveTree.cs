@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Gtk;
 using Cairo;
+using System.IO;
 
 namespace ECMGTK
 {
@@ -10,8 +11,6 @@ namespace ECMGTK
     {
         [GLib.Property("Icon")]
         public Gdk.Pixbuf Icon { get; set; }
-
-        Gdk.PixbufAnimation m_AnimatedIcon;
 
         [GLib.Property("AnimatedIcon")]
         public ECM.API.ImageLoader AnimatedIcon { get; set; }
@@ -23,8 +22,9 @@ namespace ECMGTK
         public bool IsHeading { get; set; }
 
         public bool RenderInfo { get; set; }
+        public virtual bool TruncateText { get; set; }
 
-        int m_TextXOffset = 0;
+        protected int m_TextXOffset = 0;
         protected TreeView m_Tree = null;
 
         protected Pango.FontDescription m_FontDesc = null;
@@ -51,9 +51,27 @@ namespace ECMGTK
             }
         }
 
+        protected virtual Stream ExpandedIcon
+        {
+            get { return ECM.Core.Down16PNG; }
+        }
+
+        protected virtual Stream CollapsedIcon
+        {
+            get { return ECM.Core.Up16PNG; }
+        }
+
+        public CellRendererEveTree(IntPtr raw)
+            : base(raw)
+        {
+            RenderInfo = true;
+            TruncateText = true;
+        }
+
         public CellRendererEveTree()
         {
             RenderInfo = true;
+            TruncateText = true;
         }
 
         protected override void Render (Gdk.Drawable window, Widget widget, Gdk.Rectangle background_area, Gdk.Rectangle cell_area, Gdk.Rectangle expose_area, CellRendererState flags)
@@ -97,29 +115,22 @@ namespace ECMGTK
                 context.Restore ();
             }
 
-            RenderCell(context, pix_rect, isSelected);
-
-            // Draw expander/Info
-            System.IO.Stream pixBuf = null;
-
-            if (!IsHeading && RenderInfo)
-                pixBuf = ECM.Core.Info16PNG;
-            else if (IsExpander)
+            // Draw expander
+            if (IsExpander)
             {
-                if (IsExpanded)
-                    pixBuf = ECM.Core.Up16PNG;
-                else
-                    pixBuf = ECM.Core.Down16PNG;
+                RenderExpander(context, pix_rect);
             }
-
-            if (pixBuf != null)
+            else if (!IsHeading && RenderInfo)
             {
                 context.Save();
-                Gdk.CairoHelper.SetSourcePixbuf(context, new Gdk.Pixbuf(pixBuf), pix_rect.Right - 16, pix_rect.Y);
+                Gdk.Pixbuf expander = new Gdk.Pixbuf(ECM.Core.Info16PNG);
+                Gdk.CairoHelper.SetSourcePixbuf(context, expander, pix_rect.Right - 16, pix_rect.Y);
 
                 context.Paint();
                 context.Restore();
             }
+
+            RenderCell(context, pix_rect, isSelected);
 
             // Draw line under cell
             int bottom = background_area.Bottom;
@@ -140,6 +151,23 @@ namespace ECMGTK
 
             (context.Target as System.IDisposable).Dispose();
             (context as System.IDisposable).Dispose();
+        }
+
+        protected virtual void RenderExpander(Context context, Gdk.Rectangle pix_rect)
+        {
+            Gdk.Pixbuf expander;
+
+            if (IsExpanded)
+                expander = new Gdk.Pixbuf(ExpandedIcon);
+            else
+                expander = new Gdk.Pixbuf(CollapsedIcon);
+
+            context.Save();
+
+            Gdk.CairoHelper.SetSourcePixbuf(context, expander, pix_rect.Right - 16, pix_rect.Y);
+
+            context.Paint();
+            context.Restore();
         }
 
         protected virtual void RenderCell(Context context, Gdk.Rectangle pix_rect, bool isSelected)
@@ -168,22 +196,31 @@ namespace ECMGTK
             }
 
             // Render Text
-            Color colour = White;
-
-            //if (!isSelected && !IsHeading)
-            //    colour = Black;
-
-            string text = Text;
-            TextExtents te = context.TextExtents(text);
-            int subIdx = Text.Length;
-
-            while (te.Width > pix_rect.Width - 16 - m_TextXOffset + 2)
+            if (Text != null && Text.Length > 0)
             {
-                text = string.Format("{0}...", text.Substring(0, --subIdx).TrimEnd());
-                te = context.TextExtents(text);
-            }
+                Color colour = White;
 
-            RenderText(context, text, pix_rect.X + m_TextXOffset + 2, pix_rect.Y + 2, colour);
+                //if (!isSelected && !IsHeading)
+                //    colour = Black;
+
+                string text = Text;
+
+                if (TruncateText)
+                {
+                    TextExtents te = context.TextExtents(text);
+                    int subIdx = Text.Length;
+
+                    while (te.Width > pix_rect.Width - 16 - m_TextXOffset + 2)
+                    {
+                        if (subIdx <= 0) break;
+
+                        text = string.Format("{0}...", text.Substring(0, --subIdx).TrimEnd());
+                        te = context.TextExtents(text);
+                    }
+                }
+
+                RenderText(context, text, pix_rect.X + m_TextXOffset + 2, pix_rect.Y + 2, colour);
+            }
         }
 
         protected TextExtents RenderText(Context context, string text, double x, double y, Color colour)
