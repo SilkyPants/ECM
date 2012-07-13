@@ -6,11 +6,9 @@ namespace ECM.API.EVE
 {
     [NeedsCharacterID]
     [KeyNeedsMask(ApiKeyMask.SkillInTraining)]
+    [ApiUri("/char/SkillInTraining.xml.aspx")]
 	public class SkillInTraining
-	{
-        [XmlIgnore]
-        public static string ApiUri { get { return "/char/SkillInTraining.xml.aspx"; } }
-		
+	{	
 		[XmlElement("skillInTraining")]
 		public int IsTrainingXML
 		{
@@ -100,12 +98,9 @@ namespace ECM.API.EVE
 	}
 	
 	[NeedsCharacterID]
+    [ApiUri("/char/SkillQueue.xml.aspx")]
 	public class SkillQueue
-	{
-        [XmlIgnore]
-        public static string ApiUri { get { return "/char/SkillQueue.xml.aspx"; } }
-		
-		
+	{	
 		[XmlArray("queue")]
 		[XmlArrayItem("skill")]
 		public List<SkillQueueInfo> Queue

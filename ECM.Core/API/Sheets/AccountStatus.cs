@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -8,11 +7,9 @@ namespace ECM.API.EVE
 {
     [NeedsApiKey]
     [KeyNeedsMask(ApiKeyMask.AccountStatus)]
+    [ApiUri("/account/AccountStatus.xml.aspx")]
     public class AccountStatus : IAccountStatus
     {
-        [XmlIgnore]
-        public static string ApiUri { get { return "/account/AccountStatus.xml.aspx"; } }
-
         /// <summary>
         /// User ID of account that you queried
         /// </summary>

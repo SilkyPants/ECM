@@ -15,6 +15,8 @@ using System.ComponentModel;
 
 namespace ECM.API.EVE
 {
+    public delegate void RequestUpdated(IApiResult result);
+
     public class ApiRequest<T> : IApiRequest
         where T : class
     {
@@ -26,7 +28,6 @@ namespace ECM.API.EVE
         private bool m_Enabled = false;
 
         public event RequestUpdated OnRequestUpdate;
-        public delegate void RequestUpdated(ApiResult<T> result);
 
         protected NameValueCollection postItems = new NameValueCollection();
 
@@ -100,16 +101,28 @@ namespace ECM.API.EVE
 
         void QueryAPIDone(object sender, RunWorkerCompletedEventArgs e)
         {
+            Console.WriteLine("Updated from API for {0}", typeof(T).Name);
+
             if (OnRequestUpdate != null)
                 OnRequestUpdate(m_LastResult);
         }
 
-        void QueryAPI(object sender, DoWorkEventArgs e)
+        void QueryAPI (object sender, DoWorkEventArgs e)
         {
-            Console.WriteLine("Updating from API for {0}", typeof(T).Name);
+            Console.WriteLine ("Updating from API for {0}", typeof(T).Name);
 
-            PropertyInfo pi = typeof(T).GetProperty("ApiUri", typeof(string));
-            string apiUri = pi.GetValue(null, null) as string;
+            ApiUriAttribute[] apiUris = (ApiUriAttribute[])typeof(T).GetCustomAttributes (typeof(ApiUriAttribute), false);
+
+            string apiUri = string.Empty;
+
+            if (apiUris.Length == 0)
+            {
+                Console.WriteLine("{0} does not have an ApiUriAttribute!", typeof(T).Name);
+                Enabled = false;
+                return;
+            }
+
+            apiUri = apiUris[0].ApiUri;
 
             if (postItems.Count > 0)
             {

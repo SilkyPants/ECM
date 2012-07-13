@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 namespace ECM.API.EVE
 {
 	[NeedsApiKey]
+    [ApiUri("/account/APIKeyInfo.xml.aspx")]
 	public class ApiKeyInfo
 	{
         /*
@@ -27,9 +28,6 @@ namespace ECM.API.EVE
          */
         [XmlIgnore]
 		public static string CreateKeyUrl { get { return "https://support.eveonline.com/api/Key/Create"; } }
-		
-        [XmlIgnore]
-        public static string ApiUri { get { return "/account/APIKeyInfo.xml.aspx"; } }
 
         [XmlElement("key")]
         public ApiKeyData Key

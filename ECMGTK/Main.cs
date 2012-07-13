@@ -31,6 +31,7 @@ namespace ECMGTK
             Application.Init ();
 
             MainWindow win = new MainWindow ();
+            win.Hide();
 
             Application.Run ();
     	}

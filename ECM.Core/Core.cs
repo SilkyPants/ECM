@@ -10,7 +10,6 @@ namespace ECM
     {
         static Dictionary<string, Account> m_Accounts = new Dictionary<string, Account>();
         static Dictionary<long, Character> m_Characters = new Dictionary<long, Character>();
-        static List<IApiRequest> m_ApiRequests = new List<IApiRequest>();
         static Character m_CurrentCharacter = null;
         static long m_FirstCharID = -1;
         static bool m_Loaded = false;
@@ -38,6 +37,17 @@ namespace ECM
         
         #endregion
 
+        public static DateTime CurrentEveTime
+        {
+            get;
+            set;
+        }
+
+        public static bool IsLoaded 
+        {
+            get { return m_Loaded; }
+        }
+
         public static Character CurrentCharacter
         {
             get { return m_CurrentCharacter; }
@@ -63,13 +73,7 @@ namespace ECM
         {
             get
             {
-                foreach (IApiRequest request in m_ApiRequests)
-                {
-                    if (request.IsUpdating)
-                        return true;
-                }
-
-                return API.ImageApi.IsRetrieving;
+                return API.ImageApi.IsRetrieving || API.EveApi.IsRetrieving;
             }
         }
 
@@ -242,31 +246,21 @@ namespace ECM
             m_TQServerStatus.OnRequestUpdate += TQServerStatusUpdate;
             m_TQServerStatus.Enabled = true;
 
-            m_ApiRequests.Add(m_TQServerStatus);
+            API.EveApi.AddRequest(m_TQServerStatus);
 
             LoadAccounts();
 
             m_Loaded = true;
         }
 
-        static void TQServerStatusUpdate (ApiResult<ServerStatus> result)
+        static void TQServerStatusUpdate (IApiResult result)
         {
-            if (result != null && result.Error == null)
+            if (result != null && result.Error == null && result is ApiResult<ServerStatus>)
             {
-                ServerStatus status = result.Result;
+                ApiResult<ServerStatus> status = result as ApiResult<ServerStatus>;
 
                 if(OnTQServerUpdate != null)
-                    OnTQServerUpdate(status);
-            }
-        }
-
-        public static void UpdateOnHeartbeat()
-        {
-            if (!m_Loaded) return;
-
-            foreach (IApiRequest request in m_ApiRequests)
-            {
-                request.UpdateOnSecTick();
+                    OnTQServerUpdate(status.Result);
             }
         }
 
@@ -293,8 +287,8 @@ namespace ECM
         {
             m_Accounts.Add(toAdd.KeyID, toAdd);
 
-            m_ApiRequests.Add(toAdd.AccountKeyInfo);
-            m_ApiRequests.Add(toAdd.AccountStatus);
+            API.EveApi.AddRequest(toAdd.AccountKeyInfo);
+            API.EveApi.AddRequest(toAdd.AccountStatus);
 
             foreach (Character character in toAdd.Characters)
             {
@@ -315,11 +309,11 @@ namespace ECM
 
             m_Characters.Add(charToAdd.ID, charToAdd);
 
-            m_ApiRequests.Add(charToAdd.CharInfoRequest);
-            m_ApiRequests.Add(charToAdd.CharSheetRequest);
-            m_ApiRequests.Add(charToAdd.SkillQueueRequest);
-            m_ApiRequests.Add(charToAdd.AssetListRequest);
-            m_ApiRequests.Add(charToAdd.StandingsRequest);
+            API.EveApi.AddRequest(charToAdd.CharInfoRequest);
+            API.EveApi.AddRequest(charToAdd.CharSheetRequest);
+            API.EveApi.AddRequest(charToAdd.SkillQueueRequest);
+            API.EveApi.AddRequest(charToAdd.AssetListRequest);
+            API.EveApi.AddRequest(charToAdd.StandingsRequest);
 
             charToAdd.CharacterUpdated += delegate
             {

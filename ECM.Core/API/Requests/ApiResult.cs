@@ -7,12 +7,6 @@ using System.Xml.Serialization;
 
 namespace ECM.API.EVE
 {
-
-    public interface IApiSheet
-    {
-        string ApiUri { get; }
-    }
-
     [XmlRoot("eveapi")]
     public class ApiResult<T> : IApiResult
     {

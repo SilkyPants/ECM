@@ -16,11 +16,9 @@ namespace ECM.API.EVE
 
     [NeedsCharacterID]
     [KeyNeedsMask(ApiKeyMask.Standings)]
+    [ApiUri("/char/Standings.xml.aspx")]
     public class CharacterStandings
     {
-        [XmlIgnore]
-        public static string ApiUri { get { return "/char/Standings.xml.aspx"; } }
-
         [XmlElement("characterNPCStandings")]
         public CharacterNPCStandings NPCStandings { get; set; }
     }

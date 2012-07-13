@@ -9,11 +9,9 @@ namespace ECM.API.EVE
 {
     [NeedsCharacterID]
     [KeyNeedsMask(ApiKeyMask.AssetList)]
+    [ApiUri("/char/AssetList.xml.aspx")]
     public class AssetList
     {
-        [XmlIgnore]
-        public static string ApiUri { get { return "/char/AssetList.xml.aspx"; } }
-
         [XmlArray("assets")]
         [XmlArrayItem("asset")]
         public List<AssetListInfo> Assets { get; set; }

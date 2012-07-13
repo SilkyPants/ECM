@@ -120,14 +120,16 @@ namespace ECM
             Expires = expiry;
         }
 
-        void AccountKeyInfoUpdate (ApiResult<ApiKeyInfo> result)
+        void AccountKeyInfoUpdate (IApiResult result)
         {
-            if(result != null && result.Error == null)
+            if(result != null && result.Error == null && result is ApiResult<ApiKeyInfo>)
             {
-                KeyAccess = result.Result.Key.AccessMask;
-                Expires = result.Result.Key.Expires;
+                ApiResult<ApiKeyInfo> keyInfo = result as ApiResult<ApiKeyInfo>;
 
-                foreach (CharacterListItem character in result.Result.Key.Characters)
+                KeyAccess = keyInfo.Result.Key.AccessMask;
+                Expires = keyInfo.Result.Key.Expires;
+
+                foreach (CharacterListItem character in keyInfo.Result.Key.Characters)
                 {
                     AddCharacter(character.CharacterID, character.Name);
                 }
@@ -136,14 +138,16 @@ namespace ECM
             }
         }
 
-        void AccountStatusUpdate (ApiResult<AccountStatus> result)
+        void AccountStatusUpdate (IApiResult result)
         {
-            if(result != null && result.Error == null)
+            if(result != null && result.Error == null && result is ApiResult<AccountStatus>)
             {
-                LogonCount = result.Result.LogonCount;
-                LogonMinutes = result.Result.LogonMinutes;
-                CreateDate = result.Result.CreateDate;
-                PaidUntil = result.Result.PaidUntil;
+                ApiResult<AccountStatus> accStatus = result as ApiResult<AccountStatus>;
+
+                LogonCount = accStatus.Result.LogonCount;
+                LogonMinutes = accStatus.Result.LogonMinutes;
+                CreateDate = accStatus.Result.CreateDate;
+                PaidUntil = accStatus.Result.PaidUntil;
 
                 OnAccountUpdated(result);
             }

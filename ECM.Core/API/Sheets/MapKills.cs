@@ -4,11 +4,9 @@ using System.Collections.Generic;
 
 namespace ECM.API.EVE
 {
+    [ApiUri("/map/Kills.xml.aspx")]
 	public class MapKills
 	{
-        [XmlIgnore]
-        public static string ApiUri { get { return "/map/Kills.xml.aspx"; } }
-
         [XmlArray("solarSystems")]
         [XmlArrayItem("solarSystem")]
         public List<SystemKills> SystemKills { get; set; }

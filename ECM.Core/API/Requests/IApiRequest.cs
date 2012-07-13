@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace ECM.API.EVE
@@ -8,6 +7,7 @@ namespace ECM.API.EVE
     public interface IApiRequest
     {
 		bool Enabled {get;set;}
+
         /// <summary>
         /// Gets the last time this instance was updated (UTC).
         /// </summary>
@@ -27,6 +27,8 @@ namespace ECM.API.EVE
         /// Gets the last API result.
         /// </summary>
         IApiResult LastResult { get; }
+
+        event RequestUpdated OnRequestUpdate;
 
         void UpdateOnSecTick();
     }

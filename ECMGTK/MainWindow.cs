@@ -131,7 +131,8 @@ public partial class MainWindow: Gtk.Window
 
     void heartbeat_Elapsed(object sender, ElapsedEventArgs e)
     {
-        ECM.Core.UpdateOnHeartbeat();
+        lblCurrentEveTime.Text = DateTime.UtcNow.ToString("dd/MM/yy HH:mm:ss");
+        ECM.API.EveApi.UpdateOnHeartbeat();
         ECM.Core.SaveAccounts();
         imgNetworkIndicator.Visible = ECM.Core.IsNetworkActivity;
     }

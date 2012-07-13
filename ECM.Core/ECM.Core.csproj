@@ -78,6 +78,7 @@
     <Compile Include="Helper.cs" />
     <Compile Include="Database\DatabaseBase.cs" />
     <Compile Include="TimeExtensions.cs" />
+    <Compile Include="API\EveApi.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

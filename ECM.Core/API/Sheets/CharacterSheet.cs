@@ -6,11 +6,9 @@ namespace ECM.API.EVE
 {
     [NeedsApiKey]
     [KeyNeedsMask(ApiKeyMask.CharacterSheet)]
+    [ApiUri("/char/CharacterSheet.xml.aspx")]
 	public class CharacterSheet : ICharacterSheet
 	{
-        [XmlIgnore]
-        public static string ApiUri { get { return "/char/CharacterSheet.xml.aspx"; } }
-		
 	    /*<rowset name="corporationRoles" key="roleID" columns="roleID,roleName">
 	      <row roleID="1" roleName="roleDirector" />
 	    </rowset>

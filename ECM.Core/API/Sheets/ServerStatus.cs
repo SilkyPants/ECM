@@ -6,11 +6,9 @@ using System.Xml.Serialization;
 
 namespace ECM.API.EVE
 {
+    [ApiUri("/server/ServerStatus.xml.aspx")]
     public class ServerStatus
     {
-        [XmlIgnore]
-        public static string ApiUri { get { return "/server/ServerStatus.xml.aspx"; } }
-
         [XmlElement("serverOpen")]
         public string ServerOnlineXML
         {

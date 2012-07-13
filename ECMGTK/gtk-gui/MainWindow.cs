@@ -160,6 +160,7 @@ public partial class MainWindow
 	private global::Gtk.Label label37;
 	private global::Gtk.Statusbar stbStatus;
 	private global::Gtk.Image imgNetworkIndicator;
+	private global::Gtk.Label lblCurrentEveTime;
 	
 	protected virtual void Build ()
 	{
@@ -221,6 +222,7 @@ public partial class MainWindow
 		w6.Fill = false;
 		// Container child vbxOverview.Gtk.Box+BoxChild
 		this.hbuttonbox1 = new global::Gtk.HButtonBox ();
+		this.hbuttonbox1.Name = "hbuttonbox1";
 		this.hbuttonbox1.Homogeneous = true;
 		this.hbuttonbox1.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(1));
 		// Container child hbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
@@ -962,7 +964,7 @@ public partial class MainWindow
 		this.hpnMarket = new global::Gtk.HPaned ();
 		this.hpnMarket.CanFocus = true;
 		this.hpnMarket.Name = "hpnMarket";
-		this.hpnMarket.Position = 214;
+		this.hpnMarket.Position = 222;
 		this.hpnMarket.BorderWidth = ((uint)(3));
 		// Container child hpnMarket.Gtk.Paned+PanedChild
 		this.ntbMarketGroups = new global::Gtk.Notebook ();
@@ -1368,6 +1370,7 @@ public partial class MainWindow
 		this.trvAssets = new global::Gtk.TreeView ();
 		this.trvAssets.CanFocus = true;
 		this.trvAssets.Name = "trvAssets";
+		this.trvAssets.Reorderable = true;
 		this.GtkScrolledWindow4.Add (this.trvAssets);
 		this.vbxAssets.Add (this.GtkScrolledWindow4);
 		global::Gtk.Box.BoxChild w128 = ((global::Gtk.Box.BoxChild)(this.vbxAssets [this.GtkScrolledWindow4]));
@@ -1444,11 +1447,21 @@ public partial class MainWindow
 		w134.Position = 1;
 		w134.Expand = false;
 		w134.Fill = false;
-		this.vbox3.Add (this.stbStatus);
-		global::Gtk.Box.BoxChild w135 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.stbStatus]));
-		w135.Position = 1;
+		// Container child stbStatus.Gtk.Box+BoxChild
+		this.lblCurrentEveTime = new global::Gtk.Label ();
+		this.lblCurrentEveTime.Name = "lblCurrentEveTime";
+		this.lblCurrentEveTime.LabelProp = global::Mono.Unix.Catalog.GetString ("label1");
+		this.stbStatus.Add (this.lblCurrentEveTime);
+		global::Gtk.Box.BoxChild w135 = ((global::Gtk.Box.BoxChild)(this.stbStatus [this.lblCurrentEveTime]));
+		w135.PackType = ((global::Gtk.PackType)(1));
+		w135.Position = 2;
 		w135.Expand = false;
 		w135.Fill = false;
+		this.vbox3.Add (this.stbStatus);
+		global::Gtk.Box.BoxChild w136 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.stbStatus]));
+		w136.Position = 1;
+		w136.Expand = false;
+		w136.Fill = false;
 		this.Add (this.vbox3);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();

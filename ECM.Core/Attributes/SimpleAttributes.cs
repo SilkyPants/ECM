@@ -31,4 +31,15 @@ namespace ECM
     public class NeedsExtraInfoAttribute : NeedsApiKeyAttribute
     {
     }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public class ApiUriAttribute : Attribute
+    {
+        public string ApiUri { get; private set; }
+
+        public ApiUriAttribute(string uri)
+        {
+            ApiUri = uri;
+        }
+    }
 }

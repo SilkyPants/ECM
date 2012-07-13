@@ -5,11 +5,9 @@ namespace ECM.API.EVE
 {
 	//[KeyNeedsMask(ApiKeyMask.CharacterInfoPublic)]
 	[NeedsCharacterID]
+    [ApiUriAttribute("/eve/CharacterInfo.xml.aspx")]
 	public class CharacterInfo : ICharacterInfo
-	{
-        [XmlIgnore]
-        public static string ApiUri { get { return "/eve/CharacterInfo.xml.aspx"; } }
-		
+	{	
 		// The character's ID number.
 		[XmlElement("characterID")]
 		public long ID
