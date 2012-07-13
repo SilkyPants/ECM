@@ -19,6 +19,7 @@ namespace ECM.API.EVE
         public List<AssetListInfo> Assets { get; set; }
     }
 
+    [Serializable]
     public class AssetListInfo : ContentInfo
     {
         [XmlAttribute("locationID")]
@@ -29,6 +30,7 @@ namespace ECM.API.EVE
         public List<ContentInfo> Contents { get; set; }
     }
 
+    [Serializable]
     public class ContentInfo
     {
         [XmlAttribute("itemID")]

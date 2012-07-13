@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using ECM.API.EVE;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ECM
 {
@@ -255,7 +257,8 @@ namespace ECM
                                     Perception,
                                     Willpower,
                                     Charisma,
-                                    Portrait)
+                                    Portrait,
+                                    Assets)
                                 VALUES(@ID,
                                     @AccountID,
                                     @AutoUpdate,
@@ -285,7 +288,8 @@ namespace ECM
                                     @Perception,
                                     @Willpower,
                                     @Charisma,
-                                    @Portrait)";
+                                    @Portrait,
+                                    @Assets)";
             bool mustClose = false;
 
             if(sqlConnection == null || sqlConnection.State != System.Data.ConnectionState.Open)
@@ -327,6 +331,16 @@ namespace ECM
             cmd.Parameters.AddWithValue("@Willpower", charToAdd.Attributes.Willpower);
             cmd.Parameters.AddWithValue("@Charisma", charToAdd.Attributes.Charisma);
             cmd.Parameters.AddWithValue("@Portrait", charToAdd.Portrait.ToArray());
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, charToAdd.Assets);
+
+                cmd.Parameters.AddWithValue("@Assets", stream.ToArray());
+
+                Console.WriteLine("Saving {0} assets for {1}", charToAdd.Assets.Count, charToAdd.Name);
+            }
 
             cmd.ExecuteNonQuery();
 
@@ -460,6 +474,15 @@ namespace ECM
                     newChar.Attributes.Willpower = Convert.ToInt32(reader["Willpower"].ToString());
                     newChar.Attributes.Charisma = Convert.ToInt32(reader["Charisma"].ToString());
                     newChar.Portrait = new System.IO.MemoryStream((byte[])reader["Portrait"]);
+
+                    using (MemoryStream assetStream = new System.IO.MemoryStream((byte[])reader["Assets"]))
+                    {
+                        BinaryFormatter formatter = new BinaryFormatter();
+
+                        newChar.Assets = (Dictionary<long, List<AssetListInfo>>)formatter.Deserialize(assetStream);
+
+                        Console.WriteLine("Loading {0} assets for {1}", newChar.Assets.Count, newChar.Name);
+                    }
 
                     // Get Implants
                     GetCharacterImplants(newChar);

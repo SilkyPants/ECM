@@ -340,15 +340,18 @@ namespace ECM
                     ApiResult<AssetList> assets = result as ApiResult<AssetList>;
 
                     // Create asset dictionary keyed on locationID
-                    Assets.Clear();
+                    Dictionary<long, List<AssetListInfo>> newAssets = new Dictionary<long, List<AssetListInfo>>();
 
                     foreach (API.EVE.AssetListInfo info in assets.Result.Assets)
                     {
-                        if (!Assets.ContainsKey(info.LocationID))
-                            Assets.Add(info.LocationID, new List<AssetListInfo>());
+                        if (!newAssets.ContainsKey(info.LocationID))
+                            newAssets.Add(info.LocationID, new List<AssetListInfo>());
 
-                        Assets[info.LocationID].Add(info);
+                        newAssets[info.LocationID].Add(info);
                     }
+
+                    //TODO: Better - as calling the dictionary itself doesn't trigger a save
+                    Assets = newAssets;
                 }
                 else if (result is ApiResult<CharacterStandings>)
                 {
