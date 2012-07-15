@@ -75,7 +75,9 @@ namespace ECM.API.EVE
         {
             if(this.GetType() == typeof(ApiRequest<T>))
             {
-                Debug.Assert(typeof(T).GetProperty("ApiUri", typeof(string)) != null, string.Format("The generic class '{0}' needs a property named 'ApiUri' that points to the Api page", typeof(T).Name));
+                ApiUriAttribute[] apiUris = (ApiUriAttribute[])typeof(T).GetCustomAttributes (typeof(ApiUriAttribute), false);
+
+                Debug.Assert(apiUris.Length == 1, string.Format("The generic class '{0}' needs an ApiUriAttribute that points to the Api page", typeof(T).Name));
 
                 bool needsApiKey = typeof(T).GetCustomAttributes(typeof(NeedsApiKeyAttribute), true).Length != 0;
 

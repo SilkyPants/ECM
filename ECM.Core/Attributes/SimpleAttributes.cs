@@ -30,6 +30,8 @@ namespace ECM
     [AttributeUsage(AttributeTargets.Class)]
     public class NeedsExtraInfoAttribute : NeedsApiKeyAttribute
     {
+        //TODO: Something that requires this
+        // Create new ApiRequestClass for it, have attribute store additional post items
     }
 
     [AttributeUsage(AttributeTargets.Class)]
