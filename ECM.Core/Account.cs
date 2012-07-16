@@ -12,16 +12,6 @@ namespace ECM
         ApiKeyMask m_KeyAccess;
         Dictionary<long, Character> m_Characters = new Dictionary<long, Character>();
 
-        internal AuthorisedApiRequest<ApiKeyInfo> AccountKeyInfo
-        {
-            get { return m_accountKeyInfo; }
-        }
-
-        internal AuthorisedApiRequest<AccountStatus> AccountStatus
-        {
-            get { return m_accountStatus; }
-        }
-
         public ApiKeyMask KeyAccess
         {
             get { return m_KeyAccess; }
@@ -112,6 +102,9 @@ namespace ECM
 
             m_accountStatus = new AuthorisedApiRequest<AccountStatus>(keyID, vCode);
             m_accountStatus.OnRequestUpdate += AccountStatusUpdate;
+
+            API.EveApi.AddRequest(m_accountKeyInfo);
+            API.EveApi.AddRequest(m_accountStatus);
         }
 
         public Account(string keyID, string vCode, ApiKeyMask access, DateTime expiry) : this(keyID, vCode)
@@ -120,11 +113,11 @@ namespace ECM
             Expires = expiry;
         }
 
-        void AccountKeyInfoUpdate (IApiResult result)
+        void AccountKeyInfoUpdate (IApiRequest request)
         {
-            if(result != null && result.Error == null && result is ApiResult<ApiKeyInfo>)
+            if (request.LastResult != null && request.LastResult.Error == null && request == m_accountKeyInfo)
             {
-                ApiResult<ApiKeyInfo> keyInfo = result as ApiResult<ApiKeyInfo>;
+                ApiResult<ApiKeyInfo> keyInfo = request.LastResult as ApiResult<ApiKeyInfo>;
 
                 KeyAccess = keyInfo.Result.Key.AccessMask;
                 Expires = keyInfo.Result.Key.Expires;
@@ -134,22 +127,22 @@ namespace ECM
                     AddCharacter(character.CharacterID, character.Name);
                 }
 
-                OnAccountUpdated(result);
+                OnAccountUpdated(request.LastResult);
             }
         }
 
-        void AccountStatusUpdate (IApiResult result)
+        void AccountStatusUpdate (IApiRequest request)
         {
-            if(result != null && result.Error == null && result is ApiResult<AccountStatus>)
+            if (request.LastResult != null && request.LastResult.Error == null && request == m_accountStatus)
             {
-                ApiResult<AccountStatus> accStatus = result as ApiResult<AccountStatus>;
+                ApiResult<AccountStatus> accStatus = request.LastResult as ApiResult<AccountStatus>;
 
                 LogonCount = accStatus.Result.LogonCount;
                 LogonMinutes = accStatus.Result.LogonMinutes;
                 CreateDate = accStatus.Result.CreateDate;
                 PaidUntil = accStatus.Result.PaidUntil;
 
-                OnAccountUpdated(result);
+                OnAccountUpdated(request.LastResult);
             }
         }
 

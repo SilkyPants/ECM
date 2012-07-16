@@ -15,7 +15,7 @@ using System.ComponentModel;
 
 namespace ECM.API.EVE
 {
-    public delegate void RequestUpdated(IApiResult result);
+    public delegate void RequestUpdated(IApiRequest request);
 
     public class ApiRequest<T> : IApiRequest
         where T : class
@@ -26,6 +26,7 @@ namespace ECM.API.EVE
         private ApiResult<T> m_LastResult = null;
         private BackgroundWorker m_Worker = new BackgroundWorker();
         private bool m_Enabled = false;
+        private bool m_OneShot = false;
 
         public event RequestUpdated OnRequestUpdate;
 
@@ -35,6 +36,12 @@ namespace ECM.API.EVE
         {
             get { return m_Enabled; }
             set { m_Enabled = value; }
+        }
+
+        public bool RemoveAfterUpdate
+        {
+            get { return m_OneShot; }
+            set { m_OneShot = value; }
         }
 
         public DateTime LastUpdate
@@ -106,7 +113,7 @@ namespace ECM.API.EVE
             Console.WriteLine("Updated from API for {0}", typeof(T).Name);
 
             if (OnRequestUpdate != null)
-                OnRequestUpdate(m_LastResult);
+                OnRequestUpdate(this);
         }
 
         void QueryAPI (object sender, DoWorkEventArgs e)

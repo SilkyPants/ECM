@@ -6,7 +6,15 @@ namespace ECM.API.EVE
 {
     public interface IApiRequest
     {
+        /// <summary>
+        /// Is the request enabled for updating?
+        /// </summary>
 		bool Enabled {get;set;}
+
+        /// <summary>
+        /// Should this request get removed after updating?
+        /// </summary>
+        bool RemoveAfterUpdate { get; set; }
 
         /// <summary>
         /// Gets the last time this instance was updated (UTC).

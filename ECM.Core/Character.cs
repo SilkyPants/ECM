@@ -20,30 +20,6 @@ namespace ECM
         public event EventHandler CharacterUpdated;
 
         #region Properties
-        internal CharacterApiRequest<CharacterStandings> StandingsRequest
-        {
-            get { return m_StandingsRequest; }
-        }
-        internal CharacterApiRequest<AssetList> AssetListRequest
-        {
-            get { return m_AssetListRequest; }
-        }
-
-        internal CharacterApiRequest<CharacterSheet> CharSheetRequest
-        {
-            get { return m_charSheetRequest; }
-        }
-
-        internal CharacterApiRequest<CharacterInfo> CharInfoRequest
-        {
-            get { return m_charInfoRequest; }
-        }
-
-        internal CharacterApiRequest<SkillQueue> SkillQueueRequest
-        {
-            get { return m_skillQueueRequest; }
-        }
-
         public CharacterNPCStandings Standings
         {
             get;
@@ -314,30 +290,36 @@ namespace ECM
 
             m_StandingsRequest = new CharacterApiRequest<CharacterStandings>(characterID, Account.KeyID, Account.VCode);
             m_StandingsRequest.OnRequestUpdate += ApiRequestUpdate;
+
+            API.EveApi.AddRequest(m_charInfoRequest);
+            API.EveApi.AddRequest(m_charSheetRequest);
+            API.EveApi.AddRequest(m_skillQueueRequest);
+            API.EveApi.AddRequest(m_AssetListRequest);
+            API.EveApi.AddRequest(m_StandingsRequest);
         }
 
-        void ApiRequestUpdate(IApiResult result)
+        void ApiRequestUpdate(IApiRequest request)
         {
-            if (result != null && result.Error == null)
+            if (request.LastResult != null && request.LastResult.Error == null)
             {
-                if (result is ApiResult<CharacterSheet>)
+                if (request == m_charSheetRequest)
                 {
-                    ApiResult<CharacterSheet> charSheet = result as ApiResult<CharacterSheet>;
+                    ApiResult<CharacterSheet> charSheet = request.LastResult as ApiResult<CharacterSheet>;
                     UpdateCharacter(charSheet.Result);
                 }
-                else if (result is ApiResult<CharacterInfo>)
+                else if (request == m_charInfoRequest)
                 {
-                    ApiResult<CharacterInfo> charInfo = result as ApiResult<CharacterInfo>;
+                    ApiResult<CharacterInfo> charInfo = request.LastResult as ApiResult<CharacterInfo>;
                     UpdateCharacter(charInfo.Result);
                 }
-                else if (result is ApiResult<SkillQueue>)
+                else if (request == m_skillQueueRequest)
                 {
-                    ApiResult<SkillQueue> queue = result as ApiResult<SkillQueue>;
+                    ApiResult<SkillQueue> queue = request.LastResult as ApiResult<SkillQueue>;
                     SkillQueue = queue.Result;
                 }
-                else if (result is ApiResult<AssetList>)
+                else if (request == m_AssetListRequest)
                 {
-                    ApiResult<AssetList> assets = result as ApiResult<AssetList>;
+                    ApiResult<AssetList> assets = request.LastResult as ApiResult<AssetList>;
 
                     // Create asset dictionary keyed on locationID
                     Dictionary<long, List<AssetListInfo>> newAssets = new Dictionary<long, List<AssetListInfo>>();
@@ -353,9 +335,9 @@ namespace ECM
                     //TODO: Better - as calling the dictionary itself doesn't trigger a save
                     Assets = newAssets;
                 }
-                else if (result is ApiResult<CharacterStandings>)
+                else if (request == m_StandingsRequest)
                 {
-                    ApiResult<CharacterStandings> standingsResult = result as ApiResult<CharacterStandings>;
+                    ApiResult<CharacterStandings> standingsResult = request.LastResult as ApiResult<CharacterStandings>;
                     Standings = standingsResult.Result.NPCStandings;
                 }
 

@@ -253,11 +253,11 @@ namespace ECM
             m_Loaded = true;
         }
 
-        static void TQServerStatusUpdate (IApiResult result)
+        static void TQServerStatusUpdate (IApiRequest request)
         {
-            if (result != null && result.Error == null && result is ApiResult<ServerStatus>)
+            if (request.LastResult != null && request.LastResult.Error == null && request == m_TQServerStatus)
             {
-                ApiResult<ServerStatus> status = result as ApiResult<ServerStatus>;
+                ApiResult<ServerStatus> status = request.LastResult as ApiResult<ServerStatus>;
 
                 if(OnTQServerUpdate != null)
                     OnTQServerUpdate(status.Result);
@@ -287,9 +287,6 @@ namespace ECM
         {
             m_Accounts.Add(toAdd.KeyID, toAdd);
 
-            API.EveApi.AddRequest(toAdd.AccountKeyInfo);
-            API.EveApi.AddRequest(toAdd.AccountStatus);
-
             foreach (Character character in toAdd.Characters)
             {
                 AddCharacter(character);
@@ -308,12 +305,6 @@ namespace ECM
                 m_FirstCharID = charToAdd.ID;
 
             m_Characters.Add(charToAdd.ID, charToAdd);
-
-            API.EveApi.AddRequest(charToAdd.CharInfoRequest);
-            API.EveApi.AddRequest(charToAdd.CharSheetRequest);
-            API.EveApi.AddRequest(charToAdd.SkillQueueRequest);
-            API.EveApi.AddRequest(charToAdd.AssetListRequest);
-            API.EveApi.AddRequest(charToAdd.StandingsRequest);
 
             charToAdd.CharacterUpdated += delegate
             {

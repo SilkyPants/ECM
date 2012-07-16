@@ -24,7 +24,16 @@ namespace ECM.API
 
         public static void AddRequest(IApiRequest request)
         {
+            request.OnRequestUpdate += new RequestUpdated(OnRequestUpdated);
+
             m_ApiRequests.Add(request);
+        }
+
+        static void OnRequestUpdated(IApiRequest request)
+        {
+            //Remove requests that are flagged as one shot
+            if (request.RemoveAfterUpdate)
+                m_ApiRequests.Remove(request);
         }
 
         public static void UpdateOnHeartbeat()
