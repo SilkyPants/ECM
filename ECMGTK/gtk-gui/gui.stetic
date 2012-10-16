@@ -138,7 +138,7 @@
           <widget class="Gtk.Notebook" id="ntbPages">
             <property name="MemberName" />
             <property name="CanFocus">True</property>
-            <property name="CurrentPage">10</property>
+            <property name="CurrentPage">5</property>
             <property name="TabPos">Left</property>
             <property name="BorderWidth">3</property>
             <child>
@@ -1296,7 +1296,7 @@
                     <child>
                       <widget class="Gtk.VBox" id="vbox1">
                         <property name="MemberName" />
-                        <property name="Spacing">6</property>
+                        <property name="Spacing">3</property>
                         <child>
                           <widget class="Gtk.ComboBox" id="cmbFilter">
                             <property name="MemberName" />

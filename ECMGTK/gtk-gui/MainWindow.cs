@@ -184,7 +184,7 @@ public partial class MainWindow
 		this.ntbPages = new global::Gtk.Notebook ();
 		this.ntbPages.CanFocus = true;
 		this.ntbPages.Name = "ntbPages";
-		this.ntbPages.CurrentPage = 10;
+		this.ntbPages.CurrentPage = 5;
 		this.ntbPages.TabPos = ((global::Gtk.PositionType)(0));
 		this.ntbPages.BorderWidth = ((uint)(3));
 		// Container child ntbPages.Gtk.Notebook+NotebookChild
@@ -975,7 +975,7 @@ public partial class MainWindow
 		// Container child ntbMarketGroups.Gtk.Notebook+NotebookChild
 		this.vbox1 = new global::Gtk.VBox ();
 		this.vbox1.Name = "vbox1";
-		this.vbox1.Spacing = 6;
+		this.vbox1.Spacing = 3;
 		// Container child vbox1.Gtk.Box+BoxChild
 		this.cmbFilter = global::Gtk.ComboBox.NewText ();
 		this.cmbFilter.AppendText (global::Mono.Unix.Catalog.GetString ("All Items"));
